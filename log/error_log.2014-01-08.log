@@ -1,0 +1,133 @@
+
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:19
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:19
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:20
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:20
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-08 19:29:21
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-08 19:29:21
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:30
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:30
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:44
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:44
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:46
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:29:46
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:30:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:30:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:30:52
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:30:52
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:30:57
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:30:57
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:32:12
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:32:12
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\employ_import.php","errLine":67} @@@@@@@@
+Begin Time: 2014-01-08 19:33:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\employ_import.php","errLine":86} @@@@@@@@
+Begin Time: 2014-01-08 19:33:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:34:22
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:34:22
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:36:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:36:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:36:57
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:36:57
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-08 19:36:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-08 19:36:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:37:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:37:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:43
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:43
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-08 19:37:45
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-08 19:37:45
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:52
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:52
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:53
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-08 19:37:53
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:37:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":59} @@@@@@@@
+Begin Time: 2014-01-08 19:37:59
