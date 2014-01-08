@@ -1,0 +1,21 @@
+{  
+    'fields': [  
+        {'name': 'id', 'type': 'int'},  
+        {'name': 'name', 'type': 'string'},  
+        {'name': 'sex', 'type': 'string'},
+        {'name': 'add', 'type': 'string'}
+    ],
+    'data': [  
+        {'id': '1', 'name': 'AAA', 'sex': '男','add':'SSS'},  
+        {'id': '2', 'name': 'BBB', 'sex': '男','add':'SSS'},   
+        {'id': '3', 'name': 'CCC', 'sex': '男','add':'SSS'},   
+        {'id': '4', 'name': 'DDD', 'sex': '女','add':'是'},   
+        {'id': '5', 'name': 'EEE', 'sex': '男','add':'撒的发生'} 
+    ],  
+    'columns': [  
+        {'header': '编号', 'dataIndex': 'id'},  
+        {'header': '姓名', 'dataIndex': 'name'},  
+        {'header': '性别', 'dataIndex': 'sex'},
+        {'header': '地址', 'dataIndex': 'add'}
+    ]  
+}
