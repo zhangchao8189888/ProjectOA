@@ -15,8 +15,6 @@ if (empty ( $user ) && $_REQUEST ['mode'] != "checklogin") {
 		$actionPath = "Salary";
 		$firstLoginType = 1;
 	} else {
-		// 这是
-		
 		$actionrealpath = "module/action/{$actionPath}Action.class.php";
 	}
 }
