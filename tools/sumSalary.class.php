@@ -325,12 +325,15 @@ IF(F2="外地农民工",0,"错误"))))))
 			return $num2;
 		}
 	}
+	
+	//FIXME 计算年终奖
 	function sumNianSal(&$jisuan_var){
 		$cha=0.0;
-		if($jisuan_var['yingfaheji']<3500){
-			$cha=3500-$jisuan_var['yingfaheji'];
+		if($jisuan_var['shifaheji']<3500){
+			$cha=3500-$jisuan_var['shifaheji'];
 		}
 		$pingjun=($jisuan_var['nianzhongjiang']-$cha)/12;
+
 	    if($pingjun<=1500){
 			$jisuan_var['niandaikoushui']=($jisuan_var['nianzhongjiang']-$cha)*0.03;
 		}elseif($pingjun>1500&&$pingjun<=4500){

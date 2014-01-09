@@ -169,8 +169,8 @@ class SalaryAction extends BaseAction {
 			return;
 		}
 		if (! move_uploaded_file ( $_FILES ['file'] ['tmp_name'], $fullfilepath )) { // 上传文件
-		                                                                      // print_r($_FILES);print_r($fullfilepath);
-		                                                                      // $this->objDao->rollback();
+		                                                                             // print_r($_FILES);print_r($fullfilepath);
+		                                                                             // $this->objDao->rollback();
 			$this->objForm->setFormData ( "error", "文件导入失败" );
 			throw new Exception ( UPLOADPATH . " is a disable dir" );
 			
@@ -535,15 +535,14 @@ class SalaryAction extends BaseAction {
 		$salaryTime = $_POST ['salaryTime_nian'];
 		$checkType = $_REQUEST ['checkType'];
 		// $yingfa=($_POST['yingfa']-1);
-		// 判断是否做个一次工资
+		// 判断是否做过一次工资
 		$isFirst = $_REQUEST ['isFirst'];
-		// echo $isFirst.">>>>>>>>>>>>>>>>>>>>>";
 		$nian = ($_POST ['nian'] - 1);
 		$addArray = explode ( "+", $addArray );
 		session_start ();
 		$salaryList = $_SESSION ['salarylist'];
 		$count = count ( $salaryList [Sheet1] [0] );
-		$salaryList [Sheet1] [0] [($count + 0)] = "当月应发合计";
+		$salaryList [Sheet1] [0] [($count + 0)] = "当月实发合计";
 		$salaryList [Sheet1] [0] [($count + 1)] = "年终奖代扣税";
 		$salaryList [Sheet1] [0] [($count + 2)] = "实发进卡";
 		$salaryList [Sheet1] [0] [($count + 3)] = "缴纳中企基业合计";
@@ -558,9 +557,9 @@ class SalaryAction extends BaseAction {
 			$jisuan_var = array ();
 			$salaryList [Sheet1] [$i] [$shenfenzheng] = trim ( $salaryList [Sheet1] [$i] [$shenfenzheng] );
 			$employ = $this->objDao->searchSalBy_EnoAndSalTime ( $salaryTime, trim ( $salaryList [Sheet1] [$i] [$shenfenzheng] ) );
-			
-			if (! $isFirst) {
-				if (! $employ) {
+			//echo print_r($employ);
+			if (! $isFirst) { // 未做一次工资
+				if (! $employ) { // 员工不为空
 					$employPO = $this->objDao->getEmByEno ( $salaryList [Sheet1] [$i] [$shenfenzheng] );
 					$companyPO = $this->objDao->searchCompanyByName ( $employPO ['e_company'] );
 					$salaryTimePO = $this->objDao->searchSalTimeByComIdAndSalTime ( $companyPO ['id'], $salaryTime );
@@ -603,13 +602,14 @@ class SalaryAction extends BaseAction {
 			if ($employ) {
 				$sal = $this->objDao->getErSalaryByDateNo ( $salaryTime, $salaryList [Sheet1] [$i] [$shenfenzheng] );
 				$jisuan_var ['yingfaheji'] = $employ ['per_yingfaheji'];
+				$jisuan_var['shifaheji']=$employ['per_shifaheji'];
 				if ($sal) {
 					$jisuan_var ['yingfaheji'] += $sal ['ercigongziheji'];
 				}
 				$jisuan_var ['nianzhongjiang'] = $salaryList [Sheet1] [$i] [$nian];
 				$sumclass = new sumSalary ();
-				$sumclass->sumNianSal ( $jisuan_var );
-				$salaryList [Sheet1] [$i] [($count + 0)] = sprintf ( "%01.2f", $jisuan_var ['yingfaheji'] ) + 0;
+				$sumclass->sumNianSal ( $jisuan_var ); // 计算年终奖
+				$salaryList [Sheet1] [$i] [($count + 0)] = sprintf ( "%01.2f", $jisuan_var ['shifaheji'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 1)] = sprintf ( "%01.2f", $jisuan_var ['niandaikoushui'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 2)] = sprintf ( "%01.2f", $jisuan_var ['shifajinka'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 3)] = sprintf ( "%01.2f", $jisuan_var ['jiaozhongqi'] ) + 0;
@@ -658,7 +658,6 @@ class SalaryAction extends BaseAction {
 			$this->objForm->setFormData ( "salDate", $salDate );
 		}
 	}
-	
 	function sumErSalary() {
 		$this->mode = "sumlist";
 		$shenfenzheng = ($_POST ['shenfenzheng_er'] - 1);
@@ -862,12 +861,12 @@ class SalaryAction extends BaseAction {
 		$this->mode = "toSalaryUpdate";
 		if (! empty ( $_REQUEST ['timeId'] )) {
 			$empno = $_REQUEST ['timeId'];
-			$salTime = null;
+			$salTime = $_REQUEST ['time'];
 			$emp = array ();
 			$this->objDao = new SalaryDao ();
 			$emp ['eno'] = $empno;
 			$emp ['sTime'] = $salTime;
-			$result = $this->objDao->searchSalaryListBy_Salary ( $empno );
+			$result = $this->objDao->searchSalaryListBy_SalaryEmpId ( $emp );
 			$salaryListArray = array ();
 			$i = 0;
 			global $salaryTable;
