@@ -866,6 +866,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 		$result = $this->g_db_query ( $sql );
 		return $result;
 	}
+	
 	/**
 	 * 根据工资月份和身份证查询某员工的应发合计
 	 */

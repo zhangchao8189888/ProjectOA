@@ -658,6 +658,7 @@ class SalaryAction extends BaseAction {
 			$this->objForm->setFormData ( "salDate", $salDate );
 		}
 	}
+	
 	function sumErSalary() {
 		$this->mode = "sumlist";
 		$shenfenzheng = ($_POST ['shenfenzheng_er'] - 1);
