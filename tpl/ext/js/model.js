@@ -44,18 +44,11 @@ Ext.define('oa.common.geshuitype.list',{
 Ext.define('oa.common.checkcompany.list',{
     extend: 'Ext.data.Model',
     fields: [
+            
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
         {name: 'company_address', type: 'string'},
         {name:'checked',type:'string'},
-        {name: 'pact_start_date', type: 'string'},
-        {name: 'pact_over_date', type: 'string'},
-        {name: 'service_fee_state', type: 'string'},
-        {name: 'service_fee_value', type: 'string'},
-        {name: 'can_bao_state', type: 'string'},
-        {name: 'can_bao_value', type: 'string'},
-        {name: 'companyEmail', type: 'string'},
-        {name: 'remarks', type: 'string'}
     ]
 });
 

@@ -161,6 +161,7 @@ class SalaryDao extends BaseDao {
 		$sql = "insert  into  OA_nian_total (salaryTime_Id,sum_nianzhongjiang,sum_daikoushui,sum_yingfaheji,sum_shifajika,sum_jiaozhongqi)
         values({$salary['salaryTimeId']},{$salary['nianzhongjiang']},{$salary['yingfaheji']},{$salary['nian_daikoushui']},{$salary['shifajinka']},{$salary['jiaozhongqi']});";
 		$list = $this->g_db_query ( $sql );
+		echo $sql;
 		if ($list) {
 			return $this->g_db_last_insert_id ();
 		} else {

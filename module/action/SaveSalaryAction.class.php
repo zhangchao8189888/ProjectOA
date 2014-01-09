@@ -116,37 +116,6 @@ class SaveSalaryAction extends BaseAction {
 		}
 	}
 	
-	// FIXME !!! 判断是否允许保存工资
-	function searchSaveSalaryTime() {
-		$comname = $_POST ['comname'];
-		$salaryTimeDate = $_POST ['salaryTime'];
-		$this->objDao = new SalaryDao ();
-		// 开始事务
-		$this->objDao->beginTransaction ();
-		// 查询公司信息
-		$company = $this->objDao->searchCompanyByName ( $comname );
-		if (! empty ( $company )) {
-			// 添加公司信息
-			$companyId = $company ['id'];
-			// 根据日期查询公司时间
-			$salaryTime = $this->objDao->searchSalTimeByComIdAndSalTime ( $companyId, $salaryTimeDate, "", 1 );
-			if (! empty ( $salaryTime ['id'] )) {
-				$this->objForm->setFormData ( "warn", " $comname ：$salaryTimeDate 工资月份日期已经存在！" );
-				$arr = array (
-						"sa" => "false" 
-				); // 数组
-				$carray = json_encode ( $arr );
-				echo $carray;
-				exit ();
-			}
-			$arr = array (
-					"sa" => "true" 
-			); // 数组
-			$carray = json_encode ( $arr );
-			echo $carray;
-			exit ();
-		}
-	}
 	// FIXME 保存工资
 	function saveSalary() {
 		// echo "input</br>";
@@ -335,14 +304,14 @@ class SaveSalaryAction extends BaseAction {
 		// $this->objForm->setFormData("errorlist",$errorList);
 		// $this->objDao->getSome();
 	}
+	
+	//FIXME 保存年终奖
 	function saveNianSalary() {
 		$exmsg = new EC (); // 设置错误信息类
 		$adminPO = $_SESSION ['admin'];
 		session_start ();
 		$comname = $_POST ['comname'];
-		
 		$salaryTimeDate = $_POST ['salaryTime'];
-		echo $comname . $salaryTimeDate;
 		$salaryList = $_SESSION ['excelList'];
 		// var_dump($salaryList);
 		foreach ( $salaryList [0] as $num => $row ) {
@@ -360,13 +329,13 @@ class SaveSalaryAction extends BaseAction {
 		 */
 		// 查询公司信息
 		$company = $this->objDao->searchCompanyByName ( $comname );
-		echo "company--->" . $company . "<br>";
 		if (empty ( $company )) {
 			// 添加公司信息
 			$companyList = array ();
 			$companyList ['name'] = $comname;
 			$companyId = $this->objDao->addCompany ( $companyList );
 			if (! $companyId) {
+				
 				$exmsg->setError ( __FUNCTION__, "save  company  get last_insert_id  faild " );
 				// 事务回滚
 				$this->objDao->rollback ();
@@ -393,16 +362,15 @@ class SaveSalaryAction extends BaseAction {
 			$this->objForm->setFormData ( "warn", "保存年终奖工资时间失败！" );
 			throw new Exception ( $exmsg->error () );
 		}
-		// var_dump($salaryList);
-		// echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>$sit_nianzhongjiang";
+// 		echo  var_dump($salaryList);
 		for($i = 1; $i < count ( $salaryList ); $i ++) {
 			// 如果是等于$sit_gerenyinfaheji标志位存储到固定工资表字段中
 			$salayList = array ();
 			$salayList ['nianzhongjiang'] = $salaryList [$i] [$sit_nianzhongjiang];
 			$salayList ['yingfaheji'] = $salaryList [$i] [($sit_nianzhongjiang + 1)];
-			$salayList ['nian_daikoushui'] = $salaryList [$i] [($sit_nianzhongjiang + 2)];
-			$salayList ['shifajinka'] = $salaryList [$i] [($sit_nianzhongjiang + 3)];
-			$salayList ['jiaozhongqi'] = $salaryList [$i] [($sit_nianzhongjiang + 4)];
+			$salayList ['nian_daikoushui'] = $salaryList [$i] [($sit_nianzhongjiang + 3)];
+			$salayList ['shifajinka'] = $salaryList [$i] [($sit_nianzhongjiang + 4)];
+			$salayList ['jiaozhongqi'] = $salaryList [$i] [($sit_nianzhongjiang + 5)];
 			$salayList ['employid'] = $salaryList [$i] [$sit_shenfenzhenghao];
 			$salayList ['salaryTimeId'] = $lastSalaryTimeId;
 			if ($i == ((count ( $salaryList ) - 1))) { // 最后一行为合计所以需要减1
@@ -447,6 +415,7 @@ class SaveSalaryAction extends BaseAction {
 		$this->objDao->commit ();
 		$this->searchNianSalaryTime ();
 	}
+	
 	// 个税详细BY孙瑞鹏
 	function searchGeshuiByIdJosn() {
 		// $this->mode="salaryList";
@@ -520,6 +489,7 @@ class SaveSalaryAction extends BaseAction {
 		// echo json_encode($salaryListArray);
 		exit ();
 	}
+	
 	function saveErSalary() {
 		$exmsg = new EC (); // 设置错误信息类
 		$adminPO = $_SESSION ['admin'];
@@ -551,7 +521,7 @@ class SaveSalaryAction extends BaseAction {
 				$exmsg->setError ( __FUNCTION__, "save  company  get last_insert_id  faild " );
 				// 事务回滚
 				$this->objDao->rollback ();
-				$this->objForm->setFormData ( "warn", "保存工资时间失败！" );
+				$this->objForm->setFormData ( "warn", "保存二次工资时间失败！" );
 				throw new Exception ( $exmsg->error () );
 			}
 		} else {
@@ -571,7 +541,7 @@ class SaveSalaryAction extends BaseAction {
 			$exmsg->setError ( __FUNCTION__, "save  salaryNianTime  get last_insert_id  faild " );
 			// 事务回滚
 			$this->objDao->rollback ();
-			$this->objForm->setFormData ( "warn", "保存年终奖工资时间失败！" );
+			$this->objForm->setFormData ( "warn", "保存二次工资时间失败！" );
 			throw new Exception ( $exmsg->error () );
 		}
 		for($i = 1; $i < count ( $salaryList ); $i ++) {
@@ -598,7 +568,7 @@ class SaveSalaryAction extends BaseAction {
 					$exmsg->setError ( __FUNCTION__, "save  sumNianSalary get last_insert_id  faild " );
 					// 事务回滚
 					$this->objDao->rollback ();
-					$this->objForm->setFormData ( "warn", "保存年终奖合计工资失败！" );
+					$this->objForm->setFormData ( "warn", "保存二次工资合计失败！" );
 					throw new Exception ( $exmsg->error () );
 				}
 			} else {
@@ -608,7 +578,7 @@ class SaveSalaryAction extends BaseAction {
 				$exmsg->setError ( __FUNCTION__, "save  nian_salary get last_insert_id  faild " );
 				// 事务回滚
 				$this->objDao->rollback ();
-				$this->objForm->setFormData ( "warn", "保存年终奖工资失败！" );
+				$this->objForm->setFormData ( "warn", "保存二次工资失败！" );
 				throw new Exception ( $exmsg->error () );
 			}
 			if ($i != ((count ( $salaryList ) - 1))) {

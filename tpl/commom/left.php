@@ -15,6 +15,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Admin&mode=toOpLog">日志查询</a>
 		</div>
+		<div class='item'>
+			<a href='index.php?action=Ext&mode=tosearchcompanyListJosn'>单位审批</a>
+		</div>
 		<div class="title">员工管理</div>
 		<div class="item">
 			<a href="index.php?action=Employ&mode=input">添加员工</a>
