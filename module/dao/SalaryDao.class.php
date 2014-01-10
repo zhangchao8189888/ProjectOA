@@ -101,7 +101,7 @@ class SalaryDao extends BaseDao {
 		 * `fieldValue` float(10,0) NOT NULL,
 		 * `salaryId` int(11) NOT NULL,
 		 * PRIMARY KEY (`id`)
-		 * 
+		 *
 		 * @var unknown_type
 		 */
 		$sql = "insert into OA_salarymovement  (fieldName,salaryId,fieldValue)  values('{$salaryMovement['fieldName']}',{$salaryMovement['salaryId']},'{$salaryMovement['fieldValue']}');";
@@ -120,7 +120,7 @@ class SalaryDao extends BaseDao {
 		 * `fieldIndex` int(11) DEFAULT NULL,
 		 * `fieldValue` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
 		 * `ersalaryId` int(11) DEFAULT NULL,
-		 * 
+		 *
 		 * @var unknown_type
 		 */
 		$sql = "insert into OA_er_movement  (fieldName,ersalaryId,fieldValue)  values('{$salaryMovement['fieldName']}',{$salaryMovement['ersalaryId']},'{$salaryMovement['fieldValue']}');";
@@ -727,7 +727,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 	 * `comId` int(11) DEFAULT NULL,
 	 * PRIMARY KEY (`id`)
 	 * ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-	 * 
+	 *
 	 * @param unknown_type $date        	
 	 */
 	function searchSalaryGeShuiTimeByDateAndComId($date, $comId) {
@@ -814,7 +814,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 		 * `bill_state` int(2) DEFAULT NULL,
 		 * `op_id` int(11) DEFAULT NULL,
 		 * PRIMARY KEY (`id`)
-		 * 
+		 *
 		 * @var unknown_type
 		 */
 		$sql = "insert into OA_bill (salaryTime_id,bill_type,bill_date,bill_item,bill_value,bill_state,text) values
@@ -879,8 +879,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 	}
 	
 	/**
-
-	/**
+	 * /**
 	 * 根据工资月份和身份证查询某员工的应发合计
 	 */
 	function searchSalBy_EnoAndSalTimeId($salaryTime, $eno) {
@@ -889,12 +888,14 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+	
 	/**
 	 * 根据模糊查询，查询公司名称列表
 	 */
 	function getCompanyLisyByName($comName) {
-		$sql = "select *  from OA_company where company_name like '%$comName%' ";
-		
+		$id = $_SESSION ['admin'] ['id'];
+		$sql = "select c.id ,c.company_name  from OA_company c,OA_admin_company a  where  a.companyId = c.id 
+		and c.company_name like '%$comName%' and a.adminId = $id";
 		$result = $this->g_db_query ( $sql );
 		return $result;
 	}
