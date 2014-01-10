@@ -46,7 +46,7 @@ class FinanceForm extends BaseForm
 			case "geShuiTypeList" :
 				return "finance/geShuiTypeList.php";
 			case "searchcompanyListJosn" :
-				return "finance/checkCompany.php";
+				return "testBeta.php";
 			case "geShuiSum" :
 				return "finance/geShuiSum.php";
 			case "geShuiType" :
