@@ -542,13 +542,15 @@ class SalaryAction extends BaseAction {
 		session_start ();
 		$salaryList = $_SESSION ['salarylist'];
 		$count = count ( $salaryList [Sheet1] [0] );
-		$salaryList [Sheet1] [0] [($count + 0)] = "当月实发合计";
-		$salaryList [Sheet1] [0] [($count + 1)] = "年终奖代扣税";
-		$salaryList [Sheet1] [0] [($count + 2)] = "实发进卡";
-		$salaryList [Sheet1] [0] [($count + 3)] = "缴纳中企基业合计";
+		$salaryList [Sheet1] [0] [($count + 0)] = "当月应发合计";
+		$salaryList [Sheet1] [0] [($count + 1)] = "当月实发合计";
+		$salaryList [Sheet1] [0] [($count + 2)] = "年终奖代扣税";
+		$salaryList [Sheet1] [0] [($count + 3)] = "实发进卡";
+		$salaryList [Sheet1] [0] [($count + 4)] = "缴纳中企基业合计";
+		$sumshifaheji=0;
 		$sumNianzhongjiang = 0;
 		$sumYingfaheji = 0;
-		$sumShifaheji = 0;
+		$sumshifajinka = 0;
 		$sumJiaozhongqiheji = 0;
 		$error = array ();
 		$this->objDao = new SalaryDao ();
@@ -609,19 +611,21 @@ class SalaryAction extends BaseAction {
 				$jisuan_var ['nianzhongjiang'] = $salaryList [Sheet1] [$i] [$nian];
 				$sumclass = new sumSalary ();
 				$sumclass->sumNianSal ( $jisuan_var ); // 计算年终奖
-				$salaryList [Sheet1] [$i] [($count + 0)] = sprintf ( "%01.2f", $jisuan_var ['shifaheji'] ) + 0;
-				$salaryList [Sheet1] [$i] [($count + 1)] = sprintf ( "%01.2f", $jisuan_var ['niandaikoushui'] ) + 0;
-				$salaryList [Sheet1] [$i] [($count + 2)] = sprintf ( "%01.2f", $jisuan_var ['shifajinka'] ) + 0;
-				$salaryList [Sheet1] [$i] [($count + 3)] = sprintf ( "%01.2f", $jisuan_var ['jiaozhongqi'] ) + 0;
+				$salaryList [Sheet1] [$i] [($count + 0)] = sprintf ( "%01.2f", $jisuan_var ['yingfaheji'] ) + 0;
+				$salaryList [Sheet1] [$i] [($count + 1)] = sprintf ( "%01.2f", $jisuan_var ['shifaheji'] ) + 0;
+				$salaryList [Sheet1] [$i] [($count + 2)] = sprintf ( "%01.2f", $jisuan_var ['niandaikoushui'] ) + 0;
+				$salaryList [Sheet1] [$i] [($count + 3)] = sprintf ( "%01.2f", $jisuan_var ['shifajinka'] ) + 0;
+				$salaryList [Sheet1] [$i] [($count + 4)] = sprintf ( "%01.2f", $jisuan_var ['jiaozhongqi'] ) + 0;
 			} else {
 				$error [$i] ["error"] = "{$salaryList[Sheet1][$i][$shenfenzheng]}:未查询到该员工身份类别！";
 				continue;
 			}
 			$sumNianzhongjiang += $salaryList [Sheet1] [$i] [$nian];
-			$sumNianzhongjiangdai += $salaryList [Sheet1] [$i] [($count + 0)];
-			$sumYingfaheji += $salaryList [Sheet1] [$i] [($count + 1)];
-			$sumShifaheji += $salaryList [Sheet1] [$i] [($count + 2)];
-			$sumJiaozhongqiheji += $salaryList [Sheet1] [$i] [($count + 3)];
+			$sumYingfaheji += $salaryList [Sheet1] [$i] [($count + 0)];
+			$sumshifaheji	+=$salaryList [Sheet1] [$i] [($count + 1)];
+			$sumNianzhongjiangdai += $salaryList [Sheet1] [$i] [($count + 2)];
+			$sumshifajinka += $salaryList [Sheet1] [$i] [($count + 3)];
+			$sumJiaozhongqiheji += $salaryList [Sheet1] [$i] [($count + 4)];
 		}
 		// 计算合计行
 		
@@ -634,10 +638,11 @@ class SalaryAction extends BaseAction {
 			}
 		}
 		$salaryList [Sheet1] [$countLie] [$nian] = $sumNianzhongjiang;
-		$salaryList [Sheet1] [$countLie] [($count + 0)] = $sumNianzhongjiangdai;
-		$salaryList [Sheet1] [$countLie] [($count + 1)] = $sumYingfaheji;
-		$salaryList [Sheet1] [$countLie] [($count + 2)] = $sumShifaheji;
-		$salaryList [Sheet1] [$countLie] [($count + 3)] = $sumJiaozhongqiheji;
+		$salaryList [Sheet1] [$countLie] [($count + 0)] = $sumYingfaheji;
+		$salaryList [Sheet1] [$countLie] [($count + 1)] = $sumshifaheji;
+		$salaryList [Sheet1] [$countLie] [($count + 2)] = $sumNianzhongjiangdai;
+		$salaryList [Sheet1] [$countLie] [($count + 3)] = $sumshifajinka;
+		$salaryList [Sheet1] [$countLie] [($count + 4)] = $sumJiaozhongqiheji;
 		// echo ">>>>>>>>>>>>>>>>>>>>>>><br>";
 		// var_dump($jisuan_var);
 		// var_dump($salaryList[Sheet1]);
@@ -658,6 +663,7 @@ class SalaryAction extends BaseAction {
 			$this->objForm->setFormData ( "salDate", $salDate );
 		}
 	}
+	
 	function sumErSalary() {
 		$this->mode = "sumlist";
 		$shenfenzheng = ($_POST ['shenfenzheng_er'] - 1);

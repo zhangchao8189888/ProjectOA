@@ -99,7 +99,7 @@ var geshuiTypestore = Ext.create('Ext.data.Store', {
 });
 
 //FIXME  审核公司数据源
-var checkcompany = Ext.create('Ext.data.Store', {
+var checkCompany = Ext.create('Ext.data.Store', {
     //分页大小
     pageSize: 50,
     model: 'oa.common.checkcompany.list',

@@ -38,7 +38,6 @@ class AdminForm extends BaseForm
             case "toFinance":
             	return "finance/finance_first.php";
            	case "modifyPass":
-           		//FIXME form表单 修改
             	return "modifyPassword.php";
            default :
                 return "BaseConfig.php";

@@ -41,7 +41,7 @@ class ExtForm extends BaseForm
             case "tosearhSalaryNianTimeList";
             	return "nianSalaryTime.php";
             case "tosearchcompanyListJosn":
-            	return "finance/checkCompany.php";
+            	return "testBeta.php";
            default :
                 return "BaseConfig.php";
         }
