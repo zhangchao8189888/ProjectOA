@@ -31,7 +31,8 @@ function getCompanyById($comId){
   return mysql_fetch_array($result);
     }
 function searchCompanyList($start=NULL,$limit=NULL,$sort=NULL,$where='1=1'){
-  $sql="select id,company_name from OA_company  where $where";
+  $sql="select c.id,c.company_name from OA_company c,OA_admin_cpmpany a  where $where
+  and a.companyId = c.id and a.adminId = {$_SESSION['admin']['id']}";
   if($sort){
   	$sql.=" order by $sort";
   }
@@ -98,7 +99,7 @@ function updateAdminLoginTime($admin){
    $result=$this->g_db_query($sql);
    return $result;
 }
-    function searchSalTimeByComIdAndSalTime($comId,$salTime,$dateEnd,$searchType){
+function searchSalTimeByComIdAndSalTime($comId,$salTime,$dateEnd,$searchType){
     	$sql="select *  from OA_salarytime  where companyId=$comId and ";
     	if($searchType==1){
     	$sql.=" salaryTime='{$salTime}' ";	

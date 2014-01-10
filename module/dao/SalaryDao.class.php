@@ -415,8 +415,8 @@ class SalaryDao extends BaseDao {
     	FROM OA_salary s ,OA_employ emp,OA_salarytime t
     	WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
     	AND e_company = '$sid'
-    	AND T.salaryTime = '$stime'
-    	GROUP BY S.employid,T.salaryTime
+    	AND t.salaryTime = '$stime'
+    	GROUP BY s.employid,t.salaryTime
     	ORDER BY e_name
     	) yi
     	LEFT JOIN
@@ -425,8 +425,8 @@ class SalaryDao extends BaseDao {
     	FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
     	WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
     	AND e_company = '$sid'
-    	AND T.salaryTime = '$stime'
-    	GROUP BY e.employid,T.salaryTime
+    	AND t.salaryTime = '$stime'
+    	GROUP BY e.employid,t.salaryTime
     	) er
     	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime
     	LEFT JOIN
@@ -435,8 +435,8 @@ class SalaryDao extends BaseDao {
     	FROM OA_nian_salary n  ,OA_employ emp,OA_salarytime_other t
     	WHERE n.employid = emp.e_num AND n.salaryTimeId = t.id
     	AND e_company = '$sid'
-    	AND T.salaryTime = '$stime'
-    	GROUP BY n.employid,T.salaryTime
+    	AND t.salaryTime = '$stime'
+    	GROUP BY n.employid,t.salaryTime
     	) nian
     	ON  yi.e_name = nian.e_name AND yi.salaryTime = nian.salaryTime
     	where 1=1";
