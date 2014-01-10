@@ -14,7 +14,7 @@ $admin = $_SESSION ['admin'];
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet" />
 <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
 <script language="javascript" type="text/javascript"
-	src="common/ext/ext-all-debug.js" charset="utf-8"></script>
+	src="common/ext/ext-all.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
 	src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
@@ -30,9 +30,8 @@ $admin = $_SESSION ['admin'];
               'Ext.data.*'
               ]);
  Ext.onReady(function(){
-	 //创建Grid
      var salNianTimeListGrid = Ext.create('Ext.grid.Panel',{
-     store: checkCompany,
+     store: checkCompanyStore,
       selType: 'checkboxmodel',
      id : 'comlist',
      columns: [
@@ -41,40 +40,28 @@ $admin = $_SESSION ['admin'];
                {text: "地址", flex: 200, dataIndex: 'company_address', sortable: true},
                {text: "审核状态", flex: 200, dataIndex: 'checked', sortable: true},
                ],
-       height:700,
-       width:1000,
-       x:0,
-       y:0,
-       title: '公司审核',
-       disableSelection: false,
-       loadMask: true,
-       renderTo: 'demo',
-       viewConfig: {
-       id: 'gv',
-       trackOver: false,
-       stripeRows: false
-   },
-                  bbar: Ext.create('Ext.PagingToolbar', {
-                      store: checkCompany,
-                      displayInfo: true,
-                      displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
-                      emptyMsg: "没有数据"
-                  }),
-              });
-            checkCompany.loadPage(1);
-            function newWin() {
-                var win = Ext.create('Ext.window.Window', {
-                    title: "查看工资"	,
-                    width: 300,
-                    height: 100,
-                    plain: true,
-                    closeAction: 'hide', // 关闭窗口
-                    maximizable: false, // 最大化控制 值为true时可以最大化窗体
-                    layout: 'border',
-                    contentEl: 'tab'
-                });
-            }
-          });
+     height:700,
+     width:1000,
+     x:0,
+     y:0,
+     title: '公司审核',
+     disableSelection: false,
+     loadMask: true,
+     renderTo: 'checkcom',
+     viewConfig: {
+		 id: 'gv',
+		 trackOver: false,
+		 stripeRows: false
+  	 },
+     bbar: Ext.create('Ext.PagingToolbar', {
+         store: checkCompanyStore,
+         displayInfo: true,
+         displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+         emptyMsg: "没有数据"
+      })
+  });
+  checkCompanyStore.loadPage(0);
+  });
 
       </script>
 </head>
@@ -83,9 +70,8 @@ $admin = $_SESSION ['admin'];
     <div id="main" style="min-width: 960px"></div>
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
-		<div id="demo">
-<?=$warn?>
-			</div>
+		<div id="checkcom">
+		</div>
 	</div>
 
 </body>
