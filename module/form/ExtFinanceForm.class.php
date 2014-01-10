@@ -1,14 +1,14 @@
 <?php
 /**
- * 管理员Form
- * @author zhang.chao
- *
+ * 财务ExtForm
+ *  @author Alice
+ *  
  */
-class ExtSalaryForm extends BaseForm {
+class ExtFinanceForm extends BaseForm {
 	/**
 	 * @return AdminForm
 	 */
-	function ExtSalaryForm() {
+	function ExtFinanceForm() {
 		parent::BaseForm ();
 	}
 	/**
@@ -19,10 +19,8 @@ class ExtSalaryForm extends BaseForm {
 	 */
 	function getTpl($mode = false) {
 		switch ($mode) {
-			case "toSalTimeList" :
-				return "ext/view/salary/salTimeList.php";
-			case "tosearhSalaryNianTimeList" :
-				return "nianSalaryTime.php";
+			case "toCheckCompany" :
+				return "ext/view/finance/checkCompany.php";
 			default :
 				return "BaseConfig.php";
 		}

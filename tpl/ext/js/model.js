@@ -7,6 +7,7 @@ Ext.define('oa.service.company.adminList', {
             'salStat','salTimeid','fa_state','salNianStat',
             'salOrStat','fastat','opTime']
 });
+
 /**
  * 客户公司list
  */
@@ -40,11 +41,12 @@ Ext.define('oa.common.geshuitype.list',{
     ]
 });
 
-//审核公司数据源
+/**
+ * 审核公司数据源
+ */
 Ext.define('oa.common.checkcompany.list',{
     extend: 'Ext.data.Model',
     fields: [
-            
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
         {name: 'company_address', type: 'string'},

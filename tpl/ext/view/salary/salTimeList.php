@@ -1,20 +1,25 @@
 <?php
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>工资列表查询</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
-    <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
-    <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
-    <script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
-    <script type="text/javascript">
+<title>工资列表查询</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="tpl/ext/lib/prettify/prettify.css" type="text/css"
+	rel="stylesheet" />
+<link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet" />
+<link href="common/css/admin.css" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript"
+	src="common/ext/ext-all.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"
+	src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"
+	src="tpl/ext/js/model.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"
+	src="tpl/ext/js/data.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"
+	src="common/js/jquery_last.js" charset="utf-8"></script>
+<script type="text/javascript">
         Ext.require([
             'Ext.grid.*',
             'Ext.toolbar.Paging',
@@ -291,11 +296,11 @@
 </head>
 <body>
 <?php include("tpl/commom/top.html"); ?>
-<div id="main" style="min-width:960px">
+<div id="main" style="min-width: 960px">
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
-        <div id="demo"></div>
-    </div>
-</div>
+			<div id="demo"></div>
+		</div>
+	</div>
 </body>
 </html>

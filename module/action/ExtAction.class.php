@@ -62,8 +62,8 @@ class ExtAction extends BaseAction{
             case "tosearhSalaryNianTimeList":
             	$this->tosearhSalaryNianTimeList();
             	break;
-            case "tosearchcompanyListJosn":
-            	$this->tosearchcompanyListJosn();
+            case "toCheckCompany":
+            	$this->toCheckCompany ();
             	break;
             default :
                 $this->modelInput();
@@ -74,8 +74,8 @@ class ExtAction extends BaseAction{
 
     }
     
-    function tosearchcompanyListJosn(){
-    	$this->mode="tosearchcompanyListJosn";
+    function toCheckCompany (){
+    	$this->mode="toCheckCompany";
     }
     
     function tosearhSalaryNianTimeList() {
