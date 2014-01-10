@@ -325,12 +325,14 @@ class SalaryBillAction extends BaseAction {
 		$this->objForm->setFormData ( "warn", $errormsg );
 		$this->toSendSalary ();
 	}
+	//FIXME 工资统计
 	function toSalaryTongji() {
 		$this->mode = "toSalaryTongji";
 		$this->objDao = new SalaryDao ();
 		$comList = $this->objDao->searchCompanyList ();
 		$this->objForm->setFormData ( "comList", $comList );
 	}
+	//FIXME 搜索指定公司工资统计
 	function searchSalaryTongji() {
 		global $billState;
 		global $billType;
