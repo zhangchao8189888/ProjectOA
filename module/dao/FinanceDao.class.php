@@ -31,7 +31,9 @@ class FinanceDao extends BaseDao
 		return $result;
     }
 	function searchSalTimeListBySalTime($salTime){
-		$sql="select st.*,c.company_name from OA_salarytime st,OA_company c where st.companyId=c.id and st.salaryTime='{$salTime}' ";
+		$id= $_SESSION['admin']['id'];
+		$sql="select st.*,c.company_name from OA_salarytime st,OA_company c,OA_admin_company a where st.companyId=c.id and st.salaryTime='{$salTime}'
+		and a.companyId = c.id and a.adminId = $id ";
     	$result=$this->g_db_query($sql);
 		return $result;
 	}
