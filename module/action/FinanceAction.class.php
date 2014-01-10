@@ -188,7 +188,7 @@ class FinanceAction extends BaseAction{
    		$josnArray['items'][$i]['id']=$row['id']; 
    		$josnArray['items'][$i]['company_name']=$row['company_name'];
     	$josnArray['items'][$i]['company_address']=$row['company_address'];
-    	$josnArray['items'][$i]['checked']='false';
+    	$josnArray['items'][$i]['checked']='未审核';
    		$josnArray['items'][$i]['pact_start_date']=$row['pact_start_date'];
    		$josnArray['items'][$i]['pact_over_date']=$row['pact_over_date'];
    		$josnArray['items'][$i]['service_fee_state']=$row['service_fee_state'];
