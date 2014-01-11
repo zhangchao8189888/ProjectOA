@@ -76,24 +76,21 @@ $admin = $_SESSION ['admin'];
                         text: '审批通过',
                         iconCls: 'chakan'
                     },
-                    '公司查询',
-                    {
-                        id: 'comname',
-                        xtype: 'trigger',
-                        triggerClass: 'x-form-search-trigger',
-                        name: 'search',
-                        onTriggerClick: function (src) {
+                    '公司名称查询', {
+                        id:'comname',
+                        xtype : 'trigger',
+                        triggerClass : 'x-form-search-trigger',
+                        name: 'comname',
+                        onTriggerClick : function(src) {
                             checkCompanyStores.removeAll();
-                            checkCompanyStores.load({
-                                params: {
-                                    companyName: this.getValue(),
-                                    company_address: Ext.getCmp("company_address").getValue(),
-                                    start: 0,
-                                    limit: 50
+                            checkCompanyStores.load( {
+                                params : {
+                                    company_name : this.getValue(),
+                                    start : 0,
+                                    limit : 50
                                 }
                             });
                         }
-
                     }
                 ]
             });

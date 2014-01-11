@@ -50,6 +50,7 @@ if ($checkType) {
 	  	$("#iform").submit();
 	  }
 	  function pu_bu(){
+
 		  $("#iform_sal").attr("action","index.php?action=SaveSalary&mode=saveSalary"); 
 		  $("#iform_sal").submit();
 	  }
