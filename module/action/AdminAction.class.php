@@ -35,6 +35,9 @@ class AdminAction extends BaseAction{
     {
         // Controller -> Model
         switch($this->mode) {
+        	case "betaTest":
+        		$this->betaTest();
+        		break;
             case "input" :
                 $this->getAdminList();
                 break;
@@ -54,17 +57,20 @@ class AdminAction extends BaseAction{
             	$this->logoff();
                 break;
             case "modifyPass":
-            	//FIXME   action mode
             	$this->modifyPass();
             	break;
             default :
                 $this->modelInput();
                 break;
         }
-
-
-
     }
+    /**
+     * 新功能测试专用网页。
+     */
+    function betaTest() {
+    	$this->mode	=	"betaTest";
+    }
+    
     /**
      * 得到管理员列表
      */
