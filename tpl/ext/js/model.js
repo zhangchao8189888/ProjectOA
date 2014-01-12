@@ -99,3 +99,15 @@ Ext.define('oa.common.otherSalTime.list',{
         {name: 'salaryType', type: 'int'}
     ]
 });
+
+Ext.define('oa.common.caiwuManageCom.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'salaryTime', type: 'string'},
+        {name: 'op_salaryTime', type: 'time'},
+        {name: 'salary_state', type: 'int'},
+        {name: 'salaryType', type: 'int'}
+    ]
+});

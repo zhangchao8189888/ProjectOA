@@ -43,8 +43,11 @@ class ServiceDao extends BaseDao
     	$result=$this->g_db_query($sql);
 		return $result;
     }
-    function searchAdminCompany($companyId){
+    function searchAdminCompany($companyId,$adminId=null){
     	$sql="select *  from OA_admin_company where companyId=$companyId";
+        if ($adminId) {
+            $sql.=" and adminId = $adminId";
+        }
     	$result=$this->g_db_query($sql);
 		return mysql_fetch_array($result);
     }

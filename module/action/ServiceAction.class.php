@@ -57,6 +57,9 @@ class ServiceAction extends BaseAction{
             case "addOpCompanyListJson":
             	$this->addOpCompanyListJson();
                 break;
+            case "addCaiwuOpCompanyListJson":
+                $this->addCaiwuOpCompanyListJson();
+                break;
             case "getOtherAdminComList":
             	$this->getOtherAdminComList();
                 break;
@@ -377,6 +380,35 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 	echo $html;
   	exit;
   }
+    function addCaiwuOpCompanyListJson(){
+        $salTimeList=$_POST['ids'];
+        $admin=$_SESSION["admin"];
+        $salTimeList=json_decode($salTimeList);
+        $html="";
+        for($i=0;$i<(count($salTimeList));$i++){
+            $this->objDao=new ServiceDao();
+            $adminCom=array();
+            $adminCom['adminId']=$admin['id'];
+            $adminCom['companyId']=$salTimeList[$i];
+            //先查询
+            $result=$this->objDao->searchAdminCompany($adminCom['companyId'],$admin['id']);
+            $com=$this->objDao->getCompanyById($adminCom['companyId']);
+            if(!$result){
+                $result=$this->objDao->addAdminCompany($adminCom);
+                $html.="<div><font color=green>{$com['company_name']} :添加管理成功</font></div>";
+            }else{
+
+                if($result['adminId']==$adminCom['adminId']){
+                    $html.="<div><font color=red>你已经添加该公司：{$com['company_name']}</font></div>";
+                }else{
+                    $admin=$this->objDao->getAdminById($adminCom['adminId']);
+                    $html.="<div><font color=red>客服:{$admin['name']}，已经添加该公司：{$com['company_name']}</font></div>";
+                }
+            }
+        }
+        echo $html;
+        exit;
+    }
   function getEmployList(){
   	$this->mode="toEmlist";
   	$c_name=$_REQUEST['comname']; 

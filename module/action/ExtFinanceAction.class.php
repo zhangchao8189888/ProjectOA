@@ -31,10 +31,16 @@ class ExtFinanceAction extends BaseAction {
 		switch ($this->mode) {
             case "toFinaceFirst":
                 $this->toFinaceFirst ();
+                break;
 			case "searchcompanyListJosn" :
 				$this->searchcompanyListJosn ();
+                break;
             case "companyClear";
                 $this->companyClear();
+                break;
+            case "searchCaiwuManageComListJosn" :
+                $this->searchCaiwuManageComListJosn ();
+                break;
 			default :
 				$this->modelInput ();
 				break;
@@ -104,6 +110,44 @@ class ExtFinanceAction extends BaseAction {
         $company    =   $this->objDao->getCheckCompanyById($id);
         echo($company['company_address']);
         $this->objDao->companyClear($id,$company);
+        exit();
+    }
+
+    /**
+     * 查询财务管理公司集合
+     */
+    function searchCaiwuManageComListJosn() {
+        $this->objDao=new FinanceDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $key=$_REQUEST['Key'];
+        /**
+         * sorts = Replace(Trim(Request.Form("sort")),"'","")
+        dir = Replace(Trim(Request.Form("dir")),"'","")
+         */
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where="1=1";
+        if($key){
+            $where.=" and company_name like '%$key%'";
+        }
+        $sum =$this->objDao->g_db_count("OA_company","*",$where);
+        $salaryTimeList=$this->objDao->searchCompanyList($start,$limit,$sorts." ".$dir,$where);
+        $comArray=array();
+        $comArray['total']=$sum;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $comArray['items'][$i]['id']=$row['id'];
+            $comArray['items'][$i]['company_name']=$row['company_name'];
+            $i++;
+        }
+        echo json_encode($comArray);
         exit();
     }
 
