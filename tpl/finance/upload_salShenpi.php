@@ -4,7 +4,7 @@ $succ=$form_data['succ'];
 $files=$form_data['files'];
 $timeid=$form_data['timeId'];
 //var_dump($files);
-//href="/companyOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
+//href="/zhongqiOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -88,7 +88,7 @@ $timeid=$form_data['timeId'];
 
                 <td><div><?php echo $row;?></div></td>
 
-                <td><a href="/companyOA/index.php?action=Finance&mode=delFile&fname=<?php echo $row;?>">删除</a>|<a href="#" onclick="duibi('<?php echo $row;?>')">对比</a></td>
+                <td><a href="/zhongqiOA/index.php?action=Finance&mode=delFile&fname=<?php echo $row;?>">删除</a>|<a href="#" onclick="duibi('<?php echo $row;?>')">对比</a></td>
 
 
             </tr>

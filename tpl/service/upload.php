@@ -14,7 +14,7 @@ if($checkType=="first"){
 	$salType="年终奖";
 }
 //var_dump($files);
-//href="/companyOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
+//href="/zhongqiOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -122,7 +122,7 @@ if($checkType=="first"){
 
                 <td><div><?php echo $row;?></div></td>
 
-                <td><div><a href="#" onclick="checkSal('<?php echo $row;?>')" href="">查看</a>|<a href="/companyOA/index.php?action=Salary&mode=del&fname=<?php echo $row;?>">删除</a>|<a href="/companyOA/index.php?action=Salary&mode=salDuiBi&fname=<?php echo $row;?>">对比</a>|<a  onclick="rename('<?php echo $row;?>');">重命名</a>|<a  onclick="updateEmpList('<?php echo $row;?>');">批量修改员工字段</a></div></td>
+                <td><div><a href="#" onclick="checkSal('<?php echo $row;?>')" href="">查看</a>|<a href="/zhongqiOA/index.php?action=Salary&mode=del&fname=<?php echo $row;?>">删除</a>|<a href="/zhongqiOA/index.php?action=Salary&mode=salDuiBi&fname=<?php echo $row;?>">对比</a>|<a  onclick="rename('<?php echo $row;?>');">重命名</a>|<a  onclick="updateEmpList('<?php echo $row;?>');">批量修改员工字段</a></div></td>
 
 
             </tr>

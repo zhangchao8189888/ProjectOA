@@ -24,11 +24,11 @@ $_SESSION['salarylist']=$salarylist;
 	  $("#iform").submit();
 	  }
 	  function b(){
-	  $("#iform").attr("action","/companyOA/index.php?action=Salary&mode=sumSalary"); 
+	  $("#iform").attr("action","/zhongqiOA/index.php?action=Salary&mode=sumSalary");
 	  $("#iform").submit();
 	  }
 	  function nian_b(){
-	  $("#iform_nian").attr("action","/companyOA/index.php?action=Finance&mode=shenPiSalHeji"); 
+	  $("#iform_nian").attr("action","/zhongqiOA/index.php?action=Finance&mode=shenPiSalHeji");
 	  $("#iform_nian").submit();
 	  }
         </script>
@@ -45,7 +45,7 @@ $_SESSION['salarylist']=$salarylist;
         </div>
         <!--功能项-->
          <div class="manage" style="word-wrap:break-word;">
-       <form enctype="multipart/form-data" id="iform_nian" action="/companyOA/index.php?action=Salary&mode=sumSalary" method="post"> 
+       <form enctype="multipart/form-data" id="iform_nian" action="/zhongqiOA/index.php?action=Salary&mode=sumSalary" method="post">
 			选择身份证：<input type="text" name="shenfenzheng_nian" value=""/> 
 			对比月份（2012-01-01）：<input type="text" name="salTime" value="<?php echo $salTime['salaryTime']?>" readonly="readonly"/> 
 			实发合计项：<input type="text" name="nian" value=""/> 
