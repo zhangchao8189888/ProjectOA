@@ -33,12 +33,13 @@ class ExtFinanceAction extends BaseAction {
                 $this->toFinaceFirst ();
 			case "searchcompanyListJosn" :
 				$this->searchcompanyListJosn ();
+            case "companyClear";
+                $this->companyClear();
 			default :
 				$this->modelInput ();
 				break;
 		}
 	}
-
 	function toSalaryTongji() {
 		echo "工资统计";
 	}
@@ -58,7 +59,7 @@ class ExtFinanceAction extends BaseAction {
 		$limit = $_REQUEST ['limit'];
 		$sorts = $_REQUEST ['sort'];
 		$dir = $_REQUEST ['dir'];
-		$companyName = $_REQUEST ['companyName'];
+		$companyName = $_REQUEST ['company_name'];
 		if (! $start) {
 			$start = 0;
 		}
@@ -78,7 +79,7 @@ class ExtFinanceAction extends BaseAction {
 		while ( $row = mysql_fetch_array ( $comList ) ) {
 			$josnArray ['items'] [$i] ['id'] = $row ['id'];
 			$josnArray ['items'] [$i] ['company_name'] = $row ['company_name'];
-			$josnArray ['items'] [$i] ['company_address'] = $row ['company_address'];
+			$josnArray ['items'] [$i] ['company_address'] =$row ['company_address'];
 			$josnArray ['items'] [$i] ['checked'] = '未审核';
 // 			$josnArray ['items'] [$i] ['pact_start_date'] = $row ['pact_start_date'];
 // 			$josnArray ['items'] [$i] ['pact_over_date'] = $row ['pact_over_date'];
@@ -93,7 +94,21 @@ class ExtFinanceAction extends BaseAction {
 		echo json_encode ( $josnArray );
 		exit ();
 	}
+
+    /**
+     * Extfinance action单位审核通过
+     */
+    function companyClear() {
+        $this->objDao=new FinanceDao();
+        $id=$_REQUEST['comid'];
+        $company    =   $this->objDao->getCheckCompanyById($id);
+        echo($company['company_address']);
+        $this->objDao->companyClear($id,$company);
+        exit();
+    }
+
 }
+
 
 $objModel = new ExtFinanceAction ( $actionPath );
 $objModel->dispatcher ();

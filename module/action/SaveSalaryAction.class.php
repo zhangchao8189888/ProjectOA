@@ -115,8 +115,23 @@ class SaveSalaryAction extends BaseAction {
 				break;
 		}
 	}
-	
-	// FIXME 保存工资
+
+    function AssignTabMonth($date,$step){
+        $date= date("Y-m-d",strtotime($step." months",strtotime($date)));//得到处理后的日期（得到前后月份的日期）
+        $u_date = strtotime($date);
+        $days=date("t",$u_date);// 得到结果月份的天数
+
+        //月份第一天的日期
+        $first_date=date("Y-m",$u_date).'-01';
+        for($i=0;$i<$days;$i++){
+            $for_day=date("Y-m-d",strtotime($first_date)+($i*3600*24));
+        }
+        $time = array ();
+        $time["first"]  =    $first_date;
+        $time["last"]   =      $for_day;
+        return $time;
+    }
+    // FIXME 保存工资
 	function saveSalary() {
 		// echo "input</br>";
 		// $this->mode="toSaveOk";
@@ -124,6 +139,8 @@ class SaveSalaryAction extends BaseAction {
 		session_start ();
 		$comname = $_POST ['comname'];
 		$salaryTimeDate = $_POST ['salaryTime'];
+        $time   =   $this->AssignTabMonth ($salaryTimeDate,0);
+        echo($time["first"]);
 		$shifajian = $_POST ['shifajian'];
 		$freeTex = $_POST ['shifajian']; // 免税项
 		                              // echo $comname.$salaryTime;
@@ -146,9 +163,9 @@ class SaveSalaryAction extends BaseAction {
 			// 添加公司信息
 			$companyId = $company ['id'];
 			// 根据日期查询公司时间
-			$salaryTime = $this->objDao->searchSalTimeByComIdAndSalTime ( $companyId, $salaryTimeDate, "", 1 );
+			$salaryTime = $this->objDao->searchSalTimeByComIdAndSalTime ( $companyId, "{$time["first"]}", "{$time["last"]}", 3 );
 			if (! empty ( $salaryTime ['id'] )) {
-				$this->objForm->setFormData ( "warn", " $comname ：$salaryTimeDate 工资月份日期已经存在！" );
+				$this->objForm->setFormData ( "warn", " $comname 本月已做工资 ,有问题请联系财务！" );
 				$this->searchSalaryTime ();
 				return;
 			}
@@ -418,11 +435,19 @@ class SaveSalaryAction extends BaseAction {
 	
 	// 个税详细BY孙瑞鹏
 	function searchGeshuiByIdJosn() {
+		// $this->mode="salaryList";
 		$salaryTimeId = $_REQUEST ['timeId'];
 		$salaryTime = $_REQUEST ['time'];
+       // var_dump($salaryTimeId);
+        $salaryTime=str_replace('\"','"',$salaryTime);
+       $salaryTimeId=str_replace('\"','"',$salaryTimeId);
+       // var_dump($salaryTimeId);
+        $salaryTimeId=json_decode($salaryTimeId);
+        //var_dump($salaryTimeId);
+        $salaryTime=json_decode($salaryTime);
 		$this->objDao = new SalaryDao ();
-		$salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId, $salaryTime );
-		$salaryListArray = array ();
+
+		$salaryListArrayAll = array ();
 		$i = 0;
 		global $salaryTypeTable;
         /**
@@ -440,6 +465,16 @@ class SaveSalaryAction extends BaseAction {
         ["aaa"=> 111,"bbb" => 222];
         $salaryList=array();
         while ( $row = mysql_fetch_array ( $salaryList ) ) {
+		$movKeyArr = array ();
+		$z = 0;
+        $salaryTimeId = preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $salaryTimeId);
+
+       for($h=0;$h<(count($salaryTimeId));$h++){
+
+        $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h] );
+
+		while ( $row = mysql_fetch_array ( $salaryList ) ) {
+
 			foreach ( $salaryTypeTable as $key => $value ) {
 				$rowSalCol = array ();
 				$rowFields = array ();
@@ -457,6 +492,21 @@ class SaveSalaryAction extends BaseAction {
 		}
         //print_r($salaryListArray);
 		echo json_encode ( $salaryListArray );
+            if($h==0){
+                $salaryListArrayAll['data'] = $salaryListArray['data'];
+                $salaryListArrayAll['columns'] = $salaryListArray['columns'];
+                $salaryListArrayAll['fields'] = $salaryListArray['fields'];
+            }
+            else{
+
+                $salaryListArrayAll['data']= array_merge($salaryListArrayAll['data'],$salaryListArray['data']);
+            }
+        }
+		$countData = count ( $salaryListArrayAll ['data'] );
+		
+		// $salarySumListArray=array();e
+		// var_dump($salarySumListArray);
+		echo json_encode ( $salaryListArrayAll );
 		exit ();
 	}
 	

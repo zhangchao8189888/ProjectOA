@@ -50,7 +50,6 @@ Ext.define('oa.common.checkcompany.list',{
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
         {name: 'company_address', type: 'string'},
-        {name:'checked',type:'string'},
     ]
 });
 
@@ -75,6 +74,9 @@ Ext.define('oa.common.salTime.list',{
     ]
 });
 
+/**
+ * 年终奖model
+ */
 Ext.define('oa.common.salNianTime.list',{
     extend: 'Ext.data.Model',
     fields: [

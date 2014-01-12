@@ -7,6 +7,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 	<div class="menu">
 		<div class="title">系统管理</div>
 		<div class="item">
+			<a href="index.php?action=Admin&mode=betaTest">内测网页</a>
+		</div>
+		<div class="item">
 			<a href="index.php?action=Admin&mode=input">添加管理员</a>
 		</div>
 		<div class="item">

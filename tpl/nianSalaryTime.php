@@ -7,14 +7,15 @@ $admin = $_SESSION ['admin'];
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>年终奖查询</title>
+<title>年终奖 查询</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
     <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
     <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
     <script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="tpl/ext/js/nian.js" charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
  <script type="text/javascript">
  Ext.require([
@@ -125,7 +126,7 @@ $admin = $_SESSION ['admin'];
               });
               nianSalaryListStore.on("beforeload",function(){
 
-                  Ext.apply(nianSalaryListStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue()});
+                  Ext.apply(nianSalaryListStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 
               });
               var onSelectChange = function(selModel, selections){
@@ -191,7 +192,6 @@ $admin = $_SESSION ['admin'];
                   });
                   var items=[salList];
 
-//FIXME  ！！！  窗口
                   var winSal = Ext.create('Ext.window.Window', {
                       title: "查年终奖", // 窗口标题
                       width:1200, // 窗口宽度

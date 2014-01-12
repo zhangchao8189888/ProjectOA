@@ -42,25 +42,34 @@ class FinanceDao extends BaseDao
 		$result=$this->g_db_query($sql);
 		return mysql_fetch_array($result);
     }
-    
-    function searchCheckCompanyListPage($start=NULL,$limit=NULL,$sort=NULL,$where=null){
-    	$sql="select * from oa_checkcompany";
-    	if($where!=null){
+
+    /**
+     * financedao审核公司
+     * @param null $start
+     * @param null $limit
+     * @param null $sort
+     * @param null $where
+     * @return bool|resource
+     */
+    function searchCheckCompanyListPage($start=NULL,$limit=NULL,$sort=NULL,$where){
+    	$sql="select * from oa_checkcompany where 1=1";
+
     		if($where['companyName']!=""){
     			$sql.=" and company_name like '%{$where['companyName']}%' ";
     		}
-    	}
+
     	if($sort){
     		$sql.=" order by $sort";
     	}
     	if($start>=0&&$limit){
     		$sql.=" limit $start,$limit";
     	}
+
     	$result=$this->g_db_query($sql);
     	return $result;
     }
-    function searchCheckCompanyListCount($where=null){
-    	$sql="select count(*) as cnt from oa_checkcompany";
+    function searchCheckCompanyListCount($where){
+    	$sql="select count(*) as cnt from oa_checkcompany where 1=1";
     	if($where!=null){
     		if($where['companyName']!=""){
     			$sql.=" and company_name like '%{$where['companyName']}%' ";
@@ -73,7 +82,29 @@ class FinanceDao extends BaseDao
     	$row = mysql_fetch_assoc($result);
     	return $row['cnt'];
     }
-    
+    function getCheckCompanyById($comId) {
+        $sql = "select *  from oa_checkcompany where  id=$comId";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
+    function companyClear($id,$company){
+
+        $sql = "insert into oa_company (company_name,company_address) values('{$company['company_name']}','{$company['company_address']}')";
+        $result = $this->g_db_query ( $sql );
+        echo($sql);
+        if ($result) {
+            $sql="delete from oa_checkcompany where id =$id";
+            $result = $this->g_db_query ( $sql );
+            if ($result) {
+                return $this->g_db_last_insert_id ();
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
     
 }
 ?>
