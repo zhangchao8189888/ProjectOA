@@ -118,3 +118,15 @@ Ext.define('oa.common.geshui.detail.list',{
         {name: 'geshuiSum', type: 'int'}
     ]
 });
+
+Ext.define('oa.common.caiwuManageCom.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'salaryTime', type: 'string'},
+        {name: 'op_salaryTime', type: 'time'},
+        {name: 'salary_state', type: 'int'},
+        {name: 'salaryType', type: 'int'}
+    ]
+});

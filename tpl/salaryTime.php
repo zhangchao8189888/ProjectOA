@@ -20,7 +20,7 @@ $admin=$_SESSION['admin'];
 	  $("#iform").submit();
 	  }
 	  function b(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function del(eid){

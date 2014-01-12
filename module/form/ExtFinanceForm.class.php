@@ -21,6 +21,8 @@ class ExtFinanceForm extends BaseForm {
 		switch ($mode) {
 			case "toCheckCompany" :
 				return "ext/view/finance/checkCompany.php";
+            case "toFinaceFirst" :
+                return "ext/view/finance/financeFirst.php";
 			default :
 				return "BaseConfig.php";
 		}

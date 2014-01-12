@@ -3,7 +3,7 @@ $comlist=$form_data['comList'];
 $errorlist=$form_data['error'];
 $financeList=$form_data['financeList'];
 //var_dump($files);
-//href="/companyOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
+//href="/zhongqiOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -62,7 +62,7 @@ $financeList=$form_data['financeList'];
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <!--导航栏-->
-        <div class="navigate"><h2>财务管理首页</h2></div>
+        <div class="navigate"><h2>财务管理</h2></div>
         <!--功能项-->
         <div class="manage">
        <form enctype="multipart/form-data" id="iform" action="index.php?action=Service&mode=toOpCompanyList" method="post"> 

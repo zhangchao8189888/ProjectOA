@@ -9,7 +9,7 @@ require_once( 'lib/EC.class.inc' );
 /* define('DB_HOST','qdm-001.hichina.com');
 define('DB_NAME','qdm0010465_db');
 define('DB_USER','qdm0010465');
-define('DB_PASS','l2x2y0t5o8'); */
+define('DB_PASS','l2x2y0t5o8');*/
 define('DB_HOST','localhost');
 define('DB_NAME','company_OA');
 define('DB_USER','root');

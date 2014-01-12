@@ -27,7 +27,7 @@ $excelList=$form_data['salList'];
 	  $("#iform").submit();
 	  }
 	  function b(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function update(eid,stId){

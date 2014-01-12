@@ -14,6 +14,8 @@
 <script language="javascript" type="text/javascript"
 	src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
+        src="tpl/ext/js/exportExcel.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"
 	src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
 	src="tpl/ext/js/data.js" charset="utf-8"></script>
@@ -57,7 +59,49 @@
                     displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
                     emptyMsg: "没有数据"
                 }),
-                tbar : [{
+
+                tbar : [
+                    {
+                        text: "导出到excel",
+                        style: {
+                            marginRight: '20px'
+                        },
+                        handler: function () {
+                            var vExportContent = salTimeListstore.getExcelXml(); //获取数据
+                            if (Ext.isIE9||Ext.isIE8 || Ext.isIE6 || Ext.isIE7 || Ext.isSafari
+                                || Ext.isSafari2 || Ext.isSafari3||Ext.isChrome||Ext.firefoxVersion) { //判断浏览器
+                                var fd = Ext.get('frmDummy');
+                                if (!fd) {
+                                    fd = Ext.DomHelper.append(
+                                        Ext.getBody(), {
+                                            tag: 'form',
+                                            method: 'post',
+                                            id: 'frmDummy',
+                                            action: 'exportUrl.php',
+                                            target: '_blank',
+                                            name: 'frmDummy',
+                                            cls: 'x-hidden',
+                                            cn: [
+                                                {
+                                                    tag: 'input',
+                                                    name: 'exportContent',
+                                                    id: 'exportContent',
+                                                    type: 'hidden'
+                                                }
+                                            ]
+                                        }, true);
+
+                                }
+                                fd.child('#exportContent').set({
+                                    value: vExportContent
+                                });
+                                fd.dom.submit();
+                            } else {
+                                document.location = 'data:application/vnd.ms-excel;base64,' + Base64
+                                    .encode(vExportContent);
+                            }
+                        }},
+                    {
                     xtype : 'button',
                     id : 'bt_deleteDocument',
                     handler : function(src) {

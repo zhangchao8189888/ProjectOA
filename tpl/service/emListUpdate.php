@@ -27,7 +27,7 @@ $_SESSION['salarylist']=$salarylist;
 				  alert('填入身份证位置');
 				  return;
 				  }
-			  $("#iform").attr("action","/companyOA/index.php?action=Service&mode=updateEmpList");
+			  $("#iform").attr("action","/zhongqiOA/index.php?action=Service&mode=updateEmpList");
 			  $("#iform").submit();
 	  
 	  }
@@ -40,7 +40,7 @@ $_SESSION['salarylist']=$salarylist;
     <div id="right">
         <!--导航栏-->
         <div class="navigate">员工字段批量修改</div>
-         <form enctype="multipart/form-data" id="iform" action="/companyOA/index.php?action=Service&mode=updateEmpList" method="post"> 
+         <form enctype="multipart/form-data" id="iform" action="/zhongqiOA/index.php?action=Service&mode=updateEmpList" method="post">
         <div><font color="red">如果员工较多建议100为单位修改,以身份证为查询条件</font></div>
         <div class="manage">
                   身份证：<input type="text" name="shenfenzheng" id="shenfenzheng_emp" value="" size="1"/> 

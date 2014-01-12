@@ -23,11 +23,11 @@ $_SESSION['excelList']=$excelList;
         <script language="javascript" type="text/javascript" src="common/js/jquery.checkbox.js" charset="utf-8"></script>
         <script language="javascript" type="text/javascript">
 	  function a(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function b(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function back(ofname){

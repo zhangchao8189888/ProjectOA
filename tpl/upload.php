@@ -3,8 +3,6 @@ $errorMsg=$form_data['error'];
 $succ=$form_data['succ'];
 $files=$form_data['files'];
 $admin=$_SESSION['admin'];
-//var_dump($files);
-//href="/companyOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

@@ -20,11 +20,11 @@ $_SESSION['excelList']=$excelList;
         <script language="javascript" type="text/javascript" src="common/js/jquery.checkbox.js" charset="utf-8"></script>
         <script language="javascript" type="text/javascript">
 	  function a(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function b(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function save(ofname){
@@ -55,7 +55,7 @@ $_SESSION['excelList']=$excelList;
         </div>
         <!--功能项-->
         <div class="manage">
-       <form enctype="multipart/form-data" id="iform" action="/companyOA/index.php?action=Salary&mode=sumSalary" method="post"> 
+       <form enctype="multipart/form-data" id="iform" action="/zhongqiOA/index.php?action=Salary&mode=sumSalary" method="post">
 			导出文件名称：<input type="text" name="name" value=""/> 
 			<input type="button" value="导出" onclick="a()"/>
 			<font color="red"><?php if($errorMsg)echo $errorMsg?></font>

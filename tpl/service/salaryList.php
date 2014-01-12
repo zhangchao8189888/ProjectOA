@@ -34,11 +34,11 @@ $_SESSION['salType']="html";
         <script language="javascript" type="text/javascript" src="common/js/jquery.checkbox.js" charset="utf-8"></script>
         <script language="javascript" type="text/javascript">
 	  function a(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function b(){
-	  $("#iform").attr("action","/companyOA/import.php"); 
+	  $("#iform").attr("action","/zhongqiOA/import.php");
 	  $("#iform").submit();
 	  }
 	  function save(ofname){
@@ -74,7 +74,7 @@ $_SESSION['salType']="html";
         </div>
         <!--功能项-->
         <div class="manage">
-       <form enctype="multipart/form-data" id="iform" action="/companyOA/index.php?action=Salary&mode=sumSalary" method="post"> 
+       <form enctype="multipart/form-data" id="iform" action="/zhongqiOA/index.php?action=Salary&mode=sumSalary" method="post">
 			导出文件名称：<input type="text" name="name" value=""/> 
 			<input type="button" value="导出" onclick="a()"/>
 			<font color="red"><?php if($errorMsg)echo $errorMsg?></font>
@@ -88,7 +88,7 @@ $_SESSION['salType']="html";
         
         </div>
         <div>
-        <form enctype="multipart/form-data" id="iformMark" action="/companyOA/index.php?action=Salary&mode=sumSalary" method="post"> 
+        <form enctype="multipart/form-data" id="iformMark" action="/zhongqiOA/index.php?action=Salary&mode=sumSalary" method="post">
 		备 &nbsp  注：&nbsp&nbsp&nbsp&nbsp  
          <textarea name="mark" cols="100" rows="3" class="text" id="mark"><?php if($salaryPO['mark']) echo $salaryPO['mark'];?></textarea>
          <input type="hidden" name="salTimeId" id="salTimeId"  value="<?php if($salaryPO['id']) echo $salaryPO['id'];?>"/>

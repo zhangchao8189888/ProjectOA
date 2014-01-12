@@ -3,7 +3,7 @@ $comlist=$form_data['comList'];
 $errorlist=$form_data['error'];
 $searchType=$form_data['searchType'];
 //var_dump($files);
-//href="/companyOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
+//href="/zhongqiOA/index.php?action=Salary&mode=rename&fname=<?php echo $row;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

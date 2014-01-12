@@ -28,7 +28,7 @@ $_SESSION['salarylist']=$salarylist;
 				  alert('填入身份证位置');
 				  return;
 				  }
-			  $("#iform").attr("action","/companyOA/index.php?action=Salary&mode=perZiliaoDuibi"); 
+			  $("#iform").attr("action","/zhongqiOA/index.php?action=Salary&mode=perZiliaoDuibi");
 			  $("#iform").submit();
 			  }else if(type=='com'){
 				  if($("#shenfenzheng_com").val()==''){
@@ -39,14 +39,14 @@ $_SESSION['salarylist']=$salarylist;
 					  alert('填入工资时间');
 					  return;
 				 }
-			  $("#iform_com").attr("action","/companyOA/index.php?action=Salary&mode=salPerDuibi");
+			  $("#iform_com").attr("action","/zhongqiOA/index.php?action=Salary&mode=salPerDuibi");
 			  $("#iform_com").submit();
 			  }else if(type=='jishu'){
 				  if($("#shenfenzheng_jishu").val()==''){
 					  alert('填入身份证位置');
 					  return;
 					  }
-			  $("#iform_jishu").attr("action","/companyOA/index.php?action=Salary&mode=jishuDuibi");
+			  $("#iform_jishu").attr("action","/zhongqiOA/index.php?action=Salary&mode=jishuDuibi");
 			  $("#iform_jishu").submit();
 			  }
 	  
@@ -65,7 +65,7 @@ $_SESSION['salarylist']=$salarylist;
         </div>
         <!--功能项-->
         <div class="manage">
-       <form enctype="multipart/form-data" id="iform" action="/companyOA/index.php?action=Salary&mode=perZiliaoDuibi" method="post"> 
+       <form enctype="multipart/form-data" id="iform" action="/zhongqiOA/index.php?action=Salary&mode=perZiliaoDuibi" method="post">
 			<font  style="word-wrap:break-word; background-color:red;">员工个人资料对比</font>
 			身份证：<input type="text" name="shenfenzheng" id="shenfenzheng_emp" value="" size="1"/> 
 			姓名：<input type="text" name="name" value="" size="1"/> 
@@ -81,7 +81,7 @@ $_SESSION['salarylist']=$salarylist;
 			<input type="button" value="对比" onclick="b('emp')"/>
        	</form>
          </div>
-         <form enctype="multipart/form-data" id="iform_com" action="/companyOA/index.php?action=Salary&mode=sumSalary" method="post"> 
+         <form enctype="multipart/form-data" id="iform_com" action="/zhongqiOA/index.php?action=Salary&mode=sumSalary" method="post">
          <div class="manage">
        	<font  style="word-wrap:break-word; background-color:red;">工资五险一金对比</font>
 			身份证：<input type="text" name="shenfenzheng_com" id="shenfenzheng_com" value="" size="1"/>
@@ -101,7 +101,7 @@ $_SESSION['salarylist']=$salarylist;
 			</div>
 				</form>
             <div class="manage">
-       <form enctype="multipart/form-data" id="iform_jishu" action="/companyOA/index.php?action=Salary&mode=sumSalary" method="post"> 
+       <form enctype="multipart/form-data" id="iform_jishu" action="/zhongqiOA/index.php?action=Salary&mode=sumSalary" method="post">
 			<font  style="word-wrap:break-word; background-color:red;">员工个人基数对比</font>
 			身份证：<input type="text" name="shenfenzheng_jishu" id="shenfenzheng_jishu" value="" size="1"/>  
 			失业基数：<input type="text" name="shiye_jishu" value="" size="1"/> 
