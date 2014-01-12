@@ -7,7 +7,7 @@ $admin = $_SESSION ['admin'];
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>年终奖 查询</title>
+<title>年终奖查询</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
     <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
