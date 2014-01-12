@@ -434,64 +434,53 @@ class SaveSalaryAction extends BaseAction {
 	}
 	
 	// 个税详细BY孙瑞鹏
-	function searchGeshuiByIdJosn() {
-		// $this->mode="salaryList";
-		$salaryTimeId = $_REQUEST ['timeId'];
-		$salaryTime = $_REQUEST ['time'];
-       // var_dump($salaryTimeId);
+    function searchGeshuiByIdJosn() {
+        // $this->mode="salaryList";
+        $salaryTimeId = $_REQUEST ['timeId'];
+        $salaryTime = $_REQUEST ['time'];
+        // var_dump($salaryTimeId);
         $salaryTime=str_replace('\"','"',$salaryTime);
-       $salaryTimeId=str_replace('\"','"',$salaryTimeId);
-       // var_dump($salaryTimeId);
+        $salaryTimeId=str_replace('\"','"',$salaryTimeId);
+        // var_dump($salaryTimeId);
         $salaryTimeId=json_decode($salaryTimeId);
         //var_dump($salaryTimeId);
         $salaryTime=json_decode($salaryTime);
-		$this->objDao = new SalaryDao ();
+        $this->objDao = new SalaryDao ();
 
-		$salaryListArrayAll = array ();
-		$i = 0;
-		global $salaryTypeTable;
-        /**
-         * $salaryList=array();
-        // foreach ($excelList as $salaryTimeList) {
-        //var_dump($salaryTimeList);
-        //导出excel行数标记
-
-        $salaryList[Sheet1][$hang][0]="姓名";
-        $salaryList[Sheet1][$hang][1]="身份证号";
-        $salaryList[Sheet1][$hang][2]="银行卡号";
-        $salaryList[Sheet1][$hang][3]="开户行";
-        $salaryList[Sheet1][$hang][4]="个人所得税";
-         */
-        ["aaa"=> 111,"bbb" => 222];
-        $salaryList=array();
-        while ( $row = mysql_fetch_array ( $salaryList ) ) {
-		$movKeyArr = array ();
-		$z = 0;
+        $salaryListArrayAll = array ();
+        $i = 0;
+        global $salaryTypeTable;
+        $movKeyArr = array ();
+        $z = 0;
         $salaryTimeId = preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $salaryTimeId);
 
-       for($h=0;$h<(count($salaryTimeId));$h++){
+        for($h=0;$h<(count($salaryTimeId));$h++){
 
-        $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h] );
+            $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h] );
 
-		while ( $row = mysql_fetch_array ( $salaryList ) ) {
+            while ( $row = mysql_fetch_array ( $salaryList ) ) {
 
-			foreach ( $salaryTypeTable as $key => $value ) {
-				$rowSalCol = array ();
-				$rowFields = array ();
-				if ($i == 0) {
-					$rowSalCol ['text'] = $value;
-					$rowSalCol ["dataIndex"] = $key;
-					$salaryListArray ['columns'] [] = $rowSalCol;
-				}
-				$rowFields ["name"] = $key;
-				$salaryListArray ['fields'] [] = $rowFields;
-				$rowData [$key] = $row [$key];
-			}
-			$salaryListArray ['data'] [] = $rowData;
-			$i ++;
-		}
-        //print_r($salaryListArray);
-		echo json_encode ( $salaryListArray );
+                foreach ( $salaryTypeTable as $key => $value ) {
+                    $rowSalCol = array ();
+                    $rowFields = array ();
+                    if ($i == 0) {
+                        $rowSalCol ['text'] = $value;
+                        $rowSalCol ["dataIndex"] = $key;
+                        // if($key == 'geshuiSum'){
+                        // $rowSalCol["summaryType"]='sum';
+                        // $rowFields["type"]='float';
+                        // }
+                        $salaryListArray ['columns'] [] = $rowSalCol;
+                    }
+                    $rowFields ["name"] = $key;
+                    // $rowFields["type"]='float';
+                    // type: 'int'
+                    $salaryListArray ['fields'] [] = $rowFields;
+                    $rowData [$key] = $row [$key];
+                }
+                $salaryListArray ['data'] [] = $rowData;
+                $i ++;
+            }
             if($h==0){
                 $salaryListArrayAll['data'] = $salaryListArray['data'];
                 $salaryListArrayAll['columns'] = $salaryListArray['columns'];
@@ -502,13 +491,13 @@ class SaveSalaryAction extends BaseAction {
                 $salaryListArrayAll['data']= array_merge($salaryListArrayAll['data'],$salaryListArray['data']);
             }
         }
-		$countData = count ( $salaryListArrayAll ['data'] );
-		
-		// $salarySumListArray=array();e
-		// var_dump($salarySumListArray);
-		echo json_encode ( $salaryListArrayAll );
-		exit ();
-	}
+        $countData = count ( $salaryListArrayAll ['data'] );
+
+        // $salarySumListArray=array();e
+        // var_dump($salarySumListArray);
+        echo json_encode ( $salaryListArrayAll );
+        exit ();
+    }
 	
 	// 个税类型修改BY孙瑞鹏
 	function searchGeshuiTypeByIdJosn() {
