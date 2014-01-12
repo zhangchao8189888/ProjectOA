@@ -74,6 +74,9 @@ Ext.define('oa.common.salTime.list',{
     ]
 });
 
+/**
+ * 年终奖model
+ */
 Ext.define('oa.common.salNianTime.list',{
     extend: 'Ext.data.Model',
     fields: [
