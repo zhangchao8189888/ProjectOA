@@ -9,17 +9,23 @@
     <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
     <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
     <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
+
     <script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="ToExcel/export-all.js" ></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
+     <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
     <script type="text/javascript">
-        Ext.require([
+    Ext.Loader.setConfig({ enabled: true });
+    Ext.Loader.setPath('Ext.ux.exporter', 'ToExcel/exporter');
+    Ext.require([
             'Ext.grid.*',
             'Ext.toolbar.Paging',
-            'Ext.data.*'
-        ]);
+            'Ext.data.*',
+        'Ext.ux.exporter.Exporter'
+
+    ]);
         Ext.onReady(function(){
 
             //创建Grid
@@ -52,6 +58,7 @@
                     displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
                     emptyMsg: "没有数据"
                 }),
+
                 tbar : [
 //                         {
 //                     xtype : 'button',
@@ -69,7 +76,20 @@
                         handler : function(src) {
                             var model = salTimeListGrid.getSelectionModel();
                             var sel=model.getSelection();
-                            checkSalWin(sel);
+                            var times = [];
+                            var names = [];
+                            for(var i = 0; i < sel.length ;i++){
+                                times.push(sel[i].data.salaryTime);
+                                names.push(sel[i].data.company_name);
+                            }
+                            geShuiExcelExportStore.load( {
+                                    params: {
+                                        timeId : Ext.JSON.encode(names),
+                                        time:Ext.JSON.encode(times)
+                                    }
+                                }
+                            );
+                            checkSalWin();
                         },
                         text : '详细个税信息',
                         iconCls : 'chakan'
@@ -128,6 +148,7 @@
             var salListWidth=1150;
             var salList=Ext.create("Ext.grid.Panel",{
                 title:'',
+                store:geShuiExcelExportStore,
                 width:salListWidth,
                 height:450,
                 enableLocking : true,
@@ -136,13 +157,35 @@
                 features: [{
                     ftype: 'summary'
                 }],
-                columns : [], //注意此行代码，至关重要
+                columns : [
+                    {text: "个人编号", width: 120, dataIndex: 'company_id', sortable: true},
+                    {text: "姓名", flex: 200, dataIndex: 'ename', sortable: true},
+                    {text: "身份证号", flex: 200, dataIndex: 'e_num', sortable: true},
+                    {text: "个税日期", flex: 200, dataIndex: 'salaryTime', sortable: true},
+                    {text: "所在单位", width: 120, dataIndex: 'companyname', sortable: true},
+                    {text: "个税合计", flex: 200, dataIndex: 'geshuiSum', sortable: true}
+                ], //注意此行代码，至关重要
+                dockedItems: [
+                    {
+                        xtype: 'toolbar',
+                        dock: 'right',
+                        items: [
+                            Ext.create('Ext.ux.exporter.Button', {
+                                component: Ext.getCmp("configGrid"),
+                                text: "导出 Excel"
+                            })
+                        ]
+                    }
+                ],
                 //displayInfo : true,
                 emptyMsg : "没有数据显示"
+
+
+
             });
 
 //通过ajax获取表头已经表格数据
-            function checkSalWin(sel) {
+            function checkSalWin() {
                 var p = Ext.create("Ext.grid.Panel",{
                     id:"salTimeListP",
                     title:"导航",
@@ -183,38 +226,8 @@
                     },
                     closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
                 });
-                var title="";
-                var url = "index.php?action=SaveSalary&mode=searchGeshuiByIdJosn";
-                var times = [];
-                var names = [];
-                for(var i = 0;i < sel.length ;i++){
-                    times.push(sel[i].data.salaryTime);
-                    names.push(sel[i].data.company_name);
-                }
-                Ext.Ajax.request({
-                    url: url,  //从json文件中读取数据，也可以从其他地方获取数据
-                    method : 'POST',
-                    params: {
-                        timeId : Ext.JSON.encode(names),
-                        time:Ext.JSON.encode(times)
-                    },
-                    success : function(response) {
-                        //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
-                        var json = Ext.JSON.decode(response.responseText); //获得后台传递json
-
-                        //创建store
-                        var store = Ext.create('Ext.data.Store', {
-                            fields : json.fields,//把json的fields赋给fields
-                            data : json.data     //把json的data赋给data
-                        });
-                        //根据store和column构造表格
-                        Ext.getCmp("configGrid").reconfigure(store, json.columns);
-                        //重新渲染表格
-                        //Ext.getCmp("configGrid").render();
-                    }
-                });
-                //winSal.items=[p,salList];
                 winSal.show();
+
             }
             geshuiListstore.loadPage(1);
 

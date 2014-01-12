@@ -435,67 +435,30 @@ class SaveSalaryAction extends BaseAction {
 	
 	// 个税详细BY孙瑞鹏
 	function searchGeshuiByIdJosn() {
-		// $this->mode="salaryList";
 		$salaryTimeId = $_REQUEST ['timeId'];
 		$salaryTime = $_REQUEST ['time'];
-       // var_dump($salaryTimeId);
         $salaryTime=str_replace('\"','"',$salaryTime);
-       $salaryTimeId=str_replace('\"','"',$salaryTimeId);
-       // var_dump($salaryTimeId);
+        $salaryTimeId=str_replace('\"','"',$salaryTimeId);
         $salaryTimeId=json_decode($salaryTimeId);
-        //var_dump($salaryTimeId);
         $salaryTime=json_decode($salaryTime);
+        $salaryTimeId = preg_replace("#\\\u([0-9a-f]{4})#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $salaryTimeId);
 		$this->objDao = new SalaryDao ();
-
-		$salaryListArrayAll = array ();
 		$i = 0;
-		global $salaryTypeTable;
-		$movKeyArr = array ();
-		$z = 0;
-        $salaryTimeId = preg_replace("#\\\u([0-9a-f]+)#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $salaryTimeId);
-
+        $josnArray = array ();
        for($h=0;$h<(count($salaryTimeId));$h++){
 
         $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h] );
-
-		while ( $row = mysql_fetch_array ( $salaryList ) ) {
-
-			foreach ( $salaryTypeTable as $key => $value ) {
-				$rowSalCol = array ();
-				$rowFields = array ();
-				if ($i == 0) {
-					$rowSalCol ['text'] = $value;
-					$rowSalCol ["dataIndex"] = $key;
-					// if($key == 'geshuiSum'){
-					// $rowSalCol["summaryType"]='sum';
-					// $rowFields["type"]='float';
-					// }
-					$salaryListArray ['columns'] [] = $rowSalCol;
-				}
-				$rowFields ["name"] = $key;
-				// $rowFields["type"]='float';
-				// type: 'int'
-				$salaryListArray ['fields'] [] = $rowFields;
-				$rowData [$key] = $row [$key];
-			}
-			$salaryListArray ['data'] [] = $rowData;
+           while ( $row = mysql_fetch_array ( $salaryList ) ) {
+               $josnArray ['items'] [$i] ['company_id'] = $row ['company_id'];
+               $josnArray ['items'] [$i] ['ename'] = $row ['ename'];
+               $josnArray ['items'] [$i] ['e_num'] = $row ['e_num'];
+               $josnArray ['items'] [$i] ['salaryTime'] = $row ['salaryTime'];
+               $josnArray ['items'] [$i] ['companyname'] = $row ['companyname'];
+               $josnArray ['items'] [$i] ['geshuiSum'] = $row ['geshuiSum'];
 			$i ++;
-		}
-            if($h==0){
-                $salaryListArrayAll['data'] = $salaryListArray['data'];
-                $salaryListArrayAll['columns'] = $salaryListArray['columns'];
-                $salaryListArrayAll['fields'] = $salaryListArray['fields'];
-            }
-            else{
-
-                $salaryListArrayAll['data']= array_merge($salaryListArrayAll['data'],$salaryListArray['data']);
-            }
+		   }
         }
-		$countData = count ( $salaryListArrayAll ['data'] );
-		
-		// $salarySumListArray=array();e
-		// var_dump($salarySumListArray);
-		echo json_encode ( $salaryListArrayAll );
+		echo json_encode ( $josnArray );
 		exit ();
 	}
 	

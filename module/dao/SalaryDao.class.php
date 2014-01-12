@@ -210,9 +210,14 @@ class SalaryDao extends BaseDao {
 	}
 	// 个税统计BY孙瑞鹏
 	function searhSalaryTimeCount($where = null) {
+        $id = $_SESSION ['admin'] ['id'];
 		$sql = "select count(*) as cnt  from (SELECT emp.id  ,t.salaryTime  ,e_company company_name
 			FROM OA_salary s ,OA_employ emp,OA_salarytime t
 			WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
+			 AND convert( emp.e_company  using utf8) IN (
+            SELECT  company_name  FROM OA_company c ,OA_admin_company a
+           WHERE   c.id = a.companyId AND a.adminId = $id
+             )
 			GROUP BY e_company,t.salaryTime) m
             where 1=1";
 		if ($where != null) {
@@ -233,7 +238,9 @@ class SalaryDao extends BaseDao {
 	
 	// 个税类型BY孙瑞鹏
 	function searhSalaryTypeCount($where = null) {
-		$sql = "select count(*) as cnt  from OA_company where 1=1";
+        $id = $_SESSION ['admin'] ['id'];
+		$sql = "select count(*) as cnt   from OA_company c,OA_admin_company a  where 1=1
+  and a.companyId = c.id  and  a.adminId = $id";
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and company_name like '%{$where['companyName']}%' ";
@@ -302,11 +309,16 @@ class SalaryDao extends BaseDao {
 	}
 	// 计算个税合计BY孙瑞鹏
 	function searhGeshuiListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $id = $_SESSION ['admin'] ['id'];
 		$sql = "SELECT yi.id company_id,yi.salaryTime,yi.e_company company_name,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
 			(
 			SELECT emp.id,  t.salaryTime  ,e_company,IFNULL(SUM(s.per_daikoushui),0) su
 			FROM OA_salary s ,OA_employ emp,OA_salarytime t
 			WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
+			AND convert( emp.e_company  using utf8) IN (
+            SELECT  company_name  FROM OA_company c ,OA_admin_company a
+            WHERE   c.id = a.companyId AND a.adminId = $id
+             )
 			GROUP BY e_company,t.salaryTime
 			) yi
 			LEFT JOIN
@@ -353,7 +365,9 @@ class SalaryDao extends BaseDao {
 	
 	// 个税类型BY孙瑞鹏
 	function searhGeshuiTypePage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
-		$sql = "SELECT id,company_name,geshui_dateType FROM OA_company where 1=1";
+        $id = $_SESSION ['admin'] ['id'];
+		$sql = "SELECT c.id,c.company_name,c.geshui_dateType  from OA_company c,OA_admin_company a  where 1=1
+  and a.companyId = c.id  and  a.adminId = $id";
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and company_name like '%{$where['companyName']}%' ";
