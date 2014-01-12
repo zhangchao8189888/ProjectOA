@@ -110,7 +110,7 @@
                 ]
             });
             geshuiTypestore.on("beforeload",function(){
-                Ext.apply(geshuiTypestore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue()});
+                Ext.apply(geshuiTypestore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 
             });
             var onSelectChange = function(selModel, selections){

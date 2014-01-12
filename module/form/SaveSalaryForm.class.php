@@ -47,6 +47,7 @@ class SaveSalaryForm extends BaseForm
             case "toServiceComlist" :
                 return "service/serviceComList.php";
                 default:
+                    echo("e");
                 	return "salaryTime.php";
         }
     }

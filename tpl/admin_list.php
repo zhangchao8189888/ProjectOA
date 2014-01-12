@@ -67,15 +67,15 @@ $admin=$_SESSION['admin'];
               </tr>
               <tr>
                 <td height="25"><div align="right">管理员ID：</div></td>
-                <td class="bz_gray"><input id="byid" name="byid" class="text" value="" size="20" maxlength="20"  onfocus=""/><span style="size: 10px;color: red"> *</span></td>
+                <td class="bz_gray"><input id="byid" name="byid" class="text" value="" size="20" maxlength="20"  onfocus=""/><span style="font-size: 10px;color: red"> *</span></td>
               </tr>
               <tr>
                <tr>
                 <td height="25"><div align="right">管理员密码：</div></td>
-                <td class="bz_gray"><input id="pass" name="pass" class="text" value="" size="20" maxlength="20"  onfocus=""/><span style="size: 10px;color: red"> *</span></td>
+                <td class="bz_gray"><input id="pass" name="pass" class="text" value="" size="20" maxlength="20"  onfocus=""/><span style="font-size: 10px;color: red"> *</span></td>
               </tr>
                 <td><div align="right">管理员级别：</div></td>
-                <td class="bz_gray">
+                <td class="bz_gray"  style="font-size: 12px">
 				<label for="productionYes">
                   <input type="radio" name="user_type" value="1" id="user_type"/> 
                   系统管理员</label>

@@ -32,7 +32,7 @@ class BaseDao extends db {
 	function searchCompanyList($start = NULL, $limit = NULL, $sort = NULL, $where = '1=1') {
 		$id = $_SESSION ['admin'] ['id'];
 		$sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where
-  and a.companyId = c.id ";
+  and a.companyId = c.id  and  a.adminId = $id";
 		if ($sort) {
 			$sql .= " order by $sort";
 		}
@@ -43,6 +43,21 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return $result;
 	}
+    //所有BY孙瑞鹏
+    function searchCompanyListAll($start = NULL, $limit = NULL, $sort = NULL, $where = '1=1') {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where
+  and a.companyId = c.id ";
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        // echo $sql;
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
 	function getAdmin($loginName) {
 		$sql = "select *  from OA_admin where name='$loginName'";
 		$admin = $this->g_db_query ( $sql );
@@ -106,7 +121,9 @@ class BaseDao extends db {
 			$sql .= " salaryTime='{$salTime}' ";
 		} elseif ($searchType == 2) {
 			$sql .= " op_salaryTime>='{$salTime}' and op_salaryTime<='{$dateEnd}' ";
-		}
+		}elseif ($searchType == 3) {
+            $sql .= " salaryTime>='{$salTime}' and salaryTime<='{$dateEnd}' ";
+        }
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}

@@ -51,13 +51,13 @@ class FinanceDao extends BaseDao
      * @param null $where
      * @return bool|resource
      */
-    function searchCheckCompanyListPage($start=NULL,$limit=NULL,$sort=NULL,$where=null){
+    function searchCheckCompanyListPage($start=NULL,$limit=NULL,$sort=NULL,$where){
     	$sql="select * from oa_checkcompany where 1=1";
-    	if($where!=null){
+
     		if($where['companyName']!=""){
     			$sql.=" and company_name like '%{$where['companyName']}%' ";
     		}
-    	}
+
     	if($sort){
     		$sql.=" order by $sort";
     	}
@@ -68,7 +68,7 @@ class FinanceDao extends BaseDao
     	$result=$this->g_db_query($sql);
     	return $result;
     }
-    function searchCheckCompanyListCount($where=null){
+    function searchCheckCompanyListCount($where){
     	$sql="select count(*) as cnt from oa_checkcompany where 1=1";
     	if($where!=null){
     		if($where['companyName']!=""){

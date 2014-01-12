@@ -68,8 +68,8 @@
                         disabled: true,
                         handler : function(src) {
                             var model = salTimeListGrid.getSelectionModel();
-                            var sel=model.getLastSelected();
-                            checkSalWin(sel.data.company_name,sel.data.salaryTime);
+                            var sel=model.getSelection();
+                            checkSalWin(sel);
                         },
                         text : '详细个税信息',
                         iconCls : 'chakan'
@@ -111,7 +111,7 @@
                 ]
             });
             geshuiListstore.on("beforeload",function(){
-                Ext.apply(geshuiListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue()});
+                Ext.apply(geshuiListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 
             });
             var onSelectChange = function(selModel, selections){
@@ -142,7 +142,7 @@
             });
 
 //通过ajax获取表头已经表格数据
-            function checkSalWin(timeId,time) {
+            function checkSalWin(sel) {
                 var p = Ext.create("Ext.grid.Panel",{
                     id:"salTimeListP",
                     title:"导航",
@@ -185,13 +185,18 @@
                 });
                 var title="";
                 var url = "index.php?action=SaveSalary&mode=searchGeshuiByIdJosn";
-
+                var times = [];
+                var names = [];
+                for(var i = 0;i < sel.length ;i++){
+                    times.push(sel[i].data.salaryTime);
+                    names.push(sel[i].data.company_name);
+                }
                 Ext.Ajax.request({
                     url: url,  //从json文件中读取数据，也可以从其他地方获取数据
                     method : 'POST',
                     params: {
-                        timeId : timeId,
-                        time:time
+                        timeId : Ext.JSON.encode(names),
+                        time:Ext.JSON.encode(times)
                     },
                     success : function(response) {
                         //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode

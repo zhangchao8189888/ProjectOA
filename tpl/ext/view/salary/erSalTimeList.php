@@ -157,7 +157,7 @@ Ext.onReady(function(){
     });
     erSalTimeListstore.on("beforeload",function(){
 
-        Ext.apply(erSalTimeListstore.proxy.extraParams, {companyName:Ext.getCmp("comname").getValue()});
+        Ext.apply(erSalTimeListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 
     });
     var onSelectChange = function(selModel, selections){

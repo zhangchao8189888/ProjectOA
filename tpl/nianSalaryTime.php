@@ -125,7 +125,7 @@ $admin = $_SESSION ['admin'];
               });
               nianSalaryListStore.on("beforeload",function(){
 
-                  Ext.apply(nianSalaryListStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue()});
+                  Ext.apply(nianSalaryListStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 
               });
               var onSelectChange = function(selModel, selections){

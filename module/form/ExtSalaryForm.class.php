@@ -22,7 +22,7 @@ class ExtSalaryForm extends BaseForm {
 			case "toSalTimeList" :
 				return "ext/view/salary/salTimeList.php";
 			case "tosearhSalaryNianTimeList" :
-				return "小.php";
+				return "nianSalaryTime.php";
 			default :
 				return "BaseConfig.php";
 		}

@@ -98,33 +98,41 @@ var geshuiTypestore = Ext.create('Ext.data.Store', {
     }]
 });
 
-// FIXME 审核公司数据源
+/**
+ *审核公司数据源
+ */
 var checkCompanyStores = Ext.create('Ext.data.Store', {
-    pageSize : 50,
-    model : 'oa.common.checkcompany.list',
-    remoteSort : true,
-    proxy : {
-        type : 'ajax',
-        actionMethods : {
-            create : 'POST',
-            read : 'POST',
-            update : 'POST',
-            destroy : 'POST'
+    pageSize: 50,
+    model: 'oa.common.checkcompany.list',
+    remoteSort: true,
+    proxy: {
+        type: 'ajax',
+        actionMethods: {
+            create: 'POST',
+            read: 'POST',
+            update: 'POST',
+            destroy: 'POST'
         },
-        url : 'index.php?action=ExtFinance&mode=searchcompanyListJosn',
+        url: 'index.php?action=ExtFinance&mode=searchcompanyListJosn',
 
-        reader : {
-            root : 'items',
-            totalProperty : 'total'
+        reader: {
+            root: 'items',
+            totalProperty: 'total'
         },
-        simpleSortMode : true
+        simpleSortMode: true
     },
-    sorters : [ {
-        property : 'id',
-        direction : 'DESC'
-    } ]
+    sorters: [
+        {
+            property: 'id',
+            direction: 'DESC'
+        }
+    ]
 });
 
+/**
+ * 工资查询store
+ * @type {Ext.data.Store}
+ */
 var salTimeListstore = Ext.create('Ext.data.Store', {
     // 分页大小
     pageSize: 50,

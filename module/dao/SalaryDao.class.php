@@ -249,8 +249,15 @@ class SalaryDao extends BaseDao {
 		$row = mysql_fetch_assoc ( $result );
 		return $row ['cnt'];
 	}
-	function searhSalaryTimeListCount($where = null) {
-		$sql = "select count(*) as cnt  from OA_salarytime st,OA_company c where  st.companyId=c.id  ";
+
+    /**
+     * 工资查询 dao
+     * @param null $where
+     * @return int
+     */
+    function searhSalaryTimeListCount($where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+		$sql = "select count(*) as cnt  from OA_salarytime st,OA_company c,OA_admin_company a where  a.adminId=$id and a.companyId = c.id and st.companyId=c.id  ";
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
@@ -270,7 +277,8 @@ class SalaryDao extends BaseDao {
 		return $row ['cnt'];
 	}
 	function searhSalaryTimeListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
-		$sql = "select st.*,c.company_name from OA_salarytime st,OA_company c where  st.companyId=c.id  ";
+        $id = $_SESSION ['admin'] ['id'];
+		$sql = "select st.*,c.company_name from OA_salarytime st,OA_company c,OA_admin_company a where a.adminId=$id and a.companyId = c.id and st.companyId=c.id  ";
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
@@ -365,7 +373,9 @@ class SalaryDao extends BaseDao {
 		return $list;
 	}
 	function searhErSalaryTimeListCount($where = null) {
-		$sql = "select count(*) as cnt  from OA_salarytime_other st,OA_company c where  st.companyId=c.id  and salaryType=" . ER_SALARY_TIME_TYPE;
+        $id = $_SESSION ['admin'] ['id'];
+
+		$sql = "select count(*) as cnt  from OA_salarytime_other st,OA_company c,OA_admin_company a where  a.adminId=$id and a.companyId = c.id and st.companyId=c.id   and salaryType=" . ER_SALARY_TIME_TYPE;
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
@@ -385,7 +395,8 @@ class SalaryDao extends BaseDao {
 		return $row ['cnt'];
 	}
 	function searhErSalaryTimeListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
-		$sql = "select st.*,c.company_name from OA_salarytime_other st,OA_company c where  st.companyId=c.id  and salaryType=" . ER_SALARY_TIME_TYPE;
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select st.*,c.company_name from OA_salarytime_other st,OA_company c,OA_admin_company a where  a.adminId=$id and a.companyId = c.id and st.companyId=c.id  and salaryType=" . ER_SALARY_TIME_TYPE;
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
@@ -484,7 +495,8 @@ class SalaryDao extends BaseDao {
 	
 	// 年终奖计算分页功能
 	function searhSalaryNianTimeListCount($where = null) {
-		$sql = "select count(*) as cnt   from OA_salarytime_other st,OA_company c where  st.companyId=c.id  and salaryType=" . SALARY_TIME_TYPE;
+        $id = $_SESSION ['admin'] ['id'];
+		$sql = "select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = $id and salaryType=" . SALARY_TIME_TYPE;
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
@@ -504,7 +516,8 @@ class SalaryDao extends BaseDao {
 		return $row ['cnt'];
 	}
 	function searhSalaryNianTimeListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
-		$sql = "select st.*,c.company_name from OA_salarytime_other st,OA_company c where  st.companyId=c.id  and salaryType=" . SALARY_TIME_TYPE;
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select st.*,c.company_name from OA_salarytime_other st,OA_company c  ,OA_admin_company a where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = $id and salaryType=" . SALARY_TIME_TYPE;
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";

@@ -305,7 +305,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
   		$where.=" and company_name like '%$key%'";
   	}
   	$sum =$this->objDao->g_db_count("OA_company","*",$where);
-  	$salaryTimeList=$this->objDao->searchCompanyList($start,$limit,$sorts." ".$dir,$where);
+  	$salaryTimeList=$this->objDao->searchCompanyListAll($start,$limit,$sorts." ".$dir,$where);
   	$comArray=array();
   	$comArray['total']=$sum;
   	$i=0;

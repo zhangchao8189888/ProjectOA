@@ -162,7 +162,7 @@
             });
             salTimeListstore.on("beforeload",function(){
 
-                Ext.apply(salTimeListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue()});
+                Ext.apply(salTimeListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 
             });
             var onSelectChange = function(selModel, selections){

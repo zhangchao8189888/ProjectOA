@@ -54,7 +54,7 @@ class ExtFinanceAction extends BaseAction {
 		$limit = $_REQUEST ['limit'];
 		$sorts = $_REQUEST ['sort'];
 		$dir = $_REQUEST ['dir'];
-		$companyName = $_REQUEST ['companyName'];
+		$companyName = $_REQUEST ['company_name'];
 		if (! $start) {
 			$start = 0;
 		}
