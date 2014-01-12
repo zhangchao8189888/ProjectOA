@@ -29,6 +29,8 @@ class ExtFinanceAction extends BaseAction {
 	}
 	function controller() {
 		switch ($this->mode) {
+            case "toFinaceFirst":
+                $this->toFinaceFirst ();
 			case "searchcompanyListJosn" :
 				$this->searchcompanyListJosn ();
 			default :
@@ -36,13 +38,16 @@ class ExtFinanceAction extends BaseAction {
 				break;
 		}
 	}
+
 	function toSalaryTongji() {
 		echo "工资统计";
 	}
 	function modelInput() {
 		echo "input null";
 	}
-	
+	function toFinaceFirst () {
+        $this->mode = "toFinaceFirst";
+    }
 	// FIXME 列表所有审核公司
 	/**
 	 * 查询所有未审核公司
