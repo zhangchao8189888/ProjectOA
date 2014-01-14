@@ -54,6 +54,39 @@
                 tbar: [
                     {
                         xtype: 'button',
+                        id: 'del',
+                        text: '取消管理',
+                        iconCls: 'chakan',
+                        handler: function (src) {
+                            var record = Ext.getCmp('manageComlist').getSelectionModel().getSelection();
+                            // getSelection()
+                            //var records = grid.getSelectionModel().getSelection();
+                            if (record) {
+                                var itcIds = [];
+                                //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
+                                for (var i = 0; i < record.length; i++) {
+                                    itcIds.push(record[i].data.id);
+                                }
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=ExtFinance&mode=cancelManage',
+                                    method: 'post',
+                                    params: {
+                                        ids: Ext.JSON.encode(itcIds)
+                                    },
+                                    success: function (response) {
+                                        alert("操作成功！");
+                                        location.reload();
+                                    }
+                                });
+
+                            } else {
+                                alert('请选择一条记录');
+                            }
+
+                        }
+                    },
+                    {
+                        xtype: 'button',
                         id: 'cClear',
                         handler: function (src) {
                             comListStore.load();
@@ -81,30 +114,11 @@
                 ]
             });
             getCaiwuManageCompanyListStore.on("beforeload", function () {
-
-                Ext.apply(getCaiwuManageCompanyListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue()});
-
+                Ext.apply(getCaiwuManageCompanyListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opComname").getValue()});
             });
             opManegeGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
                 Ext.getCmp("cClear").setDisabled(selections.length === 0);
             }, this);
-            //通过ajax获取表头以及表格数据
-            function messageClear(id) {
-                var title="";
-                var url = "index.php?action=ExtFinance&mode=companyClear";
-
-                Ext.Ajax.request({
-                    url: url,  //从json文件中读取数据，也可以从其他地方获取数据
-                    method : 'POST',
-                    params: {
-                        comid : id
-                    },
-                    success : function(response) {
-                        alert("审核通过！");
-                        location.reload();
-                    }
-                });
-            }
             getCaiwuManageCompanyListStore.loadPage(1);
             function newWin(text) {
                 var win = Ext.create('Ext.window.Window', {
@@ -207,7 +221,7 @@
                                     var text = response.responseText;
                                     // process server response here
                                     newWin(text);
-
+                                    location.reload();
                                 }
                             });
 

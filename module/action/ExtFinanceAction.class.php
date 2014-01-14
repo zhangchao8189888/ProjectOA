@@ -41,6 +41,9 @@ class ExtFinanceAction extends BaseAction {
             case "searchCaiwuManageComListJosn" :
                 $this->searchCaiwuManageComListJosn ();
                 break;
+            case "cancelManage":
+                $this->cancelManage();
+                break;
 			default :
 				$this->modelInput ();
 				break;
@@ -111,6 +114,19 @@ class ExtFinanceAction extends BaseAction {
         echo($company['company_address']);
         $this->objDao->companyClear($id,$company);
         exit();
+    }
+
+    /**
+     * Extfinance action 取消管理公司
+     */
+    function cancelManage(){
+        $companylist    =   $_POST["ids"];
+        $this->objDao=new BaseDao();
+        $arr=json_decode($companylist);
+        foreach($arr as $key=>$value){
+            $this->objDao->cancelManage($value);
+        }
+        exit;
     }
 
     /**

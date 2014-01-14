@@ -5,7 +5,7 @@ class BaseDao extends db {
 		parent::db ();
 	}
 	function addCompany($company) {
-		$sql = "insert into oa_checkcompany (company_name) values('{$company['name']}')";
+		$sql = "insert into OA_checkcompany (company_name) values('{$company['name']}')";
 		$result = $this->g_db_query ( $sql );
 		if ($result) {
 			return $this->g_db_last_insert_id ();
@@ -152,6 +152,24 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+
+    /**
+     * 取消公司管理
+     * @param $ids
+     * @return bool|int
+     */
+    function cancelManage($companyid){
+        $userid = $_SESSION ['admin'] ['id'];
+        $sql = "DELETE from OA_admin_company where adminId=$userid and companyId=$companyid";
+        $result = $this->g_db_query ( $sql );
+        echo($sql);
+        if ($result) {
+            return $this->g_db_last_insert_id ();
+        } else {
+            echo("x");
+            return false;
+        }
+    }
 	/*
 	 * function getOpCompanyOperByComId(){ }
 	 */

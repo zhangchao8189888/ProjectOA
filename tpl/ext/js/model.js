@@ -122,3 +122,13 @@ Ext.define('oa.common.caiwuManageCom.list',{
         {name: 'salaryType', type: 'int'}
     ]
 });
+
+/**
+ * 客服首頁model
+ */
+Ext.define('oa.common.service.list', {
+    extend: 'Ext.data.Model',
+    fields: ['salDate', 'op_salaryTime', 'company_name','companyId',
+        'salStat','salTimeid','fa_state','salNianStat',
+        'salOrStat','fastat','opTime']
+});

@@ -173,7 +173,7 @@ $admin = $_SESSION ['admin'];
             	  function checkSalWin(timeId,time) {
                       //加载数据遮罩
                   	var mk=new Ext.LoadMask(Ext.getBody(),{
-                  	msg:'玩命加载数据中，请稍候！',removeMask:true
+                  	msg:'加载数据中，请稍候！',removeMask:true
                   	});
                   	mk.show();
                   var p = Ext.create("Ext.grid.Panel",{

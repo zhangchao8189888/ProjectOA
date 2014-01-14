@@ -22,7 +22,8 @@ class ServiceForm extends BaseForm {
 	function getTpl($mode = false) {
 		switch ($mode) {
 			case "serviceFrist" :
-				return "ext/ServiceFirst.php";
+//                return "ext/ServiceFirst.php";
+				return "ext/view/Service/ServiceFirst.php";
 			case "toOpCompanyList" :
 				return "service/serviceComList.php";
 			case "toEmlist" :

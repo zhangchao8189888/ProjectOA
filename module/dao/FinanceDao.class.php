@@ -52,7 +52,7 @@ class FinanceDao extends BaseDao
      * @return bool|resource
      */
     function searchCheckCompanyListPage($start=NULL,$limit=NULL,$sort=NULL,$where){
-    	$sql="select * from oa_checkcompany where 1=1";
+    	$sql="select * from OA_checkcompany where 1=1";
 
     		if($where['companyName']!=""){
     			$sql.=" and company_name like '%{$where['companyName']}%' ";
@@ -69,7 +69,7 @@ class FinanceDao extends BaseDao
     	return $result;
     }
     function searchCheckCompanyListCount($where){
-    	$sql="select count(*) as cnt from oa_checkcompany where 1=1";
+    	$sql="select count(*) as cnt from OA_checkcompany where 1=1";
     	if($where!=null){
     		if($where['companyName']!=""){
     			$sql.=" and company_name like '%{$where['companyName']}%' ";
@@ -83,17 +83,16 @@ class FinanceDao extends BaseDao
     	return $row['cnt'];
     }
     function getCheckCompanyById($comId) {
-        $sql = "select *  from oa_checkcompany where  id=$comId";
+        $sql = "select *  from OA_checkcompany where  id=$comId";
         $result = $this->g_db_query ( $sql );
         return mysql_fetch_array ( $result );
     }
     function companyClear($id,$company){
 
-        $sql = "insert into oa_company (company_name,company_address) values('{$company['company_name']}','{$company['company_address']}')";
+        $sql = "insert into OA_company (company_name,company_address) values('{$company['company_name']}','{$company['company_address']}')";
         $result = $this->g_db_query ( $sql );
-        echo($sql);
         if ($result) {
-            $sql="delete from oa_checkcompany where id =$id";
+            $sql="delete from OA_checkcompany where id =$id";
             $result = $this->g_db_query ( $sql );
             if ($result) {
                 return $this->g_db_last_insert_id ();
