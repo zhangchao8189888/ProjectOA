@@ -102,14 +102,6 @@ Ext.define('oa.common.otherSalTime.list',{
 Ext.define('oa.common.geshui.detail.list',{
     extend: 'Ext.data.Model',
     fields: [
-    /**
-     *   {text: "个人编号", width: 120, dataIndex: 'company_id', sortable: true},
-     {text: "姓名", flex: 200, dataIndex: 'ename', sortable: true},
-     {text: "身份证号", flex: 200, dataIndex: 'e_num', sortable: true},
-     {text: "个税日期", flex: 200, dataIndex: 'salaryTime', sortable: true},
-     {text: "所在单位", width: 120, dataIndex: 'companyname', sortable: true},
-     {text: "个税合计s", flex: 200, dataIndex: 'geshuiSum', sortable: true}
-     */
         {name: 'company_id', type: 'int'},
         {name: 'ename', type: 'string'},
         {name: 'e_num', type: 'string'},
@@ -129,4 +121,14 @@ Ext.define('oa.common.caiwuManageCom.list',{
         {name: 'salary_state', type: 'int'},
         {name: 'salaryType', type: 'int'}
     ]
+});
+
+/**
+ * 客服首頁model
+ */
+Ext.define('oa.common.service.list', {
+    extend: 'Ext.data.Model',
+    fields: ['salDate', 'op_salaryTime', 'company_name','companyId',
+        'salStat','salTimeid','fa_state','salNianStat',
+        'salOrStat','fastat','opTime']
 });

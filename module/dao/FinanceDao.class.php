@@ -91,7 +91,6 @@ class FinanceDao extends BaseDao
 
         $sql = "insert into OA_company (company_name,company_address) values('{$company['company_name']}','{$company['company_address']}')";
         $result = $this->g_db_query ( $sql );
-        echo($sql);
         if ($result) {
             $sql="delete from OA_checkcompany where id =$id";
             $result = $this->g_db_query ( $sql );

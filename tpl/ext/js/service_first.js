@@ -358,8 +358,20 @@ Ext.require([
                 title: '客服管理公司首页',
                 iconCls: 'icon-grid',
                 margin: '0 0 20 0',
-                renderTo: 'tableList'
-            });
+                renderTo: 'tableList',
+                viewConfig: {
+                    id: 'gv',
+                    trackOver: false,
+                    stripeRows: false
+                },
+                bbar: Ext.create('Ext.PagingToolbar', {
+                    store: salTimeListstore,
+                    displayInfo: true,
+                    displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                    emptyMsg: "没有数据"
+                }),
+                tbar: []
+             });
              ////////////////////////////////////////////////////////////////////////////////////////
              // 定义button
              ////////////////////////////////////////////////////////////////////////////////////////
@@ -457,7 +469,7 @@ Ext.require([
                      xtype : 'button',  
                      id : 'bt_deleteDocument',  
                      handler : function(src) {  
-                      var record = Ext.getCmp('comlist').getSelectionModel().getSelection(); 
+                      var record = Ext.getCmp('comlist').getSelectionModel().getSelection();
                       // getSelection()
                       //var records = grid.getSelectionModel().getSelection();
                       if (record) {
@@ -486,7 +498,9 @@ Ext.require([
                      },  
                      text : '添加管理',  
                      iconCls : 'shanchu'  
-                    }, '公司查询', {
+                    },
+
+                     '公司查询', {
                      id:'comname',  
                      xtype : 'trigger',  
                      triggerClass : 'x-form-search-trigger', 
@@ -504,13 +518,44 @@ Ext.require([
                   
                      }  
                   
-                    }] 
+                    }, {
+                         xtype: 'button',
+                         id: 'del',
+                         text: '取消管理',
+                         iconCls: 'chakan',
+                         handler: function (src) {
+                             var record = Ext.getCmp('comlist').getSelectionModel().getSelection();
+                             // getSelection()
+                             //var records = grid.getSelectionModel().getSelection();
+                             if (record) {
+                                 var itcIds = [];
+                                 //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
+                                 for (var i = 0; i < record.length; i++) {
+                                     itcIds.push(record[i].data.id);
+                                 }
+                                 Ext.Ajax.request({
+                                     url: 'index.php?action=ExtFinance&mode=cancelManage',
+                                     method: 'post',
+                                     params: {
+                                         ids: Ext.JSON.encode(itcIds)
+                                     },
+                                     success: function (response) {
+                                         alert("取消成功！");
+                                         location.reload();
+                                     }
+                                 });
+
+                             } else {
+                                 alert('请选择一条记录');
+                             }
+
+                         }
+                     }
+                 ]
              });
              comListStore.on("beforeload",function(){ 
-               	 
-               	 Ext.apply(comListStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue()}); 
-               	  
-               	 });  
+               	 Ext.apply(comListStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
+               	 });
             
          	// Create a window
           var window = new Ext.Window({

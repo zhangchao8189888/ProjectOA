@@ -14,8 +14,6 @@
 <script language="javascript" type="text/javascript"
 	src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
-        src="tpl/ext/js/exportExcel.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript"
 	src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
 	src="tpl/ext/js/data.js" charset="utf-8"></script>

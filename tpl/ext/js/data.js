@@ -287,3 +287,18 @@ var getCaiwuManageCompanyListStore = Ext.create('Ext.data.Store', {
         direction: 'DESC'
     }]
 });
+
+/**
+ * 客服首页数据源
+ * @type {Ext.data.Store}
+ */
+var serviceManagestore = Ext.create('Ext.data.Store', {
+    model: 'oa.common.service.list',
+    proxy: {
+        type: 'ajax',
+        url : 'index.php?action=ExtService&mode=getOtherAdminComListJosn',
+        reader: {
+            type: 'json'
+        }
+    }
+});

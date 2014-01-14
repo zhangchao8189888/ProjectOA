@@ -8,7 +8,7 @@ $admin=$_SESSION['admin'];
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title></title>
+    <title>修改密码</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
    <link href="common/css/validator.css" rel="stylesheet" type="text/css" />
@@ -41,7 +41,7 @@ $admin=$_SESSION['admin'];
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
             <!--导航栏-->
-            <div class="navigate">{$navigate}</div>
+            <div class="navigate">修改密码</div>
             <div class="form">
                <div id="span_msg"><font color="red"><?php if($errorMsg)echo $errorMsg?></font>
 			<font color="green"><?php if($succ)echo $succ?></font></div>
