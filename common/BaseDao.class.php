@@ -5,7 +5,7 @@ class BaseDao extends db {
 		parent::db ();
 	}
 	function addCompany($company) {
-		$sql = "insert into oa_checkcompany (company_name) values('{$company['name']}')";
+		$sql = "insert into OA_checkcompany (company_name) values('{$company['name']}')";
 		$result = $this->g_db_query ( $sql );
 		if ($result) {
 			return $this->g_db_last_insert_id ();

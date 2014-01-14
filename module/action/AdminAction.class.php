@@ -300,6 +300,3 @@ class AdminAction extends BaseAction{
 $objModel = new AdminAction($actionPath);
 $objModel->dispatcher();
 
-
-
-?>

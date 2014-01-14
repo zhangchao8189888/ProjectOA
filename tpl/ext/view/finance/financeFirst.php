@@ -54,6 +54,41 @@
                 tbar: [
                     {
                         xtype: 'button',
+                        id: 'del',
+                        handler: function (src) {
+                            var record = Ext.getCmp('comlist').getSelectionModel().getSelection();
+                            // getSelection()
+                            //var records = grid.getSelectionModel().getSelection();
+                            if (record) {
+                                var itcIds = [];
+                                //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
+                                for (var i = 0; i < record.length; i++) {
+                                    itcIds.push(record[i].data.id);
+                                }
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=Service&mode=addOpCompanyListJson',
+                                    method: 'post',
+                                    params: {
+                                        ids: Ext.JSON.encode(itcIds)
+                                    },
+                                    success: function (response) {
+                                        var text = response.responseText;
+                                        // process server response here
+                                        newWin(text);
+
+                                    }
+                                });
+
+                            } else {
+                                alert('请选择一条记录');
+                            }
+
+                        },
+                        text: '取消管理',
+                        iconCls: 'chakan'
+                    },
+                    {
+                        xtype: 'button',
                         id: 'cClear',
                         handler: function (src) {
                             comListStore.load();

@@ -62,77 +62,37 @@
 
                 tbar : [
                     {
-                        text: "导出到excel",
-                        style: {
-                            marginRight: '20px'
-                        },
-                        handler: function () {
-                            var vExportContent = salTimeListstore.getExcelXml(); //获取数据
-                            if (Ext.isIE9||Ext.isIE8 || Ext.isIE6 || Ext.isIE7 || Ext.isSafari
-                                || Ext.isSafari2 || Ext.isSafari3||Ext.isChrome||Ext.firefoxVersion) { //判断浏览器
-                                var fd = Ext.get('frmDummy');
-                                if (!fd) {
-                                    fd = Ext.DomHelper.append(
-                                        Ext.getBody(), {
-                                            tag: 'form',
-                                            method: 'post',
-                                            id: 'frmDummy',
-                                            action: 'exportUrl.php',
-                                            target: '_blank',
-                                            name: 'frmDummy',
-                                            cls: 'x-hidden',
-                                            cn: [
-                                                {
-                                                    tag: 'input',
-                                                    name: 'exportContent',
-                                                    id: 'exportContent',
-                                                    type: 'hidden'
-                                                }
-                                            ]
-                                        }, true);
-
+                        xtype: 'button',
+                        id: 'bt_deleteDocument',
+                        handler: function (src) {
+                            var record = Ext.getCmp('comlist').getSelectionModel().getSelection();
+                            // getSelection()
+                            //var records = grid.getSelectionModel().getSelection();
+                            if (record) {
+                                var itcIds = [];
+                                //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
+                                for (var i = 0; i < record.length; i++) {
+                                    itcIds.push(record[i].data.id);
                                 }
-                                fd.child('#exportContent').set({
-                                    value: vExportContent
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=Service&mode=addOpCompanyListJson',
+                                    method: 'post',
+                                    params: {
+                                        ids: Ext.JSON.encode(itcIds)
+                                    },
+                                    success: function (response) {
+                                        var text = response.responseText;
+                                        // process server response here
+                                        newWin(text);
+
+                                    }
                                 });
-                                fd.dom.submit();
+
                             } else {
-                                document.location = 'data:application/vnd.ms-excel;base64,' + Base64
-                                    .encode(vExportContent);
+                                alert('请选择一条记录');
                             }
-                        }},
-                    {
-                    xtype : 'button',
-                    id : 'bt_deleteDocument',
-                    handler : function(src) {
-                        var record = Ext.getCmp('comlist').getSelectionModel().getSelection();
-                        // getSelection()
-                        //var records = grid.getSelectionModel().getSelection();
-                        if (record) {
-                            var itcIds = [];
-                            //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
-                            for(var i=0;i<record.length;i++){
-                                itcIds.push(record[i].data.id);
-                            }
-                            Ext.Ajax.request({
-                                url: 'index.php?action=Service&mode=addOpCompanyListJson',
-                                method: 'post',
-                                params: {
-                                    ids : Ext.JSON.encode(itcIds)
-                                },
-                                success: function(response){
-                                    var text = response.responseText;
-                                    // process server response here
-                                    newWin(text);
 
-                                }
-                            });
-
-                        } else {
-                            alert('请选择一条记录');
-                        }
-
-                    },
+                        },
                     text : '删除',
                     iconCls : 'shanchu'
                     },
