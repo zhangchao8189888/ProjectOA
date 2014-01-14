@@ -74,7 +74,7 @@
                                         ids: Ext.JSON.encode(itcIds)
                                     },
                                     success: function (response) {
-                                        alert("success");
+                                        alert("操作成功！");
                                         location.reload();
                                     }
                                 });
@@ -114,7 +114,7 @@
                 ]
             });
             getCaiwuManageCompanyListStore.on("beforeload", function () {
-                Ext.apply(getCaiwuManageCompanyListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("comname").getValue()});
+                Ext.apply(getCaiwuManageCompanyListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opComname").getValue()});
             });
             opManegeGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
                 Ext.getCmp("cClear").setDisabled(selections.length === 0);
