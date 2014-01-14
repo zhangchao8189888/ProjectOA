@@ -10,7 +10,7 @@ require 'tools/php-excel.class.php';
         array('Schwarz', 'Oliver'),
         array('Test', 'Peter')
         );*/
-
+//var_dump($salaryList);
 // generate file (constructor parameters are optional)
 $xls = new Excel_XML('UTF-8', false, 'My Test Sheet');
 $xls->addArray($salaryList);

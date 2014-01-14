@@ -447,7 +447,7 @@ class SaveSalaryAction extends BaseAction {
         $josnArray = array ();
        for($h=0;$h<(count($salaryTimeId));$h++){
 
-        $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h] );
+           $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h] );
            while ( $row = mysql_fetch_array ( $salaryList ) ) {
                $josnArray ['items'] [$i] ['company_id'] = $row ['company_id'];
                $josnArray ['items'] [$i] ['ename'] = $row ['ename'];
@@ -458,6 +458,31 @@ class SaveSalaryAction extends BaseAction {
 			$i ++;
 		   }
         }
+
+        //导出
+        $hang=0;
+        $salaryListExcel=array();
+        $salaryListExcel[$hang][0]="个人所得税";
+        $salaryListExcel[$hang][1]="姓名";
+        $salaryListExcel[$hang][2]="身份证号";
+        $salaryListExcel[$hang][3]="个税日期";
+        $salaryListExcel[$hang][4]="所在单位";
+        $salaryListExcel[$hang][5]="个税合计";
+        $hang++;
+
+         foreach ($josnArray['items'] as $value) {
+             $salaryListExcel[$hang][0]=$value['company_id'];
+             $salaryListExcel[$hang][1]=$value['ename'];
+             $salaryListExcel[$hang][2]=$value['e_num'];
+             $salaryListExcel[$hang][3]=$value['salaryTime'];
+             $salaryListExcel[$hang][4]=$value['companyname'];
+             $salaryListExcel[$hang][5]=$value['geshuiSum'];
+        $hang++;
+
+         }
+       // var_dump($salaryListExcel);
+        session_start();
+        $_SESSION['excelListGeshui']=$salaryListExcel;
 		echo json_encode ( $josnArray );
 		exit ();
 	}

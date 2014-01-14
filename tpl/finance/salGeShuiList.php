@@ -21,11 +21,11 @@ $_SESSION['excelList']=$excelList;*/
         <script language="javascript" type="text/javascript" src="common/js/jquery.checkbox.js" charset="utf-8"></script>
         <script language="javascript" type="text/javascript">
 	  function a(){
-	  $("#iform").attr("action","/zhongqiOA/import.php");
+	  $("#iform").attr("action","import.php");
 	  $("#iform").submit();
 	  }
 	  function b(){
-	  $("#iform").attr("action","/zhongqiOA/import.php");
+	  $("#iform").attr("action","import.php");
 	  $("#iform").submit();
 	  }
 	  function save(ofname){
@@ -126,7 +126,7 @@ $_SESSION['excelList']=$excelList;*/
 				    echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value[2].'</td>';
 				    echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value[3].'</td>';
 				    echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value[4].'</td>';
-			echo "</tr>";	
+			        echo "</tr>";
 			$hang++;
            }
          }

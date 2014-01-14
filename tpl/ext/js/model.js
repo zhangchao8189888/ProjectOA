@@ -49,7 +49,7 @@ Ext.define('oa.common.checkcompany.list',{
     fields: [
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
-        {name: 'company_address', type: 'string'},
+        {name: 'company_address', type: 'string'}
     ]
 });
 
@@ -102,14 +102,6 @@ Ext.define('oa.common.otherSalTime.list',{
 Ext.define('oa.common.geshui.detail.list',{
     extend: 'Ext.data.Model',
     fields: [
-    /**
-     *   {text: "个人编号", width: 120, dataIndex: 'company_id', sortable: true},
-     {text: "姓名", flex: 200, dataIndex: 'ename', sortable: true},
-     {text: "身份证号", flex: 200, dataIndex: 'e_num', sortable: true},
-     {text: "个税日期", flex: 200, dataIndex: 'salaryTime', sortable: true},
-     {text: "所在单位", width: 120, dataIndex: 'companyname', sortable: true},
-     {text: "个税合计s", flex: 200, dataIndex: 'geshuiSum', sortable: true}
-     */
         {name: 'company_id', type: 'int'},
         {name: 'ename', type: 'string'},
         {name: 'e_num', type: 'string'},

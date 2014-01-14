@@ -12,18 +12,14 @@
 
     <script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="ToExcel/export-all.js" ></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
      <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
     <script type="text/javascript">
-    Ext.Loader.setConfig({ enabled: true });
-    Ext.Loader.setPath('Ext.ux.exporter', 'ToExcel/exporter');
     Ext.require([
             'Ext.grid.*',
             'Ext.toolbar.Paging',
             'Ext.data.*',
-        'Ext.ux.exporter.Exporter'
 
     ]);
         Ext.onReady(function(){
@@ -165,16 +161,16 @@
                     {text: "所在单位", width: 120, dataIndex: 'companyname', sortable: true},
                     {text: "个税合计", flex: 200, dataIndex: 'geshuiSum', sortable: true}
                 ], //注意此行代码，至关重要
-                dockedItems: [
+                tbar : [
                     {
-                        xtype: 'toolbar',
-                        dock: 'right',
-                        items: [
-                            Ext.create('Ext.ux.exporter.Button', {
-                                component: Ext.getCmp("configGrid"),
-                                text: "导出 Excel"
-                            })
-                        ]
+                        xtype : 'button',
+                        id : 'toExcel',
+                        handler : function() {
+                            $("#iform").attr("action","importGeshui.php");
+                            $("#iform").submit();
+                        },
+                        text : '导出',
+                        iconCls : 'toExcel'
                     }
                 ],
                 //displayInfo : true,
@@ -256,5 +252,7 @@
         <div id="demo"></div>
     </div>
 </div>
+<form id="iform" action="" method="post">
+</form>
 </body>
 </html>
