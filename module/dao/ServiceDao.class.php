@@ -97,16 +97,17 @@ class ServiceDao extends BaseDao
      */
     function searhManageComPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "select c.id,c.company_name from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
-  and a.companyId = c.id  and  a.adminId = $id";
-
+        $sql = "SELECT c.id,c.company_name from OA_company c,OA_admin_company a  where 1=1
+  and a.companyId = c.id and  a.adminId = $id";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
             }
             if ($where ['searchType'] != "") {
                 if ($where ['searchType'] == 1) {
-                    $sql .= " and b.salaryTime='{$where ['$salTime']}' ";
+                    if($where ['$salTime']!=""){
+                        $sql .= " and b.salaryTime='{$where ['$salTime']}' ";
+                    }
                 } elseif ($where ['searchType'] == 2) {
                     $sql .= " b.op_salaryTime>='{$where ['$salTime']}' and b.op_salaryTime<='{$where ['$dateEnd']}' ";
                 }elseif ($where ['searchType'] == 3) {

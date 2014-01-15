@@ -221,7 +221,6 @@
                                     var text = response.responseText;
                                     // process server response here
                                     newWin(text);
-                                    location.reload();
                                 }
                             });
 

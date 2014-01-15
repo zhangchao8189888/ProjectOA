@@ -64,8 +64,7 @@ class BaseDao extends db {
     //所有BY孙瑞鹏
     function searchCompanyListAll($start = NULL, $limit = NULL, $sort = NULL, $where = '1=1') {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where
-  and a.companyId = c.id ";
+        $sql = "select c.id,c.company_name from OA_company c  where $where ";
         if ($sort) {
             $sql .= " order by $sort";
         }

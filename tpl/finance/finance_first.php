@@ -117,8 +117,8 @@ $financeList=$form_data['financeList'];
 
            <table id="tab_list" class="table_list" cellpadding="2" cellspacing="1" style="table-layout:fixed;">
   <tr>          
-                <td align="left"  style="word-wrap:break-word;">序号</td>
-                 <td align="left"  style="word-wrap:break-word;">单位</td>
+                <td align="left"  style="width:30;word-wrap:break-word;">序号</td>
+                <td align="left"  style="width:200;word-wrap:break-word;">单位</td>
                 <td align="left"  style="word-wrap:break-word;">月份</td>
                 <td align="left"  style="word-wrap:break-word; background-color:red;">工资状态</td>
                 <td align="left"  style="word-wrap:break-word;background-color:red;">发票状态</td>
