@@ -29,6 +29,24 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+
+    function searchCompanyListCount($table,$key,$where) {
+        $userId = $_SESSION ['admin'] ['id'];
+        if (!$table) {
+            return 0;
+        }
+        if (!$key) {
+            $key = '*';
+        }
+        $sql    =   "select count($key) from $table where $where and a.companyId = c.id  and  a.adminId = $userId" ;
+        $result = $this->g_db_query($sql);
+        if (!$result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc($result);
+        return $row['cnt'];
+    }
+
 	function searchCompanyList($start = NULL, $limit = NULL, $sort = NULL, $where = '1=1') {
 		$id = $_SESSION ['admin'] ['id'];
 		$sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where

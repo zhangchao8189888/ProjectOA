@@ -358,7 +358,7 @@ Ext.onReady(function(){
         title: '客服管理公司首页',
         iconCls: 'icon-grid',
         margin: '0 0 20 0',
-        renderTo: 'tableList',
+        renderTo: 'tableList'
 
     });
     ////////////////////////////////////////////////////////////////////////////////////////
@@ -551,7 +551,7 @@ Ext.onReady(function(){
     var window = new Ext.Window({
         title:"管理", // 窗口标题
         width:530, // 窗口宽度
-        height:500, // 窗口高度
+        height:450, // 窗口高度
         layout:"border",// 布局
         minimizable:true, // 最大化
         maximizable:true, // 最小化
@@ -562,12 +562,6 @@ Ext.onReady(function(){
         resizable:false, // 是否可以调整窗口大小，默认TRUE。
         plain:true,// 将窗口变为半透明状态。
         items:[companyList],
-        buttons:[{
-            text:"登陆",
-            handler:function() {
-                Ext.Msg.alert("提示","登陆成功!");
-            }
-        }],
         closeAction:'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
     });
 

@@ -75,7 +75,7 @@
                                     },
                                     success: function (response) {
                                         alert("操作成功！");
-                                        location.reload();
+                                        document.execCommand('Refresh');
                                     }
                                 });
 
@@ -261,7 +261,7 @@
             var window = new Ext.Window({
                 title:"管理", // 窗口标题
                 width:530, // 窗口宽度
-                height:500, // 窗口高度
+                height:440, // 窗口高度
                 layout:"border",// 布局
                 minimizable:true, // 最大化
                 maximizable:true, // 最小化
