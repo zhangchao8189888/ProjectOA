@@ -453,6 +453,9 @@ class SaveSalaryAction extends BaseAction {
                $josnArray ['items'] [$i] ['ename'] = $row ['ename'];
                $josnArray ['items'] [$i] ['e_num'] = $row ['e_num'];
                $josnArray ['items'] [$i] ['salaryTime'] = $row ['salaryTime'];
+               $josnArray ['items'] [$i] ['daikou'] = $row ['daikou'];
+               $josnArray ['items'] [$i] ['bukou'] = $row ['bukou'];
+               $josnArray ['items'] [$i] ['nian'] = $row ['nian'];
                $josnArray ['items'] [$i] ['companyname'] = $row ['companyname'];
                $josnArray ['items'] [$i] ['geshuiSum'] = $row ['geshuiSum'];
 			$i ++;
@@ -467,7 +470,10 @@ class SaveSalaryAction extends BaseAction {
         $salaryListExcel[$hang][2]="身份证号";
         $salaryListExcel[$hang][3]="个税日期";
         $salaryListExcel[$hang][4]="所在单位";
-        $salaryListExcel[$hang][5]="个税合计";
+        $salaryListExcel[$hang][5]="代扣税";
+        $salaryListExcel[$hang][6]="补扣税";
+        $salaryListExcel[$hang][7]="年终奖扣税";
+        $salaryListExcel[$hang][8]="个税合计";
         $hang++;
 
          foreach ($josnArray['items'] as $value) {
@@ -476,7 +482,10 @@ class SaveSalaryAction extends BaseAction {
              $salaryListExcel[$hang][2]=$value['e_num'];
              $salaryListExcel[$hang][3]=$value['salaryTime'];
              $salaryListExcel[$hang][4]=$value['companyname'];
-             $salaryListExcel[$hang][5]=$value['geshuiSum'];
+             $salaryListExcel[$hang][5]=$value['daikou'];
+             $salaryListExcel[$hang][6]=$value['bukou'];
+             $salaryListExcel[$hang][7]=$value['nian'];
+             $salaryListExcel[$hang][8]=$value['geshuiSum'];
         $hang++;
 
          }

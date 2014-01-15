@@ -310,7 +310,7 @@ class SalaryDao extends BaseDao {
 	// 计算个税合计BY孙瑞鹏
 	function searhGeshuiListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];
-		$sql = "SELECT yi.id company_id,yi.salaryTime,yi.e_company company_name,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
+		$sql = "SELECT yi.id company_id,yi.salaryTime,yi.e_company company_name,yi.su daikou,er.su bukou, nian.su nian,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
 			(
 			SELECT emp.id,  t.salaryTime  ,e_company,IFNULL(SUM(s.per_daikoushui),0) su
 			FROM OA_salary s ,OA_employ emp,OA_salarytime t
@@ -434,7 +434,7 @@ class SalaryDao extends BaseDao {
 	}
 	// 个税详细BY孙瑞鹏
 	function searchGeshuiBy_SalaryTimeId($sid, $stime) {
-		$sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
+		$sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,yi.su daikou,er.su bukou,nian.su nian,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
     	(
     	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,IFNULL(SUM(s.per_daikoushui),0) su
     	FROM OA_salary s ,OA_employ emp,OA_salarytime t
