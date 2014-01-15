@@ -69,14 +69,22 @@ class ServiceDao extends BaseDao
      */
     function searhManageComCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "SELECT count(*) as cnt   from OA_company c,OA_admin_company a  where 1=1
-  and a.companyId = c.id  and  a.adminId = $id";
+        $sql = "SELECT count(distinct company_name) as cnt   from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
+  and a.companyId = c.id and b.companyId=c.id and  a.adminId = $id";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
             }
-            if ($where ['salaryTime'] != "") {
-
+            if ($where ['searchType'] != "") {
+                if ($where ['searchType'] == 1) {
+                    if($where ['$salTime']!=""){
+                        $sql .= " and b.salaryTime='{$where ['$salTime']}' ";
+                    }
+                } elseif ($where ['searchType'] == 2) {
+                    $sql .= " b.op_salaryTime>='{$where ['$salTime']}' and b.op_salaryTime<='{$where ['dateEnd']}' ";
+                }elseif ($where ['searchType'] == 3) {
+                    $sql .= " b.salaryTime>='{$where ['$salTime']}' and b.salaryTime<='{$where ['dateEnd']}' ";
+                }
             }
         }
         $result = $this->g_db_query ( $sql );
@@ -97,8 +105,8 @@ class ServiceDao extends BaseDao
      */
     function searhManageComPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "SELECT c.id,c.company_name from OA_company c,OA_admin_company a  where 1=1
-  and a.companyId = c.id and  a.adminId = $id";
+        $sql = "SELECT  distinct c.id,c.company_name from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
+        and a.companyId = c.id and b.companyId=c.id and a.adminId = $id  ";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
@@ -109,9 +117,9 @@ class ServiceDao extends BaseDao
                         $sql .= " and b.salaryTime='{$where ['$salTime']}' ";
                     }
                 } elseif ($where ['searchType'] == 2) {
-                    $sql .= " b.op_salaryTime>='{$where ['$salTime']}' and b.op_salaryTime<='{$where ['$dateEnd']}' ";
+                    $sql .= " b.op_salaryTime>='{$where ['$salTime']}' and b.op_salaryTime<='{$where ['dateEnd']}' ";
                 }elseif ($where ['searchType'] == 3) {
-                    $sql .= " b.salaryTime>='{$where ['$salTime']}' and b.salaryTime<='{$where ['$dateEnd']}' ";
+                    $sql .= " b.salaryTime>='{$where ['$salTime']}' and b.salaryTime<='{$where ['dateEnd']}' ";
                 }
             }
         }

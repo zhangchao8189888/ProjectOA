@@ -188,11 +188,12 @@ Ext.onReady(function () {
                     var data    =   Ext.getCmp("STime").getValue();
                     serviceManagestore.removeAll();
                     serviceManagestore.load({
-                        params: {
-                            salDate:  data,
-                            start: 0,
-                            limit: 50
-                        }
+                            params: {
+                                date:  data,
+                                sType:"1" ,
+                                start: 0,
+                                limit: 50
+                            }
                     });
 
                 },
@@ -207,7 +208,8 @@ Ext.onReady(function () {
                     serviceManagestore.removeAll();
                     serviceManagestore.load({
                         params: {
-                            op_salaryTime:  data,
+                            date:  data,
+                            sType:"2",
                             start: 0,
                             limit: 50
                         }

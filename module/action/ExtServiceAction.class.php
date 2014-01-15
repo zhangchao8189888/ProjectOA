@@ -100,6 +100,7 @@ class ExtServiceAction extends BaseAction{
             $time   =   $this->AssignTabMonth($date,0);
             if(1==$searchType){
                 $date=  $time["data"];
+                $where['$salTime']=$date;
             }elseif(2 == $searchType){
                 $date   =    $time["first"];
                 $dateEnd   =    $time["last"];
@@ -121,7 +122,7 @@ class ExtServiceAction extends BaseAction{
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
             $comList ['items'] [$i] ['companyId'] = $row ['companyId'];
             if ($searchType == 1) {
-                $comList ['items'] [$i] ['salDate'] = $date;
+                $comList ['items'] [$i] ['salDate'] = $results["salaryTime"];
                 $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
             } elseif ($searchType == 2) {
                 $comList ['items'] [$i] ['salDate'] = $results['salaryTime'];
