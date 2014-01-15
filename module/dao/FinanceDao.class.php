@@ -76,6 +76,7 @@ class FinanceDao extends BaseDao
     		}
     	}
     	$result=$this->g_db_query($sql);
+        echo($sql);
     	if (!$result) {
     		return 0;
     	}

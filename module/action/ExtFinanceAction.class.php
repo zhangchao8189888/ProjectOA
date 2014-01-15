@@ -153,7 +153,7 @@ class ExtFinanceAction extends BaseAction {
         if($key){
             $where.=" and company_name like '%$key%'";
         }
-        $sum =$this->objDao->g_db_count("OA_company","*",$where);
+        $sum =$this->objDao->searchCompanyListCount("OA_company","*",$where);
         $salaryTimeList=$this->objDao->searchCompanyList($start,$limit,$sorts." ".$dir,$where);
         $comArray=array();
         $comArray['total']=$sum;

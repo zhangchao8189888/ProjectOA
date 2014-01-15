@@ -23,7 +23,6 @@ class FinanceForm extends BaseForm
      */
     function getTpl($mode = false)
     {
-    	echo  "form mode".$mode;
         switch ($mode) {
             case "financeFrist" :
                 return "finance/finance_first.php";

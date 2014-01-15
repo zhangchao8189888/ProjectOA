@@ -40,7 +40,7 @@ Ext.onReady(function () {
                 renderer: function (val, cellmeta, record) {
                     return '<a href="#" onclick=getEmploy("' + val + '") >' + val + '</a>';
                 },
-                dataIndex: 'company_name'},
+                dataIndex: 'company_name', width: 180},
             {
                 text: "一次工资",
                 renderer: function (val, cellmeta, record) {
@@ -125,7 +125,7 @@ Ext.onReady(function () {
             }
         },
         columnLines: true,
-        width: 1000,
+        width: 1100,
         height: 500,
         frame: true,
         title: '客服管理公司首页',
@@ -171,6 +171,52 @@ Ext.onReady(function () {
                         }
                     });
                 }
+            },
+            {
+                id:'STime',
+                name: 'STime',
+                xtype:'datefield',
+                format:"Y-m-d",
+                readOnly:false,
+                anchor:'95%'
+            } ,
+            {
+                xtype: 'button',
+                id: 'search1',
+                disabled: false,
+                handler: function () {
+                    var data    =   Ext.getCmp("STime").getValue();
+                    serviceManagestore.removeAll();
+                    serviceManagestore.load({
+                            params: {
+                                date:  data,
+                                sType:"1" ,
+                                start: 0,
+                                limit: 50
+                            }
+                    });
+
+                },
+                text: '按工资月份查找'
+            },
+            {
+                xtype: 'button',
+                id: 'search2',
+                disabled: false,
+                handler: function () {
+                    var data    =   Ext.getCmp("STime").getValue();
+                    serviceManagestore.removeAll();
+                    serviceManagestore.load({
+                        params: {
+                            date:  data,
+                            sType:"2",
+                            start: 0,
+                            limit: 50
+                        }
+                    });
+
+                },
+                text: '按操作时间查找'
             }
         ]
     });
@@ -336,6 +382,7 @@ Ext.onReady(function () {
     }
 });
 
+
 function a() {
     $("#iform").attr("action", "index.php?action=Salary&mode=rename");
     $("#nfname").val($("#newfname").val());
@@ -424,24 +471,8 @@ function addFa() {
                     <option value="2" <?php if ($searchType == 2) echo "selected" ?>>按操作时间查询</option>
                 </select>
             </div>
-            <div align="center">
-                <div id="bDate"></div>
-                <div id="select" style="display:none"></div>
-            </div>
-
         </div>
-        <div id="tab" class="TipDiv"></div>
-        <div id="demo"></div>
-        <div id="center"></div>
-        <div id="div1" class="content">
-            <ul>
-                <li id="li1"></li>
-                <li id="li3"></li>
-            </ul>
-        </div>
-        <div id="tableList">
-
-        </div>
+        <div id="tableList"></div>
     </div>
 </div>
 </body>
