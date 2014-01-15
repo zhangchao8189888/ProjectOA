@@ -39,6 +39,9 @@ class ServiceAction extends BaseAction{
     {
         // Controller -> Model
         switch($this->mode) {
+            case "old" :
+                $this->old();
+                break;
             case "getAdminComList" :
                 $this->getAdminCompanyList();
                 break;
@@ -119,6 +122,9 @@ class ServiceAction extends BaseAction{
   function getJson(){
   	$arry=array();
   }
+    function old(){
+        $this->mode="old";
+    }
   function getAdminCompanyList(){
   	$this->mode="serviceFrist";
   }

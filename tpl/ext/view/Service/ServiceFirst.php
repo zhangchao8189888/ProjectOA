@@ -40,7 +40,7 @@ Ext.onReady(function () {
                 renderer: function (val, cellmeta, record) {
                     return '<a href="#" onclick=getEmploy("' + val + '") >' + val + '</a>';
                 },
-                dataIndex: 'company_name'},
+                dataIndex: 'company_name', width: 180},
             {
                 text: "一次工资",
                 renderer: function (val, cellmeta, record) {
@@ -125,7 +125,7 @@ Ext.onReady(function () {
             }
         },
         columnLines: true,
-        width: 1000,
+        width: 1100,
         height: 500,
         frame: true,
         title: '客服管理公司首页',
