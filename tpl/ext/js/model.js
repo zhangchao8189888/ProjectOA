@@ -26,6 +26,9 @@ Ext.define('oa.common.geshui.list',{
         {name: 'company_id', type: 'int'},
         {name: 'company_name', type: 'string'},
         {name: 'salaryTime', type: 'string'},
+        {name: 'daikou', type: 'string'},
+        {name: 'bukou', type: 'string'},
+        {name: 'nian', type: 'string'},
         {name: 'geshuiSum', type: 'int'},
         {name: 'salary_state', type: 'int'}
     ]
@@ -107,6 +110,9 @@ Ext.define('oa.common.geshui.detail.list',{
         {name: 'e_num', type: 'string'},
         {name: 'salaryTime', type: 'string'},
         {name: 'companyname', type: 'string'},
+        {name: 'daikou', type: 'string'},
+        {name: 'bukou', type: 'string'},
+        {name: 'nian', type: 'string'},
         {name: 'geshuiSum', type: 'int'}
     ]
 });

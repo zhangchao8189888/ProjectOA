@@ -191,6 +191,9 @@ class ExtSalaryAction extends BaseAction{
     		$josnArray['items'][$i]['company_id']=$row['company_id'];
     		$josnArray['items'][$i]['company_name']=$row['company_name'];
     		$josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
+            $josnArray['items'][$i] ['daikou'] = $row ['daikou'];
+            $josnArray['items'][$i] ['bukou'] = $row ['bukou'];
+            $josnArray['items'][$i] ['nian'] = $row ['nian'];
     		$josnArray['items'][$i]['geshuiSum']=$row['geshuiSum'];
     		$i++;
     	}

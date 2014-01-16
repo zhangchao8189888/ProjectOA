@@ -33,6 +33,9 @@
                     {text: "编号", width: 120, dataIndex: 'company_id', sortable: true},
                     {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true},
                     {text: "个税日期", flex: 200, dataIndex: 'salaryTime', sortable: true},
+                    {text: "代扣税", flex: 200, dataIndex: 'daikou', sortable: true},
+                    {text: "补扣税", flex: 200, dataIndex: 'bukou', sortable: true},
+                    {text: "年终奖扣税", flex: 200, dataIndex: 'nian', sortable: true},
                     {text: "个税合计", flex: 200, dataIndex: 'geshuiSum', sortable: true}
                 ],
                 height:700,
@@ -159,6 +162,9 @@
                     {text: "身份证号", flex: 200, dataIndex: 'e_num', sortable: true},
                     {text: "个税日期", flex: 200, dataIndex: 'salaryTime', sortable: true},
                     {text: "所在单位", width: 120, dataIndex: 'companyname', sortable: true},
+                    {text: "代扣税", flex: 200, dataIndex: 'daikou', sortable: true},
+                    {text: "补扣税", flex: 200, dataIndex: 'bukou', sortable: true},
+                    {text: "年终奖扣税", flex: 200, dataIndex: 'nian', sortable: true},
                     {text: "个税合计", flex: 200, dataIndex: 'geshuiSum', sortable: true}
                 ], //注意此行代码，至关重要
                 tbar : [
