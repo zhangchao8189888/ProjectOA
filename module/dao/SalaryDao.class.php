@@ -270,7 +270,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
+				$sql .= " and st.salaryTime like '%{$where['salaryTime']}%' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
 				$sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";
@@ -291,7 +291,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and st.salaryTime   like '%{$where['salaryTime']}%' ";
+				$sql .= " and st.salaryTime  like '%{$where['salaryTime']}%' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
 				$sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}'";
@@ -394,7 +394,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
+				$sql .= " and st.salaryTime like '%{$where['salaryTime']}%' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
 				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
@@ -514,7 +514,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
+				$sql .= " and st.salaryTime like '%{$where['salaryTime']}%'";
 			}
 			if ($where ['op_salaryTime'] != "") {
 				$sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";

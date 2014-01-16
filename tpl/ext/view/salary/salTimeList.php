@@ -135,7 +135,7 @@
                                 params : {
                                     companyName : Ext.getCmp("comname").getValue(),
                                     salTime : this.getValue(),
-                                    opTime : Ext.getCmp("opTime").getValue(),
+                                    opTime : Ext.getCmp("STime").getValue(),
                                     start : 0,
                                     limit : 50
                                 }
