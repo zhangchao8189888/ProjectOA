@@ -358,7 +358,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 	$this->objForm->setFormData("error",$errorMage);	
   }
   function addOpCompanyListJson(){
-  $salTimeList=$_POST['ids'];
+    $salTimeList=$_POST['ids'];
 	$admin=$_SESSION["admin"];
 	$salTimeList=json_decode($salTimeList);
 	$html="";

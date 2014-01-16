@@ -468,7 +468,7 @@ Ext.onReady(function(){
                         itcIds.push(record[i].data.id);
                     }
                     Ext.Ajax.request({
-                        url: 'index.php?action=Service&mode=addOpCompanyListJson',
+                        url: 'index.php?action=Service&mode=addCaiwuOpCompanyListJson',
                         method: 'post',
                         params: {
                             ids : Ext.JSON.encode(itcIds)

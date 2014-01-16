@@ -197,6 +197,10 @@ var salTimeListstore = Ext.create('Ext.data.Store', {
     }]
 });
 
+/**
+ * .
+ * @type {Ext.data.Store}
+ */
 var erSalTimeListstore = Ext.create('Ext.data.Store', {
     //分页大小
     pageSize: 50,

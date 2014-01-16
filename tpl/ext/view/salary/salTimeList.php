@@ -142,23 +142,32 @@
                             });
                         }
                     },
-                    '操作时间', {
-                        id:'opTime',
-                        xtype : 'trigger',
-                        triggerClass : 'x-form-search-trigger',
-                        name: 'search',
-                        onTriggerClick : function(src) {
+                    {
+                        id:'STime',
+                        name: 'STime',
+                        xtype:'datefield',
+                        format:"Y-m-d",
+                        readOnly:false,
+                        anchor:'95%'
+                    } ,
+                    {
+                        xtype: 'button',
+                        id: 'opTime',
+                        disabled: false,
+                        handler: function () {
                             salTimeListstore.removeAll();
-                            salTimeListstore.load( {
-                                params : {
+                            salTimeListstore.load({
+                                params: {
                                     companyName : Ext.getCmp("comname").getValue(),
                                     salTime : Ext.getCmp("salTime").getValue(),
-                                    opTime : this.getValue(),
+                                    opTime : Ext.getCmp("STime").getValue(),
                                     start : 0,
                                     limit : 50
                                 }
                             });
-                        }
+
+                        },
+                        text: '按操作时间查找'
                     }
                 ]
             });

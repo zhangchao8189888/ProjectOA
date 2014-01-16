@@ -9,7 +9,7 @@
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
 <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
-<script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
@@ -96,7 +96,7 @@ Ext.onReady(function(){
                     var sel=model.getLastSelected();
                     checkSalWin(sel.data.id);
                 },
-                text : '查看工资',
+                text : '查看二次工资',
                 iconCls : 'chakan'
             },
             '公司名称查询', {
@@ -128,30 +128,39 @@ Ext.onReady(function(){
                         params : {
                             companyName : Ext.getCmp("comname").getValue(),
                             salTime : this.getValue(),
-                            opTime : Ext.getCmp("opTime").getValue(),
+                            opTime : Ext.getCmp("STime").getValue(),
                             start : 0,
                             limit : 50
                         }
                     });
                 }
             },
-            '操作时间', {
-                id:'opTime',
-                xtype : 'trigger',
-                triggerClass : 'x-form-search-trigger',
-                name: 'search',
-                onTriggerClick : function(src) {
+            {
+                id:'STime',
+                name: 'STime',
+                xtype:'datefield',
+                format:"Y-m-d",
+                readOnly:false,
+                anchor:'95%'
+            } ,
+            {
+                xtype: 'button',
+                id: 'opTime',
+                disabled: false,
+                handler: function () {
                     erSalTimeListstore.removeAll();
-                    erSalTimeListstore.load( {
-                        params : {
+                    erSalTimeListstore.load({
+                        params: {
                             companyName : Ext.getCmp("comname").getValue(),
                             salTime : Ext.getCmp("salTime").getValue(),
-                            opTime : this.getValue(),
+                            opTime : Ext.getCmp("STime").getValue(),
                             start : 0,
                             limit : 50
                         }
                     });
-                }
+
+                },
+                text: '按操作时间查找'
             }
         ]
     });
@@ -243,7 +252,7 @@ Ext.onReady(function(){
             closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
         });
         var title="";
-        var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
+        var url = "index.php?action=SaveSalary&mode=searchErSalaryByIdJson";
 
         Ext.Ajax.request({
             url: url,  //从json文件中读取数据，也可以从其他地方获取数据

@@ -273,7 +273,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
-				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
+				$sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";
 			}
 		}
 		$result = $this->g_db_query ( $sql );
@@ -294,7 +294,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
-				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
+				$sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}'";
 			}
 		}
 		if ($sort) {
@@ -388,7 +388,6 @@ class SalaryDao extends BaseDao {
 	}
 	function searhErSalaryTimeListCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
-
 		$sql = "select count(*) as cnt  from OA_salarytime_other st,OA_company c,OA_admin_company a where  a.adminId=$id and a.companyId = c.id and st.companyId=c.id   and salaryType=" . ER_SALARY_TIME_TYPE;
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
@@ -489,7 +488,6 @@ class SalaryDao extends BaseDao {
 		$list = $this->g_db_query ( $sql );
 		return $list;
 	}
-	// FIXME !!! 年终奖 dao
 	// 获得所有年终奖
 	function searhSalaryNianTimeList($where = null) {
 		$sql = "select st.*,c.company_name from OA_salarytime_other st,OA_company c where  st.companyId=c.id  and salaryType=" . SALARY_TIME_TYPE;
@@ -510,7 +508,7 @@ class SalaryDao extends BaseDao {
 	// 年终奖计算分页功能
 	function searhSalaryNianTimeListCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
-		$sql = "select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = $id and salaryType=" . SALARY_TIME_TYPE;
+		$sql = "select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company a where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = $id and salaryType=" . SALARY_TIME_TYPE;
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
@@ -519,7 +517,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
-				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
+				$sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";
 			}
 		}
 		$result = $this->g_db_query ( $sql );
@@ -540,7 +538,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
-				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
+				$sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";
 			}
 		}
 		if ($sort) {

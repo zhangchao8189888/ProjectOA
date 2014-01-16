@@ -14,7 +14,7 @@ $comlist = json_encode($comlist);
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
 <link href="common/css/admin.css" rel="stylesheet" type="text/css"/>
 <link href="common/css/validator.css" rel="stylesheet" type="text/css"/>
-<script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
@@ -228,11 +228,14 @@ Ext.onReady(function () {
     }, this);
     serviceManagestore.loadPage(1);
 
-    //创建Grid
+    /**
+     *添加管理公司grid
+     * @type {Ext.grid.Panel}
+     */
     var companyListGrid = Ext.create('Ext.grid.Panel', {
         store: comListStore,
         selType: 'checkboxmodel',
-        id: 'companyList',
+        id: 'companyLis',
         columns: [
             {text: "id", width: 120, dataIndex: 'id', sortable: true},
             {text: "公司名称", flex: 200, dataIndex: 'company_name', sortable: true}
@@ -258,29 +261,28 @@ Ext.onReady(function () {
         }),
         tbar: [
             {
-                xtype: 'button',
-                id: 'bt_deleteDocument',
-                handler: function () {
-                    var record = Ext.getCmp('companyList').getSelectionModel().getSelection();
+                xtype : 'button',
+                id : 'bt',
+                handler : function() {
+                    var record = Ext.getCmp('companyLis').getSelectionModel().getSelection();
                     // getSelection()
                     //var records = grid.getSelectionModel().getSelection();
                     if (record) {
                         var itcIds = [];
                         //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
-                        for (var i = 0; i < record.length; i++) {
+                        for(var i=0;i<record.length;i++){
                             itcIds.push(record[i].data.id);
                         }
                         Ext.Ajax.request({
                             url: 'index.php?action=Service&mode=addCaiwuOpCompanyListJson',
                             method: 'post',
                             params: {
-                                ids: Ext.JSON.encode(itcIds)
+                                ids : Ext.JSON.encode(itcIds)
                             },
-                            success: function (response) {
+                            success: function(response){
                                 var text = response.responseText;
                                 // process server response here
                                 newWin(text);
-                                location.reload();
                             }
                         });
 
@@ -288,8 +290,8 @@ Ext.onReady(function () {
                         alert('请选择一条记录');
                     }
                 },
-                text: '添加管理',
-                iconCls: 'shanchu'
+                text : '添加管理',
+                iconCls : 'shanchu'
             },
             '公司查询',
             {
@@ -317,7 +319,7 @@ Ext.onReady(function () {
                 text: '取消管理',
                 iconCls: 'chakan',
                 handler: function (src) {
-                    var record = Ext.getCmp('companyList').getSelectionModel().getSelection();
+                    var record = Ext.getCmp('companyLis').getSelectionModel().getSelection();
                     // getSelection()
                     //var records = grid.getSelectionModel().getSelection();
                     if (record) {
@@ -334,7 +336,6 @@ Ext.onReady(function () {
                             },
                             success: function (response) {
                                 alert("取消成功！");
-                                location.reload();
                             }
                         });
 

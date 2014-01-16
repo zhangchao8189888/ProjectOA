@@ -70,6 +70,7 @@ class ExtServiceAction extends BaseAction{
         }
         $time = array ();
         $time["data"]   =  $date ;
+        $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
         $time["first"]  =    $first_date;
         $time["last"]   =      $for_day;
         return $time;
@@ -103,7 +104,7 @@ class ExtServiceAction extends BaseAction{
                 $where['$salTime']=$date;
             }elseif(2 == $searchType){
                 $date   =    $time["first"];
-                $dateEnd   =    $time["last"];
+                $dateEnd   =     $time["next"];
                 $where['$salTime']=$date;
                 $where['dateEnd']=$dateEnd;
             }elseif(3 == $searchType){
