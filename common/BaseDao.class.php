@@ -38,7 +38,7 @@ class BaseDao extends db {
         if (!$key) {
             $key = '*';
         }
-        $sql    =   "select count($key) from $table where $where and a.companyId = c.id  and  a.adminId = $userId" ;
+        $sql    =   "SELECT count($key) from $table where $where and a.companyId = c.id  and  a.adminId = $userId" ;
         $result = $this->g_db_query($sql);
         if (!$result) {
             return 0;
