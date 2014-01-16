@@ -313,7 +313,7 @@ var serviceManagestore = Ext.create('Ext.data.Store', {
             root: 'items',
             totalProperty  : 'total'
         },
-        simpleSortMode: true,
+        simpleSortMode: true
     },
         sorters: [{
             //排序字段。

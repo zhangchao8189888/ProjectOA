@@ -291,7 +291,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
+				$sql .= " and st.salaryTime   like '%{$where['salaryTime']}%' ";
 			}
 			if ($where ['op_salaryTime'] != "") {
 				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
@@ -346,9 +346,9 @@ class SalaryDao extends BaseDao {
 			if ($where ['salaryTime'] != "") {
 				$time = date ( "Ymd", strtotime ( "last month", strtotime ( $where ['salaryTime'] ) ) );
 				$sql .= "and (
-    			(yi.salaryTime='{$where['salaryTime']}' AND convert(yi.e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 1))
+    			(yi.salaryTime like '%{$where['salaryTime']}%'  AND convert(yi.e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 1))
     			OR
-    			(yi.salaryTime='{$time}' AND convert(yi.e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 2))
+    			(yi.salaryTime like '%{$time}%'  AND convert(yi.e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 2))
     			)";
 			}
 		}
@@ -416,7 +416,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
+				$sql .= " and st.salaryTime   like '%{$where['salaryTime']}%'  ";
 			}
 			if ($where ['op_salaryTime'] != "") {
 				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
@@ -537,7 +537,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and c.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and st.salaryTime='{$where['salaryTime']}' ";
+				$sql .= " and st.salaryTime like '%{$where['salaryTime']}%'  ";
 			}
 			if ($where ['op_salaryTime'] != "") {
 				$sql .= " and st.op_salaryTime='{$where['op_salaryTime']}' ";
