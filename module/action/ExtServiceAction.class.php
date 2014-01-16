@@ -106,6 +106,11 @@ class ExtServiceAction extends BaseAction{
                 $dateEnd   =    $time["last"];
                 $where['$salTime']=$date;
                 $where['dateEnd']=$dateEnd;
+            }elseif(3 == $searchType){
+                $date   =    $time["first"];
+                $dateEnd   =    $time["last"];
+                $where['$salTime']=$date;
+                $where['dateEnd']=$dateEnd;
             }
         }else{
             $date=date('Y-m',time())."-01";
@@ -125,6 +130,14 @@ class ExtServiceAction extends BaseAction{
                 $comList ['items'] [$i] ['salDate'] = $results["salaryTime"];
                 $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
             } elseif ($searchType == 2) {
+                $comList ['items'] [$i] ['salDate'] = $results['salaryTime'];
+                if (empty($results['op_salaryTime'])) {
+                    $comList ['items'] [$i] ['op_salaryTime'] = $date;
+                } else {
+                    $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
+                }
+            }
+            elseif ($searchType == 3) {
                 $comList ['items'] [$i] ['salDate'] = $results['salaryTime'];
                 if (empty($results['op_salaryTime'])) {
                     $comList ['items'] [$i] ['op_salaryTime'] = $date;

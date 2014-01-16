@@ -33,8 +33,8 @@ Ext.onReady(function () {
         id: 'grid2',
         store: serviceManagestore,
         columns: [
-            {text: "工资日期", dataIndex: 'salDate'},
-            {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 150},
+            {text: "工资日期", dataIndex: 'salDate', width: 85},
+            {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100},
             {
                 text: "单位名称",
                 renderer: function (val, cellmeta, record) {
@@ -190,7 +190,7 @@ Ext.onReady(function () {
                     serviceManagestore.load({
                             params: {
                                 date:  data,
-                                sType:"1" ,
+                                sType:"3" ,
                                 start: 0,
                                 limit: 50
                             }
@@ -464,14 +464,6 @@ function addFa() {
             <input type="hidden" name="sDate" id="sDate" value=""/>
             <input type="hidden" name="salType" id="salType" value=""/>
         </form>
-        <div class="submit">
-            <div align="left">
-                <select name="searchType" id="searchType">
-                    <option value="1" <?php if ($searchType == 1) echo "selected" ?>>按工资月份查询</option>
-                    <option value="2" <?php if ($searchType == 2) echo "selected" ?>>按操作时间查询</option>
-                </select>
-            </div>
-        </div>
         <div id="tableList"></div>
     </div>
 </div>
