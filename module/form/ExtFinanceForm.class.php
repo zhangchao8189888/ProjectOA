@@ -18,11 +18,14 @@ class ExtFinanceForm extends BaseForm {
 	 * @return 页面表示文件
 	 */
 	function getTpl($mode = false) {
+        echo($mode);
 		switch ($mode) {
 			case "toCheckCompany" :
 				return "ext/view/finance/checkCompany.php";
             case "toFinaceFirst" :
                 return "ext/view/finance/financeFirst.php";
+            case "toFinaceIndex" :
+                return "ext/view/finance/financeIndex.php";
 			default :
 				return "BaseConfig.php";
 		}

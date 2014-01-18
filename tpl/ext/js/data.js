@@ -198,7 +198,7 @@ var salTimeListstore = Ext.create('Ext.data.Store', {
 });
 
 /**
- * .
+ * 二次工资
  * @type {Ext.data.Store}
  */
 var erSalTimeListstore = Ext.create('Ext.data.Store', {
@@ -261,6 +261,42 @@ var geShuiExcelExportStore = Ext.create('Ext.data.Store', {
         direction: 'DESC'
     }]
 });
+
+/**
+ *财务首页数据源
+ * @type {Ext.data.Store}
+ */
+var caiwuListStore = Ext.create('Ext.data.Store', {
+    //分页大小
+    pageSize: 50,
+    model: 'oa.common.finance.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtFinance&mode=searchcaiwuListJosn',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
+
 var getCaiwuManageCompanyListStore = Ext.create('Ext.data.Store', {
     //分页大小
     pageSize: 50,

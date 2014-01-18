@@ -42,6 +42,8 @@ class ExtForm extends BaseForm
             	return "nianSalaryTime.php";
             case "toCheckCompany":
             	return "ext/view/finance/checkCompany.php";
+            case "toFinanceIndex":
+                return "ext/view/finance/financeIndex.php";
            default :
                 return "BaseConfig.php";
         }

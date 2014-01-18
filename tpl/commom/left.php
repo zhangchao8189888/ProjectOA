@@ -148,12 +148,17 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 	<div class="top">功能菜单</div>
 	<div class='menu'>
 		<div class='title'>财务管理</div>
-		<div class='item'>
+        <div class='item'>
+            <a href='index.php?action=Ext&mode=toFinanceIndex'>主页</a>
+        </div>
+		<!--
+        <div class='item'>
 			<a href='index.php?action=Finance&mode=finance_frist'>财务首页</a>
 		</div>
         <div class='item'>
             <a href='index.php?action=ExtFinance&mode=toFinaceFirst'>查看管理公司</a>
         </div>
+        -->
 		<div class='item'>
 			<a href='index.php?action=Ext&mode=toCheckCompany'>单位审批</a>
 		</div>

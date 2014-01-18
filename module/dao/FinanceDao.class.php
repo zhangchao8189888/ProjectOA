@@ -105,6 +105,85 @@ class FinanceDao extends BaseDao
         }
 
     }
+    function searchBillBySalaryTimeId($salaryTimeId, $billType = null) {
+        $sql = "select *  from OA_bill where salaryTime_id=$salaryTimeId ";
+        if ($billType != null) {
+            $sql .= " and bill_type=$billType ";
+        }
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+    /**
+     * 客服首页dao 获得count
+     * @param null $where
+     * @return int
+     */
+    function searhManageComCount($where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT count(distinct company_name) as cnt   from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
+  and a.companyId = c.id and b.companyId=c.id and  a.adminId = $id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['searchType'] != "") {
+                if ($where ['searchType'] == 1) {
+                    if($where ['$salTime']!=""){
+                        $sql .= " and b.salaryTime='{$where ['$salTime']}' ";
+                    }
+                } elseif ($where ['searchType'] == 2) {
+                    $sql .= " and b.op_salaryTime>='{$where ['$salTime']}' and b.op_salaryTime<='{$where ['dateEnd']}' ";
+                }elseif ($where ['searchType'] == 3) {
+                    $sql .= "and b.salaryTime>='{$where ['$salTime']}' and b.salaryTime<='{$where ['dateEnd']}' ";
+                }
+            }
+        }
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
+
+    /**
+     * 客服首页dao 获得分页数据
+     * @param null $start
+     * @param null $limit
+     * @param null $sort
+     * @param null $where
+     * @return bool|resource
+     */
+    function searhManageComPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT  distinct c.id,c.company_name from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
+        and a.companyId = c.id and b.companyId=c.id and a.adminId = $id ";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['searchType'] != "") {
+                if ($where ['searchType'] == 1) {
+                    if($where ['$salTime']!=""){
+                        $sql .= " and b.salaryTime='{$where ['$salTime']}' ";
+                    }
+                } elseif ($where ['searchType'] == 2) {
+                    $sql .= " and b.op_salaryTime>='{$where ['$salTime']}' and b.op_salaryTime<='{$where ['dateEnd']}' ";
+                }elseif ($where ['searchType'] == 3) {
+                    $sql .= " and b.salaryTime>='{$where ['$salTime']}' and b.salaryTime<='{$where ['dateEnd']}' ";
+                }
+            }
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        // $sql.=" order by op_salaryTime desc ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
     
 }
 ?>
