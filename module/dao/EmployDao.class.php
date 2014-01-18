@@ -88,7 +88,9 @@ class EmployDao extends BaseDao
 		return $result;
     }
     function searhCompanyListByComany(){
-    	$sql="select company_name  from OA_company group by company_name";
+        $id = $_SESSION ['admin'] ['id'];
+    	$sql="select company_name from OA_company c,OA_admin_company a  where
+   a.companyId = c.id  and  a.adminId = $id";
     	$result=$this->g_db_query($sql);
 		return $result;
     }

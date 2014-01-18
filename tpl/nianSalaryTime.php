@@ -219,7 +219,11 @@ $admin = $_SESSION ['admin'];
                           //最小化窗口事件
                           minimize: function(window){
                               this.hide();
+                              mk.hide();
                               window.minimizable = true;
+                          },
+                          close:function(){
+                              mk.hide();
                           }
                       },
                       closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
