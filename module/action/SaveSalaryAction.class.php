@@ -137,7 +137,7 @@ class SaveSalaryAction extends BaseAction {
 		// $this->mode="toSaveOk";
 		$exmsg = new EC (); // 设置错误信息类
 		session_start ();
-		$comname = $_POST ['comname'];
+		$comname = $_GET ['comname'];
 		$salaryTimeDate = $_POST ['salaryTime'];
         $time   =   $this->AssignTabMonth ($salaryTimeDate,0);
         echo($time["first"]);
@@ -327,7 +327,7 @@ class SaveSalaryAction extends BaseAction {
 		$exmsg = new EC (); // 设置错误信息类
 		$adminPO = $_SESSION ['admin'];
 		session_start ();
-		$comname = $_POST ['comname'];
+		$comname = $_GET ['comname'];
 		$salaryTimeDate = $_POST ['salaryTime'];
 		$salaryList = $_SESSION ['excelList'];
 		// var_dump($salaryList);
@@ -532,7 +532,7 @@ class SaveSalaryAction extends BaseAction {
 		$exmsg = new EC (); // 设置错误信息类
 		$adminPO = $_SESSION ['admin'];
 		session_start ();
-		$comname = $_POST ['comname'];
+		$comname = $_GET ['comname'];
 		
 		$salaryTimeDate = $_POST ['salaryTime'];
 		echo $comname . $salaryTimeDate;

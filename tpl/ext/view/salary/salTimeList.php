@@ -218,6 +218,11 @@
             });
 //通过ajax获取表头已经表格数据
             function checkSalWin(timeId) {
+                //加载数据遮罩
+                var mk=new Ext.LoadMask(Ext.getBody(),{
+                    msg:'加载数据中，请稍候！',removeMask:true
+                });
+                mk.show();
                 var p = Ext.create("Ext.grid.Panel",{
                     id:"salTimeListP",
                     title:"导航",
@@ -253,7 +258,11 @@
                         //最小化窗口事件
                         minimize: function(window){
                             this.hide();
+                            mk.hide();
                             window.minimizable = true;
+                        },
+                        close:function(){
+                            mk.hide();
                         }
                     },
                     closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
@@ -269,6 +278,7 @@
                     },
                     success : function(response) {
                         //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
+                        mk.hide();
                         var json = Ext.JSON.decode(response.responseText); //获得后台传递json
 
                         //创建store
