@@ -65,6 +65,12 @@ class ExtAction extends BaseAction{
             case "toCheckCompany":
             	$this->toCheckCompany ();
             	break;
+            case "toFinanceIndex":
+                $this->toFinanceIndex();
+                break;
+            case "toTaxInfo":
+                $this->toTaxInfo();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -102,6 +108,15 @@ class ExtAction extends BaseAction{
     function toErSalTimeList () {
         $this->mode="toErSalTimeList";
     }
+
+    function toFinanceIndex(){
+        $this->mode =   "toFinanceIndex";
+    }
+
+    function toTaxInfo(){
+        $this->mode =   "toTaxInfo";
+    }
+
     function getExtJosn(){
     	$jsonList=array();
     	//['salDate', 'op_salaryTime', 'company_name','salStat']

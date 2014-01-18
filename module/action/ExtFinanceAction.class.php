@@ -1,6 +1,8 @@
 <?php
 require_once ("module/form/".$actionPath."Form.class.php");
 require_once ("module/dao/FinanceDao.class.php");
+require_once ("module/dao/SalaryDao.class.php");
+require_once ("module/dao/ServiceDao.class.php");
 require_once ("tools/fileTools.php");
 require_once ("tools/excel_class.php");
 require_once ("tools/sumSalary.class.php");
@@ -41,6 +43,12 @@ class ExtFinanceAction extends BaseAction {
             case "searchCaiwuManageComListJosn" :
                 $this->searchCaiwuManageComListJosn ();
                 break;
+            case "searchcaiwuListJosn":
+                $this->searchcaiwuListJosn();
+                break;
+            case "comTaxListJosn":
+                $this->comTaxListJosn();
+                break;
             case "cancelManage":
                 $this->cancelManage();
                 break;
@@ -58,7 +66,127 @@ class ExtFinanceAction extends BaseAction {
 	function toFinaceFirst () {
         $this->mode = "toFinaceFirst";
     }
-	// FIXME 列表所有审核公司
+
+    function AssignTabMonth($date,$step){
+        $date= date("Y-m-d",strtotime($step." months",strtotime($date)));//得到处理后的日期（得到前后月份的日期）
+        $u_date = strtotime($date);
+        $days=date("t",$u_date);// 得到结果月份的天数
+
+        //月份第一天的日期
+        $first_date=date("Y-m",$u_date).'-01';
+        for($i=0;$i<$days;$i++){
+            $for_day=date("Y-m-d",strtotime($first_date)+($i*3600*24));
+        }
+        $time = array ();
+        $time["data"]   =  $date ;
+        $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
+        $time["first"]  =    $first_date;
+        $time["last"]   =      $for_day;
+        return $time;
+    }
+
+    /**
+     * ExtFinance action 财务首页
+     */
+    function searchcaiwuListJosn(){
+        $this->objDao = new FinanceDao();
+        $start = $_REQUEST ['start'];
+        $limit = $_REQUEST ['limit'];
+        $sorts = $_REQUEST ['sort'];
+        $dir = $_REQUEST ['dir'];
+        $searchType = $_REQUEST['sType'];
+        $companyName=$_REQUEST['companyName'];
+        $date   =   $_REQUEST['date'];
+        if (empty($searchType)) {
+            $searchType = 1;
+        }
+        if (! $start) {
+            $start = 0;
+        }
+        if (! $limit) {
+            $limit = 50;
+        }
+        if (! $sorts) {
+            $sorts = "uncheckid";
+        }
+        $where = array ();
+        $comList = array ();
+        $where['searchType']=$searchType;
+        $where['companyName']=$companyName;
+        if($date!=null) {
+            $time   =   $this->AssignTabMonth($date,0);
+            if(1==$searchType){
+                $date=  $time["data"];
+                $where['$salTime']=$date;
+            }elseif(2 == $searchType){
+                $date   =    $time["first"];
+                $dateEnd   =     $time["next"];
+                $where['$salTime']=$date;
+                $where['dateEnd']=$dateEnd;
+            }elseif(3 == $searchType){
+                $date   =    $time["first"];
+                $dateEnd   =    $time["last"];
+                $where['$salTime']=$date;
+                $where['dateEnd']=$dateEnd;
+            }
+        }else{
+            $date=date('Y-m',time())."-01";
+        }
+
+        // 查询公司列表
+        $sum =$this->objDao->searhManageComCount($where);
+        $result=$this->objDao->searhManageComPage($start,$limit,$sorts." ".$dir,$where);
+        $comList['total']=$sum;
+        global $billType;
+        $i = 0;
+        while ( $row = mysql_fetch_array ( $result ) ) {
+            $comList ['items'] [$i] ['id'] = $row ['id'];
+            $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
+            $sal = $this->objDao->searchSalTimeByComIdAndSalTime($row['id'], $date, $dateEnd, $searchType);
+            $comList ['items'] [$i] ['id'] = $row ['id'];
+            $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
+            if ($sal) {
+                $comList ['items'] [$i] ['sal_state'] = "<span style=\"color: green\">已做工资</span>";
+            } else {
+                $comList ['items'] [$i] ['sal_state'] = "<span style=\"color: red\">未做工资</span>";
+            }
+            // 查询发票，支票，到账，是否发放
+            $comList ['items'] [$i] ['bill_state'] = "<span style=\"color: blue\">未开发票</span>";
+            $comList ['items'] [$i] ['cheque_state'] = "<span style=\"color: blue\">未开支票</span>";
+            $comList ['items'] [$i] ['cheque_account'] = "<span style=\"color: blue\">支票未到账</span>";
+            $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: blue\">未处理审批</span>";
+            if ($sal) {
+                $billList = $this->objDao->searchBillBySalaryTimeId ( $sal ['id'] );
+                while ( $bill = mysql_fetch_array ( $billList ) ) {
+                    if ($bill ['bill_type'] == $billType ['发票']) {
+                        $comList ['items'] [$i] ['bill_state'] = "<span style=\"color: green\">已开发票</span>";
+                    } elseif ($bill ['bill_type'] == $billType ['支票']) {
+                        $comList ['items'] [$i] ['cheque_state'] = "<span style=\"color: green\">已开支票</span>";
+                    } elseif ($bill ['bill_type'] == $billType ['到账支票']) {
+                        $comList ['items'] [$i] ['cheque_account'] = "<span style=\"color: green\">支票已到帐</span>";
+                    } elseif ($bill ['bill_type'] == $billType ['工资发放']) {
+                        if ($bill ['bill_value'] == 0) {
+                            $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: blue\">等待审批</span>";
+                        } elseif ($bill ['bill_value'] == 1) {
+                            $comList ['items'] [$i] ['sal_approve'] =  "<span style=\"color: green\">审批通过</span>";
+                        } elseif ($bill ['bill_value'] == 2) {
+                            $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: red\">审批未通过</span>";
+                        }
+                    }
+                }
+            }
+            if($sal ['salaryTime'])  {
+                $comList ['items'] [$i]  ['sal_date'] = $sal ['salaryTime'];
+            } else{
+                $comList ['items'] [$i]  ['sal_date'] = "<span style=\"color: black\"> - - - - </span>";
+            }
+
+            $i ++;
+        }
+        echo json_encode($comList);
+        exit ();
+    }
+
 	/**
 	 * 查询所有未审核公司
 	 */
@@ -127,6 +255,36 @@ class ExtFinanceAction extends BaseAction {
             $this->objDao->cancelManage($value);
         }
         exit;
+    }
+
+    /**
+     * ExtFinance action个税查看
+     */
+    function comTaxListJosn(){
+        $this->objDao = new FinanceDao ();
+        $start = $_REQUEST ['start'];
+        $limit = $_REQUEST ['limit'];
+        $sorts = $_REQUEST ['sort'];
+        $dir = $_REQUEST ['dir'];
+        $companyName = $_REQUEST ['company_name'];
+        if (! $start) {
+            $start = 0;
+        }
+        if (! $limit) {
+            $limit = 50;
+        }
+        if (! $sorts) {
+            $sorts = "uncheckid";
+        }
+        $where = array ();
+        $where ['companyName'] = $companyName;
+        $sum = $this->objDao->searchCheckCompanyListCount ( $where );
+        $comList = $this->objDao->searchCheckCompanyListPage ( $start, $limit, $sorts . " " . $dir, $where );
+        $josnArray = array ();
+        $josnArray ['total'] = $sum;
+        $i = 0;
+        echo json_encode ( $josnArray );
+        exit ();
     }
 
     /**

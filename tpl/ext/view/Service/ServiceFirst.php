@@ -465,6 +465,7 @@ function addFa() {
             <input type="hidden" name="sDate" id="sDate" value=""/>
             <input type="hidden" name="salType" id="salType" value=""/>
         </form>
+        <div id="tab" class="TipDiv"></div>
         <div id="tableList"></div>
     </div>
 </div>

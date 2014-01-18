@@ -76,6 +76,9 @@ class ExtServiceAction extends BaseAction{
         return $time;
     }
 
+    /**
+     * ExtService action 客服首页
+     */
     function searchComListJosn(){
         $this->objDao = new ServiceDao();
         $start=$_REQUEST['start'];

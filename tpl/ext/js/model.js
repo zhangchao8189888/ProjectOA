@@ -130,6 +130,45 @@ Ext.define('oa.common.caiwuManageCom.list',{
 });
 
 /**
+ * 财务首页model
+ */
+Ext.define('oa.common.finance.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'sal_date', type: 'time'},
+        {name: 'sal_state', type: 'string'},
+        {name: 'bill_state', type: 'string'},
+        {name: 'cheque_state', type: 'string'},
+        {name: 'cheque_account', type: 'string'},
+        {name: 'sal_approve', type: 'string'}
+    ]
+});
+
+/**
+ * 个税查看model
+ */
+Ext.define('oa.common.tax.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'company_name', type: 'string'},
+        {name: 'january', type: 'string'},
+        {name: 'february ', type: 'string'},
+        {name: 'march', type: 'string'},
+        {name: 'april ', type: 'string'},
+        {name: 'may ', type: 'string'},
+        {name: 'june', type: 'string'},
+        {name: 'july', type: 'string'},
+        {name: 'august ', type: 'string'},
+        {name: 'septmber', type: 'string'},
+        {name: 'october', type: 'string'},
+        {name: 'november', type: 'string'},
+        {name: 'december', type: 'string'}
+    ]
+});
+
+/**
  * 客服首頁model
  */
 Ext.define('oa.common.service.list', {
