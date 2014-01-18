@@ -69,8 +69,10 @@ class ServiceDao extends BaseDao
      */
     function searhManageComCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "SELECT count(distinct company_name) as cnt   from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
-  and a.companyId = c.id and b.companyId=c.id and  a.adminId = $id";
+        $sql = "SELECT count(distinct company_name) as cnt   from OA_company c
+                LEFT JOIN OA_admin_company a  ON  a.companyId = c.id
+                LEFT JOIN OA_salarytime b ON b.companyId=c.id
+                where a.adminId =$id";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
@@ -105,8 +107,10 @@ class ServiceDao extends BaseDao
      */
     function searhManageComPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "SELECT  distinct c.id,c.company_name from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
-        and a.companyId = c.id and b.companyId=c.id and a.adminId = $id ";
+        $sql = "SELECT  distinct c.id,c.company_name from OA_company c
+                LEFT JOIN OA_admin_company a  ON  a.companyId = c.id
+                LEFT JOIN OA_salarytime b ON b.companyId=c.id
+                where a.adminId =$id";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";

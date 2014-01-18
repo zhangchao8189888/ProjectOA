@@ -124,15 +124,22 @@ class ExtServiceAction extends BaseAction{
         $result = $this->objDao->searhManageComPage($start, $limit, $sorts . " " . $dir, $where);
         $i=0;
         while ($row=mysql_fetch_array($result) ){
-            $comList ['items'] [$i] ['id'] = $row ['id'];
             //查询当月工资是否发放
             $results = $this->objDao->searchSalTimeByComIdAndSalTime($row['id'], $date, $dateEnd, $searchType);
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
             $comList ['items'] [$i] ['companyId'] = $row ['companyId'];
             if ($searchType == 1) {
-                $comList ['items'] [$i] ['salDate'] = $results["salaryTime"];
-                $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
+                if($results["salaryTime"]){
+                    $comList ['items'] [$i] ['salDate'] =$results["salaryTime"] ;
+                }else{
+                    $comList ['items'] [$i] ['salDate'] =$date ;
+                }
+                if($results['op_salaryTime']){
+                    $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
+                }else{
+                    $comList ['items'] [$i] ['op_salaryTime'] = "<span style=\"color: black\"> - - - - </span>";
+                }
             } elseif ($searchType == 2) {
                 $comList ['items'] [$i] ['salDate'] = $results['salaryTime'];
                 if (empty($results['op_salaryTime'])) {
@@ -150,9 +157,10 @@ class ExtServiceAction extends BaseAction{
                 }
             }
             if (!$results) {
-                $comList ['items'] [$i]['salStat'] = 0;
+                $comList ['items'] [$i]['salStat'] =0;
                 $comList ['items'] [$i]['salTimeid'] = -1;
                 $comList ['items'] [$i]['fa_state'] = -1;
+                $result['id']=0;
             } else {
                 $comList ['items'] [$i]['salStat'] = $results['id'];
                 $comList ['items'] [$i]['salTimeid'] = $results['id'];
@@ -161,7 +169,7 @@ class ExtServiceAction extends BaseAction{
                 if ($bill = mysql_fetch_array($bill_fa)) {
                     $comList ['items'] [$i]['fa_state'] = $bill['bill_value'];
                 } else {
-                    $comList ['items'] [$i]['fa_state'] = '<font color=red>未批准发放</font>';
+                    $comList ['items'] [$i]['fa_state'] ="<span style=\"color: red\"> 未批准发放 </span>";
                 }
             }
             $comList ['items'] [$i]['salNianStat'] = 0;

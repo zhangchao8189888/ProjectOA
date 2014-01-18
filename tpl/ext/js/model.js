@@ -152,6 +152,7 @@ Ext.define('oa.common.finance.list',{
 Ext.define('oa.common.tax.list',{
     extend: 'Ext.data.Model',
     fields: [
+        {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
         {name: 'january', type: 'string'},
         {name: 'february ', type: 'string'},

@@ -20,7 +20,7 @@ class ExtServiceForm extends BaseForm {
     function getTpl($mode = false) {
         switch ($mode) {
             case "getOtherAdminComListJosn" :
-                return "ext/view/Service/ServiceFirst.php";
+                return "ext/view/Service/ServiceIndex.php";
             default :
                 return "BaseConfig.php";
         }

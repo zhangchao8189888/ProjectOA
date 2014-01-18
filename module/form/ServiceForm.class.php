@@ -25,7 +25,7 @@ class ServiceForm extends BaseForm {
                 return "ext/ServiceFirst.php";
 			case "serviceFrist" :
 //                return "ext/ServiceFirst.php";
-				return "ext/view/Service/ServiceFirst.php";
+				return "ext/view/Service/ServiceIndex.php";
 			case "toOpCompanyList" :
 				return "service/serviceComList.php";
 			case "toEmlist" :
