@@ -68,6 +68,9 @@ class ExtAction extends BaseAction{
             case "toFinanceIndex":
                 $this->toFinanceIndex();
                 break;
+            case "toTaxInfo":
+                $this->toTaxInfo();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -108,6 +111,10 @@ class ExtAction extends BaseAction{
 
     function toFinanceIndex(){
         $this->mode =   "toFinanceIndex";
+    }
+
+    function toTaxInfo(){
+        $this->mode =   "toTaxInfo";
     }
 
     function getExtJosn(){

@@ -147,6 +147,28 @@ Ext.define('oa.common.finance.list',{
 });
 
 /**
+ * 个税查看model
+ */
+Ext.define('oa.common.tax.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'company_name', type: 'string'},
+        {name: 'january', type: 'string'},
+        {name: 'february ', type: 'string'},
+        {name: 'march', type: 'string'},
+        {name: 'april ', type: 'string'},
+        {name: 'may ', type: 'string'},
+        {name: 'june', type: 'string'},
+        {name: 'july', type: 'string'},
+        {name: 'august ', type: 'string'},
+        {name: 'septmber', type: 'string'},
+        {name: 'october', type: 'string'},
+        {name: 'november', type: 'string'},
+        {name: 'december', type: 'string'}
+    ]
+});
+
+/**
  * 客服首頁model
  */
 Ext.define('oa.common.service.list', {

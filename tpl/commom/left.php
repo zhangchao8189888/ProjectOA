@@ -198,6 +198,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiTypeList">个税查看</a>
 		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toTaxInfo">个税查看</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiSum">个税统计</a>
 		</div>

@@ -45,6 +45,10 @@ class ExtFinanceAction extends BaseAction {
                 break;
             case "searchcaiwuListJosn":
                 $this->searchcaiwuListJosn();
+                break;
+            case "comTaxListJosn":
+                $this->comTaxListJosn();
+                break;
             case "cancelManage":
                 $this->cancelManage();
                 break;
@@ -251,6 +255,36 @@ class ExtFinanceAction extends BaseAction {
             $this->objDao->cancelManage($value);
         }
         exit;
+    }
+
+    /**
+     * ExtFinance action个税查看
+     */
+    function comTaxListJosn(){
+        $this->objDao = new FinanceDao ();
+        $start = $_REQUEST ['start'];
+        $limit = $_REQUEST ['limit'];
+        $sorts = $_REQUEST ['sort'];
+        $dir = $_REQUEST ['dir'];
+        $companyName = $_REQUEST ['company_name'];
+        if (! $start) {
+            $start = 0;
+        }
+        if (! $limit) {
+            $limit = 50;
+        }
+        if (! $sorts) {
+            $sorts = "uncheckid";
+        }
+        $where = array ();
+        $where ['companyName'] = $companyName;
+        $sum = $this->objDao->searchCheckCompanyListCount ( $where );
+        $comList = $this->objDao->searchCheckCompanyListPage ( $start, $limit, $sorts . " " . $dir, $where );
+        $josnArray = array ();
+        $josnArray ['total'] = $sum;
+        $i = 0;
+        echo json_encode ( $josnArray );
+        exit ();
     }
 
     /**

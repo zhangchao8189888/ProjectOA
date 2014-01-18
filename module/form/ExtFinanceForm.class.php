@@ -26,6 +26,8 @@ class ExtFinanceForm extends BaseForm {
                 return "ext/view/finance/financeFirst.php";
             case "toFinaceIndex" :
                 return "ext/view/finance/financeIndex.php";
+            case "toTaxInfo" :
+                return "ext/view/finance/taxInfo.php";
 			default :
 				return "BaseConfig.php";
 		}

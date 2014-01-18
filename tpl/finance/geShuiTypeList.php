@@ -11,7 +11,7 @@ if(empty($warn)){
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>{$title}</title>
+    <title>个税查看</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <!-- --> <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
         <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
@@ -42,7 +42,7 @@ if(empty($warn)){
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <!--导航栏-->
-        <div class="navigate">员工列表查询</div>
+        <div class="navigate">个税查看</div>
         <div class="manage">
         <font color="red"></font>
         </div>
