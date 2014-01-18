@@ -107,6 +107,7 @@ Ext.onReady(function () {
                     caiwuListStore.load( {
                         params : {
                             company_name : this.getValue(),
+                            date:   Ext.getCmp("STime").getValue(),
                             start : 0,
                             limit : 50
                         }
@@ -126,18 +127,18 @@ Ext.onReady(function () {
                 id: 'search1',
                 disabled: false,
                 handler: function () {
-                    var data    =   Ext.getCmp("STime").getValue();
                     caiwuListStore.removeAll();
                     caiwuListStore.load({
                         params: {
-                            date:  data,
+                            date:   Ext.getCmp("STime").getValue(),
+                            searchtype:"3",
                             start: 0,
                             limit: 50
                         }
                     });
 
                 },
-                text: '按月份查找'
+                text: '按日期查找'
             }
         ]
     });
@@ -301,22 +302,7 @@ Ext.onReady(function () {
         items:[companyListGrid],
         closeAction:'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
     });
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // 定义弹出窗
-    ////////////////////////////////////////////////////////////////////////////////////////
-    function newWin(text) {
-        var win = Ext.create('Ext.window.Window', {
-            title: text	,
-            width: 300,
-            height: 100,
-            plain: true,
-            closeAction: 'hide', // 关闭窗口
-            maximizable: false, // 最大化控制 值为true时可以最大化窗体
-            layout: 'border',
-            contentEl: 'tab'
-        });
-        win.show();
-    }
+
 });
 
 </script>
@@ -327,15 +313,6 @@ Ext.onReady(function () {
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <div id="tab" class="TipDiv"></div>
-        <div id="demo"></div>
-        <div id="center"></div>
-        <div id="div1" class="content">
-            <ul>
-                <li id="li1"></li>
-                <li id="li3"></li>
-            </ul>
-        </div>
-        <span style="color: red"></span>
         <div id="checkcom"></div>
     </div>
 </div>
