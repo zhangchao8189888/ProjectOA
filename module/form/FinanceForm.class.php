@@ -50,6 +50,8 @@ class FinanceForm extends BaseForm
 				return "finance/geShuiSum.php";
 			case "geShuiType" :
 				return "finance/geShuiType.php";
+            case "faPiaoDaoZhang" :
+                return "finance/fapiaodaozhang.php";
 			default :
 				return "BaseConfig.php";
         }
