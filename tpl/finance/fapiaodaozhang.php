@@ -117,8 +117,8 @@
                 ]
 
             });
-            var salTimeListGrid = Ext.create('Ext.panel.Panel',{
-                id : 'comlist',
+            var duibiPanel = Ext.create('Ext.panel.Panel',{
+                id : 'duibi',
                 height:200,
                 width:1100,
                 x:0,

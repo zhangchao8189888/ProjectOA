@@ -55,9 +55,15 @@ class EmployAction extends BaseAction{
             case "toEmlist" :
                 $this->toEmployList();
                 break;
+            case "toEmlistExt" :
+                $this->toEmployExtList();
+                break;
             case "getEmList":
             	$this->getEmployList();
             	break;
+            case "getEmListExt":
+                $this->getEmployListExt();
+                break;
             case "getEm" :
             	$this->getEmployById();
             	break;
@@ -327,6 +333,8 @@ $adminPO=$_SESSION['admin'];
      $this->objForm->setFormData("errorlist",$errorList);
      $this->objForm->setFormData("emList",$emList);
   }
+
+
   function getEmployList(){
   	$this->mode="toEmlist";
   	$c_name=$_REQUEST['comname']; 
@@ -336,9 +344,41 @@ $adminPO=$_SESSION['admin'];
   	$result=$this->objDao->getEmlistbyComname($c_name,null,$empname,$empno);
   	$this->objForm->setFormData("emList",$result);
   }
+//员工列表EXT查询VY孙瑞鹏
+    function getEmployListExt(){
+        $company_name=$_REQUEST['company_name'];
+        $emp_name=$_REQUEST['emp_name'];
+        $emp_num=$_REQUEST['emp_num'];
+        $this->objDao = new EmployDao ();
+        $i = 0;
+        $josnArray = array ();
+        $salaryList = $this->objDao->getEmlistbyComnameExt ( $company_name,null, $emp_name,$emp_num);
+            while ( $row = mysql_fetch_array ( $salaryList ) ) {
+                $josnArray ['items'] [$i] ['e_name'] = $row ['e_name'];
+                $josnArray ['items'] [$i] ['e_company'] = $row ['e_company'];
+                $josnArray ['items'] [$i] ['e_num'] = $row ['e_num'];
+                $josnArray ['items'] [$i] ['bank_name'] = $row ['bank_name'];
+                $josnArray ['items'] [$i] ['bank_num'] = $row ['bank_num'];
+                $josnArray ['items'] [$i] ['e_type'] = $row ['e_type'];
+                $josnArray ['items'] [$i] ['shebaojishu'] = $row ['shebaojishu'];
+                $josnArray ['items'] [$i] ['gongjijinjishu'] = $row ['gongjijinjishu'];
+                $josnArray ['items'] [$i] ['laowufei'] = $row ['laowufei'];
+                $josnArray ['items'] [$i] ['canbaojin'] = $row ['canbaojin'];
+                $josnArray ['items'] [$i] ['danganfei'] = $row ['danganfei'];
+                $josnArray ['items'] [$i] ['memo'] = $row ['memo'];
+                $i ++;
+            }
+        echo json_encode ( $josnArray );
+        exit ();
+    }
+
+
   function toEmployList(){
   	$this->mode="toEmlist";
   }
+    function toEmployExtList(){
+        $this->mode="toEmExtlist";
+    }
   function getEmployById(){
   	$this->mode="toEmploy";
   	$emid=$_GET['eid'];

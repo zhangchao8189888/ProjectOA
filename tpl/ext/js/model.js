@@ -128,6 +128,25 @@ Ext.define('oa.common.caiwuManageCom.list',{
         {name: 'salaryType', type: 'int'}
     ]
 });
+//员工列表BY孙瑞鹏
+Ext.define('oa.common.yuangong.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'e_name', type: 'string'},
+        {name: 'e_company', type: 'string'},
+        {name: 'e_num', type: 'string'},
+        {name: 'bank_name', type: 'string'},
+        {name: 'bank_num', type: 'string'},
+        {name: 'e_type', type: 'string'},
+        {name: 'shebaojishu', type: 'int'},
+        {name: 'gongjijinjishu', type: 'int'},
+        {name: 'laowufei', type: 'int'},
+        {name: 'canbaojin', type: 'int'},
+        {name: 'danganfei', type: 'int'},
+        {name: 'memo', type: 'string'}
+    ]
+});
 
 /**
  * 财务首页model
