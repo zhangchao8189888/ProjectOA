@@ -59,15 +59,7 @@
                 }),
 
                 tbar : [
-//                         {
-//                     xtype : 'button',
-//                     id : 'bt_deleteDocument',
-//                     handler : function(src) {
 
-//                     },
-//                     text : '删除',
-//                     iconCls : 'shanchu'
-//                     },
                     {
                         xtype : 'button',
                         id : 'searchSalBu',
@@ -90,7 +82,7 @@
                             );
                             checkSalWin();
                         },
-                        text : '详细个税信息',
+                        text : '个税查看导出',
                         iconCls : 'chakan'
                     },
                     '公司名称查询', {

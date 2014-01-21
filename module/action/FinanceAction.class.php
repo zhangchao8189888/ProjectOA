@@ -84,6 +84,9 @@ class FinanceAction extends BaseAction {
 			case "searchGeShuiType" :
 				$this->searchGeShuiType ();
 				break;
+            case "searchFaPiaoDaoZhang" :
+                 $this->searchFaPiaoDaoZhang ();
+                 break;
 			case "searchcompanyListJosn" :
 				$this->searchcompanyListJosn ();
 				break;
@@ -102,6 +105,11 @@ class FinanceAction extends BaseAction {
 	function searchGeShuiType() {
 		$this->mode = "geShuiType";
 	}
+
+// 发票跳转
+    function searchFaPiaoDaoZhang() {
+        $this->mode = "faPiaoDaoZhang";
+    }
 	function getFinanceList() {
 		$this->mode = "financeFrist";
 		$admin = $_SESSION ["admin"];

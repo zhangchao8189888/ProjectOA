@@ -52,6 +52,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiSum">个税统计</a>
 		</div>
+        <div class="item">
+            <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiType">个税类型</a>
 		</div>
