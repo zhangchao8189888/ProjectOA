@@ -26,23 +26,23 @@ Ext.onReady(function () {
         id: 'manageComlist',
         stripeRows:true,
         columns: [
-            {text: "id", width: 50, dataIndex: 'id', sortable: true,align:'center'},
-            {text: "公司名称", flex: 240, dataIndex: 'company_name', sortable: true},
-            {text: "一月", width: 120, dataIndex: 'january', sortable: true,align:'center'},
-            {text: "二月", flex: 120, dataIndex: 'february', sortable: true,align:'center'},
-            {text: "三月", width: 120, dataIndex: 'march', sortable: true,align:'center'},
-            {text: "四月", flex: 120, dataIndex: 'april', sortable: true,align:'center'},
-            {text: "五月", width: 120, dataIndex: 'may', sortable: true,align:'center'},
-            {text: "六月", flex: 120, dataIndex: 'april', sortable: true,align:'center'},
-            {text: "七月", width: 120, dataIndex: 'june', sortable: true,align:'center'},
-            {text: "八月", flex: 120, dataIndex: 'july', sortable: true,align:'center'},
-            {text: "九月", width: 120, dataIndex: 'septmber', sortable: true,align:'center'},
-            {text: "十月", flex: 120, dataIndex: 'october', sortable: true,align:'center'},
-            {text: "十一月", width: 120, dataIndex: 'november', sortable: true,align:'center'},
-            {text: "十二月", flex: 120, dataIndex: 'december', sortable: true,align:'center'}
+            {text: "id", width: 45, dataIndex: 'id', sortable: true,align:'center'},
+            {text: "公司名称", flex: 280, dataIndex: 'company_name', sortable: true},
+            {text: "一月", flex: 110, dataIndex: 'mouth1', sortable: false,align:'center'},
+            {text: "二月", flex: 110, dataIndex: 'mouth2', sortable: false,align:'center'},
+            {text: "三月", flex: 110, dataIndex: 'mouth3', sortable: false,align:'center'},
+            {text: "四月", flex: 110, dataIndex: 'mouth4', sortable: false,align:'center'},
+            {text: "五月", flex: 110, dataIndex: 'mouth5', sortable: false,align:'center'},
+            {text: "六月", flex: 110, dataIndex: 'mouth6', sortable: false,align:'center'},
+            {text: "七月", flex: 110, dataIndex: 'mouth7', sortable: false,align:'center'},
+            {text: "八月", flex: 110, dataIndex: 'mouth8', sortable: false,align:'center'},
+            {text: "九月", flex: 110, dataIndex: 'mouth9', sortable: false,align:'center'},
+            {text: "十月", flex: 110, dataIndex: 'mouth10', sortable: false,align:'center'},
+            {text: "十一月", flex: 110, dataIndex: 'mouth11', sortable: false,align:'center'},
+            {text: "十二月", flex: 110, dataIndex: 'mouth12', sortable: false,align:'center'}
         ],
-        height: 600,
-        width: 1000,
+        height: 700,
+        width: 1100,
         x: 0,
         y: 0,
         title: '个税查看',
@@ -62,47 +62,6 @@ Ext.onReady(function () {
             emptyMsg: "没有数据"
         }),
         tbar: [
-            {
-                xtype: 'button',
-                id: 'del',
-                text: '取消管理',
-                handler: function (src) {
-                    var record = Ext.getCmp('manageComlist').getSelectionModel().getSelection();
-                    // getSelection()
-                    //var records = grid.getSelectionModel().getSelection();
-                    if (record) {
-                        var itcIds = [];
-                        //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
-                        for (var i = 0; i < record.length; i++) {
-                            itcIds.push(record[i].data.id);
-                        }
-                        Ext.Ajax.request({
-                            url: 'index.php?action=ExtFinance&mode=cancelManage',
-                            method: 'post',
-                            params: {
-                                ids: Ext.JSON.encode(itcIds)
-                            },
-                            success: function (response) {
-                                alert("操作成功！");
-                                document.execCommand('Refresh');
-                            }
-                        });
-
-                    } else {
-                        alert('请选择一条记录');
-                    }
-
-                }
-            },
-            {
-                xtype: 'button',
-                id: 'cClear',
-                text: '添加管理公司',
-                handler: function (src) {
-                    comListStore.load();
-                    window.show();
-                }
-            },
             '公司名称查询', {
                 id:'opComname',
                 xtype : 'trigger',
@@ -113,47 +72,35 @@ Ext.onReady(function () {
                     taxstore.load( {
                         params : {
                             company_name : this.getValue(),
-                            date:   Ext.getCmp("STime").getValue(),
+                            date:   Ext.getCmp("opDate").getValue(),
                             start : 0,
                             limit : 50
                         }
                     });
                 }
             },
-            {
-                id:'STime',
-                name: 'STime',
-                xtype:'datefield',
-                format:"Y-m-d",
-                readOnly:false,
-                anchor:'80%'
-            } ,
-            {
-                xtype: 'button',
-                id: 'search1',
-                disabled: false,
-                handler: function () {
+            '查找年份', {
+                id:'opDate',
+                xtype : 'trigger',
+                triggerClass : 'x-form-search-trigger',
+                name: 'opDate',
+                onTriggerClick : function(src) {
                     taxstore.removeAll();
-                    taxstore.load({
-                        params: {
-                            date:   Ext.getCmp("STime").getValue(),
-                            searchtype:"3",
-                            start: 0,
-                            limit: 50
+                    taxstore.load( {
+                        params : {
+                            company_name : Ext.getCmp("opComname").getValue(),
+                            date:   this.getValue(),
+                            start : 0,
+                            limit : 50
                         }
                     });
-
-                },
-                text: '按日期查找'
+                }
             }
         ]
     });
     taxstore.on("beforeload", function () {
-        Ext.apply(taxstore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opComname").getValue()});
+        Ext.apply(taxstore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opDate").getValue()});
     });
-    opManegeGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
-        Ext.getCmp("cClear").setDisabled(selections.length === 0);
-    }, this);
     taxstore.loadPage(1);
     function newWin(text) {
         var win = Ext.create('Ext.window.Window', {

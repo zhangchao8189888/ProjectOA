@@ -173,18 +173,18 @@ Ext.define('oa.common.tax.list',{
     fields: [
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
-        {name: 'january', type: 'string'},
-        {name: 'february ', type: 'string'},
-        {name: 'march', type: 'string'},
-        {name: 'april ', type: 'string'},
-        {name: 'may ', type: 'string'},
-        {name: 'june', type: 'string'},
-        {name: 'july', type: 'string'},
-        {name: 'august ', type: 'string'},
-        {name: 'septmber', type: 'string'},
-        {name: 'october', type: 'string'},
-        {name: 'november', type: 'string'},
-        {name: 'december', type: 'string'}
+        {name: 'mouth1', type: 'string'},
+        {name: 'mouth2 ', type: 'string'},
+        {name: 'mouth3', type: 'string'},
+        {name: 'mouth4 ', type: 'string'},
+        {name: 'mouth5 ', type: 'string'},
+        {name: 'mouth6', type: 'string'},
+        {name: 'mouth7', type: 'string'},
+        {name: 'mouth8', type: 'string'},
+        {name: 'mouth9', type: 'string'},
+        {name: 'mouth10', type: 'string'},
+        {name: 'mouth11', type: 'string'},
+        {name: 'mouth12', type: 'string'}
     ]
 });
 
