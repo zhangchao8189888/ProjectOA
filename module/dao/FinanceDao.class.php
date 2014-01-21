@@ -45,11 +45,6 @@ class FinanceDao extends BaseDao
 
     /**
      * financedao审核公司
-     * @param null $start
-     * @param null $limit
-     * @param null $sort
-     * @param null $where
-     * @return bool|resource
      */
     function searchCheckCompanyListPage($start=NULL,$limit=NULL,$sort=NULL,$where){
     	$sql="select * from OA_checkcompany where 1=1";
@@ -105,6 +100,49 @@ class FinanceDao extends BaseDao
         }
 
     }
+
+    /**
+     * financedao 查看个税
+     */
+    function searchTaxListCount($where){
+        $id = $_SESSION ['admin'] ['id'];
+        $sql="select count(*) as cnt from OA_admin_company a,OA_company b where a.adminId=$id and a.companyId=b.id";
+        if($where!=null){
+            if($where['companyName']!=""){
+                $sql.=" and company_name like '%{$where['companyName']}%' ";
+            }
+        }
+        $result=$this->g_db_query($sql);
+        if (!$result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc($result);
+        return $row['cnt'];
+    }
+
+    function searchTaxListPage($start=NULL,$limit=NULL,$sort=NULL,$where){
+        $id = $_SESSION ['admin'] ['id'];
+        $sql="select * from OA_admin_company a,OA_company b where a.adminId=$id and a.companyId=b.id";
+
+        if($where['companyName']!=""){
+            $sql.=" and company_name like '%{$where['companyName']}%' ";
+        }
+
+        if($sort){
+            $sql.=" order by b.$sort";
+        }
+        if($start>=0&&$limit){
+            $sql.=" limit $start,$limit";
+        }
+        $result=$this->g_db_query($sql);
+        return $result;
+    }
+    function searchTaxTimeByDateAndComId($date, $comId) {
+        $sql = "select *  from OA_gesui where salTime='$date' and comId=$comId ";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
+
     function searchBillBySalaryTimeId($salaryTimeId, $billType = null) {
         $sql = "select *  from OA_bill where salaryTime_id=$salaryTimeId ";
         if ($billType != null) {

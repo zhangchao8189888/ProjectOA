@@ -267,6 +267,7 @@ class ExtFinanceAction extends BaseAction {
         $sorts = $_REQUEST ['sort'];
         $dir = $_REQUEST ['dir'];
         $companyName = $_REQUEST ['company_name'];
+        $year = $_POST ['year'];
         if (! $start) {
             $start = 0;
         }
@@ -276,13 +277,37 @@ class ExtFinanceAction extends BaseAction {
         if (! $sorts) {
             $sorts = "uncheckid";
         }
+        if(!$year){
+            $year="2014";
+        }
         $where = array ();
         $where ['companyName'] = $companyName;
-        $sum = $this->objDao->searchCheckCompanyListCount ( $where );
-        $comList = $this->objDao->searchCheckCompanyListPage ( $start, $limit, $sorts . " " . $dir, $where );
+        $sum =$this->objDao->searchTaxListCount($where);
+        $result=$this->objDao->searchTaxListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray = array ();
         $josnArray ['total'] = $sum;
-        $i = 0;
+        $j = 0;
+        while ( $row = mysql_fetch_array ( $result ) ) {
+            $josnArray['items'][$j]['id']=$row['id'];
+            $josnArray['items'][$j]['company_name']=$row['company_name'];
+            // 查询12个月的工资状况包括年终奖
+            $josnArray['items'][$j]['mouth'.$j] = "<span style='color: red'>未报个税</span>";
+            for($i = 1; $i <= 12; $i ++) {
+                $josnArray['items'][$j]['mouth'.$i] = "<span style='color: red'>未报个税</span>";
+                if ($i < 10) {
+                    $date = $year . "-0" . $i . "-01";
+                } else {
+                    $date = $year . "-" . $i . "-01";
+                }
+                $resul = $this->objDao->searchTaxTimeByDateAndComId ( $date, $row ['id'] );
+                if ($resul && $resul ['geSui_type'] == 1) {
+                    $josnArray['items'][$j]['mouth1'] = "<span style='color: green'>已报个税</span>";
+                } else {
+                    $josnArray['items'][$j]['mouth2'] = "<span style='color: red'>未报个税</span>";
+                }
+            }
+            $j++;
+        }
         echo json_encode ( $josnArray );
         exit ();
     }
@@ -297,10 +322,6 @@ class ExtFinanceAction extends BaseAction {
         $sorts=$_REQUEST['sort'];
         $dir=$_REQUEST['dir'];
         $key=$_REQUEST['Key'];
-        /**
-         * sorts = Replace(Trim(Request.Form("sort")),"'","")
-        dir = Replace(Trim(Request.Form("dir")),"'","")
-         */
         if(!$start){
             $start=0;
         }

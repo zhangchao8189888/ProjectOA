@@ -103,10 +103,8 @@ class ExtServiceAction extends BaseAction{
         if($date!=null) {
             $time   =   $this->AssignTabMonth($date,0);
             if(1==$searchType){
-                $date=  $time["data"];
                 $where['$salTime']=$date;
             }elseif(2 == $searchType){
-                $date   =    $time["first"];
                 $dateEnd   =     $time["next"];
                 $where['$salTime']=$date;
                 $where['dateEnd']=$dateEnd;
