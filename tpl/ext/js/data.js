@@ -262,6 +262,37 @@ var geShuiExcelExportStore = Ext.create('Ext.data.Store', {
     }]
 });
 
+//员工查询BY孙瑞鹏
+var empExtListStore = Ext.create('Ext.data.Store', {
+    //分页大小
+    //  pageSize: 50,
+    model: 'oa.common.yuangong.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=Employ&mode=getEmListExt',
+
+        reader: {
+            root: 'items'
+            // totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'e_name',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
 /**
  *财务首页数据源
  * @type {Ext.data.Store}

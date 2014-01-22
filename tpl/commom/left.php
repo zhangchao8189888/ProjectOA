@@ -25,9 +25,12 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Employ&mode=toimport">导入员工</a>
 		</div>
-		<div class="item">
-			<a href="index.php?action=Employ&mode=toEmlist">员工列表查询</a>
-		</div>
+<!--		<div class="item">-->
+<!--			<a href="index.php?action=Employ&mode=toEmlist">员工列表查询</a>-->
+<!--		</div>-->
+        <div class="item">
+            <a href="index.php?action=Employ&mode=toEmlistExt">员工列表查询</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=Employ&mode=toComplist">单位列表查询</a>
 		</div>
