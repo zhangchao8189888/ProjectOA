@@ -158,7 +158,7 @@ class FinanceDao extends BaseDao
      */
     function searhManageComCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "SELECT count(distinct company_name) as cnt   from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
+        $sql = "SELECT count(distinct company_name) as cnt   from OA_company c,OA_admin_company a,OA_salarytime b  where 1=1
   and a.companyId = c.id and b.companyId=c.id and  a.adminId = $id";
         if ($where != null) {
             if ($where ['companyName'] != "") {
@@ -186,15 +186,10 @@ class FinanceDao extends BaseDao
 
     /**
      * 客服首页dao 获得分页数据
-     * @param null $start
-     * @param null $limit
-     * @param null $sort
-     * @param null $where
-     * @return bool|resource
      */
     function searhManageComPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "SELECT  distinct c.id,c.company_name from OA_company c,OA_admin_company a,oa_salarytime b  where 1=1
+        $sql = "SELECT  distinct c.id,c.company_name from OA_company c,OA_admin_company a,OA_salarytime b  where 1=1
         and a.companyId = c.id and b.companyId=c.id and a.adminId = $id ";
         if ($where != null) {
             if ($where ['companyName'] != "") {

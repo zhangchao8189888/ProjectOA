@@ -198,9 +198,6 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 <!-- 			<a href="index.php?action=SaveSalary&mode=searchErSalaryTime">二次工资查询</a> -->
 				<a href="index.php?action=Ext&mode=toErSalTimeList">二次工资查询</a>
 		</div>
-		<div class="item">
-			<a href="index.php?action=Finance&mode=searchGeShuiTypeList">个税查看</a>
-		</div>
         <div class="item">
             <a href="index.php?action=Ext&mode=toTaxInfo">个税查看</a>
         </div>

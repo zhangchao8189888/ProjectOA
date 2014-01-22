@@ -327,15 +327,6 @@ Ext.onReady(function () {
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <div id="tab" class="TipDiv"></div>
-        <div id="demo"></div>
-        <div id="center"></div>
-        <div id="div1" class="content">
-            <ul>
-                <li id="li1"></li>
-                <li id="li3"></li>
-            </ul>
-        </div>
-        <span style="color: red"></span>
         <div id="checkcom"></div>
     </div>
 </div>

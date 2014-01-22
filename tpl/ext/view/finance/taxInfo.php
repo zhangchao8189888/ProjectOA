@@ -22,7 +22,6 @@ Ext.onReady(function () {
 
     var opManegeGrid = Ext.create('Ext.grid.Panel', {
         store: taxstore,
-        selType: 'checkboxmodel',
         id: 'manageComlist',
         stripeRows:true,
         columns: [
@@ -84,12 +83,12 @@ Ext.onReady(function () {
                 xtype : 'trigger',
                 triggerClass : 'x-form-search-trigger',
                 name: 'opDate',
-                onTriggerClick : function(src) {
+                    onTriggerClick : function(src) {
                     taxstore.removeAll();
                     taxstore.load( {
                         params : {
                             company_name : Ext.getCmp("opComname").getValue(),
-                            date:   this.getValue(),
+                            year:   this.getValue(),
                             start : 0,
                             limit : 50
                         }
