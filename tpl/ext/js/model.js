@@ -193,7 +193,19 @@ Ext.define('oa.common.tax.list',{
  */
 Ext.define('oa.common.service.list', {
     extend: 'Ext.data.Model',
-    fields: ['salDate', 'op_salaryTime', 'company_name','companyId',
-        'salStat','salTimeid','fa_state','salNianStat',
-        'salOrStat','fastat','opTime']
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'salDate', type: 'string'},
+        {name: 'op_salaryTime', type: 'string'},
+        {name: 'companyId', type: 'string'},
+        {name: 'salStat', type: 'string'},
+        {name: 'salTimeid', type: 'string'},
+        {name: 'fa_state', type: 'string'},
+        {name: 'salNianStat', type: 'string'},
+        {name: 'salOrStat', type: 'string'},
+        {name: 'fastat', type: 'string'},
+        {name: 'opTime', type: 'string'}
+    ]
+
 });

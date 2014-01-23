@@ -13,6 +13,7 @@
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="tpl/ext/js/monthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
 <script type="text/javascript">
 Ext.require([
@@ -97,7 +98,6 @@ Ext.onReady(function(){
                     checkSalWin(sel.data.id);
                 },
                 text : '查看二次工资',
-                iconCls : 'chakan'
             },
             '公司名称查询', {
                 id:'comname',
@@ -117,23 +117,33 @@ Ext.onReady(function(){
                     });
                 }
             },
-            '工资月份', {
+            {
                 id:'salTime',
-                xtype : 'trigger',
-                triggerClass : 'x-form-search-trigger',
                 name: 'salTime',
-                onTriggerClick : function(src) {
+                xtype : 'monthfield',
+                editable: true,
+                width: 130,
+                labelAlign: 'right',
+                format: 'Y-m'
+            },
+            {
+                xtype: 'button',
+                id: 'opmonth',
+                disabled: false,
+                handler: function () {
                     erSalTimeListstore.removeAll();
-                    erSalTimeListstore.load( {
-                        params : {
+                    erSalTimeListstore.load({
+                        params: {
                             companyName : Ext.getCmp("comname").getValue(),
-                            salTime : this.getValue(),
+                            salTime : Ext.getCmp("salTime").getValue(),
                             opTime : Ext.getCmp("STime").getValue(),
                             start : 0,
                             limit : 50
                         }
                     });
-                }
+
+                },
+                text: '二次工资月份查找'
             },
             {
                 id:'STime',
@@ -160,7 +170,7 @@ Ext.onReady(function(){
                     });
 
                 },
-                text: '按操作时间查找'
+                text: '保存时间查找'
             }
         ]
     });

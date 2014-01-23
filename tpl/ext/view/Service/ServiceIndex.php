@@ -35,7 +35,7 @@ Ext.onReady(function () {
         stripeRows:true,
         selType: 'checkboxmodel',
         columns: [
-            {text: "id", dataIndex: 'id', width: 45,align:'center'},
+            {text: "id", width: 50, dataIndex: 'id', sortable: true,align:'center'},
             {text: "工资日期", dataIndex: 'salDate', width: 85,align:'center'},
             {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100,align:'center'},
             {
@@ -153,14 +153,51 @@ Ext.onReady(function () {
         tbar: [
             {
                 xtype: 'button',
-                id: 'addManageCom',
-                disabled: false,
-                handler: function () {
+                id: 'cClear',
+                text: '添加管理公司',
+                handler: function (src) {
                     comListStore.load();
                     window.show();
-                },
-                text: '管理公司',
-                iconCls: 'chakan'
+                }
+            },
+            {
+                xtype: 'button',
+                id: 'delc',
+                text: '取消管理',
+                handler: function (src) {
+                    var record = Ext.getCmp('grid2').getSelectionModel().getSelection();
+                    // getSelection()
+                    //var records = grid.getSelectionModel().getSelection();
+                    if (record) {
+                        var itcIds = [];
+                        //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
+                        for (var i = 0; i < record.length; i++) {
+                            itcIds.push(record[i].data.id);
+                        }
+                        Ext.Ajax.request({
+                            url: 'index.php?action=ExtFinance&mode=cancelManage',
+                            method: 'post',
+                            params: {
+                                ids: Ext.JSON.encode(itcIds)
+                            },
+                            success: function (response) {
+                                alert("取消成功！");
+                                serviceManagestore.removeAll();
+                                serviceManagestore.load({
+                                    params: {
+                                        date:  Ext.getCmp("STime").getValue(),
+                                        start: 0,
+                                        limit: 50
+                                    }
+                                });
+                            }
+                        });
+
+                    } else {
+                        alert('请选择一条记录');
+                    }
+
+                }
             },
             '公司名称查询',
             {
@@ -192,11 +229,10 @@ Ext.onReady(function () {
                 id: 'search1',
                 disabled: false,
                 handler: function () {
-                    var data    =   Ext.getCmp("STime").getValue();
                     serviceManagestore.removeAll();
                     serviceManagestore.load({
                             params: {
-                                date:  data,
+                                date:  Ext.getCmp("STime").getValue(),
                                 sType:"3" ,
                                 start: 0,
                                 limit: 50
@@ -211,11 +247,10 @@ Ext.onReady(function () {
                 id: 'search2',
                 disabled: false,
                 handler: function () {
-                    var data    =   Ext.getCmp("STime").getValue();
                     serviceManagestore.removeAll();
                     serviceManagestore.load({
                         params: {
-                            date:  data,
+                            date:   Ext.getCmp("STime").getValue(),
                             sType:"2",
                             start: 0,
                             limit: 50
@@ -230,9 +265,7 @@ Ext.onReady(function () {
     serviceManagestore.on("beforeload", function () {
     Ext.apply(serviceManagestore.proxy.extraParams, {Key: Ext.getCmp("comname").getValue(), companyName: Ext.getCmp("comname").getValue()});
 });
-    serviceManage.getSelectionModel().on('selectionchange', function (selModel, selections) {
-        Ext.getCmp("addManageCom").setDisabled(selections.length === 0);
-    }, this);
+
     serviceManagestore.loadPage(1);
 
     /**
@@ -269,7 +302,7 @@ Ext.onReady(function () {
         tbar: [
             {
                 xtype : 'button',
-                id : 'bt',
+                id : 'addcombt',
                 handler : function() {
                     var record = Ext.getCmp('companyLis').getSelectionModel().getSelection();
                     // getSelection()
@@ -286,8 +319,8 @@ Ext.onReady(function () {
                             params: {
                                 ids : Ext.JSON.encode(itcIds)
                             },
-                            success: function(response){
-                                var text = response.responseText;
+                            success: function(x){
+                                var text = x.responseText;
                                 // process server response here
                                 newWin(text);
                             }
@@ -319,90 +352,45 @@ Ext.onReady(function () {
 
                 }
 
-            },
-            {
-                xtype: 'button',
-                id: 'del',
-                text: '取消管理',
-                iconCls: 'chakan',
-                handler: function (src) {
-                    var record = Ext.getCmp('companyLis').getSelectionModel().getSelection();
-                    // getSelection()
-                    //var records = grid.getSelectionModel().getSelection();
-                    if (record) {
-                        var itcIds = [];
-                        //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
-                        for (var i = 0; i < record.length; i++) {
-                            itcIds.push(record[i].data.id);
-                        }
-                        Ext.Ajax.request({
-                            url: 'index.php?action=ExtFinance&mode=cancelManage',
-                            method: 'post',
-                            params: {
-                                ids: Ext.JSON.encode(itcIds)
-                            },
-                            success: function (response) {
-                                alert("取消成功！");
-                            }
-                        });
-
-                    } else {
-                        alert('请选择一条记录');
-                    }
-
-                }
             }
         ]
     });
     comListStore.on("beforeload", function () {
         Ext.apply(comListStore.proxy.extraParams, {Key: Ext.getCmp("addc").getValue()});
     });
-    // Create a window
-    var window = new Ext.Window({
-        title: "公司列表", // 窗口标题
-        width: 530, // 窗口宽度
-        height: 450, // 窗口高度
-        layout: "border",// 布局
-        minimizable: true, // 最大化
-        maximizable: true, // 最小化
-        frame: true,
-        constrain: true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
-        buttonAlign: "center", // 按钮显示的位置
-        modal: true, // 模式窗口，弹出窗口后屏蔽掉其他组建
-        resizable: false, // 是否可以调整窗口大小，默认TRUE。
-        plain: true,// 将窗口变为半透明状态。
-        items: [companyListGrid],
-        closeAction: 'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
-    });
-
     function newWin(text) {
         var win = Ext.create('Ext.window.Window', {
             title: text,
             width: 300,
             height: 100,
             plain: true,
-            closeAction: 'close', // 关闭窗口
+            closeAction: 'hide', // 关闭窗口
             maximizable: false, // 最大化控制 值为true时可以最大化窗体
             layout: 'border',
             contentEl: 'tab'
         });
         win.show();
-    }
-    var salListWidth=890;
-    var salList=Ext.create("Ext.grid.Panel",{
-        title:'',
-        width:salListWidth,
-        height:450,
-        enableLocking : true,
-        id : 'configGrid',
-        name : 'configGrid',
-        features: [{
-            ftype: 'summary'
-        }],
-        columns : [], //注意此行代码，至关重要
-        //displayInfo : true,
-        emptyMsg : "没有数据显示"
+    };
+    // Create a window
+    var window = new Ext.Window({
+        title:"管理", // 窗口标题
+        width:530, // 窗口宽度
+        height:440, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:false, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:[companyListGrid],
+        closeAction:'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
     });
+
+    var salListWidth=890;
+
     function checkSalWin(text,type,timeId,rowEl) {
         var p = Ext.create("Ext.grid.Panel",{
             id:"salTimeListP",
@@ -425,36 +413,6 @@ Ext.onReady(function () {
         }else{
             items=[salList];
         }
-        var salTimeListStore = Ext.create('Ext.data.Store', {
-            model: 'oa.common.salTime.list',
-            proxy: {
-                type: 'ajax',
-                url : 'index.php?action=SaveSalary&mode=searchErSalaryTimeListByIdJson'
-            }
-        });
-        var winSal = Ext.create('Ext.window.Window', {
-            title:text, // 窗口标题
-            width:900, // 窗口宽度
-            height:500, // 窗口高度
-            layout:"border",// 布局
-            minimizable:true, // 最大化
-            maximizable:true, // 最小化
-            frame:true,
-            constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
-            buttonAlign:"center", // 按钮显示的位置
-            modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
-            resizable:true, // 是否可以调整窗口大小，默认TRUE。
-            plain:true,// 将窗口变为半透明状态。
-            items:items,
-            listeners: {
-                //最小化窗口事件
-                minimize: function(window){
-                    this.hide();
-                    window.minimizable = true;
-                }
-            },
-            closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
-        });
         var title="";
         if(type == 3){
             var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
@@ -585,6 +543,7 @@ function addFa() {
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <div id="tableList"></div>
+        <div id="tab" class="TipDiv"></div>
         <form enctype="multipart/form-data" id="iform" action="" target="_blank" method="post">
             <input type="hidden" name="comId" id="comId" value=""/>
             <input type="hidden" name="sDate" id="sDate" value=""/>

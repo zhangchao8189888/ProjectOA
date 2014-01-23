@@ -76,6 +76,7 @@ class ExtSalaryAction extends BaseAction{
         $time = array ();
         $time["data"]   =  $date ;
         $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
+        $time["month"]  =   (date("Y-m",strtotime("+1 day",strtotime($date))));
         $time["first"]  =    $first_date;
         $time["last"]   =      $for_day;
         return $time;
@@ -101,13 +102,16 @@ class ExtSalaryAction extends BaseAction{
     		$limit=50;
     	}
         $where=array();
+        if($salTime){
+            $timesal=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$timesal["month"];
+        }
         if($opTime) {
             $time=$this->AssignTabMonth($opTime,0);
             $where['op_salaryTime']=$time["next"];
             $where['op_time']   =   $time["data"];
         }
     	$where['companyName']=$companyName;
-    	$where['salaryTime']=$salTime;
     	$sum =$this->objDao->searhSalaryNianTimeListCount($where);
     	$salaryNianTimeList=$this->objDao->searhSalaryNianTimeListPage($start,$limit,$sorts." ".$dir,$where);
     	$josnArray=array();
@@ -150,11 +154,13 @@ class ExtSalaryAction extends BaseAction{
             $where['op_salaryTime']=$time["next"];
             $where['op_time']   =   $time["data"];
         }
-
-        $where['companyName']=$companyName;
         $where['salaryTime']=$salTime;
+        if($salTime) {
+            $time=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$time["month"];
+        }
+        $where['companyName']=$companyName;
         $sum =$this->objDao->searhSalaryTimeListCount($where);
-
         $salaryTimeList=$this->objDao->searhSalaryTimeListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray=array();
         $josnArray['total']=$sum;
@@ -188,16 +194,18 @@ class ExtSalaryAction extends BaseAction{
     	$dir=$_REQUEST['dir'];
     	$companyName=$_REQUEST['companyName'];
     	$salTime=$_REQUEST['salTime'];
-    
+        $where=array();
     	if(!$start){
     		$start=0;
     	}
     	if(!$limit){
     		$limit=50;
     	}
-    	$where=array();
+        if($salTime){
+            $time=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$time["month"];
+        }
     	$where['companyName']=$companyName;
-    	$where['salaryTime']=$salTime;
     
     	$sum =$this->objDao->searhSalaryTimeCount($where);
     
@@ -286,25 +294,24 @@ class ExtSalaryAction extends BaseAction{
         $companyName=$_REQUEST['companyName'];
         $salTime=$_REQUEST['salTime'];
         $opTime=$_REQUEST['opTime'];
-
+        $where=array();
         if(!$start){
             $start=0;
         }
         if(!$limit){
             $limit=50;
         }
-        $where=array();
+        if($salTime){
+            $timesal=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$timesal["month"];
+        }
         $where['companyName']=$companyName;
-        $where['salaryTime']=$salTime;
         $where['op_salaryTime']=$opTime;
-
         $sum =$this->objDao->searhErSalaryTimeListCount($where);
-
         $salaryTimeList=$this->objDao->searhErSalaryTimeListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray=array();
         $josnArray['total']=$sum;
         $i=0;
-
         while ($row=mysql_fetch_array($salaryTimeList) ){
             $josnArray['items'][$i]['id']=$row['id'];
             $josnArray['items'][$i]['company_name']=$row['company_name'];

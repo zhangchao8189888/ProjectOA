@@ -78,7 +78,7 @@ Ext.onReady(function () {
                                 ids: Ext.JSON.encode(itcIds)
                             },
                             success: function (response) {
-                                alert("操作成功！");
+                                alert("取消成功！");
                                 caiwuListStore.removeAll();
                                 caiwuListStore.load({
                                     params: {
@@ -136,12 +136,12 @@ Ext.onReady(function () {
                 id: 'search1',
                 disabled: false,
                 handler: function () {
-                    var data    =   Ext.getCmp("STime").getValue();
                     caiwuListStore.removeAll();
                     caiwuListStore.load({
                         params: {
-                            date:  data,
+                            date:   Ext.getCmp("STime").getValue(),
                             start: 0,
+                            sType:3,
                             limit: 50
                         }
                     });

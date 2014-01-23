@@ -39,7 +39,7 @@ class ExtForm extends BaseForm
             case "toErSalTimeList":
                 return "ext/view/salary/erSalTimeList.php";
             case "tosearhSalaryNianTimeList";
-            	return "nianSalaryTime.php";
+            	return "ext/view/salary/nianSalaryTime.php";
             case "toCheckCompany":
             	return "ext/view/finance/checkCompany.php";
             case "toFinanceIndex":

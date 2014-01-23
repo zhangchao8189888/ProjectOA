@@ -17,7 +17,7 @@
         src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
         src="tpl/ext/js/data.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript" src="tpl/ext/js/MonthPickerPlugin.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="tpl/ext/js/monthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
         src="common/js/jquery_last.js" charset="utf-8"></script>
 <script type="text/javascript">
@@ -128,9 +128,9 @@
                     {
                         id:'fd',
                         xtype : 'monthfield',
-                        fieldLabel: '日期',
-                        editable: false,
-                        width: 250,
+                        editable: true,
+                        width: 130,
+
                         labelAlign: 'right',
                         format: 'Y-m'
                     },
@@ -157,10 +157,11 @@
                     {
                         id:'STime',
                         name: 'STime',
+                        width: 130,
                         xtype:'datefield',
                         format:"Y-m-d",
                         readOnly:false,
-                        anchor:'95%'
+                        anchor:'85%'
                     } ,
                     {
                         xtype: 'button',
