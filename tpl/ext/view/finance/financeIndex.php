@@ -10,6 +10,7 @@
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"src="tpl/ext/js/data.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"src="tpl/ext/js/MonthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript">
 Ext.require([
@@ -78,7 +79,14 @@ Ext.onReady(function () {
                             },
                             success: function (response) {
                                 alert("操作成功！");
-                                document.execCommand('Refresh');
+                                caiwuListStore.removeAll();
+                                caiwuListStore.load({
+                                    params: {
+                                        date:  Ext.getCmp("STime").getValue(),
+                                        start: 0,
+                                        limit: 50
+                                    }
+                                });
                             }
                         });
 
@@ -116,11 +124,13 @@ Ext.onReady(function () {
             {
                 id:'STime',
                 name: 'STime',
-                xtype:'datefield',
-                format:"Y-m-d",
-                readOnly:false,
-                anchor:'80%'
-            } ,
+                xtype : 'monthfield',
+                editable: false,
+                width: 150,
+                labelAlign: 'right',
+                format: 'Y-m'
+            },
+
             {
                 xtype: 'button',
                 id: 'search1',

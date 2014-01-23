@@ -6,19 +6,20 @@
 <title>工资列表查询</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css"
-	rel="stylesheet" />
-<link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet" />
-<link href="common/css/admin.css" rel="stylesheet" type="text/css" />
+      rel="stylesheet"/>
+<link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
+<link href="common/css/admin.css" rel="stylesheet" type="text/css"/>
 <script language="javascript" type="text/javascript"
-	src="common/ext/ext-all.js" charset="utf-8"></script>
+        src="common/ext/ext-all.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
-	src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
+        src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
-	src="tpl/ext/js/model.js" charset="utf-8"></script>
+        src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
-	src="tpl/ext/js/data.js" charset="utf-8"></script>
+        src="tpl/ext/js/data.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="tpl/ext/js/MonthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
-	src="common/js/jquery_last.js" charset="utf-8"></script>
+        src="common/js/jquery_last.js" charset="utf-8"></script>
 <script type="text/javascript">
         Ext.require([
             'Ext.grid.*',
@@ -124,24 +125,35 @@
                             });
                         }
                     },
-                    '工资月份', {
-                        id:'salTime',
-                        xtype : 'trigger',
-                        triggerClass : 'x-form-search-trigger',
-                        name: 'salTime',
-                        onTriggerClick : function(src) {
+                    {
+                        id:'fd',
+                        xtype : 'monthfield',
+                        fieldLabel: '日期',
+                        editable: false,
+                        width: 250,
+                        labelAlign: 'right',
+                        format: 'Y-m'
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'opmonth',
+                        disabled: false,
+                        handler: function () {
                             salTimeListstore.removeAll();
-                            salTimeListstore.load( {
-                                params : {
+                            salTimeListstore.load({
+                                params: {
                                     companyName : Ext.getCmp("comname").getValue(),
-                                    salTime : this.getValue(),
+                                    salTime : Ext.getCmp("fd").getValue(),
                                     opTime : Ext.getCmp("STime").getValue(),
                                     start : 0,
                                     limit : 50
                                 }
                             });
-                        }
-                    },
+
+                        },
+                        text: '按工资月份查找'
+                    }  ,
+
                     {
                         id:'STime',
                         name: 'STime',

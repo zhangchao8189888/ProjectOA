@@ -10,7 +10,7 @@
 ?> 
 <html>
    <head>
-    <title></title>
+    <title>日志查询</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
    <link href="common/css/validator.css" rel="stylesheet" type="text/css" />
@@ -46,20 +46,21 @@
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <!--导航栏-->
-        <div class="navigate">{$navigate}</div>
-        <div class="manage">
+        <div class="navigate">日志查询</div>
+ <!--       <div class="manage">
         </div>
-        <!--功能项-->
+        <!--功能项
         <div class="manage">
          </div>
-             <!--搜索栏-->
-        <div class="search" style="min-width:830px;">
-        
+             <!--搜索栏
+        <div class="search" >
+
         </div>
+        -->
 <div>
 <table width="100%" cellpadding="0" cellspacing="0">
 	<tr valign="top">
-		<th width="11%"><table border="0" cellspacing="5" cellpadding="1">
+		<th width="2%"><table border="0" cellspacing="5" cellpadding="1">
 		    <?php include(ROOT."/common/tpl/left.php"); ?></table></th>
 	  <td width="89%">
 		<table cellpadding=4 cellspacing=0 width="100%">
