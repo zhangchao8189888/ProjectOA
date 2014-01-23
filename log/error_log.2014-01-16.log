@@ -1,0 +1,91 @@
+
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-16 10:32:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-16 10:32:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-16 10:32:19
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\admin_list.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-16 10:32:19
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-16 10:32:21
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\modifyPassword.php","errLine":52} @@@@@@@@
+Begin Time: 2014-01-16 10:32:21
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include(ROOT\/common\/tpl\/left.php) [<a href='function.include'>function.include<\/a>]: failed to open stream: No such file or directory","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-16 10:32:22
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"include() [<a href='function.include'>function.include<\/a>]: Failed opening 'ROOT\/common\/tpl\/left.php' for inclusion (include_path='.;C:\\xampp\\php\\pear\\')","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\log_list.php","errLine":63} @@@@@@@@
+Begin Time: 2014-01-16 10:32:22
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt from OA_checkcompany where 1=1 @@@@@@@@
+Begin Time: 2014-01-16 10:32:24
+**************sql_msg**************
+@@@@@@@@ select * from OA_checkcompany where 1=1 order by id DESC limit 0,50 @@@@@@@@
+Begin Time: 2014-01-16 10:32:24
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\ExtFinanceAction.class.php","errLine":88} @@@@@@@@
+Begin Time: 2014-01-16 10:32:24
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\employ_import.php","errLine":67} @@@@@@@@
+Begin Time: 2014-01-16 10:32:26
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\employ_import.php","errLine":86} @@@@@@@@
+Begin Time: 2014-01-16 10:32:26
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 1 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 10:34:39
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 1 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 10:38:35
+**************sql_msg**************
+@@@@@@@@ select count(*) from OA_company where 1=1 and a.companyId = c.id  and  a.adminId = 18 @@@@@@@@
+Begin Time: 2014-01-16 11:21:56
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\finance_first.php","errLine":85} @@@@@@@@
+Begin Time: 2014-01-16 11:21:58
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\finance_first.php","errLine":85} @@@@@@@@
+Begin Time: 2014-01-16 11:22:00
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\finance_first.php","errLine":85} @@@@@@@@
+Begin Time: 2014-01-16 11:22:00
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 1 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 11:32:31
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 1 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 11:32:45
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 16:05:14
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 16:58:42
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 17:00:23
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 and st.salaryTime='2013-01'  @@@@@@@@
+Begin Time: 2014-01-16 17:00:29
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 and st.salaryTime='2013-03'  @@@@@@@@
+Begin Time: 2014-01-16 17:00:33
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 17:03:44
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\finance_first.php","errLine":85} @@@@@@@@
+Begin Time: 2014-01-16 17:04:41
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 17:22:32
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-16 17:59:05

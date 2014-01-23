@@ -1,0 +1,1612 @@
+
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\employ_import.php","errLine":67} @@@@@@@@
+Begin Time: 2014-01-14 10:21:11
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\employ_import.php","errLine":86} @@@@@@@@
+Begin Time: 2014-01-14 10:21:11
+**************sql_msg**************
+@@@@@@@@ update OA_admin  set last_login_time=now()  where id= @@@@@@@@
+Begin Time: 2014-01-14 10:21:22
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:21:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:21:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:21:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:21:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:21:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:21:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:21:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:32
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:32
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:32
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:32
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:32
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 10:22:32
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 10:22:38
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 18 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-14 10:23:20
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt from oa_checkcompany where 1=1 @@@@@@@@
+Begin Time: 2014-01-14 10:23:57
+**************sql_msg**************
+@@@@@@@@ select * from oa_checkcompany where 1=1 order by id DESC limit 0,50 @@@@@@@@
+Begin Time: 2014-01-14 10:23:57
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\ExtFinanceAction.class.php","errLine":85} @@@@@@@@
+Begin Time: 2014-01-14 10:23:57
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 1 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-14 10:41:12
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:28:29
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:28:29
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:28:29
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:28:29
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:28:29
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:28:29
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:28:36
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:30:09
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:58
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:58
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:58
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:58
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:58
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:30:58
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:31:02
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:42:01
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:42:01
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:42:01
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:42:01
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:42:01
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:42:01
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:42:07
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:53:20
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:53:20
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:53:20
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:53:20
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:53:20
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:53:20
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:53:25
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:54:41
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:54:41
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:54:41
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:54:41
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:54:41
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:54:41
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:54:47
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:55:27
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:55:27
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:55:27
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:55:27
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:55:27
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 11:55:27
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 11:55:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:03:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:03:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:03:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:03:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:03:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:03:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:03:40
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:08:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:08:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:08:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:08:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:08:50
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:08:50
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:08:55
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:11
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:11
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:11
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:11
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:11
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:11
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:16
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:43
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:43
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:43
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:43
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:43
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:43
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:26:48
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:59
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:26:59
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:27:04
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:28:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:28:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:28:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:28:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:28:31
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\finance\\caiWuImport.php","errLine":110} @@@@@@@@
+Begin Time: 2014-01-14 12:28:31
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='210402197812250925' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110111197106020045' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='51011119661022424X' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='370683197706136428' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='450203197411050746' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='110108198206044964' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='37108119790201452X' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='320481198007066821' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select *  from OA_nian_salary where salaryTimeId= and employid='410503198110041524' @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":446} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"mysql_fetch_array(): supplied argument is not a valid MySQL result resource","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\FinanceAction.class.php","errLine":455} @@@@@@@@
+Begin Time: 2014-01-14 12:28:35
+**************sql_msg**************
+@@@@@@@@ select count(*) as cnt   from OA_salarytime_other st,OA_company c ,OA_admin_company where  st.companyId=c.id and a.companyId = c.id  and  a.adminId = 1 and salaryType=5 @@@@@@@@
+Begin Time: 2014-01-14 18:05:40

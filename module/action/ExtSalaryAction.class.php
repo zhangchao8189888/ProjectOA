@@ -51,6 +51,12 @@ class ExtSalaryAction extends BaseAction{
             case "searchGeshuiListJosn" :
             	$this->searchGeshuiListJosn();
             	break;
+            case "searchFapiaoTypeJosn" :
+                $this->searchFapiaoTypeJosn();
+                break;
+            case "searchDaozhangTypeJosn" :
+                $this->searchDaozhangTypeJosn();
+                break;
             case "searchGeshuiTypeJosn" :
             	$this->searchGeshuiTypeJosn();
             	break;
@@ -183,7 +189,72 @@ class ExtSalaryAction extends BaseAction{
         echo json_encode($josnArray);
         exit;
     }
-    
+    //发票统计BY孙瑞鹏
+    function searchFapiaoTypeJosn(){
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $companyName=$_REQUEST['comname'];
+        $salTime=$_REQUEST['salTime'];
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where=array();
+        $where['companyName']=$companyName;
+        $where['salaryTime']=$salTime;
+        $sum =$this->objDao->searhFapiaoCount($where);
+        $salaryTimeList=$this->objDao->searhFapiaoListPage($start,$limit,$sorts." ".$dir,$where);
+        $josnArray=array();
+        $josnArray['total']=$sum;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['bill_no']=$row['bill_no'];
+            $josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
+            $josnArray['items'][$i]['company_name']=$row['company_name'];
+            $josnArray['items'][$i] ['bill_value'] = $row ['bill_value'];
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
+
+    //到账统计BY孙瑞鹏
+    function searchDaozhangTypeJosn(){
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $companyName=$_REQUEST['comname'];
+        $salTime=$_REQUEST['salTime'];
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where=array();
+        $where['companyName']=$companyName;
+        $where['salaryTime']=$salTime;
+        $sum =$this->objDao->searhDaozhangCount($where);
+        $salaryTimeList=$this->objDao->searhDaozhangListPage($start,$limit,$sorts." ".$dir,$where);
+        $josnArray=array();
+        $josnArray['total']=$sum;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['daozhangTime']=$row['daozhangTime'];
+            $josnArray['items'][$i]['cname']=$row['cname'];
+            $josnArray['items'][$i]['daozhangValue']=$row['daozhangValue'];
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
 
     //个税统计BY孙瑞鹏
     function searchGeshuiListJosn(){

@@ -109,6 +109,15 @@ $comList=$form_data['comList'];
                                <div id="e_noTip"></div>
                            </td>
                        </tr>
+                        <tr>
+                            <td class="td_left"><label>发票编号:</label></td>
+                            <td class="td_right" nowrap style="line-height:20px;">
+                                <input type="text" id="billno" name="billno"  style="width:150px;float:left" value=""/>
+                            </td>
+                            <td class="td_right">
+                                <div id="noTip"></div>
+                            </td>
+                        </tr>
                		<tr>
                            <td class="td_left" id="index"><label>工资日期：</label></td>
                            <td class="td_right" nowrap>

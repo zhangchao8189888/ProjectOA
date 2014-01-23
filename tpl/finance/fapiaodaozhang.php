@@ -26,12 +26,13 @@
 
             //创建Grid
             var salTimeListGrid1 = Ext.create('Ext.grid.Panel',{
+                store: fapiaoStore,
                 id : 'comlist1',
                 columns: [
-                    {text: "发票编号", width: 120, dataIndex: 'company_id', sortable: true},
-                    {text: "发票日期", width: 120, dataIndex: 'company_id', sortable: true},
+                    {text: "发票编号", width: 120, dataIndex: 'bill_no', sortable: true},
+                    {text: "工资日期", width: 120, dataIndex: 'salaryTime', sortable: true},
                     {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true},
-                    {text: "发票金额", flex: 200, dataIndex: 'name', sortable: true}
+                    {text: "发票金额", flex: 200, dataIndex: 'bill_value', sortable: true}
                 ],
                 height:500,
                 width:550,
@@ -42,12 +43,12 @@
                 loadMask: true,
                 renderTo: 'demo',
                 viewConfig: {
-                    id: 'gv',
+                    id: 'gv1',
                     trackOver: false,
                     stripeRows: false
                 },
                 bbar: Ext.create('Ext.PagingToolbar', {
-                    store: geshuiListstore,
+                    store: fapiaoStore,
                     displayInfo: true,
                     displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
                     emptyMsg: "没有数据"
@@ -76,12 +77,18 @@
                 ]
 
             });
+            fapiaoStore.on("beforeload",function(){
+                Ext.apply(fapiaoStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue()});
+
+            });
+
             var salTimeListGrid2 = Ext.create('Ext.grid.Panel',{
+                store: daozhangListstore,
                 id : 'comlist2',
                 columns: [
-                    {text: "到账日期", width: 120, dataIndex: 'company_id', sortable: true},
-                    {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true},
-                    {text: "到账金额", flex: 200, dataIndex: 'company', sortable: true}
+                    {text: "工资日期", width: 120, dataIndex: 'daozhangTime', sortable: true},
+                    {text: "单位名称", flex: 200, dataIndex: 'cname', sortable: true},
+                    {text: "到账金额", flex: 200, dataIndex: 'daozhangValue', sortable: true}
                 ],
                 height:500,
                 width:550,
@@ -92,12 +99,12 @@
                 loadMask: true,
                 renderTo: 'demo',
                 viewConfig: {
-                    id: 'gv',
+                    id: 'gv2',
                     trackOver: false,
                     stripeRows: false
                 },
                 bbar: Ext.create('Ext.PagingToolbar', {
-                    store: geshuiListstore,
+                    store: daozhangListstore,
                     displayInfo: true,
                     displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
                     emptyMsg: "没有数据"
@@ -107,14 +114,35 @@
 
                     {
                         xtype : 'button',
-                        id : 'searchSalBu',
+                        id : 'searchSalBu1',
                         handler : function(src) {
-
+                            fapiaoStore.removeAll();
+                            fapiaoStore.load( {
+                                params : {
+                                    comname :Ext.getCmp("comname").getValue(),
+                                    salTime : Ext.getCmp("salTime").getValue(),
+                                    start : 0,
+                                    limit : 50
+                                }
+                            });
+                            daozhangListstore.removeAll();
+                            daozhangListstore.load( {
+                                params : {
+                                    comname :Ext.getCmp("comname").getValue(),
+                                    salTime : Ext.getCmp("salTime").getValue(),
+                                   start : 0,
+                                    limit : 50
+                                }
+                            });
                         },
                         text : '查询',
                         iconCls : 'chakan'
                     }
                 ]
+            });
+
+            daozhangListstore.on("beforeload",function(){
+                Ext.apply(daozhangListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue()});
 
             });
             var duibiPanel = Ext.create('Ext.panel.Panel',{
@@ -125,12 +153,7 @@
                 y:-500,
                 title: '对比结论',
                 renderTo: 'demo'
-
-
             });
-
-
-
         });
 
     </script>
