@@ -65,6 +65,9 @@ class SalaryBillAction extends BaseAction {
 			case "toSalaryTongji" :
 				$this->toSalaryTongji ();
 				break;
+            case "toSalaryTongjiExt" :
+                $this->toSalaryTongjiExt ();
+                break;
 			case "searchSalaryTongji" :
 				$this->searchSalaryTongji ();
 				break;
@@ -175,6 +178,7 @@ class SalaryBillAction extends BaseAction {
 		$comId = $_REQUEST ['companyname'];
 		$salaryTime = $_REQUEST ['salaryTime'];
 		$billname = $_REQUEST ['billname'];
+        $billno = $_REQUEST ['billno'];
 		$billval = $_REQUEST ['billval'];
 		$memo = $_REQUEST ['memo'];
 		$billArray = array ();
@@ -182,6 +186,7 @@ class SalaryBillAction extends BaseAction {
 		$billArray ['bill_type'] = $billType ['发票'];
 		$billArray ['bill_date'] = date ( 'Y-m-d H:i:s' );
 		$billArray ['bill_item'] = $billname;
+        $billArray ['bill_no'] = $billno;
 		$billArray ['bill_value'] = $billval;
 		$billArray ['bill_state'] = 1; // 对应$billState['1']=>发票已开
 		$billArray ['op_id'] = 0;
@@ -332,6 +337,10 @@ class SalaryBillAction extends BaseAction {
 		$comList = $this->objDao->searchCompanyList ();
 		$this->objForm->setFormData ( "comList", $comList );
 	}
+    //FIXME 工资统计BY孙瑞鹏
+    function toSalaryTongjiExt() {
+        $this->mode = "toSalaryTongjiExt";
+    }
 	//FIXME 搜索指定公司工资统计
 	function searchSalaryTongji() {
 		global $billState;
@@ -580,6 +589,256 @@ class SalaryBillAction extends BaseAction {
 		$this->objForm->setFormData ( "billState", $billState );
 		$this->objForm->setFormData ( "billType", $billType );
 	}
+
+
+    //FIXME 搜索指定公司工资统计BY孙瑞鹏
+    function searchSalaryTongjiExt() {
+        global $billState;
+        global $billType;
+        $comId = $_REQUEST ['cid'];
+        $this->mode = "toSalaryTongji";
+        $salaryTongjiArray = array ();
+        $this->objDao = new SalaryDao ();
+        $salaryTimeList = $this->objDao->searchSalaryListByComId ( $comId, 1 ); // 1什么也不代表
+        $html_td = array ();
+        $leiji = 0.0;
+        $i = 0;
+        while ( $rowtime = mysql_fetch_array ( $salaryTimeList ) ) {
+            $count = $this->objDao->searchCountBill ( $rowtime ['id'], 1 );
+            $html = "";
+            $j = 0;
+            $html .= '<tr >';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . ($i + 1) . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '" ><a href="index.php?action=SaveSalary&mode=searchSalaryById&id=' . $rowtime ['id'] . '" target="_self">' . $rowtime ['company_name'] . '</a></td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '" >' . $rowtime ['salaryTime'] . '</td>';
+            $html_td [$i] [$j] = $html;
+            // 查询发票收据
+            $salaryFaList = $this->objDao->searchBillBySalaryTimeId ( $rowtime ['id'], 1 );
+            $salaryFaArr = array ();
+            $j = 0;
+            $sumvalue_fa = 0.0;
+            while ( $row = mysql_fetch_array ( $salaryFaList ) ) {
+                $html = "";
+                $html = $html_td [$i] [$j];
+                if ($j == 0) {
+                    $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_date'] . '</td>';
+                    $html .= ' <td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_item'] . '</td>';
+                    $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_value'] . '</td>';
+                } else {
+                    $html .= '<tr>';
+                    $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_date'] . '</td>';
+                    $html .= ' <td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_item'] . '</td>';
+                    $html .= ' <td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_value'] . '</td>';
+                }
+                $html_td [$i] [$j] = $html;
+                $sumvalue_fa += $row ['bill_value'];
+                $j ++;
+            }
+            $html = "";
+            $html = $html_td [$i] [0];
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $sumvalue_fa . '</td>';
+            $html_td [$i] [0] = $html;
+            $salaryTongjiArray [$i] ['fapiao'] = $salaryFaArr;
+            // 查询支票收据
+            $count_zhi = $this->objDao->searchCountBill ( $rowtime ['id'], 2 );
+            if ($count_zhi ['count'] < 1) {
+                for($j = 0; $j < $count ['count']; $j ++) {
+                    $html = "";
+                    $html = $html_td [$i] [$j];
+                    if ($j == 0) {
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                    } else {
+                        // $html.='';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                    }
+                    $html_td [$i] [$j] = $html;
+                    $j ++;
+                }
+            } elseif ($count_zhi ['count'] == 1) {
+                $salaryZhiList = $this->objDao->searchBillBySalaryTimeId ( $rowtime ['id'], 2 );
+                $row = mysql_fetch_array ( $salaryZhiList );
+                for($j = 0; $j < $count ['count']; $j ++) {
+                    $html = "";
+                    $html = $html_td [$i] [$j];
+                    if ($j == 0) {
+                        if ($html == '') {
+                            $html .= '<tr>';
+                        }
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . $row ['bill_date'] . '</td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . $row ['bill_value'] . '</td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . $row ['bill_value'] . '</td>';
+                    } else {
+                        if ($html == '') {
+                            $html .= '<tr>';
+                        }
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" ></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;"></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" ></td>';
+                    }
+                    $html_td [$i] [$j] = $html;
+                    $j ++;
+                }
+            } else {
+                $salaryZhiList = $this->objDao->searchBillBySalaryTimeId ( $rowtime ['id'], 2 );
+                $j = 0;
+                $sumvalue_zhi = 0.0;
+                while ( $row = mysql_fetch_array ( $salaryZhiList ) ) {
+                    $html = "";
+                    $html = $html_td [$i] [$j];
+                    if ($j == 0) {
+                        if ($html == '') {
+                            $html .= '<tr>';
+                        }
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_date'] . '</td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_value'] . '</td>';
+                    } else {
+                        // $html.='<tr>';
+                        if ($html == '') {
+                            $html .= '<tr>';
+                        }
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_date'] . '</td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_value'] . '</td>';
+                    }
+                    $html_td [$i] [$j] = $html;
+                    $sumvalue_zhi += $row ['bill_value'];
+                    $j ++;
+                    /*
+                     * if($row['bill_date']=='2011-11-27'){ var_dump($html_td) ; exit; }
+                     */
+                }
+                $html = "";
+                $html = $html_td [$i] [0];
+                $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $sumvalue_zhi . '</td>';
+                $html_td [$i] [0] = $html;
+            }
+            // 查询到账支票收据
+            $count_zhidao = $this->objDao->searchCountBill ( $rowtime ['id'], 3 );
+            if ($count_zhidao ['count'] < 1) {
+                $sumvalue_zhidao = 0.0;
+                for($j = 0; $j < $count ['count']; $j ++) {
+                    $html = "";
+                    $html = $html_td [$i] [$j];
+                    if ($j == 0) {
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '"></td>';
+                    } else {
+                        // $html.='<tr>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;"></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;"></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;"></td>';
+                    }
+                    $html_td [$i] [$j] = $html;
+                    $j ++;
+                }
+            } elseif ($count_zhidao ['count'] == 1) {
+                $sumvalue_zhidao = 0.0;
+                $salaryZhiList = $this->objDao->searchBillBySalaryTimeId ( $rowtime ['id'], 3 );
+                $row = mysql_fetch_array ( $salaryZhiList );
+                for($j = 0; $j < $count ['count']; $j ++) {
+                    $html = "";
+                    $html = $html_td [$i] [$j];
+                    if ($j == 0) {
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . $row ['bill_date'] . '</td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . $row ['bill_value'] . '</td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . $row ['bill_value'] . '</td>';
+                    } else {
+                        // $html.='<tr>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;"></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;"></td>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;"></td>';
+                    }
+                    $html_td [$i] [$j] = $html;
+                    $sumvalue_zhidao += $row ['bill_value'];
+                    // echo $sumvalue_zhidao."1<br/>";
+                    $j ++;
+                }
+            } else {
+                $sumvalue_zhidao = 0.0;
+                $salaryZhiDaoList = $this->objDao->searchBillBySalaryTimeId ( $rowtime ['id'], 3 );
+                $salaryZhiDaoArr = array ();
+                $j = 0;
+                while ( $row = mysql_fetch_array ( $salaryZhiDaoList ) ) {
+                    $html = "";
+                    $html = $html_td [$i] [$j];
+                    if ($j == 0) {
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_date'] . '</td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_value'] . '</td>';
+                    } else {
+                        // $html.='<tr>';
+                        $html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_date'] . '</td>';
+                        $html .= ' <td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_value'] . '</td>';
+                    }
+                    $html_td [$i] [$j] = $html;
+                    $sumvalue_zhidao += $row ['bill_value'];
+                    // echo $sumvalue_zhidao."2<br/>";
+                    $j ++;
+                }
+                $html = "";
+                $html = $html_td [$i] [0];
+                $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $sumvalue_zhidao . '</td>';
+                $html_td [$i] [0] = $html;
+            }
+            // 查询合计收据
+            $salaryHejiList = $this->objDao->searchSumSalaryListBy_SalaryTimeId ( $rowtime ['id'] );
+            $row = mysql_fetch_array ( $salaryHejiList );
+            $html = $html_td [$i] [0];
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_yingfaheji'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_shiye'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_yiliao'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_yanglao'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_gongjijin'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_daikoushui'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_koukuangheji'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_per_shifaheji'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_com_shiye'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_com_yiliao'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_com_yanglao'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_com_gongshang'] . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_com_shengyu'] . '</td>';
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_com_gongjijin'] . '</td>';
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_com_heji'] . '</td>';
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $row ['sum_paysum_zhongqi'] . '</td>';
+            $yu_e = $sumvalue_zhidao - $row ['sum_paysum_zhongqi'];
+            if ($rowtime ['salary_leijiyue'] == null) {
+                $yu_e_l = $sumvalue_zhidao - $row ['sum_paysum_zhongqi'] + $leiji;
+            } else {
+                $yu_e_l = $rowtime ['salary_leijiyue'];
+            }
+            $salarttimeId = $rowtime ['id'];
+            $yu_e_l = sprintf ( "%01.2f", $yu_e_l );
+            // echo $sumvalue_zhidao."!!!!".$row['sum_paysum_zhongqi'];
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . sprintf ( "%01.2f", $yu_e ) . '</td>';
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '"><div id="' . $salarttimeId . '_text">(累计' . $yu_e_l . ')</div></td>';
+
+            $leiji = $yu_e_l;
+            // echo $leiji.">>>>>>><br/>";
+            if ($yu_e == 0) {
+                $state = "<font color='green'>正常</font>";
+            } elseif ($yu_e < 0) {
+                $state = "<font color='red'>公司垫付</font>";
+            } else {
+                $state = "<font color='blue'>该公司有剩余资金</font>";
+            }
+            $html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $state . '</td>';
+            $html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '"><a href="#" onclick="update(' . $salarttimeId . ',' . $yu_e_l . ')" target="_self">修改</a></td>';
+
+            $html .= '</tr>';
+            $html_td [$i] [0] = $html;
+            $i ++;
+        }
+        // print_r($html_td);
+        // exit;
+        $comList = $this->objDao->searchCompanyList ();
+        $this->objForm->setFormData ( "comList", $comList );
+        $this->objForm->setFormData ( "salaryTimeList", $html_td );
+        $this->objForm->setFormData ( "billState", $billState );
+        $this->objForm->setFormData ( "billType", $billType );
+    }
 	/*
 	 * function toHtmlByCount($count){ $htmlList=array(); $htmlList[0]= for($i=1;$i<$count;$i++){ } }
 	 */

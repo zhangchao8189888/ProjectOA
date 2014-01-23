@@ -208,6 +208,57 @@ class SalaryDao extends BaseDao {
 		$list = $this->g_db_query ( $sql );
 		return $list;
 	}
+
+    // 发票统计数BY孙瑞鹏
+    function searhFapiaoCount($where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select count(*) as cnt  from OA_bill b ,OA_salarytime  s ,OA_company c ,OA_admin_company a
+                    WHERE  b.salaryTime_id = s.id
+                    AND s.companyId=c.id
+                    AND a.companyId = c.id
+                    AND bill_type = 1
+                    AND a.adminId = $id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= " and salaryTime='{$where['salaryTime']}' ";
+            }
+        }
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
+
+    // 到账统计数BY孙瑞鹏
+    function searhDaozhangCount($where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select count(*) as cnt  from OA_bill b ,OA_salarytime  s ,OA_company c ,OA_admin_company a
+                    WHERE  b.salaryTime_id = s.id
+                    AND s.companyId=c.id
+                    AND a.companyId = c.id
+                    AND bill_type = 3
+                    AND a.adminId = $id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= " and salaryTime='{$where['salaryTime']}' ";
+            }
+        }
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
+
 	// 个税统计BY孙瑞鹏
 	function searhSalaryTimeCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
@@ -362,6 +413,62 @@ class SalaryDao extends BaseDao {
 		$list = $this->g_db_query ( $sql );
 		return $list;
 	}
+
+    // 发票BY孙瑞鹏
+    function searhFapiaoListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT  bill_no,salaryTime ,company_name ,bill_value FROM OA_bill b ,OA_salarytime  s ,OA_company c ,OA_admin_company a
+                    WHERE  b.salaryTime_id = s.id
+                    AND s.companyId=c.id
+                    AND a.companyId = c.id
+                    AND bill_type = 1
+                    AND a.adminId = $id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= "  and salaryTime like '%{$where['salaryTime']}%' ";
+            }
+
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+
+    // 到账BY孙瑞鹏
+    function searhDaozhangListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT  salaryTime daozhangTime ,company_name cname ,bill_value  daozhangValue FROM OA_bill b ,OA_salarytime  s ,OA_company c ,OA_admin_company a
+                    WHERE  b.salaryTime_id = s.id
+                    AND s.companyId=c.id
+                    AND a.companyId = c.id
+                    AND bill_type = 3
+                    AND a.adminId = $id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= "  and salaryTime like '%{$where['salaryTime']}%' ";
+            }
+
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
 	
 	// 个税类型BY孙瑞鹏
 	function searhGeshuiTypePage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
@@ -842,11 +949,10 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 		 *
 		 * @var unknown_type
 		 */
-		$sql = "insert into OA_bill (salaryTime_id,bill_type,bill_date,bill_item,bill_value,bill_state,text) values
-    	     ({$billArray['salaryTime_id']},{$billArray['bill_type']},'{$billArray['bill_date']}',
+		$sql = "insert into OA_bill (salaryTime_id,bill_no,bill_type,bill_date,bill_item,bill_value,bill_state,text) values
+    	     ({$billArray['salaryTime_id']},'{$billArray['bill_no']}',{$billArray['bill_type']},'{$billArray['bill_date']}',
     	     '{$billArray['bill_item']}',{$billArray['bill_value']},{$billArray['bill_state']},'{$billArray['text']}')";
 		$result = $this->g_db_query ( $sql );
-		echo $sql;
 		return $result;
 	}
 	function updateSalaryTimeState($state, $salaryTimeId) {

@@ -55,13 +55,14 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiSum">个税统计</a>
 		</div>
-        <div class="item">
-            <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
-        </div>
+
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiType">个税类型</a>
 		</div>
 		<div class="title">发票管理</div>
+        <div class="item">
+            <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=toAddInvoice">添加发票</a>
 		</div>
@@ -78,6 +79,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=toSalaryTongji">工资统计</a>
 		</div>
+<!--        <div class="item">-->
+<!--            <a href="index.php?action=SalaryBill&mode=toSalaryTongjiExt">工资统计NEW</a>-->
+<!--        </div>-->
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=salaryComList">工资查看</a>
 		</div>
@@ -122,6 +126,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 			<a href="index.php?action=Salary&mode=toSalaryUpdate">个人工资查询</a>
 		</div>
 		<div class="title">发票管理</div>
+        <div class="item">
+            <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=toAddInvoice">添加发票</a>
 		</div>
@@ -211,6 +218,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 			<a href="index.php?action=Finance&mode=searchGeShuiType">个税类型</a>
 		</div>
 		<div class="title">发票管理</div>
+        <div class="item">
+            <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=toAddInvoice">添加发票</a>
 		</div>

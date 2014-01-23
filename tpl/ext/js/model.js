@@ -148,6 +148,30 @@ Ext.define('oa.common.yuangong.list',{
     ]
 });
 
+//发票列表BY孙瑞鹏
+Ext.define('oa.common.fapiao.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+
+        {name: 'bill_no', type: 'string'},
+        {name: 'salaryTime', type: 'string'},
+        {name: 'company_name', type: 'string'},
+        {name: 'bill_value', type: 'int'}
+
+    ]
+});
+
+//到账列表BY孙瑞鹏
+Ext.define('oa.common.daozhang.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+
+        {name: 'daozhangTime', type: 'string'},
+        {name: 'cname', type: 'string'},
+        {name: 'daozhangValue', type: 'inxxt'}
+    ]
+});
+
 /**
  * 财务首页model
  */
