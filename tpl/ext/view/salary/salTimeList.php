@@ -130,7 +130,6 @@
                         xtype : 'monthfield',
                         editable: true,
                         width: 130,
-
                         labelAlign: 'right',
                         format: 'Y-m'
                     },
@@ -172,7 +171,7 @@
                             salTimeListstore.load({
                                 params: {
                                     companyName : Ext.getCmp("comname").getValue(),
-                                    salTime : Ext.getCmp("salTime").getValue(),
+                                    salTime : Ext.getCmp("fd").getValue(),
                                     opTime : Ext.getCmp("STime").getValue(),
                                     start : 0,
                                     limit : 50

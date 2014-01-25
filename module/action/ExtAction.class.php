@@ -53,6 +53,9 @@ class ExtAction extends BaseAction{
             case "toExtTest":
                 $this->toExtTest();
                 break;
+            case "toSalaryComList":
+                $this->toSalaryComList();
+                break;
             case "toSalTimeList":
                 $this->toSalTimeList();
                 break;
@@ -101,6 +104,10 @@ class ExtAction extends BaseAction{
     }
     function toExtTest () {
         $this->mode="toExtTest";
+    }
+
+    function toSalaryComList(){
+        $this->mode =   "toSalaryComList";
     }
     function toSalTimeList () {
         $this->mode="toSalTimeList";
