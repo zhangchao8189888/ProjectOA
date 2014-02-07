@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>年度工资查询</title>
+<title>工资统计</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css"
       rel="stylesheet"/>
@@ -13,8 +13,7 @@
         src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
         src="tpl/ext/js/model.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript"
-        src="tpl/ext/js/data.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/monthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"
         src="common/js/jquery_last.js" charset="utf-8"></script>
@@ -218,13 +217,6 @@ Ext.onReady(function(){
             {name: 'salTimeId', type: 'int'},
             {name: 'salaryTime', type: 'string'}
         ]
-    });
-    var salaryComListstore = Ext.create('Ext.data.Store', {
-        model: salTimeList,
-        proxy: {
-            type: 'ajax',
-            url : 'index.php?action=SaveSalary&mode=searchErSalaryTimeListByIdJson'
-        }
     });
 //通过ajax获取表头已经表格数据
     function checkSalWin(timeId) {
