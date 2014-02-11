@@ -70,29 +70,28 @@ if (empty ( $warn )) {
           $("#leijiyue").val(jine);
           $("#updateId").val(timeid)
 		    }
-	    function updateYue(){
-		    var timeid=$("#updateId").val();
-		    var str=$("#updateId").val()+"_text";
-	    	$.ajax(
-	                {
-	                   type: "POST",
-	                   url: "index.php?action=SalaryBill&mode=updateLeijiYueByTimeId",
-	                   data: "leijie="+$("#leijiyue").val()+"&timeId="+$("#updateId").val(),
-	                   success: function(msg)
-	                            {
-	                      var result=msg.split("$");
-	                     // alert(result);
-	                      if(result[1]=="ok"){
-		                      alert('修改成功');
-		                      $("#"+str).text($("#leijiyue").val());
-		                      }else{
-		                    	  alert('修改失败');
-			                      }      
-	                            }
-	            }
-	            );
+      function updateYue() {
+          var timeid = $("#updateId").val();
+          var str = $("#updateId").val() + "_text";
+          $.ajax(
+              {
+                  type: "POST",
+                  url: "index.php?action=SalaryBill&mode=updateLeijiYueByTimeId",
+                  data: "leijie=" + $("#leijiyue").val() + "&timeId=" + $("#updateId").val(),
+                  success: function (msg) {
+                      var result = msg.split("$");
+                      // alert(result);
+                      if (result[1] == "ok") {
+                          alert('修改成功');
+                          $("#" + str).text($("#leijiyue").val());
+                      } else {
+                          alert('修改失败');
+                      }
+                  }
+              }
+          );
 
-		    }
+      }
         </script>
 </head>
 <body>

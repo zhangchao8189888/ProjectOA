@@ -965,7 +965,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 		if ($it == 1) {
 			$sql .= " and OA_salarytime.salary_state>0";
 		}
-		$sql .= " order by  OA_salarytime.salaryTime ";
+		$sql .= " order by  OA_salarytime.salaryTime desc";
 		$result = $this->g_db_query ( $sql );
 		return $result;
 	}

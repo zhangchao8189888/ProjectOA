@@ -46,6 +46,9 @@ class ExtSalaryAction extends BaseAction{
             case "searchSalaryTongji":
                 $this->searchSalaryTongji();
                 break;
+            case "searchLeijiYueByTimeId":
+                $this->searchLeijiYueByTimeId();
+                break;
             case "searchErSalaryTimeListJosn":
                 $this->searchErSalaryTimeListJosn();
                 break;
@@ -301,6 +304,21 @@ class ExtSalaryAction extends BaseAction{
 
         echo json_encode ( $josnArray );
         exit ();
+    }
+
+    /**
+     * 工资统计余额修改ext
+     */
+    function searchLeijiYueByTimeId(){
+        $yue=$_REQUEST['yue'];
+        $updateid=$_REQUEST['updateid'];
+        $salarytimeMonth=$_REQUEST['salarytimeMonth'];
+        $josnArray=array();
+        $josnArray["updateid"] =  $updateid  ;
+        $josnArray["yue"]=  $yue  ;
+        $josnArray["salarytimeMonth"] =  $salarytimeMonth  ;
+        echo json_encode ( $josnArray );
+        exit();
     }
     //发票统计BY孙瑞鹏
     function searchFapiaoTypeJosn(){

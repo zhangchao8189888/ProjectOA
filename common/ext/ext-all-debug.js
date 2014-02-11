@@ -86822,7 +86822,7 @@ Ext.define('Ext.form.field.Base', {
             data;
         
         data = Ext.apply({
-            id         : inputId,
+            sel.data.sum_yueid         : inputId,
             cmpId      : me.id,
             name       : me.name || inputId,
             disabled   : me.disabled,

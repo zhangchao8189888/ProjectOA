@@ -716,9 +716,9 @@ class SaveSalaryAction extends BaseAction {
 		$salaryTimeId = $_REQUEST ['id'];
 		$this->objDao = new SalaryDao ();
 		$salaryPO = $this->objDao->searchSalaryTimeBy_id ( $salaryTimeId );
-		$salaryList = $this->objDao->searchSalaryListBy_SalaryTimeId ( $salaryTimeId );
-		$salarySumList = $this->objDao->searchSumSalaryListBy_SalaryTimeId ( $salaryTimeId );
-		$salaryListArray = array ();
+        $salaryList = $this->objDao->searchSalaryListBy_SalaryTimeId ( $salaryTimeId );
+        $salarySumList = $this->objDao->searchSumSalaryListBy_SalaryTimeId ( $salaryTimeId );
+        $salaryListArray = array ();
 		$i = 0;
 		while ( $row = mysql_fetch_array ( $salaryList ) ) {
 			$salaryMovementList = $this->objDao->searchSalaryMovementBy_SalaryId ( $row ['id'] );
