@@ -197,7 +197,7 @@ var nianSalaryListStore	=	Ext.create('Ext.data.Store', {
 });
 /**
  *审核公司数据源
- */
+*/
 var checkCompanyStores = Ext.create('Ext.data.Store', {
     pageSize: 50,
     model: 'oa.common.checkcompany.list',
