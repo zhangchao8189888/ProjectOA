@@ -703,6 +703,34 @@ class SalaryDao extends BaseDao {
 		$list = $this->g_db_query ( $sql );
 		return $list;
 	}
+
+    function searchSalaryListBy_SalaryTimeId_New($sid) {
+        $sql = "SELECT c.*,b.* FROM (select *  from OA_salary where salaryTimeId=$sid)  b,
+(select salaryId,
+                MAX(CASE WHEN a.fieldName = '部门' THEN a.fieldValue ELSE NULL END)  as 部门,
+                MAX(CASE WHEN a.fieldName = '姓名' THEN a.fieldValue ELSE NULL END)  as 姓名,
+								MAX(CASE WHEN a.fieldName = '身份证号' THEN a.fieldValue ELSE NULL END)  as 身份证号,
+								MAX(CASE WHEN a.fieldName = '基本工资' THEN a.fieldValue ELSE NULL END)  as 基本工资,
+								MAX(CASE WHEN a.fieldName = '职务工资' THEN a.fieldValue ELSE NULL END)  as 职务工资,
+								MAX(CASE WHEN a.fieldName = '年度骨干津贴' THEN a.fieldValue ELSE NULL END)  as 年度骨干津贴,
+								MAX(CASE WHEN a.fieldName = '季度骨干津贴' THEN a.fieldValue ELSE NULL END)  as 季度骨干津贴,
+								MAX(CASE WHEN a.fieldName = '月骨干津贴' THEN a.fieldValue ELSE NULL END)  as 月骨干津贴,
+								MAX(CASE WHEN a.fieldName = '保密津贴' THEN a.fieldValue ELSE NULL END)  as 保密津贴,
+								MAX(CASE WHEN a.fieldName = '补发工资' THEN a.fieldValue ELSE NULL END)  as 补发工资,
+								MAX(CASE WHEN a.fieldName = '交通补贴' THEN a.fieldValue ELSE NULL END)  as 交通补贴,
+								MAX(CASE WHEN a.fieldName = '季度奖' THEN a.fieldValue ELSE NULL END)  as 季度奖,
+								MAX(CASE WHEN a.fieldName = '质量奖' THEN a.fieldValue ELSE NULL END)  as 质量奖,
+								MAX(CASE WHEN a.fieldName = '考核工资' THEN a.fieldValue ELSE NULL END)  as 考核工资,
+								MAX(CASE WHEN a.fieldName like '%银行卡号%'   THEN a.fieldValue ELSE NULL END)  as 银行卡号,
+								MAX(CASE WHEN a.fieldName = '身份类别' THEN a.fieldValue ELSE NULL END)  as 身份类别,
+								MAX(CASE WHEN a.fieldName  like '%社保基数%'  THEN a.fieldValue ELSE NULL END)  as 社保基数,
+								MAX(CASE WHEN a.fieldName   like '%公积金基数%' THEN a.fieldValue ELSE NULL END)  as 公积金基数
+                FROM OA_salarymovement as a
+                WHERE salaryId in  (select id  from OA_salary where salaryTimeId=$sid)   group by salaryId
+) c  WHERE b.id = c.salaryId";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
 	// 查询年终奖
 	function searchNianSalaryListBy_SalaryTimeId($sid) {
 		$sql = "select *  from OA_nian_salary where salaryTimeId=$sid";

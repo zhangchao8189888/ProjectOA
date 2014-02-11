@@ -145,15 +145,15 @@
                 Ext.apply(daozhangListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue()});
 
             });
-            var duibiPanel = Ext.create('Ext.panel.Panel',{
-                id : 'duibi',
-                height:200,
-                width:1100,
-                x:0,
-                y:-500,
-                title: '对比结论',
-                renderTo: 'demo'
-            });
+//            var duibiPanel = Ext.create('Ext.panel.Panel',{
+//                id : 'duibi',
+//                height:200,
+//                width:1100,
+//                x:0,
+//                y:-500,
+//                title: '对比结论',
+//                renderTo: 'demo'
+//            });
         });
 
     </script>
