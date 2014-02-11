@@ -192,6 +192,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 			<a href="index.php?action=Salary&mode=input">文件上传</a>
 		</div>
 		<div class="title">工资统计管理</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=tosalaryTongji">工资统计ext</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=toSalaryTongji">工资统计</a>
 		</div>
@@ -201,6 +204,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Ext&mode=toSalTimeList">工资查询</a>
 		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toSalaryComList">年度工资查询</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=Ext&mode=tosearhSalaryNianTimeList">年终奖查询</a>
 		</div>

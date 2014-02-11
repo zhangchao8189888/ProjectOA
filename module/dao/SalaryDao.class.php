@@ -969,6 +969,20 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
 		$result = $this->g_db_query ( $sql );
 		return $result;
 	}
+    function searchSalaryListCountByComId($comId, $it = null) {
+        $sql = "select count(*) as cnt  from OA_salarytime,OA_company where OA_company.id=OA_salarytime.companyId and OA_company.id=$comId";
+        if ($it == 1) {
+            $sql .= " and OA_salarytime.salary_state>0";
+        }
+        $sql .= " order by  OA_salarytime.salaryTime ";
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+        return $result;
+    }
 	function searchCountBill($salaryTimeId, $billType) {
 		$sql = "select count(*) as count from OA_bill where salaryTime_id=$salaryTimeId and bill_type=$billType";
 		$result = $this->g_db_query ( $sql );

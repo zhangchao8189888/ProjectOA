@@ -78,6 +78,68 @@ Ext.define('oa.common.salTime.list',{
 });
 
 /**
+ * 工资统计model
+ */
+Ext.define('oa.common.salTime.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'salaryTime', type: 'string'},
+        {name: 'bill_date', type: 'string'},
+        {name: 'bill_value', type: 'string'},
+        {name: 'bill_money', type: 'string'},
+        {name: 'bill_money_sum', type: 'string'},
+        {name: 'cheque_date', type: 'string'},
+        {name: 'cheque_money', type: 'string'},
+        {name: 'cheque_money_sum', type: 'string'},
+        {name: 'cheque_account_date', type: 'string'},
+        {name: 'cheque_account_money', type: 'string'},
+        {name: 'account_money_sum', type: 'string'},
+        {name: 'sum_per_yingfaheji', type: 'string'},
+        {name: 'sum_per_shiye', type: 'string'},
+        {name: 'sum_per_yiliao', type: 'string'},
+        {name: 'sum_per_yanglao', type: 'string'},
+        {name: 'sum_per_gongjijin', type: 'string'},
+        {name: 'sum_per_daikoushui', type: 'string'},
+        {name: 'sum_per_koukuangheji', type: 'string'},
+        {name: 'sum_per_shifaheji', type: 'string'},
+        {name: 'sum_com_shiye', type: 'string'},
+        {name: 'sum_com_yiliao', type: 'string'},
+        {name: 'sum_com_yanglao', type: 'string'},
+        {name: 'sum_com_gongshang', type: 'string'},
+        {name: 'sum_com_shengyu', type: 'string'},
+        {name: 'sum_com_gongjijin', type: 'string'},
+        {name: 'sum_com_heji', type: 'string'},
+        {name: 'sum_paysum_zhongqi', type: 'string'},
+        {name: 'this_month_yue', type: 'string'},
+        {name: 'sum_yue', type: 'string'},
+        {name: 'state', type: 'string'}
+    ]
+});
+
+Ext.define('oa.common.salarycom.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'mouth1', type: 'string'},
+        {name: 'mouth2', type: 'string'},
+        {name: 'mouth3', type: 'string'},
+        {name: 'mouth4', type: 'string'},
+        {name: 'mouth5', type: 'string'},
+        {name: 'mouth6', type: 'string'},
+        {name: 'mouth7', type: 'string'},
+        {name: 'mouth8', type: 'string'},
+        {name: 'mouth9', type: 'string'},
+        {name: 'mouth10', type: 'string'},
+        {name: 'mouth11', type: 'string'},
+        {name: 'mouth12', type: 'string'} ,
+        {name: 'nian', type: 'string'}
+    ]
+});
+
+/**
  * 年终奖model
  */
 Ext.define('oa.common.salNianTime.list',{

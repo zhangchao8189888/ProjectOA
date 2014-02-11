@@ -132,7 +132,7 @@ if (empty ( $warn )) {
 					cellspacing="1" style="table-layout: fixed;">
 					<tr>
 						<td align="left" width="150px" style="word-wrap: break-word;">序号</td>
-						<td align="left" width="150px" style="word-wrap: break-word;">单位</td>
+						<td align="left" width="300px" style="word-wrap: break-word;">单位</td>
 						<td align="left" width="150px" style="word-wrap: break-word;">单位工资表月份</td>
 						<td align="left" width="150px"
 							style="word-wrap: break-word; background-color: red;">发票日期</td>
@@ -190,7 +190,7 @@ if (empty ( $warn )) {
 						<td align="left" width="150px" style="word-wrap: break-word;">累计余额</td>
 						<td align="left" width="150px"
 							style="word-wrap: break-word; background-color: Tomato;">状态</td>
-						<td align="left" width="150px"
+						<td align="left" width="300px"
 							style="word-wrap: break-word; background-color: Tomato;">操作</td>
 					</tr>
          <?php

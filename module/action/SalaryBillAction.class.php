@@ -359,7 +359,7 @@ class SalaryBillAction extends BaseAction {
 			$j = 0;
 			$html .= '<tr >';
 			$html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '">' . ($i + 1) . '</td>';
-			$html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '" ><a href="index.php?action=SaveSalary&mode=searchSalaryById&id=' . $rowtime ['id'] . '" target="_self">' . $rowtime ['company_name'] . '</a></td>';
+			$html .= '<td align="left" width="300px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '" ><a href="index.php?action=SaveSalary&mode=searchSalaryById&id=' . $rowtime ['id'] . '" target="_self">' . $rowtime ['company_name'] . '</a></td>';
 			$html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan="' . $count ['count'] . '" >' . $rowtime ['salaryTime'] . '</td>';
 			$html_td [$i] [$j] = $html;
 			// 查询发票收据
@@ -372,7 +372,7 @@ class SalaryBillAction extends BaseAction {
 				$html = $html_td [$i] [$j];
 				if ($j == 0) {
 					$html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_date'] . '</td>';
-					$html .= ' <td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_item'] . '</td>';
+					$html .= ' <td align="left" width="300px" style="word-wrap:break-word;">' . $row ['bill_item'] . '</td>';
 					$html .= '<td align="left" width="150px" style="word-wrap:break-word;">' . $row ['bill_value'] . '</td>';
 				} else {
 					$html .= '<tr>';
@@ -574,7 +574,7 @@ class SalaryBillAction extends BaseAction {
 			} else {
 				$state = "<font color='blue'>该公司有剩余资金</font>";
 			}
-			$html .= ' <td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $state . '</td>';
+			$html .= ' <td align="left" width="300px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '">' . $state . '</td>';
 			$html .= '<td align="left" width="150px" style="word-wrap:break-word;" rowspan=" ' . $count ['count'] . '"><a href="#" onclick="update(' . $salarttimeId . ',' . $yu_e_l . ')" target="_self">修改</a></td>';
 			
 			$html .= '</tr>';

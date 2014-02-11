@@ -34,6 +34,10 @@ class ExtForm extends BaseForm
             	return "ext/extDongTai.php";
             case "toExtTest":
                 return "ext/view/viewTest.php";
+            case "tosalaryTongji":
+                return  "ext/view/salary/salary_Tongji.php";
+            case "toSalaryComList":
+                return "ext/view/salary/salaryComList.php";
             case "toSalTimeList":
                 return "ext/view/salary/salTimeList.php";
             case "toErSalTimeList":

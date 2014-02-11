@@ -226,9 +226,39 @@ var checkCompanyStores = Ext.create('Ext.data.Store', {
     ]
 });
 
+var salaryComListstore = Ext.create('Ext.data.Store', {
+    //分页大小
+    pageSize: 50,
+    model: 'oa.common.salarycom.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSalary&mode=salaryComListJosn',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
+
 /**
  * 工资查询store
- * @type {Ext.data.Store}
  */
 var salTimeListstore = Ext.create('Ext.data.Store', {
     // 分页大小
@@ -261,6 +291,39 @@ var salTimeListstore = Ext.create('Ext.data.Store', {
     }]
 });
 
+/**
+ * 工资统计store
+ */
+var salTongjistore = Ext.create('Ext.data.Store', {
+    // 分页大小
+    pageSize: 50,
+    model: 'oa.common.salTime.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSalary&mode=searchSalaryTongji',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
 /**
  * 二次工资
  * @type {Ext.data.Store}
