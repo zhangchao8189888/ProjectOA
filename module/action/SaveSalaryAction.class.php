@@ -753,48 +753,20 @@ class SaveSalaryAction extends BaseAction {
 		// $this->mode="salaryList";
 		$salaryTimeId = $_REQUEST ['timeId'];
 		$this->objDao = new SalaryDao ();
-		$salaryList = $this->objDao->searchSalaryListBy_SalaryTimeId ( $salaryTimeId );
+		$salaryList = $this->objDao->searchSalaryListBy_SalaryTimeId_New ( $salaryTimeId );
 		$salaryListArray = array ();
 		$i = 0;
 		global $salaryTable;
-		$movKeyArr = array ();
-		$z = 0;
 		while ( $row = mysql_fetch_array ( $salaryList ) ) {
-			$salaryMovementList = $this->objDao->searchSalaryMovementBy_SalaryId ( $row ['id'] );
-			$j = 0;
-			while ( $row_move = mysql_fetch_array ( $salaryMovementList ) ) {
-				$rowFields = array ();
-				$rowCol = array ();
-				if ($row_move ['fieldName'] == NULL) {
-					continue;
-				}
-				if ($i == 0) {
-					$rowCol ['text'] = $row_move ['fieldName'];
-					if ($row_move ['fieldName'] == '部门' || $row_move ['fieldName'] == '身份证号' || $row_move ['fieldName'] == '姓名') {
-						// hidden:true
-						$rowCol ["locked"] = true;
-					} else {
-						$rowCol ["hidden"] = true;
-					}
-					$rowCol ["dataIndex"] = $row_move ['id'];
-					$salaryListArray ['columns'] [] = $rowCol;
-					$movKeyArr [$z] = $row_move ['id'];
-					$z ++;
-				}
-				$rowData ["{$movKeyArr[$j]}"] = $row_move ['fieldValue'];
-				$j ++;
-				if ($i == 0) {
-					$rowFields ["name"] = "{$row_move['id']}";
-					$salaryListArray ['fields'] [] = $rowFields;
-				}
-			}
 			foreach ( $salaryTable as $key => $value ) {
 				$rowSalCol = array ();
 				$rowFields = array ();
 				if ($i == 0) {
 					$rowSalCol ['text'] = $value;
 					$rowSalCol ["dataIndex"] = $key;
+                    if( $key !="姓名"  && $key !="部门"  && $key !="身份证号"  && $key !="身份类别"  &&$key !="银行卡号"    ){
 					$rowSalCol ["summaryType"] = 'sum';
+                }
 					// summaryType: 'count',
 					if ($key == 'paysum_zhongqi') {
 						$rowSalCol ["width"] = 150;
@@ -804,7 +776,10 @@ class SaveSalaryAction extends BaseAction {
 					$salaryListArray ['columns'] [] = $rowSalCol;
 				}
 				$rowFields ["name"] = $key;
-				$rowFields ["type"] = 'float';
+                if( $key !="姓名"  && $key !="部门"  && $key !="身份证号"  && $key !="身份类别"  &&$key !="银行卡号"    ){
+                    $rowFields ["type"] = 'float';
+                }
+
 				// type: 'int'
 				$salaryListArray ['fields'] [] = $rowFields;
 				$rowData [$key] = $row [$key];
