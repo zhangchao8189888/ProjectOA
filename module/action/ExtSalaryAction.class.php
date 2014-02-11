@@ -198,7 +198,7 @@ class ExtSalaryAction extends BaseAction{
      */
     function searchSalaryTongji(){
         $this->objDao=new SalaryDao();
-        $comId  =   $_POST['id'];
+        $comId  =   $_POST['comid'];
         $start=$_REQUEST['start'];
         $limit=$_REQUEST['limit'];
         $sorts=$_REQUEST['sort'];
@@ -218,11 +218,84 @@ class ExtSalaryAction extends BaseAction{
         $i = 0;
 
         while ( $row = mysql_fetch_array ( $salaryTimeList ) ) {
-            $count = $this->objDao->searchCountBill ( $row ['id'], 1 );
-            $html = "";
-            $j = 0;
             $josnArray['items'][$i]['id']=$row['id'];
             $josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
+
+            //发票部分
+            $salaryFaList = $this->objDao->searchBillBySalaryTimeId ( $row ['id'], 1 );
+            $sumvalue_fa = 0.0;
+            while ( $rowbill = mysql_fetch_array ( $salaryFaList ) ) {
+                $josnArray['items'][$i]['bill_date']=$rowbill['bill_date'];
+                $josnArray['items'][$i]['bill_value']=$rowbill['bill_item'];
+                $josnArray['items'][$i]['bill_money']=$rowbill['bill_value'];
+                $sumvalue_fa += $rowbill ['bill_value'];
+            }
+            $josnArray['items'][$i]['bill_money_sum']= $sumvalue_fa;
+
+            //支票部分
+            $salaryChequeList = $this->objDao->searchBillBySalaryTimeId ( $row ['id'], 2 );
+            $sumvalue_cheque = 0.0;
+            $josnArray['items'][$i]['cheque_date']="<span style=\"color: blue\">没有支票</span>";
+            $josnArray['items'][$i]['cheque_money']="<span style=\"color: blue\">没有支票</span>";
+            while ( $rowcheque = mysql_fetch_array ( $salaryChequeList ) ) {
+                $josnArray['items'][$i]['cheque_date']=$rowcheque['bill_date'];
+                $josnArray['items'][$i]['cheque_money']=$rowcheque['bill_value'];
+                $sumvalue_cheque += $rowcheque ['bill_value'];
+            }
+            $josnArray['items'][$i]['cheque_money_sum']=$sumvalue_cheque;
+
+            //支票到账部分
+            $sumvalue_chequeaccount = 0.0;
+            $salaryChequeAccountList = $this->objDao->searchBillBySalaryTimeId ( $row ['id'], 3 );
+            while ( $rowchequeaccount = mysql_fetch_array ( $salaryChequeAccountList ) ) {
+                $josnArray['items'][$i]['cheque_account_date']=$rowchequeaccount['bill_date'];
+                $josnArray['items'][$i]['cheque_account_money']=$rowchequeaccount['bill_value'];
+                $sumvalue_chequeaccount += $rowchequeaccount ['bill_value'];
+            }
+            $josnArray['items'][$i]['account_money_sum']=$sumvalue_chequeaccount;
+
+            //合计查询部分
+            $yu_e=0.0;
+            $salaryHejiList = $this->objDao->searchSumSalaryListBy_SalaryTimeId ( $row ['id'] );
+            while ( $rowheji = mysql_fetch_array ( $salaryHejiList ) ) {
+                $josnArray['items'][$i]['sum_per_yingfaheji']=$rowheji['sum_per_yingfaheji'];
+                $josnArray['items'][$i]['sum_per_shiye']=$rowheji['sum_per_shiye'];
+                $josnArray['items'][$i]['sum_per_yiliao']=$rowheji['sum_per_yiliao'];
+                $josnArray['items'][$i]['sum_per_yanglao']=$rowheji['sum_per_yanglao'];
+                $josnArray['items'][$i]['sum_per_gongjijin']=$rowheji['sum_per_gongjijin'];
+                $josnArray['items'][$i]['sum_per_daikoushui']=$rowheji['sum_per_daikoushui'];
+                $josnArray['items'][$i]['sum_per_koukuangheji']=$rowheji['sum_per_koukuangheji'];
+                $josnArray['items'][$i]['sum_per_shifaheji']=$rowheji['sum_per_shifaheji'];
+                $josnArray['items'][$i]['sum_com_shiye']=$rowheji['sum_com_shiye'];
+                $josnArray['items'][$i]['sum_com_yiliao']=$rowheji['sum_com_yiliao'];
+                $josnArray['items'][$i]['sum_com_yanglao']=$rowheji['sum_com_yanglao'];
+                $josnArray['items'][$i]['sum_com_gongshang']=$rowheji['sum_com_gongshang'];
+                $josnArray['items'][$i]['sum_com_shengyu']=$rowheji['sum_com_shengyu'];
+                $josnArray['items'][$i]['sum_com_gongjijin']=$rowheji['sum_com_gongjijin'];
+                $josnArray['items'][$i]['sum_com_heji']=$rowheji['sum_com_heji'];
+                $josnArray['items'][$i]['sum_paysum_zhongqi']=$rowheji['sum_paysum_zhongqi'];
+                $josnArray['items'][$i]['sum_yue']=$rowheji['sum_com_heji'];
+                $yu_e = $sumvalue_chequeaccount - $rowheji['sum_paysum_zhongqi'];
+                if ($row ['salary_leijiyue'] == null) {
+                    $yu_e_l = $sumvalue_chequeaccount - $rowheji ['sum_paysum_zhongqi'] + $leiji;
+                } else {
+                    $yu_e_l = $row ['salary_leijiyue'];
+                }
+            }
+
+            $leiji = $yu_e_l;
+            $yu_e_l = sprintf ( "%01.2f", $yu_e_l );
+            $josnArray['items'][$i]['this_month_yue']=$yu_e;
+            $josnArray['items'][$i]['sum_yue']=$yu_e_l;
+
+            if ($yu_e == 0) {
+                $josnArray['items'][$i]['state']="<span style=\"color: green\">正常</span>";
+            } elseif ($yu_e < 0) {
+                $josnArray['items'][$i]['state']="<span style=\"color: red\">公司垫付</span>";
+            } else {
+                $josnArray['items'][$i]['state']="<span style=\"color: blue\">该公司有剩余资金</span>";
+            }
+
             $i++;
         }
 
