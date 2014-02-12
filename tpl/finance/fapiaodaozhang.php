@@ -14,7 +14,8 @@
     <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
-     <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="tpl/ext/js/monthPickerPlugin.js" charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
     <script type="text/javascript">
     Ext.require([
             'Ext.grid.*',
@@ -58,21 +59,18 @@
 
                     '公司名称', {
                         id:'comname',
-                        xtype : 'trigger',
-                        triggerClass : 'x-form-search-trigger',
-                        name: 'comname',
-                        onTriggerClick : function(src) {
-
-                        }
+                        xtype : 'textfield',
+                        name: 'comname'
                     },
-                    '查看月份', {
+                    '查看月份',
+                    {
                         id:'salTime',
-                        xtype : 'trigger',
-                        triggerClass : 'x-form-search-trigger',
                         name: 'salTime',
-                        onTriggerClick : function(src) {
-
-                        }
+                        xtype : 'monthfield',
+                        editable: true,
+                        width: 130,
+                        labelAlign: 'right',
+                        format: 'Y-m'
                     }
                 ]
 
@@ -128,10 +126,10 @@
                             daozhangListstore.removeAll();
                             daozhangListstore.load( {
                                 params : {
-                                    comname :Ext.getCmp("comname").getValue(),
-                                    salTime : Ext.getCmp("salTime").getValue(),
-                                   start : 0,
-                                    limit : 50
+                                    comname: Ext.getCmp("comname").getValue(),
+                                    salTime: Ext.getCmp("salTime").getValue(),
+                                    start: 0,
+                                    limit: 50
                                 }
                             });
                         },

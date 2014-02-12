@@ -336,8 +336,11 @@ class ExtSalaryAction extends BaseAction{
             $limit=50;
         }
         $where=array();
+        if($salTime) {
+            $time=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$time["month"];
+        }
         $where['companyName']=$companyName;
-        $where['salaryTime']=$salTime;
         $sum =$this->objDao->searhFapiaoCount($where);
         $salaryTimeList=$this->objDao->searhFapiaoListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray=array();
@@ -371,7 +374,10 @@ class ExtSalaryAction extends BaseAction{
         }
         $where=array();
         $where['companyName']=$companyName;
-        $where['salaryTime']=$salTime;
+        if($salTime) {
+            $time=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$time["month"];
+        }
         $sum =$this->objDao->searhDaozhangCount($where);
         $salaryTimeList=$this->objDao->searhDaozhangListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray=array();

@@ -10,7 +10,6 @@
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript" src="tpl/ext/js/monthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
 <script type="text/javascript">
     Ext.require([
@@ -29,7 +28,7 @@
                 {text: "id", width: 50, dataIndex: 'id', sortable: true},
                 {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true}
             ],
-            height: 650,
+            height: 500,
             width: 350,
             x: 0,
             y: 0,
@@ -106,13 +105,13 @@
             loadMask:true,
             columns : [
                 {text: "编号", width: 50, dataIndex: 'id', sortable: false,align:'center'},
-                {text: "状态", width: 130, dataIndex: 'state', sortable: false},
-                {text: "缴中企基业合计", width: 110, dataIndex: 'sum_paysum_zhongqi', sortable: false},
-                {text: "本月余额", width: 100, dataIndex: 'this_month_yue', sortable: false},
-                {text: "累计余额", width: 100, dataIndex: 'sum_yue', sortable: true},
                 {text: "工资月份",width: 90,dataIndex: 'salaryTime', sortable: true,align:'center'},
+                {text: "状态", width: 130, dataIndex: 'state', sortable: false},
                 {text: "个人实发合计", width: 100, dataIndex: 'sum_per_shifaheji', sortable: true},
-                {text: "单位合计", width: 100, dataIndex: 'sum_com_heji', sortable: true},
+                {text: "代扣税",width: 100, dataIndex: 'sum_per_daikoushui', sortable: true},
+                {text: "缴中企基业合计", width: 110, dataIndex: 'sum_paysum_zhongqi', sortable: false},
+                {text: "累计余额", width: 100, dataIndex: 'sum_yue', sortable: true},
+                {text: "本月余额", width: 100, dataIndex: 'this_month_yue', sortable: false},
                 {text: "发票日期",width: 90, dataIndex: 'bill_date', sortable: true,align:'center'},
                 {text: "发票项目", width: 100, dataIndex: 'bill_value', sortable: true},
                 {text: "发票金额",width: 100, dataIndex: 'bill_money', sortable: true},
@@ -128,19 +127,19 @@
                 {text: "个人医疗",width: 100, dataIndex: 'sum_per_yiliao', sortable: true},
                 {text: "个人养老",width: 100, dataIndex: 'sum_per_yanglao', sortable: true},
                 {text: "个人公积金",width: 100, dataIndex: 'sum_per_gongjijin', sortable: true},
-                {text: "代扣税",width: 100, dataIndex: 'sum_per_daikoushui', sortable: true},
                 {text: "个人扣款合计", width: 100, dataIndex: 'sum_per_koukuangheji', sortable: true},
                 {text: "单位失业", width: 100, dataIndex: 'sum_com_shiye', sortable: true},
                 {text: "单位医疗", width: 100, dataIndex: 'sum_com_yiliao', sortable: true},
                 {text: "单位养老", width: 100, dataIndex: 'sum_com_yanglao', sortable: true},
                 {text: "单位工伤", width: 100, dataIndex: 'sum_com_gongshang', sortable: true},
                 {text: "单位生育", width: 100, dataIndex: 'sum_com_shengyu', sortable: true},
-                {text: "单位公积金", width: 100, dataIndex: 'sum_com_gongjijin', sortable: true}
+                {text: "单位公积金", width: 100, dataIndex: 'sum_com_gongjijin', sortable: true},
+                {text: "单位合计", width: 100, dataIndex: 'sum_com_heji', sortable: true}
             ],
-            height:650,
+            height:500,
             width:800,
             x:350,
-            y:-650,
+            y:-500,
             title: '工资统计详细',
             disableSelection: false,
             loadMask: true,
