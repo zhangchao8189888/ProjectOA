@@ -767,6 +767,10 @@ class SaveSalaryAction extends BaseAction {
                     if( $key !="姓名"  && $key !="部门"  && $key !="身份证号"  && $key !="身份类别"  &&$key !="银行卡号"    ){
 					$rowSalCol ["summaryType"] = 'sum';
                 }
+                    if( $key =="姓名"  || $key =="部门"  || $key =="身份证号"     ){
+                        $rowSalCol ["locked"] = true;
+                    }
+
 					// summaryType: 'count',
 					if ($key == 'paysum_zhongqi') {
 						$rowSalCol ["width"] = 150;
