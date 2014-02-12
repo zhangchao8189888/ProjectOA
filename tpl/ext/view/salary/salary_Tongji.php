@@ -27,7 +27,7 @@
             title: '公司列表',
             columns: [
                 {text: "id", width: 50, dataIndex: 'id', sortable: true},
-                {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true},
+                {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true}
             ],
             height: 650,
             width: 350,
