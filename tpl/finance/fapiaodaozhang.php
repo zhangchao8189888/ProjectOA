@@ -10,7 +10,7 @@
     <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
     <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
 
-    <script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
