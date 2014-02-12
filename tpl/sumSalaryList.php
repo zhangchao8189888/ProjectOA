@@ -34,9 +34,8 @@ if ($checkType) {
     <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
     <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
     <link href="common/css/admin.css" rel="stylesheet" type="text/css"/>
-    <script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
-    <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js"
-            charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
+    <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js"charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/js/jquery.pagination.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/js/jquery.checkbox.js" charset="utf-8"></script>
