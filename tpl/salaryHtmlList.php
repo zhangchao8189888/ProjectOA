@@ -160,28 +160,27 @@ if ($checkType) {
 			<div style="min-width: 830px">
 
 				<table id="tab_list" class="table_list" width="100%">
-           
-           <?php
-											echo '<tr onmouseover="" onmouseout="">';
-											for($j = 0; $j < count ( $salarylist ['Sheet1'] [0] ); $j ++) {
-												// if($salarylist[Sheet1][$i][$j]!=""){
-												echo '<td><div><font color="green">' . ($j + 1) . '</font></div></td>';
-												// }
-											}
-											echo "</tr>";
-											for($i = 0; $i < count ( $salarylist ['Sheet1'] ); $i ++) {
-												echo '<tr onmouseover="" onmouseout="">';
-												for($j = 0; $j < count ( $salarylist ['Sheet1'] [$i] ); $j ++) {
-													// if($salarylist[Sheet1][$i][$j]!=""){
-													echo '<td><div>' . $salarylist ['Sheet1'] [$i] [$j] . '</div></td>';
-													// }
-												}
-												echo "</tr>";
-											}
-											?>
 
+                    <?php
+                    echo '<tr onmouseover="" onmouseout="">';
+                    for ($j = 0; $j < count($salarylist ['Sheet1'] [0]); $j++) {
+                        // if($salarylist[Sheet1][$i][$j]!=""){
+                        echo '<td><div><font color="green">' . ($j + 1) . '</font></div></td>';
+                        // }
+                    }
+                    echo "</tr>";
+                    for ($i = 0; $i < count($salarylist ['Sheet1']); $i++) {
+                        echo '<tr onmouseover="" onmouseout="">';
+                        for ($j = 0; $j < count($salarylist ['Sheet1'] [$i]); $j++) {
+                            // if($salarylist[Sheet1][$i][$j]!=""){
+                            echo '<td><div>' . $salarylist ['Sheet1'] [$i] [$j] . '</div></td>';
+                            // }
+                        }
+                        echo "</tr>";
+                    }
+                    ?>
 
-        </table>
+                </table>
 
 			</div>
 		</div>
