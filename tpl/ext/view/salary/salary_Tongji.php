@@ -89,9 +89,7 @@
             ]
         });
         caiwuListStore.on("beforeload", function () {
-
             Ext.apply(caiwuListStore.proxy.extraParams, {Key: Ext.getCmp("comname").getValue(), companyName: Ext.getCmp("comname").getValue()});
-
         });
         salTongjiGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
             //var sel=model.getLastSelected();
@@ -107,10 +105,10 @@
             id : 'comlist2',
             loadMask:true,
             columns : [
-                {text: "编号", width: 50, dataIndex: 'id', sortable: true,align:'center'},
-                {text: "状态", width: 130, dataIndex: 'state', sortable: true},
-                {text: "缴中企基业合计", width: 110, dataIndex: 'sum_paysum_zhongqi', sortable: true},
-                {text: "本月余额", width: 100, dataIndex: 'this_month_yue', sortable: true},
+                {text: "编号", width: 50, dataIndex: 'id', sortable: false,align:'center'},
+                {text: "状态", width: 130, dataIndex: 'state', sortable: false},
+                {text: "缴中企基业合计", width: 110, dataIndex: 'sum_paysum_zhongqi', sortable: false},
+                {text: "本月余额", width: 100, dataIndex: 'this_month_yue', sortable: false},
                 {text: "累计余额", width: 100, dataIndex: 'sum_yue', sortable: true},
                 {text: "工资月份",width: 90,dataIndex: 'salaryTime', sortable: true,align:'center'},
                 {text: "个人实发合计", width: 100, dataIndex: 'sum_per_shifaheji', sortable: true},
@@ -164,6 +162,9 @@
                     id: 'searchsSalBu',
                     disabled: false,
                     handler: function (src) {
+                        var model2 = salTimeListGrid2.getSelectionModel();
+                        var sel2=model2.getLastSelected(); ;
+                        selectinfo(sel2.data.id);
                     },
                     text: '查看详细',
                     iconCls: 'chakan'
@@ -173,9 +174,9 @@
                     id: 'edit',
                     disabled: false,
                     handler: function (src) {
-                        var model = salTongjiGrid.getSelectionModel();
-                        var sel=model.getLastSelected();
-                        checkSalWin(sel.data.sum_yue);
+                        var model2 = salTimeListGrid2.getSelectionModel();
+                        var sel2=model2.getLastSelected(); ;
+                        checkSalWin(sel2.data.sum_yue,sel2.data.salaryTime,sel2.data.id);
                     },
                     text: '修改余额',
                     iconCls: 'chakan'
@@ -183,11 +184,12 @@
             ]
         });
 
-        salTongjistore.on("beforeload",function(){
-            Ext.apply(salTongjistore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue()});
-        });
+        salTimeListGrid2.getSelectionModel().on('selectionchange', function (selModel, selections) {
+            //var sel=model.getLastSelected();
+            Ext.getCmp("edit").setDisabled(selections.length === 0);
+        }, this);
 
-        function checkSalWin(timeId) {
+        function checkSalWin(yue,salarytime_month,updateid) {
             var p = Ext.create("Ext.grid.Panel",{
                 id:"salTimeListP",
                 title:"导航",
@@ -227,27 +229,22 @@
                 },
                 closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
             });
-            var title="";
-            var url = "index.php?action=SaveSalary&mode=searchGeshuiTypeByIdJosn";
 
+            var title="修改余额";
+            var url = "index.php?action=ExtSalary&mode=searchLeijiYueByTimeId";
             Ext.Ajax.request({
                 url: url,  //从json文件中读取数据，也可以从其他地方获取数据
                 method : 'POST',
                 params: {
-                    timeId : timeId
+                    yue : yue,
+                    salarytimeMonth:salarytime_month,
+                    updateid:updateid
                 },
-                success : function(response) {
-                    //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
-                    var json = Ext.JSON.decode(response.responseText); //获得后台传递json
-                    Ext.getCmp("companyname").setValue(json.data[0].company_name);
-                    if(json.data[0].geshui_dateType ==2){
-                        Ext.getCmp("shangyue").setDisabled(true);
-                    }
-                    else if(json.data[0].geshui_dateType ==1){
-                        Ext.getCmp("benyue").setDisabled(true);
-                    }
-
-
+                success: function(response){
+                    var json = Ext.JSON.decode(response.responseText);
+                    Ext.getCmp("updateid").setValue(json["updateid"]);
+                    Ext.getCmp("su_yue").setValue(json["yue"]);
+                    Ext.getCmp("salaryTime").setValue(json["salarytimeMonth"]);
                 }
             });
             winSal.show();
@@ -265,24 +262,32 @@
             }],
             columns : [], //注意此行代码，至关重要
             tbar : [
+                '编号:',
+                {
+                    id:'updateid',
+                    xtype : 'textfield',
+                    readonly:true,
+                    width:45,
+                    name: 'updateid'
+                },
                 {
                     id:'salaryTime',
                     xtype : 'textfield',
+                    readonly:true,
+                    width:85,
                     name: 'salaryTime'
                 },
-                '余额',
+                '余额:',
                 {
-                    id:'sum_yue',
+                    id:'su_yue',
                     xtype : 'textfield',
-                    name: 'sum_yue'
+                    name: 'su_yue'
                 },
                 {
                     xtype : 'button',
                     id : 'benyue',
                     handler : function(src) {
-                        var model = salTimeListGrid.getSelectionModel();
-                        var sel=model.getLastSelected();
-                        setBenyue(sel.data.id);
+                        updateYue(Ext.getCmp("updateid").getValue(),Ext.getCmp("su_yue").getValue());
                     },
                     text : '修改',
                     iconCls : 'update'
@@ -291,7 +296,123 @@
             //displayInfo : true,
             emptyMsg : "没有数据显示"
         });
+
+        function selectinfo(timeId) {
+            //加载数据遮罩
+            var mk=new Ext.LoadMask(Ext.getBody(),{
+                msg:'加载数据中，请稍候！',removeMask:true
+            });
+            mk.show();
+            var p = Ext.create("Ext.grid.Panel",{
+                id:"salTimeListP",
+                title:"详细信息",
+                width:150,
+                region:"west",
+                columns : [],
+                listeners: {
+                    'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+                    }
+                },
+                split:true,
+                colspan: 3,
+                collapsible:true
+            });
+
+            var infolist=Ext.create("Ext.grid.Panel",{
+                title:'',
+                width:1150,
+                height:450,
+                enableLocking : true,
+                id : 'infogrid',
+                name : 'infogrid',
+                features: [{
+                    ftype: 'summary'
+                }],
+                columns : [], //注意此行代码，至关重要
+                //displayInfo : true,
+                emptyMsg : "没有数据显示"
+            });
+
+            var items=[infolist];
+
+            var wininfo = Ext.create('Ext.window.Window', {
+                title: "详细信息", // 窗口标题
+                width:1200, // 窗口宽度
+                height:500, // 窗口高度
+                layout:"border",// 布局
+                minimizable:true, // 最大化
+                maximizable:true, // 最小化
+                frame:true,
+                constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+                buttonAlign:"center", // 按钮显示的位置
+                modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+                resizable:true, // 是否可以调整窗口大小，默认TRUE。
+                plain:true,// 将窗口变为半透明状态。
+                items:items,
+                listeners: {
+                    //最小化窗口事件
+                    minimize: function(window){
+                        this.hide();
+                        mk.hide();
+                        window.minimizable = true;
+                    },
+                    close:function(){
+                        mk.hide();
+                    }
+                },
+                closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+            });
+            var title="";
+            var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
+
+            Ext.Ajax.request({
+                url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+                method : 'POST',
+                params: {
+                    timeId : timeId
+                },
+                success : function(response) {
+                    //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
+                    mk.hide();
+                    var json = Ext.JSON.decode(response.responseText); //获得后台传递json
+
+                    //创建store
+                    var store = Ext.create('Ext.data.Store', {
+                        fields : json.fields,//把json的fields赋给fields
+                        data : json.data     //把json的data赋给data
+                    });
+
+                    //根据store和column构造表格
+                    Ext.getCmp("infogrid").reconfigure(store, json.columns);
+                    //重新渲染表格
+                    //Ext.getCmp("configGrid").render();
+                }
+            });
+            wininfo.show();
+        }
+        function updateYue(updateid,leijie) {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "index.php?action=SalaryBill&mode=updateLeijiYueByTimeId",
+                    data:{
+                        timeId:updateid,
+                        leijie:leijie
+                    } ,
+                    success: function (msg) {
+                        var result = msg.split("$");
+                        if (result[1] == "ok") {
+                            alert('修改成功');
+                        } else {
+                            alert('修改失败');
+                        }
+                    }
+                }
+            );
+
+        }
     });
+
 
 </script>
 </head>

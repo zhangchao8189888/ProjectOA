@@ -193,11 +193,8 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		</div>
 		<div class="title">工资统计管理</div>
         <div class="item">
-            <a href="index.php?action=Ext&mode=tosalaryTongji">工资统计ext</a>
+            <a href="index.php?action=Ext&mode=tosalaryTongji">工资统计</a>
         </div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toSalaryTongji">工资统计</a>
-		</div>
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=salaryComList">工资查看</a>
 		</div>
