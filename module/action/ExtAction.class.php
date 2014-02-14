@@ -77,6 +77,9 @@ class ExtAction extends BaseAction{
             case "toTaxInfo":
                 $this->toTaxInfo();
                 break;
+            case "toBusiness":
+                $this->toBusiness();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -127,6 +130,10 @@ class ExtAction extends BaseAction{
 
     function toTaxInfo(){
         $this->mode =   "toTaxInfo";
+    }
+
+    function toBusiness(){
+        $this->mode="toBusiness";
     }
 
     function getExtJosn(){
