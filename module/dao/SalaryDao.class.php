@@ -441,7 +441,33 @@ class SalaryDao extends BaseDao {
         $list = $this->g_db_query ( $sql );
         return $list;
     }
+    // 增减员删除BY孙瑞鹏
+    function deleteZengjian($id) {
+        $sql = "delete  FROM oa_security WHERE id=$id";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 增减员BY孙瑞鹏
+    function searhZengjianListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $sql = "SELECT * FROM oa_security WHERE 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= "  and salaryTime like '%{$where['salaryTime']}%' ";
+            }
 
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
     // 到账BY孙瑞鹏
     function searhDaozhangListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];

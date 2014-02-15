@@ -63,8 +63,14 @@ class ExtSalaryAction extends BaseAction{
             case "searchDaozhangTypeJosn" :
                 $this->searchDaozhangTypeJosn();
                 break;
+            case "searchZengjianJosn" :
+                $this->searchZengjianJosn();
+                break;
             case "searchGeshuiTypeJosn" :
             	$this->searchGeshuiTypeJosn();
+            	break;
+            case "deleteZengjianyuan" :
+            	$this->deleteZengjianyuan();
             	break;
             case "searchEmploy":
                 $this->searchEmploy();
@@ -72,6 +78,7 @@ class ExtSalaryAction extends BaseAction{
             default :
                 $this->modelInput();
                 break;
+
         }
 
 
@@ -322,6 +329,65 @@ class ExtSalaryAction extends BaseAction{
         $josnArray["salarytimeMonth"] =  $salarytimeMonth  ;
         echo json_encode ( $josnArray );
         exit();
+    }
+   //删除增减员记录BY孙瑞鹏
+    function deleteZengjianyuan(){
+        $this->objDao=new SalaryDao();
+        $ids = $_REQUEST ['ids'];
+        $ids=str_replace('\"','"',$ids);
+        $ids=json_decode($ids);
+        for($h=0;$h<(count($ids));$h++){
+        $this->objDao->deleteZengjian($ids[$h]);
+        }
+        $josnArray=array();
+        echo json_encode($josnArray);
+        exit;
+    }
+    //增减员统计BY孙瑞鹏
+    function searchZengjianJosn(){
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $companyName=null;
+        $salTime=null;
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where=array();
+        if($salTime) {
+            $time=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$time["month"];
+        }
+        $where['companyName']=$companyName;
+        $sum =$this->objDao->searhFapiaoCount($where);
+        $salaryTimeList=$this->objDao->searhZengjianListPage($start,$limit,$sorts." ".$dir,$where);
+        $josnArray=array();
+        $josnArray['total']=$sum;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['id']=$row['id'];
+            $josnArray['items'][$i]['CName']=$row['CName'];
+            $josnArray['items'][$i]['Dept']=$row['Dept'];
+            $josnArray['items'][$i] ['EName'] = $row ['EName'];
+            $josnArray['items'][$i]['EmpNo']=$row['EmpNo'];
+            $josnArray['items'][$i]['EmpType']=$row['EmpType'];
+            $josnArray['items'][$i]['zengjianbiaozhi']=$row['zengjianbiaozhi'];
+            $josnArray['items'][$i] ['shebaojishu'] = $row ['shebaojishu'];
+            $josnArray['items'][$i]['waiquzhuanru']=$row['waiquzhuanru'];
+            $josnArray['items'][$i]['sum']=$row['sum'];
+            $josnArray['items'][$i]['danweijishu']=$row['danweijishu'];
+            $josnArray['items'][$i]['caozuoren']=$row['caozuoren'];
+            $josnArray['items'][$i]['shenbaozhuangtai']=$row['shenbaozhuangtai'];
+            $josnArray['items'][$i]['beizhu']=$row['beizhu'];
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
     }
     //发票统计BY孙瑞鹏
     function searchFapiaoTypeJosn(){

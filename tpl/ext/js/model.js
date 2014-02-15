@@ -209,6 +209,26 @@ Ext.define('oa.common.yuangong.list',{
         {name: 'memo', type: 'string'}
     ]
 });
+//增减员BY孙瑞鹏
+Ext.define('oa.common.zengjian.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'CName', type: 'string'},
+        {name: 'Dept', type: 'string'},
+        {name: 'EName', type: 'string'},
+        {name: 'EmpNo', type: 'string'},
+        {name: 'EmpType', type: 'string'},
+        {name: 'zengjianbiaozhi', type: 'string'},
+        {name: 'shebaojishu', type: 'string'},
+        {name: 'waiquzhuanru', type: 'string'},
+        {name: 'sum', type: 'double'},
+        {name: 'danweijishu', type: 'string'},
+        {name: 'caozuoren', type: 'string'},
+        {name: 'shenbaozhuangtai', type: 'string'},
+        {name: 'beizhu', type: 'string'}
+    ]
+});
 
 //发票列表BY孙瑞鹏
 Ext.define('oa.common.fapiao.list',{
