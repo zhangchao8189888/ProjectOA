@@ -21,7 +21,7 @@
         var window = Ext.create('Ext.form.Panel', {
             bodyPadding: 10,
             width: 700,
-            height: 300,
+            height: 400,
             title: '业务变更',
             items: [
                 {
@@ -31,18 +31,11 @@
                     items: [
                         {
                             xtype: 'combobox',
-                            editable:false,
-                            emptyText:"选择公司",
-                            allowBlank:false,
-                            store:{
-                                fields: ['abbr', 'name'],
-                                data : [
-                                    {"abbr":"AL", "name":"Alabama"},
-                                    {"abbr":"AK", "name":"Alaska"},
-                                    {"abbr":"AZ", "name":"Arizona"}
-                                    //...
-                                ]
-                            },
+                            id:"companyName" ,
+                            emptyText: "选择公司",
+                            triggerAction:"all",
+                            allowBlank: false,
+                            store: managerCom,
                             valueField: 'abbr',
                             displayField: 'name',
                             fieldLabel: '单位'
@@ -50,58 +43,108 @@
                         },
                         {
                             xtype: 'textfield',
-                            emptyText:"请输入姓名",
+                            id:"employName",
+                            emptyText: "请输入姓名",
                             fieldLabel: '姓名'
                         },
                         {
                             xtype: 'textfield',
-                            emptyText:"请输入身份证号",
+                            id:"employNumber",
+                            emptyText: "请输入身份证号",
+                            onBlur:function(){
+                                var title="修改余额";
+                                var url = "index.php?action=ExtSalary&mode=searchEmploy";
+                                Ext.Ajax.request({
+                                    url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+                                    method : 'POST',
+                                    params: {
+                                        employNumber: Ext.getCmp("employNumber").getValue()
+                                    },
+                                    success: function(response){
+                                        Ext.getCmp("employName").setValue(response["e_name"]);
+                                    }
+                                });
+
+                            } ,
                             fieldLabel: '身份证号'
                         },
+
                         {
                             xtype: 'textfield',
-                            emptyText:"请输入办理的业务",
+                            id:"business",
+                            emptyText: "请输入办理的业务",
                             fieldLabel: '办理的业务'
                         },
                         {
-                            xtype: 'textfield',
-                            emptyText:"请输入身份证号",
+                            xtype: 'combobox',
+                            id:"employState" ,
+                            emptyText: "请选择社保状态",
+                            editable: false,
+                            allowBlank: false,
+                            store: {
+                                fields: ['abbr', 'name'],
+                                data: [
+                                    {"abbr": "yes", "name": "在职"},
+                                    {"abbr": "no", "name": "离职"},
+                                ]
+                            },
+                            valueField: 'abbr',
+                            displayField: 'name',
                             fieldLabel: '社保状态'
                         },
                         {
                             xtype: 'combobox',
-                            editable:false,
-                            emptyText:"请选择状态",
-                            allowBlank:false,
-                            store:{
+                            id:"socialSecurityState" ,
+                            editable: false,
+                            emptyText: "请选择状态",
+                            allowBlank: false,
+                            store: {
                                 fields: ['abbr', 'name'],
-                                data : [
-                                    {"abbr":"yes", "name":"完成"},
-                                    {"abbr":"no", "name":"未完成"},
+                                data: [
+                                    {"abbr": "yes", "name": "完成"},
+                                    {"abbr": "no", "name": "未完成"},
                                 ]
                             },
                             valueField: 'abbr',
                             displayField: 'name',
                             fieldLabel: '社保经办状态'
-                        }
+                        },
+                        {
+                            xtype: 'textareafield',
+                            id:"remarks",
+                            width:400,
+                            height:80,
+                            emptyText: "请输入备注信息",
+                            fieldLabel: '备注'
+                        },
                     ]
                 }
             ],
             bbar: [
                 {
-                     align:right
-                }   ,
-                {
                     text: '提交',
-                    handler: function() {
-
+                    handler: function () {
+                        var companyName =  Ext.getCmp("companyName").getValue();
+                        var employName  =  Ext.getCmp("employName").getValue();
+                        var employNumber  =  Ext.getCmp("employNumber").getValue();
+                        var business    =   Ext.getCmp("business").getValue();
+                        var employState =   Ext.getCmp("employState").getValue();
+                        var socialSecurityState =   Ext.getCmp("socialSecurityState").getValue();
+                        var remarks =   Ext.getCmp("remarks").getValue();
+                        alert(companyName)   ;
                     }
                 },
                 '-',
                 {
-                    text: '取消',
-                    handler: function() {
-                        Ext.getCmp('checkbox1').setValue(true);
+                    text: '清空',
+                    handler: function () {
+                        var companyName =  Ext.getCmp("companyName").setValue(" ");
+                        var employName  =  Ext.getCmp("employName").setValue(" ");
+                        var employNumber  =  Ext.getCmp("employNumber").setValue(" ");
+                        var business    =   Ext.getCmp("business").setValue(" ");
+                        var employState =   Ext.getCmp("employState").setValue(" ");
+                        var socialSecurityState =   Ext.getCmp("socialSecurityState").setValue(" ");
+                        var remarks =   Ext.getCmp("remarks").setValue(" ");
                     }
                 }
             ],

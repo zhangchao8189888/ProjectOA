@@ -66,6 +66,9 @@ class ExtSalaryAction extends BaseAction{
             case "searchGeshuiTypeJosn" :
             	$this->searchGeshuiTypeJosn();
             	break;
+            case "searchEmploy":
+                $this->searchEmploy();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -528,6 +531,17 @@ class ExtSalaryAction extends BaseAction{
             $i++;
         }
         echo json_encode($josnArray);
+        exit;
+    }
+
+    function searchEmploy(){
+        $this->objDao=new SalaryDao();
+        $employNumber=$_REQUEST['employNumber'];
+        $result=$this->objDao->getEmploy($employNumber);
+        $josnArray=array();
+        echo("111");
+        echo($result['e_company']);
+
         exit;
     }
 }

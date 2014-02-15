@@ -46,6 +46,9 @@ class ExtServiceAction extends BaseAction{
             case "data" :
                 $this->data();
                 break;
+            case "selectManageCompany" :
+                $this->selectManageCompany();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -192,6 +195,20 @@ class ExtServiceAction extends BaseAction{
             $comList[$i] = $comList ['items'] [$i];
             $i++;
         }
+        echo json_encode($comList);
+        exit();
+    }
+
+    function  selectManageCompany(){
+        $this->objDao = new ServiceDao();
+        $result = $this->objDao->searchCompanyList();
+        $comList=array();
+        $i=0;
+        while ($row=mysql_fetch_array($result) ){
+            $comList["item"][i]["name"]    =  $row["company_name"] ;
+            $i++;
+        }
+        $comList["total"]=10;
         echo json_encode($comList);
         exit();
     }

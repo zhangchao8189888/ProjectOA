@@ -76,7 +76,7 @@
 
             });
             fapiaoStore.on("beforeload",function(){
-                Ext.apply(fapiaoStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue()});
+                Ext.apply(fapiaoStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue(),salTime:Ext.getCmp("salTime").getValue()});
 
             });
 
@@ -140,7 +140,7 @@
             });
 
             daozhangListstore.on("beforeload",function(){
-                Ext.apply(daozhangListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue()});
+                Ext.apply(daozhangListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue(),salTime:Ext.getCmp("salTime").getValue()});
 
             });
 //            var duibiPanel = Ext.create('Ext.panel.Panel',{

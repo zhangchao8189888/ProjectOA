@@ -30,6 +30,12 @@ class BaseDao extends db {
 		return mysql_fetch_array ( $result );
 	}
 
+    function getEmploy($employNumber){
+        $sql = "select *  from OA_employ where  e_num=$employNumber";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
+
     function searchCompanyListCount($table,$key,$where) {
         $userId = $_SESSION ['admin'] ['id'];
         if (!$table) {

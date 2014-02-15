@@ -556,3 +556,16 @@ var serviceManagestore = Ext.create('Ext.data.Store', {
             direction: 'DESC'
         }]
 });
+
+
+/**
+ * select 变更业务公司列表
+ */
+var managerCom  =   new Ext.data.JsonStore({
+    remoteSort: true,
+    url : 'index.php?action=ExtService&mode=selectManageCompany',
+    totalProperty : 'total',
+    root : 'items',
+    fields : ['abbr']
+});
+

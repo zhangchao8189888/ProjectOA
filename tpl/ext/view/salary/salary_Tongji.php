@@ -162,7 +162,7 @@
                     disabled: false,
                     handler: function (src) {
                         var model2 = salTimeListGrid2.getSelectionModel();
-                        var sel2=model2.getLastSelected(); ;
+                        var sel2=model2.getLastSelected();
                         selectinfo(sel2.data.id);
                     },
                     text: '查看详细',
@@ -174,7 +174,7 @@
                     disabled: false,
                     handler: function (src) {
                         var model2 = salTimeListGrid2.getSelectionModel();
-                        var sel2=model2.getLastSelected(); ;
+                        var sel2=model2.getLastSelected();
                         checkSalWin(sel2.data.sum_yue,sel2.data.salaryTime,sel2.data.id);
                     },
                     text: '修改余额',
