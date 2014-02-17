@@ -26,10 +26,10 @@ Ext.define('oa.common.geshui.list',{
         {name: 'company_id', type: 'int'},
         {name: 'company_name', type: 'string'},
         {name: 'salaryTime', type: 'string'},
-        {name: 'daikou', type: 'string'},
-        {name: 'bukou', type: 'string'},
-        {name: 'nian', type: 'string'},
-        {name: 'geshuiSum', type: 'int'},
+        {name: 'daikou', type: 'double'},
+        {name: 'bukou', type: 'double'},
+        {name: 'nian', type: 'double'},
+        {name: 'geshuiSum', type: 'double'},
         {name: 'salary_state', type: 'int'}
     ]
 });

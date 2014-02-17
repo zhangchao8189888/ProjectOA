@@ -154,6 +154,12 @@
                   	  var model = salTimeListGrid.getSelectionModel();
                       var sel=model.getLastSelected();
                       setBenyue(sel.data.id);
+
+                        geshuiTypestore.load( {
+                            params: {
+
+                            }
+                        }  );
                     },
                     text : '本月报本月',
                     iconCls : 'benyue'
@@ -166,6 +172,12 @@
                        var model = salTimeListGrid.getSelectionModel();
                        var sel=model.getLastSelected();
                        setShangyue(sel.data.id);
+
+                        geshuiTypestore.load( {
+                            params: {
+
+                            }
+                        }  );
                     },
                     text : '本月报上月',
                     iconCls : 'shangyue'

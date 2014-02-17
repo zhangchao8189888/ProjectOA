@@ -483,24 +483,21 @@ class ExtSalaryAction extends BaseAction{
             $where['salaryTime']=$time["month"];
         }
     	$where['companyName']=$companyName;
-    
-    	$sum =$this->objDao->searhSalaryTimeCount($where);
-    
-    	$salaryTimeList=$this->objDao->searhGeshuiListPage($start,$limit,$sorts." ".$dir,$where);
+
+           if ($where ['salaryTime'] == "") {
+                $where ['salaryTime']=date("Y-m");
+            }
+
+    	$sum =$this->objDao->searhSalaryTimeCount();
+        $salaryNameList=$this->objDao->searchCompanyList();
     	$josnArray=array();
     	$josnArray['total']=$sum;
     	$i=0;
-    	/**
-    	 * companyId	int(11)	No
-    	 salaryTime	date	No
-    	 op_salaryTime	datetime	No
-    	 op_id	int(11)	Yes
-    	 salary_state	int(2)	No	0
-    	 salary_leijiyue	float(11,2)	Yes
-    	 */
-    	while ($row=mysql_fetch_array($salaryTimeList) ){
-    		$josnArray['items'][$i]['company_id']=$row['company_id'];
-    		$josnArray['items'][$i]['company_name']=$row['company_name'];
+    	while ($nameList=mysql_fetch_array($salaryNameList) ){
+            $josnArray['items'][$i]['company_id']=$nameList['id'];
+            $josnArray['items'][$i]['company_name']=$nameList['company_name'];
+            $salaryTimeList=$this->objDao->searhGeshuiListPage($where,$nameList['id']);
+            $row=mysql_fetch_array($salaryTimeList);
     		$josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
             $josnArray['items'][$i] ['daikou'] = $row ['daikou'];
             $josnArray['items'][$i] ['bukou'] = $row ['bukou'];
@@ -539,14 +536,6 @@ class ExtSalaryAction extends BaseAction{
     	$josnArray=array();
     	$josnArray['total']=$sum;
     	$i=0;
-    	/**
-    	 * companyId	int(11)	No
-    	 salaryTime	date	No
-    	 op_salaryTime	datetime	No
-    	 op_id	int(11)	Yes
-    	 salary_state	int(2)	No	0
-    	 salary_leijiyue	float(11,2)	Yes
-    	 */
     	while ($row=mysql_fetch_array($salaryTimeList) ){
     		$josnArray['items'][$i]['id']=$row['id'];
     		$josnArray['items'][$i]['company_name']=$row['company_name'];

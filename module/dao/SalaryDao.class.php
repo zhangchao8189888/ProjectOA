@@ -260,25 +260,10 @@ class SalaryDao extends BaseDao {
     }
 
 	// 个税统计BY孙瑞鹏
-	function searhSalaryTimeCount($where = null) {
+	function searhSalaryTimeCount() {
         $id = $_SESSION ['admin'] ['id'];
-		$sql = "select count(*) as cnt  from (SELECT emp.id  ,t.salaryTime  ,e_company company_name
-			FROM OA_salary s ,OA_employ emp,OA_salarytime t
-			WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
-			 AND convert( emp.e_company  using utf8) IN (
-            SELECT  company_name  FROM OA_company c ,OA_admin_company a
-           WHERE   c.id = a.companyId AND a.adminId = $id
-             )
-			GROUP BY e_company,t.salaryTime) m
-            where 1=1";
-		if ($where != null) {
-			if ($where ['companyName'] != "") {
-				$sql .= " and m.company_name like '%{$where['companyName']}%' ";
-			}
-			if ($where ['salaryTime'] != "") {
-				$sql .= " and m.salaryTime='{$where['salaryTime']}' ";
-			}
-		}
+		$sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where
+  and a.companyId = c.id  and  a.adminId = $id";
 		$result = $this->g_db_query ( $sql );
 		if (! $result) {
 			return 0;
@@ -359,22 +344,28 @@ class SalaryDao extends BaseDao {
 		return $list;
 	}
 	// 计算个税合计BY孙瑞鹏
-	function searhGeshuiListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
-        $id = $_SESSION ['admin'] ['id'];
-		$sql = "SELECT yi.id company_id,yi.salaryTime,yi.e_company company_name,yi.su daikou,er.su bukou, nian.su nian,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
+	function searhGeshuiListPage($where = null,$id = null) {
+
+        $time = date ( "Y-m", strtotime ( "last month", strtotime ( $where ['salaryTime'] ) ) );
+		$sql = "SELECT yi.companyId company_id,yi.salaryTime,yi.e_company company_name,yi.su daikou,er.su bukou, nian.su nian,(IFNULL(yi.su,0)+IFNULL(er.su,0)+IFNULL(nian.su,0))  geshuiSum FROM
 			(
-			SELECT emp.id,  t.salaryTime  ,e_company,IFNULL(SUM(s.per_daikoushui),0) su
+			SELECT t.companyId,  t.salaryTime  ,e_company,SUM(s.per_daikoushui) su
 			FROM OA_salary s ,OA_employ emp,OA_salarytime t
 			WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
-			AND convert( emp.e_company  using utf8) IN (
-            SELECT  company_name  FROM OA_company c ,OA_admin_company a
-            WHERE   c.id = a.companyId AND a.adminId = $id
+			AND convert( emp.e_company  using utf8) = (
+            SELECT  company_name  FROM OA_company c
+            WHERE    c.id=$id
              )
+      AND (
+    			(t.salaryTime like '%{$where ['salaryTime']}%'  AND convert(e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 1))
+    			OR
+    			(t.salaryTime like '%{$time}%'  AND convert(e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 2))
+    			)
 			GROUP BY e_company,t.salaryTime
 			) yi
 			LEFT JOIN
 			 (
-			SELECT  t.salaryTime,e_company,IFNULL(SUM(e.bukoushui),0) su
+			SELECT  t.salaryTime,e_company,SUM(e.bukoushui) su
 			FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
 			WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
 			GROUP BY e_company,t.salaryTime
@@ -382,26 +373,18 @@ class SalaryDao extends BaseDao {
 			ON yi.e_company = er.e_company AND yi.salaryTime = er.salaryTime
 			LEFT JOIN
 			(
-			SELECT   t.salaryTime,e_company,IFNULL(SUM(n.nian_daikoushui),0) su
+			SELECT   t.salaryTime,e_company,SUM(n.nian_daikoushui) su
 			FROM OA_nian_salary n  ,OA_employ emp,OA_salarytime_other t
 			WHERE n.employid = emp.e_num AND n.salaryTimeId = t.id
 			GROUP BY e_company, t.salaryTime
 			) nian
 			ON  yi.e_company = nian.e_company AND yi.salaryTime = nian.salaryTime
-    		where 1=1
-			";
+    		where 1=1";
 		if ($where != null) {
 			if ($where ['companyName'] != "") {
 				$sql .= " and yi.e_company like '%{$where['companyName']}%' ";
 			}
-			if ($where ['salaryTime'] != "") {
-				$time = date ( "Ymd", strtotime ( "last month", strtotime ( $where ['salaryTime'] ) ) );
-				$sql .= "and (
-    			(yi.salaryTime like '%{$where['salaryTime']}%'  AND convert(yi.e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 1))
-    			OR
-    			(yi.salaryTime like '%{$time}%'  AND convert(yi.e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 2))
-    			)";
-			}
+
 		}
 		if ($sort) {
 			$sql .= " order by $sort";
