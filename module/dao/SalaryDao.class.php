@@ -276,7 +276,7 @@ class SalaryDao extends BaseDao {
 				$sql .= " and m.company_name like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$sql .= " and m.salaryTime='{$where['salaryTime']}' ";
+				$sql .= " and m.salaryTime like '%{$where['salaryTime']}%' ";
 			}
 		}
 		$result = $this->g_db_query ( $sql );
@@ -395,7 +395,8 @@ class SalaryDao extends BaseDao {
 				$sql .= " and yi.e_company like '%{$where['companyName']}%' ";
 			}
 			if ($where ['salaryTime'] != "") {
-				$time = date ( "Ymd", strtotime ( "last month", strtotime ( $where ['salaryTime'] ) ) );
+				$time = date ( "Y-m", strtotime ( "last month", strtotime ( $where ['salaryTime'] ) ) );
+
 				$sql .= "and (
     			(yi.salaryTime like '%{$where['salaryTime']}%'  AND convert(yi.e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 1))
     			OR
@@ -406,6 +407,7 @@ class SalaryDao extends BaseDao {
 		if ($sort) {
 			$sql .= " order by $sort";
 		}
+        //ceshi
 		if ($start >= 0 && $limit) {
 			$sql .= " limit $start,$limit";
 		}

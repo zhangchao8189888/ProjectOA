@@ -31,7 +31,7 @@ class BaseDao extends db {
 	}
 
     function getEmploy($employNumber){
-        $sql = "select *  from OA_employ where  e_num=$employNumber";
+        $sql = "select *  from OA_employ where  e_num='{$employNumber}'";
         $result = $this->g_db_query ( $sql );
         return mysql_fetch_array ( $result );
     }
