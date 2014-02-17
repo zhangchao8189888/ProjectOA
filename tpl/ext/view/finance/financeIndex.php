@@ -115,6 +115,7 @@ Ext.onReady(function () {
                     caiwuListStore.load( {
                         params : {
                             company_name : this.getValue(),
+                            date:   Ext.getCmp("STime").getValue(),
                             start : 0,
                             limit : 50
                         }
@@ -130,7 +131,6 @@ Ext.onReady(function () {
                 labelAlign: 'right',
                 format: 'Y-m'
             },
-
             {
                 xtype: 'button',
                 id: 'search1',
@@ -139,9 +139,9 @@ Ext.onReady(function () {
                     caiwuListStore.removeAll();
                     caiwuListStore.load({
                         params: {
+                            company_name : Ext.getCmp("opComname").getValue(),
                             date:   Ext.getCmp("STime").getValue(),
                             start: 0,
-                            sType:3,
                             limit: 50
                         }
                     });
@@ -154,9 +154,6 @@ Ext.onReady(function () {
     caiwuListStore.on("beforeload", function () {
         Ext.apply(caiwuListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opComname").getValue()});
     });
-    opManegeGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
-        Ext.getCmp("cClear").setDisabled(selections.length === 0);
-    }, this);
     caiwuListStore.loadPage(1);
     function newWin(text) {
         var win = Ext.create('Ext.window.Window', {
@@ -274,7 +271,6 @@ Ext.onReady(function () {
             triggerClass : 'x-form-search-trigger',
             name: 'search',
             onTriggerClick : function(src) {
-                comListStore.loadPage(1);
                 comListStore.removeAll();
                 comListStore.load( {
                     params : {
