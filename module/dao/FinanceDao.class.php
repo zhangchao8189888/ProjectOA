@@ -153,8 +153,6 @@ class FinanceDao extends BaseDao
     }
     /**
      * 客服首页dao 获得count
-     * @param null $where
-     * @return int
      */
     function searhManageComCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];

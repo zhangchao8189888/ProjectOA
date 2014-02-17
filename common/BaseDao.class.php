@@ -31,7 +31,7 @@ class BaseDao extends db {
 	}
 
     function getEmploy($employNumber){
-        $sql = "select *  from OA_employ where  e_num=$employNumber";
+        $sql = "select *  from OA_employ where  e_num='{$employNumber}'";
         $result = $this->g_db_query ( $sql );
         return mysql_fetch_array ( $result );
     }
@@ -150,6 +150,11 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+    function searchByComIdAndSalTime($comId, $salTime) {
+        $sql = "SELECT *  FROM OA_salarytime  WHERE companyId=$comId AND salaryTime LIKE '%$salTime%'";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
 	/**
 	 * 根据公司id和月份查询二次及其他工资明细
 	 * 
@@ -175,11 +180,48 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+    /**
+     * 首页数据dao 获得count
+     */
+    function manageCompanyCount($where = null){
+        $id = $_SESSION ['admin'] ['id'];
+        $sql    =   "SELECT count(company_name) AS cnt FROM OA_company c,OA_admin_company a WHERE a.adminId = $id  AND a.companyId = c.id"  ;
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+        }
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
+
+    /**
+     * 首页数据dao 获得分页
+     */
+    function manageCompanyPage($start = NULL, $limit = NULL, $sort = NULL, $where = null){
+        $id = $_SESSION ['admin'] ['id'];
+        $sql    =   "SELECT c.id,c.company_name FROM OA_company c,OA_admin_company a WHERE a.adminId = $id AND a.companyId = c.id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
 
     /**
      * 取消公司管理
-     * @param $ids
-     * @return bool|int
      */
     function cancelManage($companyid){
         $userid = $_SESSION ['admin'] ['id'];

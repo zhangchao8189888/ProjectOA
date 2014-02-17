@@ -40,7 +40,7 @@ class ExtServiceAction extends BaseAction{
     function controller()
     {
         switch($this->mode) {
-            case "getOtherAdminComListJosn" :
+            case "searchComListJosn" :
                 $this->searchComListJosn();
                 break;
             case "data" :
@@ -74,6 +74,7 @@ class ExtServiceAction extends BaseAction{
         $time = array ();
         $time["data"]   =  $date ;
         $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
+        $time["month"]  =   (date("Y-m",strtotime("+1 day",strtotime($date))));
         $time["first"]  =    $first_date;
         $time["last"]   =      $for_day;
         return $time;
@@ -89,11 +90,8 @@ class ExtServiceAction extends BaseAction{
         $sorts=$_REQUEST['sort'];
         $dir=$_REQUEST['dir'];
         $companyName=$_REQUEST['companyName'];
-        $searchType = $_REQUEST['sType'];
         $date = $_REQUEST['date'];
-        if (empty($searchType)) {
-            $searchType = 1;
-        }
+        $operationTime = $_REQUEST['operationTime'];
         if(!$start){
             $start=0;
         }
@@ -101,62 +99,39 @@ class ExtServiceAction extends BaseAction{
             $limit=50;
         }
         $where['companyName']=$companyName;
-        $where['searchType']=$searchType;
         $comList=array();
         if($date!=null) {
             $time   =   $this->AssignTabMonth($date,0);
-            if(1==$searchType){
-                $where['$salTime']=$date;
-            }elseif(2 == $searchType){
-                $dateEnd   =     $time["next"];
-                $where['$salTime']=$date;
-                $where['dateEnd']=$dateEnd;
-            }elseif(3 == $searchType){
-                $date   =    $time["first"];
-                $dateEnd   =    $time["last"];
-                $where['$salTime']=$date;
-                $where['dateEnd']=$dateEnd;
-            }
+            $where['$salTime']=$time["month"];
         }else{
             $date=date('Y-m',time())."-01";
+            if(!$companyName&&!$operationTime) {
+                $where['$salTime']= date('Y-m',time())."-01";
+            }
         }
-        $sum =$this->objDao->searhManageComCount($where);
+        if($operationTime!=null) {
+            $where['opTime']    =  date("Y-m-d",strtotime($operationTime));
+        }
+        $sum =$this->objDao->manageCompanyCount($where);
         $comList['total']=$sum;
-        $result = $this->objDao->searhManageComPage($start, $limit, $sorts . " " . $dir, $where);
+        $result = $this->objDao->manageCompanyPage($start, $limit, $sorts . " " . $dir, $where);
         $i=0;
         while ($row=mysql_fetch_array($result) ){
             //查询当月工资是否发放
-            $results = $this->objDao->searchSalTimeByComIdAndSalTime($row['id'], $date, $dateEnd, $searchType);
+            $results = $this->objDao->searchByComIdAndSalTime($row['id'],$where);
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
-            $comList ['items'] [$i] ['companyId'] = $row ['companyId'];
-            if ($searchType == 1) {
                 if($results["salaryTime"]){
-                    $comList ['items'] [$i] ['salDate'] =$results["salaryTime"] ;
+                    $comList ['items'] [$i] ['salDate'] =date("Y-m",strtotime($results["salaryTime"]));
                 }else{
-                    $comList ['items'] [$i] ['salDate'] =$date ;
+                    $comList ['items'] [$i] ['salDate'] =date("Y-m",strtotime($date));
                 }
                 if($results['op_salaryTime']){
-                    $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
+                    $comList ['items'] [$i] ['op_salaryTime'] = date("Y-m-d",strtotime( $results['op_salaryTime']));
                 }else{
                     $comList ['items'] [$i] ['op_salaryTime'] = "<span style=\"color: black\"> - - - - </span>";
                 }
-            } elseif ($searchType == 2) {
-                $comList ['items'] [$i] ['salDate'] = $results['salaryTime'];
-                if (empty($results['op_salaryTime'])) {
-                    $comList ['items'] [$i] ['op_salaryTime'] = $date;
-                } else {
-                    $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
-                }
-            }
-            elseif ($searchType == 3) {
-                $comList ['items'] [$i] ['salDate'] = $results['salaryTime'];
-                if (empty($results['op_salaryTime'])) {
-                    $comList ['items'] [$i] ['op_salaryTime'] = $date;
-                } else {
-                    $comList ['items'] [$i] ['op_salaryTime'] = $results['op_salaryTime'];
-                }
-            }
+
             if (!$results) {
                 $comList ['items'] [$i]['salStat'] =0;
                 $comList ['items'] [$i]['salTimeid'] = -1;

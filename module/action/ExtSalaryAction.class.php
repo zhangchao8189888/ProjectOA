@@ -593,10 +593,7 @@ class ExtSalaryAction extends BaseAction{
         $this->objDao=new SalaryDao();
         $employNumber=$_REQUEST['employNumber'];
         $result=$this->objDao->getEmploy($employNumber);
-        $josnArray=array();
-        echo("111");
-        echo($result['e_company']);
-
+        echo json_encode($result);
         exit;
     }
 }

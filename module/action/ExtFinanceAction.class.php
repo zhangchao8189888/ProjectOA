@@ -71,7 +71,6 @@ class ExtFinanceAction extends BaseAction {
         $date= date("Y-m-d",strtotime($step." months",strtotime($date)));//得到处理后的日期（得到前后月份的日期）
         $u_date = strtotime($date);
         $days=date("t",$u_date);// 得到结果月份的天数
-
         //月份第一天的日期
         $first_date=date("Y-m",$u_date).'-01';
         for($i=0;$i<$days;$i++){
@@ -80,6 +79,7 @@ class ExtFinanceAction extends BaseAction {
         $time = array ();
         $time["data"]   =  $date ;
         $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
+        $time["month"]  =   (date("Y-m",strtotime("+1 day",strtotime($date))));
         $time["first"]  =    $first_date;
         $time["last"]   =      $for_day;
         return $time;
@@ -94,12 +94,8 @@ class ExtFinanceAction extends BaseAction {
         $limit = $_REQUEST ['limit'];
         $sorts = $_REQUEST ['sort'];
         $dir = $_REQUEST ['dir'];
-        $searchType = $_REQUEST['sType'];
         $companyName=$_REQUEST['companyName'];
         $date   =   $_REQUEST['date'];
-        if (empty($searchType)) {
-            $searchType = 1;
-        }
         if (! $start) {
             $start = 0;
         }
@@ -111,38 +107,24 @@ class ExtFinanceAction extends BaseAction {
         }
         $where = array ();
         $comList = array ();
-        $where['searchType']=$searchType;
         $where['companyName']=$companyName;
         if($date!=null) {
             $time   =   $this->AssignTabMonth($date,0);
-            if(1==$searchType){
-                $date=  $time["data"];
-                $where['$salTime']=$date;
-            }elseif(2 == $searchType){
-                $date   =    $time["first"];
-                $dateEnd   =     $time["next"];
-                $where['$salTime']=$date;
-                $where['dateEnd']=$dateEnd;
-            }elseif(3 == $searchType){
-                $date   =    $time["first"];
-                $dateEnd   =    $time["last"];
-                $where['$salTime']=$date;
-                $where['dateEnd']=$dateEnd;
-            }
+                $where['$salTime']=$time["month"];
         }else{
-            $date=date('Y-m',time())."-01";
+            $where['$salTime']=date('Y-m',time())."-01";
         }
 
         // 查询公司列表
-        $sum =$this->objDao->searhManageComCount($where);
-        $result=$this->objDao->searhManageComPage($start,$limit,$sorts." ".$dir,$where);
+        $sum =$this->objDao->manageCompanyCount($where);
+        $result=$this->objDao->manageCompanyPage($start,$limit,$sorts." ".$dir,$where);
         $comList['total']=$sum;
         global $billType;
         $i = 0;
         while ( $row = mysql_fetch_array ( $result ) ) {
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
-            $sal = $this->objDao->searchSalTimeByComIdAndSalTime($row['id'], $date, $dateEnd, $searchType);
+            $sal = $this->objDao->searchByComIdAndSalTime($row['id'], $where['$salTime']);
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
             if ($sal) {

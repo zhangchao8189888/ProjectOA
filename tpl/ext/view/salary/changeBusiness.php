@@ -30,14 +30,10 @@
                     defaultType: 'checkboxfield',
                     items: [
                         {
-                            xtype: 'combobox',
+                            xtype: 'textfield',
                             id:"companyName" ,
                             emptyText: "选择公司",
-                            triggerAction:"all",
                             allowBlank: false,
-                            store: managerCom,
-                            valueField: 'abbr',
-                            displayField: 'name',
                             fieldLabel: '单位'
 
                         },
@@ -61,7 +57,10 @@
                                         employNumber: Ext.getCmp("employNumber").getValue()
                                     },
                                     success: function(response){
-                                        Ext.getCmp("employName").setValue(response["e_name"]);
+                                        var json = Ext.JSON.decode(response.responseText);
+                                        Ext.getCmp("employName").setValue(json.e_name);
+                                        Ext.getCmp("companyName").setValue(json.e_company);
+                                        Ext.getCmp("companyName").hide();
                                     }
                                 });
 

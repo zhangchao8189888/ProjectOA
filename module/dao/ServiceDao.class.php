@@ -62,10 +62,14 @@ class ServiceDao extends BaseDao
 		return $result;
     }
 
+    function searchByComIdAndSalTime($comId, $where) {
+        $sql = "SELECT *  FROM OA_salarytime  WHERE companyId=$comId AND salaryTime LIKE '%{$where ['$salTime']}%'and op_salaryTime LIKE '%{$where ['opTime']}%'";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
+
     /**
      * 客服首页dao 获得count
-     * @param null $where
-     * @return int
      */
     function searhManageComCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
@@ -99,11 +103,6 @@ class ServiceDao extends BaseDao
 
     /**
      * 客服首页dao 获得分页数据
-     * @param null $start
-     * @param null $limit
-     * @param null $sort
-     * @param null $where
-     * @return bool|resource
      */
     function searhManageComPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];

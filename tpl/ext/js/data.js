@@ -571,7 +571,7 @@ var serviceManagestore = Ext.create('Ext.data.Store', {
             update : 'POST',
             destroy: 'POST'
         },
-        url : 'index.php?action=ExtService&mode=getOtherAdminComListJosn',
+        url : 'index.php?action=ExtService&mode=searchComListJosn',
 
         reader: {
             root: 'items',
