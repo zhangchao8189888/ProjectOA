@@ -29,6 +29,9 @@ class SalaryBillForm extends BaseForm {
 				return "send_salary.php";
 			case "toSalaryTongji" :
 				return "salaryTongji.php";
+
+            case "toShebaoExt" :
+                 return "shebaoExt.php";
             case "toSalaryTongjiExt" :
                 return "salaryTongjiExt.php";
 			case "billList" :

@@ -66,7 +66,10 @@ class SalaryBillAction extends BaseAction {
 				$this->toSalaryTongji ();
 				break;
             case "toSalaryTongjiExt" :
-                $this->toSalaryTongjiExt ();
+            $this->toSalaryTongjiExt ();
+            break;
+            case "toShebaoExt" :
+                $this->toShebaoExt ();
                 break;
 			case "searchSalaryTongji" :
 				$this->searchSalaryTongji ();
@@ -340,6 +343,10 @@ class SalaryBillAction extends BaseAction {
     //FIXME 工资统计BY孙瑞鹏
     function toSalaryTongjiExt() {
         $this->mode = "toSalaryTongjiExt";
+    }
+    //FIXME 社保BY孙瑞鹏
+    function toShebaoExt() {
+        $this->mode = "toShebaoExt";
     }
 	//FIXME 搜索指定公司工资统计
 	function searchSalaryTongji() {

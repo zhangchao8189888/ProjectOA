@@ -76,6 +76,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 			<a href="index.php?action=SalaryBill&mode=toBillList">工资票据查询</a>
 		</div>
 		<div class="title">工资统计管理</div>
+        <div class="item">
+            <a href="index.php?action=SalaryBill&mode=toShebaoExt">社保查看</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=toSalaryTongji">工资统计</a>
 		</div>
@@ -85,6 +88,7 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=salaryComList">工资查看</a>
 		</div>
+
 	</div>
 	<img id="imgload" style="display: none" src="common/image/load.gif" />
 </div>
