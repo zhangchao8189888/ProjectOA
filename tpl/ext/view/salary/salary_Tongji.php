@@ -384,7 +384,7 @@
                     //根据store和column构造表格
                     Ext.getCmp("infogrid").reconfigure(store, json.columns);
                     //重新渲染表格
-                    //Ext.getCmp("configGrid").render();
+                   // Ext.getCmp("salTimeListP").render();
                 }
             });
             wininfo.show();
