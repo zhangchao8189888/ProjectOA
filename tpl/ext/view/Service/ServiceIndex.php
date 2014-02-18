@@ -37,8 +37,8 @@ Ext.onReady(function () {
         selType: 'checkboxmodel',
         columns: [
             {text: "id", width: 50, dataIndex: 'id', sortable: true, align: 'center'},
-            {text: "工资月份", dataIndex: 'salDate', width: 85, align: 'center'},
-            {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100, align: 'center'},
+            {text: "工资月份", dataIndex: 'salDate', width: 85,sortable: false, align: 'center'},
+            {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100, sortable: false,align: 'center'},
             {
                 text: "单位名称",
                 renderer: function (val, cellmeta, record) {
@@ -49,17 +49,16 @@ Ext.onReady(function () {
                 text: "一次工资",
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="做工资" target="_top" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","first")><span style="color: red"> 未做工资 </span></a>';
+                        return '<a href="#" title="做工资" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","first")><span style="color: red"> 未做工资 </span></a>';
                     } else if (val > 0) {
                         return '<font color="green" title="查看工资" _salTimeId="' + record.data['salTimeid'] + '"  id="check">已做工资</font>';
                     }
                     return val;
                 },
-                dataIndex: 'salStat', align: 'center'
+                dataIndex: 'salStat', sortable: false,align: 'center'
             },
             {
                 text: "二次工资",
-
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
                         return '<a href="#" title="做二次工资" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","second")><span style="color: red"> 无 </span></a>';
@@ -69,7 +68,7 @@ Ext.onReady(function () {
                     }
                     return val;
                 },
-                dataIndex: 'salOrStat', align: 'center'
+                dataIndex: 'salOrStat', sortable: false,align: 'center'
             },
             {
                 text: "年终奖",
@@ -81,7 +80,7 @@ Ext.onReady(function () {
                     }
                     return val;
                 },
-                dataIndex: 'salNianStat', align: 'center'
+                dataIndex: 'salNianStat',sortable: false, align: 'center'
             },
             {
                 text: "发票情况",
@@ -93,7 +92,7 @@ Ext.onReady(function () {
                     }
                     return val;
                 },
-                dataIndex: 'fastat', align: 'center'},
+                dataIndex: 'fastat',sortable: false, align: 'center'},
             {
                 text: "审批状态",
                 renderer: function (val, cellmeta, record) {
@@ -109,9 +108,9 @@ Ext.onReady(function () {
                     return "<span style=\"color: red\"> 未批准发放 </span>";
                     return '<a href="#" onclick="send(' + record.data['salTimeid'] + ')" target="_self">' + val + '</font></a>';
                 },
-                dataIndex: 'fa_state', align: 'center'},
-            {text: "添加管理时间", dataIndex: 'opTime', align: 'center'},
-            {text: "备注", dataIndex: 'mark', align: 'center'}
+                dataIndex: 'fa_state',sortable: false, align: 'center'},
+            {text: "添加管理时间", dataIndex: 'opTime',sortable: false, align: 'center'},
+            {text: "备注", dataIndex: 'mark',sortable: false, align: 'center'}
         ],
         listeners: {
             'cellclick': function (iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
@@ -570,7 +569,7 @@ function addFa() {
     <div id="right">
         <div id="tableList"></div>
         <div id="tab" class="TipDiv"></div>
-        <form enctype="multipart/form-data" id="iform" action="" target="_blank" method="post">
+        <form enctype="multipart/form-data" id="iform" action="" target="_top" method="post">
             <input type="hidden" name="comId" id="comId" value=""/>
             <input type="hidden" name="sDate" id="sDate" value=""/>
             <input type="hidden" name="salType" id="salType" value=""/>

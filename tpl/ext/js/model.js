@@ -262,6 +262,7 @@ Ext.define('oa.common.finance.list',{
     fields: [
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
+        {name: 'sal_id', type: 'string'},
         {name: 'sal_date', type: 'time'},
         {name: 'sal_state', type: 'string'},
         {name: 'bill_state', type: 'string'},

@@ -29,12 +29,22 @@ Ext.onReady(function () {
         columns: [
             {text: "id", width: 50, dataIndex: 'id', sortable: true,align:'center'},
             {text: "公司名称", flex: 240, dataIndex: 'company_name', sortable: true},
-            {text: "操作月份", width: 120, dataIndex: 'sal_date', sortable: true,align:'center'},
-            {text: "工资状态", flex: 120, dataIndex: 'sal_state', sortable: true,align:'center'},
-            {text: "发票状态", width: 120, dataIndex: 'bill_state', sortable: true,align:'center'},
-            {text: "支票状态", flex: 120, dataIndex: 'cheque_state', sortable: true,align:'center'},
-            {text: "支票到账", width: 120, dataIndex: 'cheque_account', sortable: true,align:'center'},
-            {text: "工资发放", flex: 120, dataIndex: 'sal_approve', sortable: true,align:'center'}
+            {text: "操作月份", width: 100, dataIndex: 'sal_date', sortable: false,align:'center'},
+            {text: "工资状态", flex: 120, dataIndex: 'sal_state', sortable: false,align:'center',
+                renderer: function (val, cellmeta, record) {
+                    if (val == 0) {
+                        return '<a href="#" title="做工资" target="_top" onclick=makeSal(' + record.data['id'] + ',"' + record.data['sal_date'] + '","first")><span style="color: red"> 未做工资 </span></a>';
+                    } else if (val > 0) {
+                        return '<a style="color: green" href="#" title="做工资" target="_top" onclick=selectinfo(' + record.data['sal_state'] + ')>已做工资</span>.'
+                        return '<span style="color: green" title="查看工资" _salTimeId="' + record.data['salTimeid'] + '"  id="check">已做工资</span>.';
+                    }
+                    return val;
+                }
+            },
+            {text: "发票状态", width: 120, dataIndex: 'bill_state', sortable: false,align:'center'},
+            {text: "支票状态", flex: 120, dataIndex: 'cheque_state', sortable: false,align:'center'},
+            {text: "支票到账", width: 120, dataIndex: 'cheque_account', sortable: false,align:'center'},
+            {text: "工资发放", flex: 120, dataIndex: 'sal_approve', sortable: false,align:'center'}
         ],
         height: 600,
         width: 1000,
@@ -168,42 +178,6 @@ Ext.onReady(function () {
         });
         win.show();
     }
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // 定义管理公司数据
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    Ext.define('companyModel',{
-        extend: 'Ext.data.Model',
-        fields: [
-            {name: 'id', type: 'int'},
-            {name: 'company_name', type: 'string'}
-        ]
-    });
-    //创建数据源
-    var comListStore = Ext.create('Ext.data.Store', {
-        //分页大小
-        pageSize: 50,
-        model: 'companyModel',
-        //是否在服务端排序
-        remoteSort: true,
-        proxy: {
-            //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
-            type: 'ajax',
-            url : 'index.php?action=Service&mode=getOpCompanyListJson',
-
-            reader: {
-                root: 'items',
-                totalProperty  : 'total'
-            },
-            simpleSortMode: true
-        },
-        sorters: [{
-            //排序字段。
-            property: 'id',
-            //排序类型，默认为 ASC
-            direction: 'DESC'
-        }]
-    });
 
     //创建Grid
     var companyListGrid = Ext.create('Ext.grid.Panel',{
@@ -285,9 +259,7 @@ Ext.onReady(function () {
         }]
     });
     comListStore.on("beforeload",function(){
-
         Ext.apply(comListStore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue()});
-
     });
 
     // Create a window
@@ -322,9 +294,116 @@ Ext.onReady(function () {
             contentEl: 'tab'
         });
         win.show();
+        document.location='index.php?action=Ext&mode=toFinanceIndex';
     }
 });
+function makeSal(id, sDate, salType) {
+    if (sDate == "") {
+        alert("未找到做工资月份，请按工资月份查询后再做工资！");
+        return;
+    }
+    $("#comId").val(id);
+    $("#sDate").val(sDate);
+    $("#salType").val(salType);
+    $("#iform").attr("action", "index.php?action=Service&mode=makeSal");
+    $("#iform").submit();
+}
 
+function selectinfo(timeId) {
+    alert(timeId);
+    //加载数据遮罩
+    var mk=new Ext.LoadMask(Ext.getBody(),{
+        msg:'加载数据中，请稍候！',removeMask:true
+    });
+    mk.show();
+    var p = Ext.create("Ext.grid.Panel",{
+        id:"salTimeListP",
+        title:"详细信息",
+        width:150,
+        region:"west",
+        columns : [],
+        listeners: {
+            'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+            }
+        },
+        split:true,
+        colspan: 3,
+        collapsible:true
+    });
+
+    var infolist=Ext.create("Ext.grid.Panel",{
+        title:'',
+        width:1150,
+        height:450,
+        enableLocking : true,
+        id : 'infogrid',
+        name : 'infogrid',
+        features: [{
+            ftype: 'summary'
+        }],
+        columns : [], //注意此行代码，至关重要
+        //displayInfo : true,
+        emptyMsg : "没有数据显示"
+    });
+
+    var items=[infolist];
+
+    var wininfo = Ext.create('Ext.window.Window', {
+        title: "详细信息", // 窗口标题
+        width:1200, // 窗口宽度
+        height:500, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                mk.hide();
+                window.minimizable = true;
+            },
+            close:function(){
+                mk.hide();
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    var title="";
+    var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
+
+    Ext.Ajax.request({
+        url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+        method : 'POST',
+        params: {
+            timeId : timeId
+        },
+        success : function(response) {
+            //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
+            mk.hide();
+            var json = Ext.JSON.decode(response.responseText); //获得后台传递json
+
+            //创建store
+            var store = Ext.create('Ext.data.Store', {
+                fields : json.fields,//把json的fields赋给fields
+                data : json.data     //把json的data赋给data
+            });
+
+            //根据store和column构造表格
+            //Ext.getCmp("infogrid").render();
+            Ext.getCmp("infogrid").reconfigure(store, json.columns);
+            //重新渲染表格
+
+        }
+    });
+    wininfo.show();
+}
 </script>
 </head>
 <body>
@@ -334,6 +413,11 @@ Ext.onReady(function () {
     <div id="right">
         <div id="tab" class="TipDiv"></div>
         <div id="checkcom"></div>
+        <form enctype="multipart/form-data" id="iform" action="" target="_top" method="post">
+            <input type="hidden" name="comId" id="comId" value=""/>
+            <input type="hidden" name="sDate" id="sDate" value=""/>
+            <input type="hidden" name="salType" id="salType" value=""/>
+        </form>
     </div>
 </div>
 </body>

@@ -469,7 +469,7 @@ var caiwuListStore = Ext.create('Ext.data.Store', {
             update : 'POST',
             destroy: 'POST'
         },
-        url : 'index.php?action=ExtFinance&mode=searchcaiwuListJosn',
+        url : 'index.php?action=ExtFinance&mode=searchCaiwuListJosn',
 
         reader: {
             root: 'items',

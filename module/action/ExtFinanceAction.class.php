@@ -43,8 +43,8 @@ class ExtFinanceAction extends BaseAction {
             case "searchCaiwuManageComListJosn" :
                 $this->searchCaiwuManageComListJosn ();
                 break;
-            case "searchcaiwuListJosn":
-                $this->searchcaiwuListJosn();
+            case "searchCaiwuListJosn":
+                $this->searchCaiwuListJosn();
                 break;
             case "comTaxListJosn":
                 $this->comTaxListJosn();
@@ -88,7 +88,7 @@ class ExtFinanceAction extends BaseAction {
     /**
      * ExtFinance action 财务首页
      */
-    function searchcaiwuListJosn(){
+    function searchCaiwuListJosn(){
         $this->objDao = new FinanceDao();
         $start = $_REQUEST ['start'];
         $limit = $_REQUEST ['limit'];
@@ -127,10 +127,9 @@ class ExtFinanceAction extends BaseAction {
             $sal = $this->objDao->searchByComIdAndSalTime($row['id'], $where['$salTime']);
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
+            $comList ['items'] [$i] ['sal_state'] =0;
             if ($sal) {
-                $comList ['items'] [$i] ['sal_state'] = "<span style=\"color: green\">已做工资</span>";
-            } else {
-                $comList ['items'] [$i] ['sal_state'] = "<span style=\"color: red\">未做工资</span>";
+                $comList ['items'] [$i] ['sal_state'] =  $sal ['id'];
             }
             // 查询发票，支票，到账，是否发放
             $comList ['items'] [$i] ['bill_state'] = "<span style=\"color: blue\">未开发票</span>";
@@ -158,9 +157,9 @@ class ExtFinanceAction extends BaseAction {
                 }
             }
             if($sal ['salaryTime'])  {
-                $comList ['items'] [$i]  ['sal_date'] = $sal ['salaryTime'];
+                $comList ['items'] [$i]  ['sal_date'] = date("Y-m",strtotime($sal["salaryTime"]));
             } else{
-                $comList ['items'] [$i]  ['sal_date'] = "<span style=\"color: black\"> - - - - </span>";
+                $comList ['items'] [$i]  ['sal_date'] = date("Y-m",strtotime($where['$salTime']));
             }
 
             $i ++;
