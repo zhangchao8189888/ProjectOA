@@ -350,7 +350,8 @@ class ExtSalaryAction extends BaseAction{
         $limit=$_REQUEST['limit'];
         $sorts=$_REQUEST['sort'];
         $dir=$_REQUEST['dir'];
-        $companyName=null;
+        $companyName=$_REQUEST['companyName'];
+        $zengjian=$_REQUEST['zengjian'];
         $salTime=null;
         if(!$start){
             $start=0;
@@ -364,7 +365,8 @@ class ExtSalaryAction extends BaseAction{
             $where['salaryTime']=$time["month"];
         }
         $where['companyName']=$companyName;
-        $sum =$this->objDao->searhFapiaoCount($where);
+        $where['zengjian']=$zengjian;
+        $sum =$this->objDao->searhZengjianTongjiPage($where);
         $salaryTimeList=$this->objDao->searhZengjianListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray=array();
         $josnArray['total']=$sum;

@@ -262,7 +262,7 @@ class SalaryDao extends BaseDao {
 	// 个税统计BY孙瑞鹏
 	function searhSalaryTimeCount() {
         $id = $_SESSION ['admin'] ['id'];
-		$sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where
+		$sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where 1=1
   and a.companyId = c.id  and  a.adminId = $id";
 		$result = $this->g_db_query ( $sql );
 		if (! $result) {
@@ -386,12 +386,7 @@ class SalaryDao extends BaseDao {
 			}
 
 		}
-		if ($sort) {
-			$sql .= " order by $sort";
-		}
-		if ($start >= 0 && $limit) {
-			$sql .= " limit $start,$limit";
-		}
+
 		// $sql.=" order by op_salaryTime desc ";
 		$list = $this->g_db_query ( $sql );
 		return $list;
@@ -435,10 +430,10 @@ class SalaryDao extends BaseDao {
         $sql = "SELECT * FROM oa_security WHERE 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
-                $sql .= " and company_name like '%{$where['companyName']}%' ";
+                $sql .= " and Dept like '%{$where['companyName']}%' ";
             }
-            if ($where ['salaryTime'] != "") {
-                $sql .= "  and salaryTime like '%{$where['salaryTime']}%' ";
+            if ($where ['zengjian'] != "") {
+                $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
             }
 
         }
@@ -447,6 +442,21 @@ class SalaryDao extends BaseDao {
         }
         if ($start >= 0 && $limit) {
             $sql .= " limit $start,$limit";
+        }
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 增减员统计BY孙瑞鹏
+    function searhZengjianTongjiPage($where = null) {
+        $sql = "SELECT count(*)  FROM oa_security WHERE 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and Dept like '%{$where['companyName']}%' ";
+            }
+            if ($where ['zengjian'] != "") {
+                $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
+            }
+
         }
         $list = $this->g_db_query ( $sql );
         return $list;
@@ -590,7 +600,13 @@ class SalaryDao extends BaseDao {
 		$list = $this->g_db_query ( $sql );
 		return $list;
 	}
-	
+    // 增员BY孙瑞鹏
+    function setZengyuan($CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi) {
+        $sql = "insert into OA_security (CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi)
+                   values ('{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}',{$sum1},'{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}')";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
 	// 个税类型设置本月BY孙瑞鹏
 	function setTypeBenyue($sid) {
 		$sql = "UPDATE OA_company SET geshui_dateType = 1 WHERE id = $sid";

@@ -60,7 +60,7 @@
                                         var json = Ext.JSON.decode(response.responseText);
                                         Ext.getCmp("employName").setValue(json.e_name);
                                         Ext.getCmp("companyName").setValue(json.e_company);
-                                        Ext.getCmp("companyName").hide();
+
                                     }
                                 });
 
@@ -130,20 +130,20 @@
                         var employState =   Ext.getCmp("employState").getValue();
                         var socialSecurityState =   Ext.getCmp("socialSecurityState").getValue();
                         var remarks =   Ext.getCmp("remarks").getValue();
-                        alert(companyName)   ;
+
                     }
                 },
                 '-',
                 {
                     text: '清空',
                     handler: function () {
-                        var companyName =  Ext.getCmp("companyName").setValue(" ");
-                        var employName  =  Ext.getCmp("employName").setValue(" ");
-                        var employNumber  =  Ext.getCmp("employNumber").setValue(" ");
-                        var business    =   Ext.getCmp("business").setValue(" ");
-                        var employState =   Ext.getCmp("employState").setValue(" ");
-                        var socialSecurityState =   Ext.getCmp("socialSecurityState").setValue(" ");
-                        var remarks =   Ext.getCmp("remarks").setValue(" ");
+                        var companyName =  Ext.getCmp("companyName").setValue("");
+                        var employName  =  Ext.getCmp("employName").setValue("");
+                        var employNumber  =  Ext.getCmp("employNumber").setValue("");
+                        var business    =   Ext.getCmp("business").setValue("");
+                        var employState =   Ext.getCmp("employState").setValue("");
+                        var socialSecurityState =   Ext.getCmp("socialSecurityState").setValue("");
+                        var remarks =   Ext.getCmp("remarks").setValue("");
                     }
                 }
             ],
