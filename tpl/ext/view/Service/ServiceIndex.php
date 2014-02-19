@@ -22,6 +22,11 @@ $comlist = json_encode($comlist);
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery.pagination.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery.checkbox.js" charset="utf-8"></script>
+<style type="text/css">
+    <!--
+    A { text-decoration: none}
+    -->
+</style>
 <script language="javascript" type="text/javascript">
 Ext.require([
     'Ext.grid.*',
@@ -49,9 +54,9 @@ Ext.onReady(function () {
                 text: "一次工资",
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="做工资" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","first")><span style="color: red"> 未做工资 </span></a>';
+                        return '<a href="#" title="做工资" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","first")><span style="color: red"> 未做工资</span></a>';
                     } else if (val > 0) {
-                        return '<font color="green" title="查看工资" _salTimeId="' + record.data['salTimeid'] + '"  id="check">已做工资</font>';
+                        return '<a style="color: green" href="#" title="查看工资" onclick=selectinfo(' + record.data['salStat'] + ')>已做工资</span>';
                     }
                     return val;
                 },
@@ -61,7 +66,7 @@ Ext.onReady(function () {
                 text: "二次工资",
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="做二次工资" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","second")><span style="color: red"> 无 </span></a>';
+                        return '<a href="#" title="做二次工资" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","second")><span style="color: red">未做二次工资</span></a>';
                     } else if (val > 0) {
                         return '<a href="#" title="查看工资" _salTimeId="' + record.data['salOrStat'] + '" _salTime="' + record.data['salDate'] + '" _companyId="' + record.data['companyId'] + '"  id="check"><span style="color: green"> 已做二次工资 </span></a>';
                         return '<font color="green" title="查看工资" _salTimeId="' + record.data['salOrStat'] + '" _salTime="' + record.data['salDate'] + '" _companyId="' + record.data['companyId'] + '"  id="check"></font>';
@@ -74,7 +79,7 @@ Ext.onReady(function () {
                 text: "年终奖",
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="做年终奖" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","nian")><font color="red">无</font></a>';
+                        return '<a href="#" title="做年终奖" onclick=makeSal(' + record.data['id'] + ',"' + record.data['salDate'] + '","nian")><span style="color: red">未做年终奖</span></a>';
                     } else if (val > 0) {
                         return '<font color="green" title="查看年终奖" _salTimeId="' + record.data['salNianStat'] + '"  id="check">已做年终奖</font>';
                     }
@@ -86,9 +91,10 @@ Ext.onReady(function () {
                 text: "发票情况",
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="添加发票" onclick=addFa()><font color="red">添加发票</font></a>';
+                        return '<a href="#" title="开发票" onclick=addBill(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['salStat'] + '","' + record.data['salDate'] + '")><span style="color: red"> 添加发票 </span></a>';
+
                     } else if (val > 0) {
-                        return '<font color="green" title="查看发票情况"  id="check">已添加发票</font>';
+                        return '<a href="#" title="继续添加发票" onclick=addBill(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['salStat'] + '","' + record.data['salDate'] + '")><span style="color: green"> 已添加发票</span></a>';
                     }
                     return val;
                 },
@@ -134,7 +140,7 @@ Ext.onReady(function () {
         width: 1100,
         height: 500,
         frame: true,
-        title: '客服管理公司首页',
+        title: '主页',
         iconCls: 'icon-grid',
         margin: '0 0 20 0',
         renderTo: 'tableList',
@@ -405,78 +411,6 @@ Ext.onReady(function () {
 
     var salListWidth = 890;
 
-    function checkSalWin(text, type, timeId, rowEl) {
-        var p = Ext.create("Ext.grid.Panel", {
-            id: "salTimeListP",
-            title: "导航",
-            width: 150,
-            region: "west",
-            columns: [],
-            listeners: {
-                'cellclick': function (iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
-                }
-            },
-            split: true,
-            colspan: 3,
-            collapsible: true
-        });
-        var items = [];
-        if (type == 4) {
-            items = [p, salList];
-            salListWidth = 750;
-        } else {
-            items = [salList];
-        }
-        var title = "";
-        if (type == 3) {
-            var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
-        } else if (type == 4) {
-            var comId = rowEl.getAttribute('_companyId');
-            var salTime = rowEl.getAttribute('_salTime');
-            salTimeListstore.load({
-                params: {
-                    companyId: comId,
-                    salTime: salTime
-                }
-            });
-            var columns = [
-                {text: "二次工资月份",
-                    width: 130,
-                    renderer: function (val, cellmeta, record) {
-                        return '<font color="green" title="查看工资" _salTimeId="' + record.data['salTimeId'] + '"  id="check">' + val + '</font>';
-                    },
-                    dataIndex: 'salaryTime'}
-            ];
-            Ext.getCmp("salTimeListP").reconfigure(salTimeListStore, columns);
-            var url = "index.php?action=SaveSalary&mode=searchErSalaryByIdJson";
-        } else if (type == 5) {
-            var url = "index.php?action=SaveSalary&mode=searchNianSalaryByIdJson";
-        }
-        Ext.Ajax.request({
-            url: url,  //从json文件中读取数据，也可以从其他地方获取数据
-            method: 'POST',
-            params: {
-                timeId: timeId
-            },
-            success: function (response) {
-                //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
-                var json = Ext.JSON.decode(response.responseText); //获得后台传递json
-
-                //创建store
-                var store = Ext.create('Ext.data.Store', {
-                    fields: json.fields,//把json的fields赋给fields
-                    data: json.data     //把json的data赋给data
-                });
-
-                //根据store和column构造表格
-                Ext.getCmp("configGrid").reconfigure(store, json.columns);
-                //重新渲染表格
-                //Ext.getCmp("configGrid").render();
-            }
-        });
-        //winSal.items=[p,salList];
-        winSal.show();
-    }
     function makeSal(id, sDate, salType) {
         //alert(sDate);
         if (sDate == "") {
@@ -561,6 +495,278 @@ function addFa() {
     $("#iform").submit();
 }
 
+function addBill(comId,companyName,sal_state,sal_date) {
+    if(sal_state==0){
+        alert("没有发工资是不能开发票的！");
+        return false;
+    }
+    var p = Ext.create("Ext.grid.Panel",{
+        id:"salTimeListP",
+        title:"导航",
+        width:150,
+        region:"west",
+        columns : [],
+        listeners: {
+            'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+            }
+        },
+        split:true,
+        colspan: 3,
+        collapsible:true
+    });
+    var items=[salList];
+
+    Ext.getCmp("company_id").setValue(comId);
+    Ext.getCmp("company_name").setValue(companyName);
+    Ext.getCmp("salaryTime").setValue(sal_date);
+    Ext.getCmp("sal_state").setValue(sal_state);
+
+    var winSal = Ext.create('Ext.window.Window', {
+        title: "添加发票", // 窗口标题
+        width:500, // 窗口宽度
+        height:350, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                window.minimizable = true;
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+
+    winSal.show();
+}
+
+var salList=Ext.create("Ext.form.Panel",{
+    width: 700,
+    height: 300,
+    bodyPadding: 10,
+    labelWidth:50,
+    id : 'addBillForm',
+    name : 'addBillForm',
+    items: [
+        {
+            id:'company_id',
+            xtype : 'hiddenfield',
+            readonly:true,
+            name: 'company_id'
+        },
+        {
+            id:'sal_state',
+            xtype : 'hiddenfield',
+            readonly:true,
+            name: 'sal_state'
+        },
+
+        {
+            id:'company_name',
+            xtype : 'displayfield',
+            width:300,
+            name: 'company_name',
+            fieldLabel: '单位'
+        },
+        {
+            id:'salaryTime',
+            xtype : 'displayfield',
+            readonly:true,
+            width:150,
+            name: 'salaryTime',
+            fieldLabel:'月份'
+        } ,
+        {
+            id:'billNo',
+            xtype : 'numberfield',
+            width:300,
+            name: 'billNo',
+            emptyText: "请输入发票编号",
+            fieldLabel:'发票编号'
+        } ,
+        {
+            id:'billItem',
+            xtype : 'textfield',
+            width:300,
+            name: 'billItem',
+            emptyText: "请输入发票项目",
+            fieldLabel:'发票项目'
+        } ,
+        {
+            id:'billValue',
+            xtype : 'numberfield',
+            width:300,
+            name: 'billValue',
+            emptyText: "请输入金额",
+            fieldLabel:'金额'
+        } ,
+        {
+            id:'billRemarks',
+            xtype : 'textareafield',
+            width:400,
+            height:80,
+            name: 'billRemarks',
+            emptyText: "请输入备注信息",
+            fieldLabel:'备注'
+        }
+    ],
+    bbar: [
+        {
+            text: '提交',
+            handler: function () {
+                var companyId =  Ext.getCmp("company_id").getValue();
+                var companyName =  Ext.getCmp("company_name").getValue();
+                var sal_state =  Ext.getCmp("sal_state").getValue();
+                var billNo =   Ext.getCmp("billNo").getValue();
+                var billItem =   Ext.getCmp("billItem").getValue();
+                var billValue =   Ext.getCmp("billValue").getValue();
+                var remarks =   Ext.getCmp("billRemarks").getValue();
+                if(billNo==null){
+                    alert("请您先输入发票编号！");
+                    return;
+                }
+                if(billItem==null){
+                    alert("请您先输入发票项目！");
+                    return;
+                }
+                if(billValue==null){
+                    alert("请您先输入发票金额！");
+                    return;
+                }
+                Ext.Ajax.request({
+                    url: "index.php?action=ExtSalaryBill&mode=addInvoice",
+                    method : 'POST',
+                    params: {
+                        companyId:companyId,
+                        companyname:companyName,
+                        salaryTime:sal_state,
+                        billno:billNo,
+                        billname:billItem,
+                        billval:billValue,
+                        memo:remarks
+                    },
+                    success : function(response) {
+                        var text=   response.responseText;
+                        alert(text);
+                        document.location='index.php?action=Ext&mode=toServiceIndex';
+                    }
+                });
+            }
+        },
+        '-',
+        {
+            text: '清空',
+            handler: function () {
+                Ext.getCmp("billNo").setValue("");
+                Ext.getCmp("billItem").setValue("");
+                Ext.getCmp("billValue").setValue("");
+                Ext.getCmp("billRemarks").setValue("");
+            }
+        }
+    ]
+});
+
+
+var infolist=Ext.create("Ext.grid.Panel",{
+    title:'',
+    width:1150,
+    height:450,
+    enableLocking : true,
+    id : 'infogrid',
+    name : 'infogrid',
+    features: [{
+        ftype: 'summary'
+    }],
+    columns : [], //注意此行代码，至关重要
+    //displayInfo : true,
+    emptyMsg : "没有数据显示"
+});
+function selectinfo(timeId) {
+    //加载数据遮罩
+    var mk=new Ext.LoadMask(Ext.getBody(),{
+        msg:'加载数据中，请稍候！',removeMask:true
+    });
+    mk.show();
+    var p = Ext.create("Ext.grid.Panel",{
+        id:"salTimeListP",
+        title:"详细信息",
+        width:150,
+        region:"west",
+        columns : [],
+        listeners: {
+            'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+            }
+        },
+        split:true,
+        colspan: 3,
+        collapsible:true
+    });
+
+    var items=[infolist];
+
+    var wininfo = Ext.create('Ext.window.Window', {
+        title: "详细信息", // 窗口标题
+        width:1200, // 窗口宽度
+        height:500, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                mk.hide();
+                window.minimizable = true;
+            },
+            close:function(){
+                mk.hide();
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    var title="";
+    var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
+
+    Ext.Ajax.request({
+        url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+        method : 'POST',
+        params: {
+            timeId : timeId
+        },
+        success : function(response) {
+            //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
+            mk.hide();
+            var json = Ext.JSON.decode(response.responseText); //获得后台传递json
+
+            //创建store
+            var store = Ext.create('Ext.data.Store', {
+                fields : json.fields,//把json的fields赋给fields
+                data : json.data     //把json的data赋给data
+            });
+
+            //根据store和column构造表格
+            Ext.getCmp("infogrid").reconfigure(store, json.columns);
+            //重新渲染表格
+            // Ext.getCmp("salTimeListP").render();
+        }
+    });
+    wininfo.show();
+}
 </script>
 </head>
 <body>

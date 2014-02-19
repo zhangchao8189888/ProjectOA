@@ -12,6 +12,11 @@
 <script language="javascript" type="text/javascript"src="tpl/ext/js/data.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"src="tpl/ext/js/MonthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
+<style type="text/css">
+    <!--
+    A { text-decoration: none}
+    -->
+</style>
 <script language="javascript" type="text/javascript">
 Ext.require([
     'Ext.grid.*',
@@ -33,13 +38,13 @@ Ext.onReady(function () {
                     return '<a href="#" onclick=getEmploy("' + val + '") >' + val + '</a>';
                 }
             },
-            {text: "操作月份", width: 100, dataIndex: 'sal_date', sortable: false,align:'center'},
+            {text: "操作日期", width: 100, dataIndex: 'sal_date', sortable: false,align:'center'},
             {text: "工资状态", flex: 120, dataIndex: 'sal_state', sortable: false,align:'center',
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="做工资" onclick=makeSal(' + record.data['id'] + ',"' + record.data['sal_date'] + '","first")><span style="color: red"> 未做工资 </span></a>';
+                        return '<span style="color: red"> 未做工资 </span>';
                     } else if (val > 0) {
-                        return '<a style="color: green" href="#" title="查看工资" onclick=selectinfo(' + record.data['sal_state'] + ')>已做工资</span>.'
+                        return '<a style="color: green" href="#" title="查看工资" onclick=selectinfo(' + record.data['sal_state'] + ')>已做工资</span>';
                     }
                     return val;
                 }
@@ -47,14 +52,23 @@ Ext.onReady(function () {
             {text: "发票状态", width: 120, dataIndex: 'bill_state', sortable: false,align:'center',
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="做工资" onclick=addBill(' + record.data['id'] + ',' + record.data['company_name'] + ',"' + record.data['sal_date'] + '")><span style="color: red"> 未开发票 </span></a>';
+                        return '<span style="color: red"> 未开发票 </span>';
                     } else if (val > 0) {
                         return '<span style="color: green" title="查看发票" _salTimeId="' + record.data['salTimeid'] + '"  id="check">已开发票</span>.';
                     }
                     return val;
                 }
             },
-            {text: "银行到账", width: 120, dataIndex: 'cheque_account', sortable: false,align:'center'},
+            {text: "银行到账", width: 120, dataIndex: 'cheque_account', sortable: false,align:'center',
+                renderer: function (val, cellmeta, record) {
+                    if (val == 0) {
+                        return '<a href="#" title="开支票" onclick=addCheque(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['sal_state'] + '","' + record.data['sal_date'] + '")><span style=\"color: blue\">支票未到账</span></a>';
+                    } else if (val > 0) {
+                        return '<a href="#" title="继续开支票" onclick=addCheque(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['sal_state'] + '","' + record.data['sal_date'] + '")><span style="color: green"已开发票</span></a>';
+                    }
+                    return val;
+                }
+            },
             {text: "工资发放", flex: 120, dataIndex: 'sal_approve', sortable: false,align:'center'}
         ],
         height: 600,
@@ -176,19 +190,6 @@ Ext.onReady(function () {
         Ext.apply(caiwuListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opComname").getValue()});
     });
     caiwuListStore.loadPage(1);
-    function newWin(text) {
-        var win = Ext.create('Ext.window.Window', {
-            title: text,
-            width: 300,
-            height: 100,
-            plain: true,
-            closeAction: 'hide', // 关闭窗口
-            maximizable: false, // 最大化控制 值为true时可以最大化窗体
-            layout: 'border',
-            contentEl: 'tab'
-        });
-        win.show();
-    }
 
     //创建Grid
     var companyListGrid = Ext.create('Ext.grid.Panel',{
@@ -310,8 +311,15 @@ Ext.onReady(function () {
 
 });
 
+/**
+ * 添加支票的方法
+ */
 
-function addBill(comId,sal_date) {
+function addCheque(comId,companyName,sal_state,sal_date) {
+//    if(sal_state==0){
+//        alert("没有发工资是不能开支票的！");
+//        return false;
+//    }
     var p = Ext.create("Ext.grid.Panel",{
         id:"salTimeListP",
         title:"导航",
@@ -328,10 +336,15 @@ function addBill(comId,sal_date) {
     });
     var items=[salList];
 
+    Ext.getCmp("company_id").setValue(comId);
+    Ext.getCmp("company_name").setValue(companyName);
+    Ext.getCmp("salaryTime").setValue(sal_date);
+    Ext.getCmp("sal_state").setValue(sal_state);
+
     var winSal = Ext.create('Ext.window.Window', {
-        title: "添加发票", // 窗口标题
+        title: "添加支票", // 窗口标题
         width:500, // 窗口宽度
-        height:100, // 窗口高度
+        height:300, // 窗口高度
         layout:"border",// 布局
         minimizable:true, // 最大化
         maximizable:true, // 最小化
@@ -354,52 +367,122 @@ function addBill(comId,sal_date) {
 
     winSal.show();
 }
-var salListWidth=1150;
-var salList=Ext.create("Ext.grid.Panel",{
-    title:'',
-    width:salListWidth,
-    height:450,
-    enableLocking : true,
-    id : 'configGrid',
-    name : 'configGrid',
-    features: [{
-        ftype: 'summary'
-    }],
-    columns : [], //注意此行代码，至关重要
-    tbar : [
-        '公司名称:',
+
+var salList=Ext.create("Ext.form.Panel",{
+    width: 700,
+    height: 260,
+    bodyPadding: 10,
+    labelWidth:50,
+    id : 'addBillForm',
+    name : 'addBillForm',
+    items: [
+        {
+            id:'company_id',
+            xtype : 'hiddenfield',
+            readonly:true,
+            name: 'company_id'
+        },
+        {
+            id:'sal_state',
+            xtype : 'hiddenfield',
+            readonly:true,
+            name: 'sal_state'
+        },
+
         {
             id:'company_name',
-            xtype : 'textfield',
-            readonly:true,
-            width:200,
-            name: 'updateid'
+            xtype : 'displayfield',
+            width:300,
+            name: 'company_name',
+            fieldLabel: '单位'
         },
         {
             id:'salaryTime',
-            xtype : 'textfield',
+            xtype : 'displayfield',
             readonly:true,
-            width:85,
-            name: 'salaryTime'
-        },
-        '余额:',
+            width:150,
+            name: 'salaryTime',
+            fieldLabel:'月份'
+        } ,
         {
-            id:'su_yue',
-            xtype : 'textfield',
-            name: 'su_yue'
-        },
-        {
-            xtype : 'button',
-            id : 'benyue',
-            handler : function(src) {
-
+            xtype: 'combobox',
+            id:"chequeType" ,
+            emptyText: "请选择支票类型",
+            editable: false,
+            allowBlank: false,
+            store: {
+                fields: ['abbr', 'name'],
+                data: [
+                    {"abbr": "2", "name": "到账支票"},
+                    {"abbr": "3", "name": "银行到账"},
+                ]
             },
-            text : '修改',
-            iconCls : 'update'
+            valueField: 'abbr',
+            displayField: 'name',
+            fieldLabel: '支票类型'
+        },
+        {
+            id:'chequeValue',
+            xtype : 'numberfield',
+            width:300,
+            name: 'chequeValue',
+            emptyText: "请输入金额",
+            fieldLabel:'金额'
+        } ,
+        {
+            id:'chequeRemarks',
+            xtype : 'textareafield',
+            width:400,
+            height:80,
+            name: 'chequeRemarks',
+            emptyText: "请输入备注信息",
+            fieldLabel:'备注'
         }
     ],
-    //displayInfo : true,
-    emptyMsg : "没有数据显示"
+    bbar: [
+    {
+        text: '提交',
+        handler: function () {
+            var companyId =  Ext.getCmp("company_id").getValue();
+            var companyName =  Ext.getCmp("company_name").getValue();
+            var sal_state =  Ext.getCmp("sal_state").getValue();
+            var chequeType =   Ext.getCmp("chequeType").getValue();
+            var chequeValue =   Ext.getCmp("chequeValue").getValue();
+            var remarks =   Ext.getCmp("chequeRemarks").getValue();
+            if(chequeValue==null){
+                alert("请您先输入发票金额！");
+                return;
+            }
+            Ext.Ajax.request({
+                url: "index.php?action=ExtSalaryBill&mode=addCheque",
+                method : 'POST',
+                params: {
+                    companyId:companyId,
+                    companyname:companyName,
+                    salaryTime:sal_state,
+                    chequeType:chequeType,
+                    chequeval:chequeValue,
+                    memo:remarks
+                },
+                success : function(response) {
+                    var text=   response.responseText;
+                    alert(text);
+                    document.location='index.php?action=Ext&mode=toFinanceIndex';
+                }
+            });
+        }
+    },
+    '-',
+    {
+        text: '清空',
+        handler: function () {
+            Ext.getCmp("billNo").setValue("");
+            Ext.getCmp("billItem").setValue("");
+            Ext.getCmp("billValue").setValue("");
+            Ext.getCmp("billRemarks").setValue("");
+        }
+    }
+]
 });
 
 function getEmploy(com) {
@@ -426,33 +509,45 @@ function addFa(id,sDate) {
     $("#iform").attr("action", "index.php?action=SalaryBill&mode=toAddInvoice");
     $("#iform").submit();
 }
-
+var infolist=Ext.create("Ext.grid.Panel",{
+    title:'',
+    width:1150,
+    height:450,
+    enableLocking : true,
+    id : 'infogrid',
+    name : 'infogrid',
+    features: [{
+        ftype: 'summary'
+    }],
+    columns : [], //注意此行代码，至关重要
+    //displayInfo : true,
+    emptyMsg : "没有数据显示"
+});
 function selectinfo(timeId) {
     //加载数据遮罩
     var mk=new Ext.LoadMask(Ext.getBody(),{
         msg:'加载数据中，请稍候！',removeMask:true
     });
     mk.show();
-    var infolist=Ext.create("Ext.grid.Panel",{
-        title:'',
-        width:1150,
-        height:450,
-        enableLocking : true,
-        id : 'infogrid',
-        name : 'infogrid',
-        features: [{
-            ftype: 'summary'
-        }],
-        columns : [], //注意此行代码，至关重要
-        //displayInfo : true,
-        emptyMsg : "没有数据显示"
+    var p = Ext.create("Ext.grid.Panel",{
+        id:"salTimeListP",
+        title:"详细信息",
+        width:150,
+        region:"west",
+        columns : [],
+        listeners: {
+            'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+            }
+        },
+        split:true,
+        colspan: 3,
+        collapsible:true
     });
 
     var items=[infolist];
 
     var wininfo = Ext.create('Ext.window.Window', {
         title: "详细信息", // 窗口标题
-        id:"win",
         width:1200, // 窗口宽度
         height:500, // 窗口高度
         layout:"border",// 布局
@@ -488,20 +583,20 @@ function selectinfo(timeId) {
             timeId : timeId
         },
         success : function(response) {
-            Ext.getCmp("infogrid").doAutoRender();
             //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
             mk.hide();
             var json = Ext.JSON.decode(response.responseText); //获得后台传递json
+
             //创建store
             var store = Ext.create('Ext.data.Store', {
                 fields : json.fields,//把json的fields赋给fields
                 data : json.data     //把json的data赋给data
             });
+
             //根据store和column构造表格
             Ext.getCmp("infogrid").reconfigure(store, json.columns);
-         //   Ext.getCmp("win").render();
             //重新渲染表格
-
+            // Ext.getCmp("salTimeListP").render();
         }
     });
     wininfo.show();

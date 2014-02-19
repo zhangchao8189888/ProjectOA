@@ -122,9 +122,9 @@ class ExtServiceAction extends BaseAction{
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
                 if($results["salaryTime"]){
-                    $comList ['items'] [$i] ['salDate'] =date("Y-m",strtotime($results["salaryTime"]));
+                    $comList ['items'] [$i] ['salDate'] =date("Y-m-d",strtotime($results["salaryTime"]));
                 }else{
-                    $comList ['items'] [$i] ['salDate'] =date("Y-m",strtotime($date));
+                    $comList ['items'] [$i] ['salDate'] =date("Y-m-d",strtotime($date));
                 }
                 if($results['op_salaryTime']){
                     $comList ['items'] [$i] ['op_salaryTime'] = date("Y-m-d",strtotime( $results['op_salaryTime']));

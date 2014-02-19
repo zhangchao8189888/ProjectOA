@@ -133,7 +133,7 @@ class ExtFinanceAction extends BaseAction {
             }
             // 查询发票，支票，到账，是否发放
             $comList ['items'] [$i] ['bill_state'] = 0;
-            $comList ['items'] [$i] ['cheque_account'] = "<span style=\"color: blue\">支票未到账</span>";
+            $comList ['items'] [$i] ['cheque_account'] = 0;
             $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: blue\">未处理审批</span>";
             if ($sal) {
                 $billList = $this->objDao->searchBillBySalaryTimeId ( $sal ['id'] );
@@ -154,9 +154,9 @@ class ExtFinanceAction extends BaseAction {
                 }
             }
             if($sal ['salaryTime'])  {
-                $comList ['items'] [$i]  ['sal_date'] = date("Y-m",strtotime($sal["salaryTime"]));
+                $comList ['items'] [$i]  ['sal_date'] = date("Y-m-d",strtotime($sal["salaryTime"]));
             } else{
-                $comList ['items'] [$i]  ['sal_date'] = date("Y-m",strtotime($where['$salTime']));
+                $comList ['items'] [$i]  ['sal_date'] = date("Y-m-d",strtotime($where['$salTime']));
             }
 
             $i ++;
