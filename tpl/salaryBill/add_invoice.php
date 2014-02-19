@@ -2,7 +2,10 @@
 $errorMsg=$form_data['errormsg'];
 $succ=$form_data['succ'];
 $comList=$form_data['comList'];
-//var_dump($comList);
+$comId=$form_data['comId'];
+$date=$form_data['date'];
+echo($comId["company_name"]) ;
+echo($date) ;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -97,7 +100,7 @@ $comList=$form_data['comList'];
                            <td class="td_left" id="index"><label>公司名称：</label></td>
                            <td >
                                 <select  name="comname" id="comname"  >
-                                <option value="-1">请选择公司名称</option>
+                                <option value="<?php echo($comId["company_name"])?>">请选择公司名称</option>
 			<?php  if($comList){
            	  while ($row=mysql_fetch_array($comList) ){
            	  	?>
@@ -122,7 +125,7 @@ $comList=$form_data['comList'];
                            <td class="td_left" id="index"><label>工资日期：</label></td>
                            <td class="td_right" nowrap>
                                 <select  name="salaryTime" id="salaryTime"  >
-			                    <option value="-1">请选择工资日期</option>
+			                    <option value="<?php echo($date)?>">请选择工资日期</option>
 			                    </select></td>
                            <td class="td_right">
                                <div id="e_noTip"></div>

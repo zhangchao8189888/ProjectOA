@@ -100,7 +100,7 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 	<div class='menu'>
 		<div class='title'>客服管理</div>
 		<div class='item'>
-			<a href='index.php?action=Service&mode=getAdminComList'>客服首页</a>
+			<a href='index.php?action=Ext&mode=toServiceIndex'>主页</a>
 		</div>
         <div class='item'>
             <a href='index.php?action=Ext&mode=toBusiness'>业务变更</a>

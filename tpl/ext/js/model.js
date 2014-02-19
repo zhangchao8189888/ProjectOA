@@ -266,7 +266,6 @@ Ext.define('oa.common.finance.list',{
         {name: 'sal_date', type: 'time'},
         {name: 'sal_state', type: 'string'},
         {name: 'bill_state', type: 'string'},
-        {name: 'cheque_state', type: 'string'},
         {name: 'cheque_account', type: 'string'},
         {name: 'sal_approve', type: 'string'}
     ]

@@ -36,7 +36,7 @@ Ext.onReady(function () {
         stripeRows: true,
         selType: 'checkboxmodel',
         columns: [
-            {text: "id", width: 50, dataIndex: 'id', sortable: true, align: 'center'},
+            {text: "id", width: 50, dataIndex: 'id', sortable: true, align: 'center',hidden:true},
             {text: "工资月份", dataIndex: 'salDate', width: 85,sortable: false, align: 'center'},
             {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100, sortable: false,align: 'center'},
             {
@@ -200,10 +200,10 @@ Ext.onReady(function () {
             },
             '公司名称查询',
             {
-                id: 'comname',
+                id: 'comnamesecrch',
                 xtype: 'trigger',
                 triggerClass: 'x-form-search-trigger',
-                name: 'comname',
+                name: 'comnamesecrch',
                 onTriggerClick: function (src) {
                     serviceManagestore.removeAll();
                     serviceManagestore.load({
@@ -234,7 +234,7 @@ Ext.onReady(function () {
                     serviceManagestore.removeAll();
                     serviceManagestore.load({
                         params: {
-                            company_name: Ext.getCmp("comname").getValue(),
+                            company_name: Ext.getCmp("comnamesecrch").getValue(),
                             date: Ext.getCmp("STime").getValue(),
                             operationTime: Ext.getCmp("operationTime").getValue(),
                             start: 0,
@@ -262,7 +262,7 @@ Ext.onReady(function () {
                     serviceManagestore.removeAll();
                     serviceManagestore.load({
                         params: {
-                            company_name: Ext.getCmp("comname").getValue(),
+                            company_name: Ext.getCmp("comnamesecrch").getValue(),
                             operationTime: Ext.getCmp("operationTime").getValue(),
                             date: Ext.getCmp("STime").getValue(),
                             start: 0,
@@ -276,7 +276,7 @@ Ext.onReady(function () {
         ]
     });
     serviceManagestore.on("beforeload", function () {
-        Ext.apply(serviceManagestore.proxy.extraParams, {Key: Ext.getCmp("comname").getValue(), companyName: Ext.getCmp("comname").getValue()});
+        Ext.apply(serviceManagestore.proxy.extraParams, {Key: Ext.getCmp("comnamesecrch").getValue(), companyName: Ext.getCmp("comnamesecrch").getValue()});
     });
 
     serviceManagestore.loadPage(1);
@@ -383,6 +383,7 @@ Ext.onReady(function () {
             contentEl: 'tab'
         });
         win.show();
+        document.location='index.php?action=Ext&mode=toServiceIndex';
     };
     // Create a window
     var window = new Ext.Window({
@@ -570,6 +571,7 @@ function addFa() {
         <div id="tableList"></div>
         <div id="tab" class="TipDiv"></div>
         <form enctype="multipart/form-data" id="iform" action="" target="_top" method="post">
+            <input type="hidden" name="comname" id="comname" value=""/>
             <input type="hidden" name="comId" id="comId" value=""/>
             <input type="hidden" name="sDate" id="sDate" value=""/>
             <input type="hidden" name="salType" id="salType" value=""/>
