@@ -43,7 +43,7 @@ Ext.onReady(function(){
             {text: "申报状态", width: 100, dataIndex: 'shenbaozhuangtai', sortable: true},
             {text: "备注", width: 100, dataIndex: 'beizhu', sortable: true}
         ],
-        height:700,
+        height:600,
         width:1000,
         x:0,
         y:0,
@@ -68,11 +68,11 @@ Ext.onReady(function(){
                 handler: function (src) {
                     var model = salTimeListGrid.getSelectionModel();
                     var sel=model.getSelection();
-                     if (sel) {
-                         var ids = [];
-                         for(var i = 0; i < sel.length ;i++){
-                             ids.push(sel[i].data.id);
-                         }
+                    if (sel) {
+                        var ids = [];
+                        for(var i = 0; i < sel.length ;i++){
+                            ids.push(sel[i].data.id);
+                        }
                         Ext.Ajax.request({
                             url: 'index.php?action=ExtSalary&mode=deleteZengjianyuan',
                             method: 'post',
@@ -108,62 +108,242 @@ Ext.onReady(function(){
                 },
                 text : '增员按钮',
                 iconCls : 'chakan'
+            },
+            '公司名称查询', {
+                id:'comname',
+                xtype : 'trigger',
+                triggerClass : 'x-form-search-trigger',
+                name: 'comname',
+                onTriggerClick : function(src) {
+                    zengjianListstore.removeAll();
+                    zengjianListstore.load( {
+                        params : {
+                            companyName : this.getValue(),
+                            zengjian : Ext.getCmp("zengjian").getValue(),
+                            start : 0,
+                            limit : 50
+                        }
+                    });
+                }
+            },
+            '增减类型查询', {
+                id:'zengjian',
+                xtype : 'trigger',
+                triggerClass : 'x-form-search-trigger',
+                name: 'zengjian',
+                onTriggerClick : function(src) {
+                    zengjianListstore.removeAll();
+                    zengjianListstore.load( {
+                        params : {
+                            companyName : Ext.getCmp("comname").getValue(),
+                            zengjian : this.getValue(),
+                            start : 0,
+                            limit : 50
+                        }
+                    });
+                }
             }
 
         ]
     });
     salTimeListGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
-        //var sel=model.getLastSelected();
-        Ext.getCmp("searchSalBu").setDisabled(selections.length === 0);
+
     }, this);
-    /**
-     * 定义工资table
-     */
-    //创建表格,可以加入更多的属性。
-    var salListWidth=1150;
-    var salList=Ext.create("Ext.grid.Panel",{
-        title:'',
-        width:salListWidth,
-        height:450,
-        enableLocking : true,
-        id : 'configGrid',
-        name : 'configGrid',
-        features: [{
-            ftype: 'summary'
-        }],
-        columns : [
+    var salList = Ext.create('Ext.form.Panel', {
+        bodyPadding: 10,
+        width: 700,
+        height: 500,
+        title: '',
+        items: [
+            {
+                xtype: 'fieldcontainer',
+                fieldLabel: '请输入数据',
+                defaultType: 'checkboxfield',
+                items: [
+                    {
+                        xtype: 'textfield',
+                        id:"kefuName" ,
+                        emptyText: "输入客服姓名",
+                        allowBlank: false,
+                        fieldLabel: '客服'
 
-        ], //注意此行代码，至关重要
-        //displayInfo : true,
-        emptyMsg : "没有数据显示"
+                    },
+                    {
+                        xtype: 'textfield',
+                        id:"companyName" ,
+                        emptyText: "选择公司",
+                        allowBlank: false,
+                        fieldLabel: '单位'
 
+                    },
+                    {
+                        xtype: 'textfield',
+                        id:"employName",
+                        emptyText: "请输入姓名",
+                        fieldLabel: '姓名'
+                    },
+                    {
+                        xtype: 'textfield',
+                        id:"employNumber",
+                        emptyText: "请输入身份证号",
+                        onBlur:function(){
+                            var url = "index.php?action=ExtSalary&mode=searchEmploy";
+                            Ext.Ajax.request({
+                                url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+                                method : 'POST',
+                                params: {
+                                    employNumber: Ext.getCmp("employNumber").getValue()
+                                },
+                                success: function(response){
+                                    var json = Ext.JSON.decode(response.responseText);
+                                    Ext.getCmp("employName").setValue(json.e_name);
+                                    Ext.getCmp("companyName").setValue(json.e_company);
 
+                                }
+                            });
 
-    });
+                        } ,
+                        fieldLabel: '身份证号'
+                    },
+                    {
+                        xtype: 'combobox',
+                        id:"leibie" ,
+                        emptyText: "请选择身份类别",
+                        editable: false,
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "本市城镇职工", "name": "本市城镇职工"},
+                                {"abbr": "外埠城镇职工", "name": "外埠城镇职工"},
+                                {"abbr": "本市农村劳动力", "name": "本市农村劳动力"},
+                                {"abbr": "外地农村劳动力", "name": "外地农村劳动力"}
+                            ]
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '身份类别'
+                    },
+                    {
+                        xtype: 'combobox',
+                        id:"caozuo" ,
+                        editable: false,
+                        emptyText: "请选择操作状态",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "增员", "name": "增员"},
+                                {"abbr": "减员", "name": "减员"}
+                            ]
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '操作状态'
+                    },
+                    {
+                        xtype: 'textfield',
+                        id:"shebao",
+                        emptyText: "请输入社保基数",
+                        fieldLabel: '社保基数'
+                    },
+                    {
+                        xtype: 'combobox',
+                        id:"waiqu" ,
+                        editable: false,
+                        emptyText: "请选择操作状态",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "外区转入", "name": "外区转入"},
+                                {"abbr": "新参保", "name": "新参保"}
+                            ]
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '外区转入/新参保'
+                    },
 
-//通过ajax获取表头已经表格数据
-    function checkSalWin() {
-        var p = Ext.create("Ext.grid.Panel",{
-            id:"salTimeListP",
-            title:"导航",
-            width:150,
-            region:"west",
-            columns : [],
-            listeners: {
-                'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+                    {
+                        xtype: 'combobox',
+                        id:"yongren" ,
+                        editable: false,
+                        emptyText: "请选择用人单位基数是否有",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "是", "name": "是"},
+                                {"abbr": "否", "name": "否"}
+                            ]
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '用人单位基数'
+                    },
+                    {
+                        xtype: 'combobox',
+                        id:"shenbao" ,
+                        editable: false,
+                        emptyText: "请选择申报状态",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "完成", "name": "完成"},
+                                {"abbr": "未完成", "name": "未完成"}
+                            ]
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '申报状态'
+                    },
+                    {
+                        xtype: 'textareafield',
+                        id:"beizhu",
+                        width:400,
+                        height:80,
+                        emptyText: "请输入备注信息",
+                        fieldLabel: '备注'
+                    }
+                ]
+            }
+        ],
+        bbar: [
+            {
+                text: '提交',
+                handler: function () {
+                    addZengyuan();
                 }
             },
-            split:true,
-            colspan: 3,
-            collapsible:true
-        });
+            '-',
+            {
+                text: '清空',
+                handler: function () {
+                    var yongren =  Ext.getCmp("yongren").setValue("");
+                    var waiqu =  Ext.getCmp("waiqu").setValue("");
+                    var shebao =  Ext.getCmp("shebao").setValue("");
+                    var caozuo =  Ext.getCmp("caozuo").setValue("");
+                    var leibie =  Ext.getCmp("leibie").setValue("");
+                    var kefuName =  Ext.getCmp("kefuName").setValue("");
+                    var companyName =  Ext.getCmp("companyName").setValue("");
+                    var employName  =  Ext.getCmp("employName").setValue("");
+                    var employNumber  =  Ext.getCmp("employNumber").setValue("");
+                    var shenbao =   Ext.getCmp("shenbao").setValue("");
+                    var beizhu =   Ext.getCmp("beizhu").setValue("");
+                }
+            }
+        ]
+
+    });
+    var winSal=null;
+    function checkSalWin() {
         var items=[salList];
-
-
-        var winSal = Ext.create('Ext.window.Window', {
+         winSal = Ext.create('Ext.window.Window', {
             title: "增员信息", // 窗口标题
-            width:1200, // 窗口宽度
-            height:500, // 窗口高度
+            width:600, // 窗口宽度
+            height:560, // 窗口高度
             layout:"border",// 布局
             minimizable:true, // 最大化
             maximizable:true, // 最小化
@@ -185,6 +365,35 @@ Ext.onReady(function(){
         });
         winSal.show();
 
+    }
+    //通过ajax添加信息
+    function addZengyuan() {
+        var url = "index.php?action=SaveSalary&mode=addZengyuan";
+        Ext.Ajax.request({
+            url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+            method : 'POST',
+            params: {
+                yongren: Ext.getCmp("yongren").getValue(),
+                waiqu: Ext.getCmp("waiqu").getValue(),
+                shebao: Ext.getCmp("shebao").getValue(),
+                caozuo: Ext.getCmp("caozuo").getValue(),
+                leibie: Ext.getCmp("leibie").getValue(),
+                kefuName: Ext.getCmp("kefuName").getValue(),
+                companyName: Ext.getCmp("companyName").getValue(),
+                employName: Ext.getCmp("employName").getValue(),
+                employNumber: Ext.getCmp("employNumber").getValue(),
+                shenbao: Ext.getCmp("shenbao").getValue(),
+                beizhu: Ext.getCmp("beizhu").getValue()
+            },
+            success : function(response) {
+                winSal.hide();
+                zengjianListstore.load( {
+                    params: {
+
+                    }
+                });
+            }
+        });
     }
     zengjianListstore.loadPage(1);
 });

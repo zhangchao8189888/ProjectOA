@@ -11,6 +11,30 @@ var $danweigongshang;
 var $danweishengyu;
 var $danweiheji;	
 const  jijinshu=3500;
+    function getSumShebao($leibie,$shebao){
+        /**社保金额合计
+         *
+         */
+        $jisuan_sum = array();
+        $userType=$this->getShenfenleibie($leibie);
+        $jisuan_sum['shebaojishu']=$shebao;
+            if($userType!=-1){
+                $jisuan_sum['gerenshiye']=$this->jisuan_geren_shiye($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['gerenyiliao']=$this->jisuan_geren_yiliao($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['gerenyanglao']=$this->jisuan_geren_yanglao($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['koukuanheji']=($jisuan_sum['gerenshiye']+$jisuan_sum['gerenyiliao']+$jisuan_sum['gerenyanglao']);
+                $jisuan_sum['danweishiye']=$this->jisuan_danwei_shiye($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['danweigongshang']=$this->jisuan_danwei_gongshang($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['danweishengyu']=$this->jisuan_danwei_shengyu($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['danweiyanglao']=$this->jisuan_danwei_yanglao($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['danweiyiliao']=$this->jisuan_danwei_yiliao($jisuan_sum['shebaojishu'],$userType);
+                $jisuan_sum['danweiheji']=($jisuan_sum['danweishiye']+$jisuan_sum['danweigongshang']+$jisuan_sum['danweishengyu']+$jisuan_sum['danweiyanglao']+$jisuan_sum['danweiyiliao']);
+                $jisuan_sum['sum']=$jisuan_sum['koukuanheji']+ $jisuan_sum['danweiheji'];
+            }else{
+                $jisuan_sum['sum']=-1;
+            }
+        return  $jisuan_sum['sum'];
+    }
 	function getSumSalary(&$jisuan_var){
 		//$shebaojishu,$shenfenleibie
 		//var_dump($jisuan_var);

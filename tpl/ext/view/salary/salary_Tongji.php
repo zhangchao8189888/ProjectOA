@@ -295,7 +295,20 @@
             //displayInfo : true,
             emptyMsg : "没有数据显示"
         });
-
+        var infolist=Ext.create("Ext.grid.Panel",{
+            title:'',
+            width:1150,
+            height:450,
+            enableLocking : true,
+            id : 'infogrid',
+            name : 'infogrid',
+            features: [{
+                ftype: 'summary'
+            }],
+            columns : [], //注意此行代码，至关重要
+            //displayInfo : true,
+            emptyMsg : "没有数据显示"
+        });
         function selectinfo(timeId) {
             //加载数据遮罩
             var mk=new Ext.LoadMask(Ext.getBody(),{
@@ -315,21 +328,6 @@
                 split:true,
                 colspan: 3,
                 collapsible:true
-            });
-
-            var infolist=Ext.create("Ext.grid.Panel",{
-                title:'',
-                width:1150,
-                height:450,
-                enableLocking : true,
-                id : 'infogrid',
-                name : 'infogrid',
-                features: [{
-                    ftype: 'summary'
-                }],
-                columns : [], //注意此行代码，至关重要
-                //displayInfo : true,
-                emptyMsg : "没有数据显示"
             });
 
             var items=[infolist];

@@ -2,6 +2,10 @@
 require_once ("module/form/SaveSalaryForm.class.php");
 require_once ("module/dao/SalaryDao.class.php");
 require_once ("module/dao/EmployDao.class.php");
+require_once("tools/fileTools.php");
+require_once("tools/excel_class.php");
+require_once("tools/sumSalary.class.php");
+require_once("tools/Classes/PHPExcel.php");
 class SaveSalaryAction extends BaseAction {
 	/*
 	 * @param $actionPath @return TestAction
@@ -110,6 +114,10 @@ class SaveSalaryAction extends BaseAction {
 			case "setBenyueType" :
 				$this->setBenyueType ();
 				break;
+            case "addZengyuan" :
+				$this->addZengyuan ();
+				break;
+
 			default :
 				$this->modelInput ();
 				break;
@@ -527,6 +535,28 @@ class SaveSalaryAction extends BaseAction {
 		// echo json_encode($salaryListArray);
 		exit ();
 	}
+
+    // 增员BY孙瑞鹏
+    function addZengyuan() {
+
+        $yongren = $_REQUEST ['yongren'];
+        $waiqu = $_REQUEST ['waiqu'];
+        $shebao = $_REQUEST ['shebao'];
+        $caozuo = $_REQUEST ['caozuo'];
+        $leibie = $_REQUEST ['leibie'];
+        $kefuName = $_REQUEST ['kefuName'];
+        $companyName = $_REQUEST ['companyName'];
+        $employName = $_REQUEST ['employName'];
+        $employNumber = $_REQUEST ['employNumber'];
+        $beizhu = $_REQUEST ['beizhu'];
+        $shenbao = $_REQUEST ['shenbao'];
+        $caozuorenming= $_SESSION ['admin'] ['name'];
+        $this->jisuan = new sumSalary();
+        $sum= $this->jisuan->getSumShebao($leibie,$shebao);
+        $this->objDao = new SalaryDao ();
+        $this->objDao->setZengyuan ($kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$sum,$yongren,$caozuorenming,$shenbao,$beizhu,$caozuo);
+        exit ();
+    }
 	
 	function saveErSalary() {
 		$exmsg = new EC (); // 设置错误信息类
