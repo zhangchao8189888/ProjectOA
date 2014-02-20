@@ -1,24 +1,25 @@
 <?php
-require_once("module/form/".$actionPath."Form.class.php");
+require_once("module/form/" . $actionPath . "Form.class.php");
 require_once("module/dao/SalaryDao.class.php");
 require_once("module/dao/ServiceDao.class.php");
 require_once("tools/fileTools.php");
 require_once("tools/excel_class.php");
 require_once("tools/sumSalary.class.php");
 require_once("tools/Classes/PHPExcel.php");
-class ExtServiceAction extends BaseAction{
+
+class ExtServiceAction extends BaseAction {
     /*
      *
      * @param $actionPath
      * @return SalaryAction
      */
-    function ExtServiceAction($actionPath)
-    {
+    function ExtServiceAction($actionPath) {
         parent::BaseAction();
-        $this->objForm  = new ExtServiceForm();
+        $this->objForm = new ExtServiceForm();
         $this->actionPath = $actionPath;
     }
-    function dispatcher(){
+
+    function dispatcher() {
         // (1) mode set
         $this->setMode();
         // (2) COM initialize
@@ -32,14 +33,14 @@ class ExtServiceAction extends BaseAction{
         // (6) closeConnect
         $this->closeDB();
     }
-    function setMode()
-    {
+
+    function setMode() {
         // 模式设定
         $this->mode = $_REQUEST['mode'];
     }
-    function controller()
-    {
-        switch($this->mode) {
+
+    function controller() {
+        switch ($this->mode) {
             case "searchComListJosn" :
                 $this->searchComListJosn();
                 break;
@@ -55,88 +56,88 @@ class ExtServiceAction extends BaseAction{
         }
 
 
+    }
+
+    function modelInput() {
 
     }
 
-    function modelInput(){
-
-    }
-    function AssignTabMonth($date,$step){
-        $date= date("Y-m-d",strtotime($step." months",strtotime($date)));//得到处理后的日期（得到前后月份的日期）
+    function AssignTabMonth($date, $step) {
+        $date = date("Y-m-d", strtotime($step . " months", strtotime($date))); //得到处理后的日期（得到前后月份的日期）
         $u_date = strtotime($date);
-        $days=date("t",$u_date);// 得到结果月份的天数
+        $days = date("t", $u_date); // 得到结果月份的天数
 
         //月份第一天的日期
-        $first_date=date("Y-m",$u_date).'-01';
-        for($i=0;$i<$days;$i++){
-            $for_day=date("Y-m-d",strtotime($first_date)+($i*3600*24));
+        $first_date = date("Y-m", $u_date) . '-01';
+        for ($i = 0; $i < $days; $i++) {
+            $for_day = date("Y-m-d", strtotime($first_date) + ($i * 3600 * 24));
         }
-        $time = array ();
-        $time["data"]   =  $date ;
-        $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
-        $time["month"]  =   (date("Y-m",strtotime("+1 day",strtotime($date))));
-        $time["first"]  =    $first_date;
-        $time["last"]   =      $for_day;
+        $time = array();
+        $time["data"] = $date;
+        $time["next"] = (date("Y-m-d", strtotime("+1 day", strtotime($date))));
+        $time["month"] = (date("Y-m", strtotime("+1 day", strtotime($date))));
+        $time["first"] = $first_date;
+        $time["last"] = $for_day;
         return $time;
     }
 
     /**
      * ExtService action 客服首页
      */
-    function searchComListJosn(){
+    function searchComListJosn() {
         $this->objDao = new ServiceDao();
-        $start=$_REQUEST['start'];
-        $limit=$_REQUEST['limit'];
-        $sorts=$_REQUEST['sort'];
-        $dir=$_REQUEST['dir'];
-        $companyName=$_REQUEST['companyName'];
+        $start = $_REQUEST['start'];
+        $limit = $_REQUEST['limit'];
+        $sorts = $_REQUEST['sort'];
+        $dir = $_REQUEST['dir'];
+        $companyName = $_REQUEST['companyName'];
         $date = $_REQUEST['date'];
         $operationTime = $_REQUEST['operationTime'];
-        if(!$start){
-            $start=0;
+        if (!$start) {
+            $start = 0;
         }
-        if(!$limit){
-            $limit=50;
+        if (!$limit) {
+            $limit = 50;
         }
-        $where['companyName']=$companyName;
-        $comList=array();
-        if($date!=null) {
-            $time   =   $this->AssignTabMonth($date,0);
-            $where['$salTime']=$time["month"];
-        }else{
-            $date=date('Y-m',time())."-01";
-            if(!$companyName&&!$operationTime) {
-                $where['$salTime']= date('Y-m',time())."-01";
+        $where['companyName'] = $companyName;
+        $comList = array();
+        if ($date != null) {
+            $time = $this->AssignTabMonth($date, 0);
+            $where['$salTime'] = $time["month"];
+        } else {
+            $date = date('Y-m', time()) . "-01";
+            if (!$companyName && !$operationTime) {
+                $where['$salTime'] = date('Y-m', time()) . "-01";
             }
         }
-        if($operationTime!=null) {
-            $where['opTime']    =  date("Y-m-d",strtotime($operationTime));
+        if ($operationTime != null) {
+            $where['opTime'] = date("Y-m-d", strtotime($operationTime));
         }
-        $sum =$this->objDao->manageCompanyCount($where);
-        $comList['total']=$sum;
+        $sum = $this->objDao->manageCompanyCount($where);
+        $comList['total'] = $sum;
         $result = $this->objDao->manageCompanyPage($start, $limit, $sorts . " " . $dir, $where);
-        $i=0;
-        while ($row=mysql_fetch_array($result) ){
+        $i = 0;
+        while ($row = mysql_fetch_array($result)) {
             //查询当月工资是否发放
-            $results = $this->objDao->searchByComIdAndSalTime($row['id'],$where);
+            $results = $this->objDao->searchByComIdAndSalTime($row['id'], $where);
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
-                if($results["salaryTime"]){
-                    $comList ['items'] [$i] ['salDate'] =date("Y-m-d",strtotime($results["salaryTime"]));
-                }else{
-                    $comList ['items'] [$i] ['salDate'] =date("Y-m-d",strtotime($date));
-                }
-                if($results['op_salaryTime']){
-                    $comList ['items'] [$i] ['op_salaryTime'] = date("Y-m-d",strtotime( $results['op_salaryTime']));
-                }else{
-                    $comList ['items'] [$i] ['op_salaryTime'] = "<span style=\"color: black\"> - - - - </span>";
-                }
+            if ($results["salaryTime"]) {
+                $comList ['items'] [$i] ['salDate'] = date("Y-m-d", strtotime($results["salaryTime"]));
+            } else {
+                $comList ['items'] [$i] ['salDate'] = date("Y-m-d", strtotime($date));
+            }
+            if ($results['op_salaryTime']) {
+                $comList ['items'] [$i] ['op_salaryTime'] = date("Y-m-d", strtotime($results['op_salaryTime']));
+            } else {
+                $comList ['items'] [$i] ['op_salaryTime'] = "<span style=\"color: black\"> - - - - </span>";
+            }
 
             if (!$results) {
-                $comList ['items'] [$i]['salStat'] =0;
+                $comList ['items'] [$i]['salStat'] = 0;
                 $comList ['items'] [$i]['salTimeid'] = -1;
                 $comList ['items'] [$i]['fa_state'] = -1;
-                $result['id']=0;
+                $result['id'] = 0;
             } else {
                 $comList ['items'] [$i]['salStat'] = $results['id'];
                 $comList ['items'] [$i]['salTimeid'] = $results['id'];
@@ -145,7 +146,7 @@ class ExtServiceAction extends BaseAction{
                 if ($bill = mysql_fetch_array($bill_fa)) {
                     $comList ['items'] [$i]['fa_state'] = $bill['bill_value'];
                 } else {
-                    $comList ['items'] [$i]['fa_state'] ="<span style=\"color: red\"> 未批准发放 </span>";
+                    $comList ['items'] [$i]['fa_state'] = "<span style=\"color: red\"> 未批准发放 </span>";
                 }
             }
             $comList ['items'] [$i]['salNianStat'] = 0;
@@ -174,16 +175,16 @@ class ExtServiceAction extends BaseAction{
         exit();
     }
 
-    function  selectManageCompany(){
+    function  selectManageCompany() {
         $this->objDao = new ServiceDao();
         $result = $this->objDao->searchCompanyList();
-        $comList=array();
-        $i=0;
-        while ($row=mysql_fetch_array($result) ){
-            $comList["item"][i]["name"]    =  $row["company_name"] ;
+        $comList = array();
+        $i = 0;
+        while ($row = mysql_fetch_array($result)) {
+            $comList["item"][i]["name"] = $row["company_name"];
             $i++;
         }
-        $comList["total"]=10;
+        $comList["total"] = 10;
         echo json_encode($comList);
         exit();
     }

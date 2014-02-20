@@ -54,7 +54,7 @@ Ext.onReady(function () {
                     if (val == 0) {
                         return '<span style="color: red"> 未开发票 </span>';
                     } else if (val > 0) {
-                        return '<span style="color: green" title="查看发票" _salTimeId="' + record.data['salTimeid'] + '"  id="check">已开发票</span>.';
+                        return '<a href="#" title="查看发票" onclick=billInfo(' + record.data['id'] + ',"' + record.data['sal_date'] + '")><span style="color: green">已开发票</span></a>';
                     }
                     return val;
                 }
@@ -62,9 +62,9 @@ Ext.onReady(function () {
             {text: "银行到账", width: 120, dataIndex: 'cheque_account', sortable: false,align:'center',
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="开支票" onclick=addCheque(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['sal_state'] + '","' + record.data['sal_date'] + '")><span style=\"color: blue\">支票未到账</span></a>';
+                        return '<a href="#" title="开支票" onclick=addCheque(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['sal_state'] + '","' + record.data['sal_date'] + '")><span style="color: blue">支票未到账</span></a>';
                     } else if (val > 0) {
-                        return '<a href="#" title="继续开支票" onclick=addCheque(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['sal_state'] + '","' + record.data['sal_date'] + '")><span style="color: green"已开发票</span></a>';
+                        return '<a href="#" title="继续开支票" onclick=addCheque(' + record.data['id'] + ',"' + record.data['company_name'] + '","' + record.data['sal_state'] + '","' + record.data['sal_date'] + '")><span style="color: green">支票已到帐</span></a>';
                     }
                     return val;
                 }
@@ -101,6 +101,10 @@ Ext.onReady(function () {
                     // getSelection()
                     //var records = grid.getSelectionModel().getSelection();
                     if (record) {
+                        if(record.length==0){
+                           alert("请先选择一家单位吧！");
+                           return false;
+                        }
                         var itcIds = [];
                         //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
                         for (var i = 0; i < record.length; i++) {
@@ -117,7 +121,6 @@ Ext.onReady(function () {
                                 caiwuListStore.removeAll();
                                 caiwuListStore.load({
                                     params: {
-                                        date:  Ext.getCmp("STime").getValue(),
                                         start: 0,
                                         limit: 50
                                     }
@@ -484,6 +487,13 @@ var salList=Ext.create("Ext.form.Panel",{
     }
 ]
 });
+
+function billInfo(id,sal_date){
+    $("#comId").val(id);
+    $("#sDate").val(sal_date);
+    $("#iform").attr("action", "index.php?action=Finance&mode=searchFaPiaoDaoZhang");
+    $("#iform").submit();
+}
 
 function getEmploy(com) {
     $("#iform").attr("action", "index.php?action=Service&mode=getEmList");

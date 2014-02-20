@@ -241,6 +241,7 @@ class FinanceAction extends BaseAction {
 		$result = $this->objDao->searchSalTimeListBySalTime ( $dateNow );
 		$i = 0;
 		while ( $row = mysql_fetch_array ( $result ) ) {
+            echo($row ['id']);
 			$billFaPO = $this->objDao->searchFaBill ( $row ['id'] );
 			if ($billFaPO) {
 				if ($billFaPO ['bill_value'] == 0) {
@@ -252,8 +253,9 @@ class FinanceAction extends BaseAction {
 				}
 				$row ['faValue'] = $billFaPO;
 				$salaryTimeList [$i] = $row;
-				$i ++;
+
 			}
+            $i ++;
 		}
 		$this->objForm->setFormData ( "salaryTimeList", $salaryTimeList );
 		$this->objForm->setFormData ( "billState", $billState );

@@ -102,8 +102,11 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class='item'>
 			<a href='index.php?action=Ext&mode=toServiceIndex'>主页</a>
 		</div>
-        <div class='item'>
-            <a href='index.php?action=Ext&mode=toBusiness'>业务变更</a>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toBusiness">业务变更</a>
+        </div>
+        <div class="item">
+            <a href="index.php?action=SalaryBill&mode=toShebaoExt">社保查看</a>
         </div>
 		<div class="item">
 			<a href="index.php?action=Employ&mode=toEmlist">员工列表查询</a>

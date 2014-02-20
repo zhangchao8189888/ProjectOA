@@ -139,9 +139,9 @@ class ExtFinanceAction extends BaseAction {
                 $billList = $this->objDao->searchBillBySalaryTimeId ( $sal ['id'] );
                 while ( $bill = mysql_fetch_array ( $billList ) ) {
                     if ($bill ['bill_type'] == $billType ['发票']) {
-                        $comList ['items'] [$i] ['bill_state'] = "<span style=\"color: green\">已开发票</span>";
+                        $comList ['items'] [$i] ['bill_state'] = 1;
                     }elseif ($bill ['bill_type'] == $billType ['到账支票']) {
-                        $comList ['items'] [$i] ['cheque_account'] = "<span style=\"color: green\">支票已到帐</span>";
+                        $comList ['items'] [$i] ['cheque_account'] = 3;
                     } elseif ($bill ['bill_type'] == $billType ['工资发放']) {
                         if ($bill ['bill_value'] == 0) {
                             $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: blue\">等待审批</span>";

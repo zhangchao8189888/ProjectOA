@@ -1,21 +1,16 @@
 <?php
 /**
- * 客服ExtForm
- *  @author Alice
- *
+ *社保Form
  */
-class ExtServiceForm extends BaseForm {
+class ExtSocialSecurityForm extends BaseForm {
     /**
      * @return AdminForm
      */
-    function ExtServiceForm() {
+    function ExtSocialSecurityForm() {
         parent::BaseForm ();
     }
     /**
      * 取得tpl文件
-     *
-     * @param $mode 模式
-     * @return 页面表示文件
      */
     function getTpl($mode = false) {
         switch ($mode) {

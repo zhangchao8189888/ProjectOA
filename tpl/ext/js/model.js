@@ -315,3 +315,26 @@ Ext.define('oa.common.service.list', {
     ]
 
 });
+
+/**
+ * 业务变更model
+ */
+Ext.define('oa.common.socialSecurity.business', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'submitTime', type: 'string'},
+        {name: 'updateTime', type: 'date'},
+        {name: 'companyId', type: 'int'},
+        {name: 'companyName', type: 'string'},
+        {name: 'employId', type: 'int'},
+        {name: 'employName', type: 'string'},
+        {name: 'employStateId', type: 'int'},
+        {name: 'employState', type: 'string'},
+        {name: 'businessName', type: 'string'},
+        {name: 'remarks', type: 'string'},
+        {name: 'socialSecurityStateId', type: 'int'},
+        {name: 'socialSecurityState', type: 'string'},
+    ]
+
+});

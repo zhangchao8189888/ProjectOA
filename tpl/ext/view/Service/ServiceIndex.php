@@ -174,6 +174,10 @@ Ext.onReady(function () {
                     // getSelection()
                     //var records = grid.getSelectionModel().getSelection();
                     if (record) {
+                        if(record.length==0){
+                            alert("请先选择一家单位吧！");
+                            return false;
+                        }
                         var itcIds = [];
                         //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
                         for (var i = 0; i < record.length; i++) {
