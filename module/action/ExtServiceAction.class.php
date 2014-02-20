@@ -140,8 +140,8 @@ class ExtServiceAction extends BaseAction{
             } else {
                 $comList ['items'] [$i]['salStat'] = $results['id'];
                 $comList ['items'] [$i]['salTimeid'] = $results['id'];
-                $this->objDao = new SalaryDao();
-                $bill_fa = $this->objDao->searchBillBySalaryTimeId($results['id'], 4);
+                $this->billInfo = new SalaryDao();
+                $bill_fa = $this->billInfo->searchBillBySalaryTimeId($results['id'], 4);
                 if ($bill = mysql_fetch_array($bill_fa)) {
                     $comList ['items'] [$i]['fa_state'] = $bill['bill_value'];
                 } else {
