@@ -505,6 +505,10 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i] ['bukou'] = $row ['bukou'];
             $josnArray['items'][$i] ['nian'] = $row ['nian'];
     		$josnArray['items'][$i]['geshuiSum']=$row['geshuiSum'];
+            if(!$josnArray['items'][$i]['salaryTime']){
+                $josnArray['items'][$i]['salaryTime']='<span style="color: red">未作工资</span>';
+            }
+
     		$i++;
     	}
     	echo json_encode($josnArray);

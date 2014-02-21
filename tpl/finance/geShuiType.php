@@ -46,10 +46,10 @@
                     stripeRows: false
                 },
                 bbar: Ext.create('Ext.PagingToolbar', {
-                    store: geshuiTypestore,
-                    displayInfo: true,
-                    displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
-                    emptyMsg: "没有数据"
+//                    store: geshuiTypestore,
+//                    displayInfo: true,
+//                    displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+//                    emptyMsg: "没有数据"
                 }),
                 tbar : [
 //                         {
@@ -241,12 +241,12 @@
                         //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
                         var json = Ext.JSON.decode(response.responseText); //获得后台传递json
                         Ext.getCmp("companyname").setValue(json.data[0].company_name);
-						if(json.data[0].geshui_dateType ==2){
-							Ext.getCmp("shangyue").setDisabled(true);
-						}
-						else if(json.data[0].geshui_dateType ==1){
-							Ext.getCmp("benyue").setDisabled(true);
-						}
+//						if(json.data[0].geshui_dateType ==2){
+//							Ext.getCmp("shangyue").setDisabled(true);
+//						}
+//						else if(json.data[0].geshui_dateType ==1){
+//							Ext.getCmp("benyue").setDisabled(true);
+//						}
 
 
                     }
@@ -264,8 +264,8 @@
                         timeId : timeId
                     },
                     success : function(response) {
-                        Ext.getCmp("shangyue").setDisabled(true);
-                        Ext.getCmp("benyue").setDisabled(false);
+//                        Ext.getCmp("shangyue").setDisabled(true);
+//                        Ext.getCmp("benyue").setDisabled(false);
                     }
                 });
             }
@@ -279,8 +279,8 @@
                         timeId : timeId
                     },
                     success : function(response) {
-                       Ext.getCmp("benyue").setDisabled(true);
-                       Ext.getCmp("shangyue").setDisabled(false);
+//                       Ext.getCmp("benyue").setDisabled(true);
+//                       Ext.getCmp("shangyue").setDisabled(false);
                     }
                 });
             }
