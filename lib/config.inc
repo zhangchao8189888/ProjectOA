@@ -94,6 +94,9 @@ $employState=array(
     'zhengchang'=>0,
     'lizhi'=>1,
     'hetongdaoqi'=>2,
+    '1'=>'正常',
+    '2'=>'离职',
+    '3'=>'合同到期',
 );
 //客服工作流程类型
 global $serviceState;
@@ -137,6 +140,7 @@ $salaryTable=array(
   	'danganfei' =>'档案费',
   	'paysum_zhongqi' =>'交中企基业合计',
 );
+
 //工资表字段
 global $salNianTable;
 $salNianTable=array(
@@ -149,7 +153,8 @@ $salNianTable=array(
     'shifajinka' => '实发进卡',
     'jiaozhongqi' => '缴纳中企基业合计',
 );
-//FIXME 个税字段
+
+// 个税字段
 global $salaryTypeTable;
 $salaryTypeTable=array(
 		'company_id' =>'个人编号',
@@ -212,6 +217,14 @@ $salErTable=array(
         	'key'=>'交中企基业合计',
             'width'=>'',
         ),
+);
+
+//业务状态字段
+global $businessState;
+$businessState=array(
+    '1'=>'等待处理',
+    '2'=>'正在办理',
+    '3'=>'已完成',
 );
 
 ?>

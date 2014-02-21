@@ -1,14 +1,14 @@
 <?php
 /**
- * 客服ExtForm
+ * 财务ExtForm
  *  @author Alice
  *
  */
-class ExtServiceForm extends BaseForm {
+class ExtSalaryBillForm extends BaseForm {
     /**
      * @return AdminForm
      */
-    function ExtServiceForm() {
+    function ExtSalaryBillForm() {
         parent::BaseForm ();
     }
     /**
@@ -18,9 +18,10 @@ class ExtServiceForm extends BaseForm {
      * @return 页面表示文件
      */
     function getTpl($mode = false) {
+        echo($mode);
         switch ($mode) {
-            case "getOtherAdminComListJosn" :
-                return "ext/view/service/ServiceIndex.php";
+            case "toFinaceIndex" :
+                return "ext/view/finance/financeIndex.php";
             default :
                 return "BaseConfig.php";
         }

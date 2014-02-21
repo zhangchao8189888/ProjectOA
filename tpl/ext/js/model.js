@@ -266,7 +266,6 @@ Ext.define('oa.common.finance.list',{
         {name: 'sal_date', type: 'time'},
         {name: 'sal_state', type: 'string'},
         {name: 'bill_state', type: 'string'},
-        {name: 'cheque_state', type: 'string'},
         {name: 'cheque_account', type: 'string'},
         {name: 'sal_approve', type: 'string'}
     ]
@@ -313,6 +312,29 @@ Ext.define('oa.common.service.list', {
         {name: 'salOrStat', type: 'string'},
         {name: 'fastat', type: 'string'},
         {name: 'opTime', type: 'string'}
+    ]
+
+});
+
+/**
+ * 业务变更model
+ */
+Ext.define('oa.common.socialSecurity.business', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'submitTime', type: 'string'},
+        {name: 'updateTime', type: 'date'},
+        {name: 'companyId', type: 'int'},
+        {name: 'companyName', type: 'string'},
+        {name: 'employId', type: 'int'},
+        {name: 'employName', type: 'string'},
+        {name: 'employStateId', type: 'int'},
+        {name: 'employState', type: 'string'},
+        {name: 'businessName', type: 'string'},
+        {name: 'remarks', type: 'string'},
+        {name: 'socialSecurityStateId', type: 'int'},
+        {name: 'socialSecurityState', type: 'string'},
     ]
 
 });

@@ -35,7 +35,7 @@ class AdminForm extends BaseForm
             case "toOpLog" :
                 return "log_list.php";
             case "service":
-            	return  "ext/view/Service/ServiceIndex.php";
+            	return  "ext/view/service/ServiceIndex.php";
             case "toFinance":
             	return "ext/view/finance/financeIndex.php";
            	case "modifyPass":

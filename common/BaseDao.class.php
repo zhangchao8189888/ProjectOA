@@ -21,7 +21,6 @@ class BaseDao extends db {
 	function searchCompanyByName($companyName) {
 		$sql = "select * from  OA_company where company_name='{$companyName}'";
 		$result = $this->g_db_query ( $sql );
-		// var_dump($result);
 		return mysql_fetch_array ( $result );
 	}
 	function getCompanyById($comId) {
@@ -29,12 +28,6 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
-
-    function getEmploy($employNumber){
-        $sql = "select *  from OA_employ where  e_num='{$employNumber}'";
-        $result = $this->g_db_query ( $sql );
-        return mysql_fetch_array ( $result );
-    }
 
     function searchCompanyListCount($table,$key,$where) {
         $userId = $_SESSION ['admin'] ['id'];

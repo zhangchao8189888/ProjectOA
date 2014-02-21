@@ -598,10 +598,11 @@ class ExtSalaryAction extends BaseAction{
     function searchEmploy(){
         $this->objDao=new SalaryDao();
         $employNumber=$_REQUEST['employNumber'];
-        $result=$this->objDao->getEmploy($employNumber);
+        $result=$this->objDao->getEmByEno($employNumber);
         echo json_encode($result);
         exit;
     }
+
 }
 
 

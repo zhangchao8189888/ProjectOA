@@ -821,10 +821,6 @@ class SaveSalaryAction extends BaseAction {
 			$salaryListArray ['data'] [] = $rowData;
 			$i ++;
 		}
-		$countData = count ( $salaryListArray ['data'] );
-		
-		// $salarySumListArray=array();e
-		// var_dump($salarySumListArray);
 		echo json_encode ( $salaryListArray );
 		exit ();
 	}

@@ -417,7 +417,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
     }
   function getEmployList(){
   	$this->mode="toEmlist";
-  	$c_name=$_REQUEST['comname']; 
+  	$c_name=$_REQUEST['comname'];
   	$e_stat=$_POST['emState'];
   	global $employState;
   	$this->objDao=new EmployDao();

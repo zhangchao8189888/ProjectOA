@@ -105,8 +105,13 @@ class SalaryBillAction extends BaseAction {
 	}
 	function toAddInvoice() {
 		$this->mode = "toinvoice";
+        $comId=$_REQUEST['comId'];
+        $date=$_REQUEST['sDate'];
 		$this->objDao = new SalaryDao ();
+        $comSend=$this->objDao->getCompanyById($comId);
 		$comList = $this->objDao->searchCompanyList ();
+        $this->objForm->setFormData ( "comId", $comSend );
+        $this->objForm->setFormData ( "date", $date );
 		$this->objForm->setFormData ( "comList", $comList );
 	}
 	function toSendSalary() {

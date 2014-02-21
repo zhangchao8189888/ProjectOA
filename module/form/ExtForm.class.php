@@ -48,10 +48,12 @@ class ExtForm extends BaseForm
             	return "ext/view/finance/checkCompany.php";
             case "toFinanceIndex":
                 return "ext/view/finance/financeIndex.php";
+            case "toServiceIndex":
+                return "ext/view/service/ServiceIndex.php";
             case "toTaxInfo":
                 return "ext/view/finance/taxInfo.php";
             case "toBusiness":
-                return"ext/view/salary/changeBusiness.php";
+                return"ext/view/socialsecurity/changeBusiness.php";
            default :
                 return "BaseConfig.php";
         }

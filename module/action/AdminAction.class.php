@@ -191,6 +191,7 @@ class AdminAction extends BaseAction{
   	$pass= $_POST['nowpass'];
   	$this->objDao=new AdminDao();
   	$name=$_SESSION['admin']['name'];
+    $exmsg=new EC();//设置错误信息类
     $getpassword=$this->objDao->getPass($name);
    	$nowpass	=	$getpassword['password'];
   	$newpass	=	 $_POST['newpass'];
