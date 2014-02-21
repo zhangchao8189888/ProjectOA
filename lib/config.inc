@@ -222,6 +222,7 @@ $salErTable=array(
 //业务状态字段
 global $businessState;
 $businessState=array(
+    '0'=>'取消办理',
     '1'=>'等待处理',
     '2'=>'正在办理',
     '3'=>'已完成',

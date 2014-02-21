@@ -6,7 +6,7 @@
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
 <link href="common/css/admin.css" rel="stylesheet" type="text/css"/>
-<script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
@@ -39,8 +39,11 @@
                             return '<span style="color: gray"> 已取消 </span>';
                         }
                         if (val == 1) {
-                            return '<span style="color: blue"> 等待办理 </span>';
-                        } else if (val =2) {
+                            return '<span style="color: red"> 等待办理 </span>';
+                        } else if (val ==2) {
+                            return '<span style="color: blue"> 正在办理 </span>';
+                        }
+                        else if (val ==3) {
                             return '<span style="color: green"> 办理成功 </span>';
                         }
                         return val;
@@ -72,11 +75,12 @@
                     handler: function (src) {
                         var model = businessLogWindow.getSelectionModel();
                         var sel=model.getSelection();
-                        if (sel) {
+                        if (sel.length>0) {
                             var ids = [];
                             for(var i = 0; i < sel.length ;i++){
                                 ids.push(sel[i].data.id);
                             }
+
                             Ext.Ajax.request({
                                 url: 'index.php?action=ExtSocialSecurity&mode=updateBusiness',
                                 method: 'post',
@@ -86,7 +90,7 @@
                                 },
                                 success: function (response) {
                                     var text = response.responseText;
-                                    alert(text);
+                                    Ext.Msg.alert("提示",text);
                                     businessLogstore.load( {
                                             params: {
                                                 start: 0,
@@ -98,7 +102,7 @@
                             });
 
                         } else {
-                            alert('请选择一条记录');
+                            Ext.Msg.alert("警告","请选择一条记录！");
                         }
 
                     },
@@ -123,7 +127,7 @@
 
     });
     function checkSalWin() {
-        var items=[window];
+        var items=[addBusinessWindow];
         winSal = Ext.create('Ext.window.Window', {
             title: "业务变更", // 窗口标题
             width:600, // 窗口宽度
@@ -150,9 +154,9 @@
         winSal.show();
 
     }
-    var window = Ext.create('Ext.form.Panel', {
+    var addBusinessWindow = Ext.create('Ext.form.Panel', {
         bodyPadding: 15,
-        width: 700,
+        width: 580,
         height: 320,
         items: [
             {
@@ -163,6 +167,7 @@
                     {
                         xtype: 'textfield',
                         id:"employNumber",
+                        allowBlank: false,
                         emptyText: "请输入身份证号",
                         onBlur:function(){
                             var title="修改余额";
@@ -186,6 +191,13 @@
                     },
                     {
                         xtype: 'textfield',
+                        id:"employName",
+                        emptyText: "请输入姓名",
+                        allowBlank: false,
+                        fieldLabel: '姓名'
+                    },
+                    {
+                        xtype: 'textfield',
                         id:"companyName" ,
                         emptyText: "选择公司",
                         allowBlank: false,
@@ -193,14 +205,9 @@
                     },
                     {
                         xtype: 'textfield',
-                        id:"employName",
-                        emptyText: "请输入姓名",
-                        fieldLabel: '姓名'
-                    },
-                    {
-                        xtype: 'textfield',
                         id:"business",
                         emptyText: "请输入办理的业务",
+                        allowBlank: false,
                         fieldLabel: '办理的业务'
                     },
                     {
@@ -232,47 +239,46 @@
                 ]
             }
         ],
-        bbar: [
+        buttons: [
             {
                 text: '提交',
                 handler: function () {
-                    var companyName =  Ext.getCmp("companyName").getValue();
-                    var employName  =  Ext.getCmp("employName").getValue();
-                    var employNumber  =  Ext.getCmp("employNumber").getValue();
-                    var business    =   Ext.getCmp("business").getValue();
-                    var employState =   Ext.getCmp("employState").getValue();
-                    var remarks =   Ext.getCmp("remarks").getValue();
+                    var companyName = Ext.getCmp("companyName").getValue();
+                    var employName = Ext.getCmp("employName").getValue();
+                    var employNumber = Ext.getCmp("employNumber").getValue();
+                    var business = Ext.getCmp("business").getValue();
+                    var employState = Ext.getCmp("employState").getValue();
+                    var remarks = Ext.getCmp("remarks").getValue();
+                    var submitInfo = this.up('form').getForm().isValid();
+                    if (!submitInfo) {
+                        Ext.Msg.alert("警告！", "请输入完整的信息！");
+                        return false;
+                    }
                     Ext.Ajax.request({
                         url: "index.php?action=ExtSocialSecurity&mode=changeBusiness",
-                        method : 'POST',
+                        method: 'POST',
                         params: {
-                            companyName:companyName,
-                            employName:employName,
-                            employNumber:employNumber,
-                            business:business,
-                            employState:employState,
-                            remarks:remarks
+                            companyName: companyName,
+                            employName: employName,
+                            employNumber: employNumber,
+                            business: business,
+                            employState: employState,
+                            remarks: remarks
                         },
-                        success : function(response) {
-                            var text=   response.responseText;
+                        success: function (response) {
+                            var text = response.responseText;
                             alert(text);
-                            document.location='index.php?action=Ext&mode=toBusiness';
+                            document.location = 'index.php?action=Ext&mode=toBusiness';
                         }
                     });
 
                 }
-            },
-            '-',
+            }
+            ,
             {
                 text: '清空',
                 handler: function () {
-                    var companyName =  Ext.getCmp("companyName").setValue("");
-                    var employName  =  Ext.getCmp("employName").setValue("");
-                    var employNumber  =  Ext.getCmp("employNumber").setValue("");
-                    var business    =   Ext.getCmp("business").setValue("");
-                    var employState =   Ext.getCmp("employState").setValue("");
-                    var socialSecurityState =   Ext.getCmp("socialSecurityState").setValue("");
-                    var remarks =   Ext.getCmp("remarks").setValue("");
+                    this.up('form').getForm().reset();
                 }
             }
         ]

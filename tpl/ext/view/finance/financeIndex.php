@@ -44,7 +44,7 @@ Ext.onReady(function () {
                     if (val == 0) {
                         return '<span style="color: red"> 未做工资 </span>';
                     } else if (val > 0) {
-                        return '<a style="color: green" href="#" title="查看工资" onclick=selectinfo(' + record.data['sal_state'] + ')>已做工资</span>';
+                        return '<a style="color: green" href="#" title="查看工资" onclick=selectinfo(' + record.data['sal_state'] + ')><span style="color: green">已做工资</span></a>';
                     }
                     return val;
                 }
@@ -100,11 +100,7 @@ Ext.onReady(function () {
                     var record = Ext.getCmp('manageComlist').getSelectionModel().getSelection();
                     // getSelection()
                     //var records = grid.getSelectionModel().getSelection();
-                    if (record) {
-                        if(record.length==0){
-                           alert("请先选择一家单位吧！");
-                           return false;
-                        }
+                    if (record.length>0) {
                         var itcIds = [];
                         //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
                         for (var i = 0; i < record.length; i++) {
@@ -117,7 +113,7 @@ Ext.onReady(function () {
                                 ids: Ext.JSON.encode(itcIds)
                             },
                             success: function (response) {
-                                alert("取消成功！");
+                                Ext.Msg.alert("提示","取消成功！");
                                 caiwuListStore.removeAll();
                                 caiwuListStore.load({
                                     params: {
@@ -129,7 +125,7 @@ Ext.onReady(function () {
                         });
 
                     } else {
-                        alert('请选择一条记录');
+                        Ext.Msg.alert("警告","请选择一条记录！");
                     }
 
                 }

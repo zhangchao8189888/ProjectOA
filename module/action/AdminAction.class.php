@@ -230,7 +230,9 @@ class AdminAction extends BaseAction{
   			$this->mode="service";
   		}elseif($check['admin_type']==4){
   			$this->mode="toFinance";
-  		}
+  		}elseif($check['admin_type']==5){
+            $this->mode="toSocialSecurity";
+        }
   		else{
   		$this->mode="index";
   		}

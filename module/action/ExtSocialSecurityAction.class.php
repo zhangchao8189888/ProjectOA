@@ -83,6 +83,7 @@ class ExtSocialSecurityAction extends BaseAction {
         $limit = $_REQUEST ['limit'];
         $sorts = $_REQUEST ['sort'];
         $dir = $_REQUEST ['dir'];
+        $businessLog    = $_REQUEST ['businessLog'];
         $date   =   $_REQUEST['date'];
         if (! $start) {
             $start = 0;
@@ -95,7 +96,7 @@ class ExtSocialSecurityAction extends BaseAction {
         }
         $where = array ();
         $comList = array ();
-        $sum =$this->objDao->searchBusinessCount($where);
+        $sum =$this->objDao->searchBusinessCount($businessLog,$where);
         $result=$this->objDao->searchBusinessPage($start,$limit,$sorts." ".$dir,$where);
         $comList['total']=$sum;
         $i=0;
@@ -107,6 +108,10 @@ class ExtSocialSecurityAction extends BaseAction {
             $comList ['items'] [$i] ['companyName'] = $row ['companyName'];
             $comList ['items'] [$i] ['employId'] = $row ['employId'];
             $comList ['items'] [$i] ['employName'] = $row ['employName'];
+            $comList ['items'] [$i] ['serviceId'] = $row ['serviceId'];
+            $comList ['items'] [$i] ['serviceName'] = $row ['serviceName'];
+            $comList ['items'] [$i] ['adminId'] = $row ['adminId'];
+            $comList ['items'] [$i] ['adminName'] = $row ['adminName'];
             $comList ['items'] [$i] ['employStateId'] = $row ['employStateId'];
             $comList ['items'] [$i] ['employState'] = $row ['employState'];
             $comList ['items'] [$i] ['businessName'] = $row ['businessName'];
@@ -136,6 +141,22 @@ class ExtSocialSecurityAction extends BaseAction {
         $business = $_REQUEST['business'];
         $employStateNow = $_REQUEST['employState'];
         $remarks = $_REQUEST['remarks'];
+        if(!$employName){
+           echo("添加失败！您没有输入员工姓名！");
+           exit;
+        }
+        if(!$employNumber){
+            echo("添加失败！您没有输入员工身份证号！");
+            exit;
+        }
+        if(!$business){
+            echo("添加失败！您没有输入业务名称！");
+            exit;
+        }
+        if(!$employStateNow){
+            echo("添加失败！您没有输入员工状态！");
+            exit;
+        }
         $com = $this->objDao->searchCompanyByName($companyName);
         $addBusinessLog = array();
         $addBusinessLog["companyId"]=$com["id"];
@@ -143,8 +164,8 @@ class ExtSocialSecurityAction extends BaseAction {
         $addBusinessLog["employName"]=$employName;
         $addBusinessLog["employNumber"]=$employNumber;
         $addBusinessLog["businessName"]=$business;
-        $addBusinessLog["adminId"]=$adminId;
-        $addBusinessLog["adminName"]=$adminName;
+        $addBusinessLog["serviceId"]=$adminId;
+        $addBusinessLog["serviceName"]=$adminName;
         $addBusinessLog["remarks"]=$remarks;
         $addBusinessLog["socialSecurityStateId"]="1";
         $addBusinessLog["socialSecurityState"]=$businessState['1'];
@@ -152,7 +173,7 @@ class ExtSocialSecurityAction extends BaseAction {
         $addBusinessLog["employState"]=$employState[$employStateNow];
         $result = $this->objDao->addBusinessLog($addBusinessLog);
         if(!$result){
-            $exmsg->setError(__FUNCTION__, "delete admin   faild ");
+            $exmsg->setError(__FUNCTION__, "add business faild ");
             //事务回滚
             $this->objDao->rollback();
             echo("操作失败了，请重新尝试一下！")  ;
@@ -166,11 +187,27 @@ class ExtSocialSecurityAction extends BaseAction {
 
     function updateBusiness(){
         $companylist    =   $_POST["ids"];
-        $this->objDao=new BaseDao();
+        $updateType    =   $_POST["updateType"];
+        $this->objDao = new SocialSecurityDao();
+        $loginType = $this->objDao->loginType();
+        $exmsg=new EC();//设置错误信息类
+        global $businessState;
         $arr=json_decode($companylist);
-        foreach($arr as $key=>$value){
-            $this->objDao->cancelManage($value);
+        if($arr==null){
+           echo "没有找到编号！";
+           exit;
         }
+        foreach($arr as $key=>$value){
+            $result = $this->objDao->updateBusinessLog($loginType['admin_type'],$value,$updateType,$businessState[$updateType]);
+            if(!$result){
+                $exmsg->setError(__FUNCTION__, "add business faild ");
+                //事务回滚
+                $this->objDao->rollback();
+                echo("操作失败了，请重新尝试一下！")  ;
+                throw new Exception ($exmsg->error());
+            }
+        }
+        echo "操作成功！";
         exit;
     }
 }

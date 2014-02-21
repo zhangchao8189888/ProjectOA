@@ -115,7 +115,6 @@ Ext.onReady(function () {
                     return '<a href="#" onclick="send(' + record.data['salTimeid'] + ')" target="_self">' + val + '</font></a>';
                 },
                 dataIndex: 'fa_state',sortable: false, align: 'center'},
-            {text: "添加管理时间", dataIndex: 'opTime',sortable: false, align: 'center'},
             {text: "备注", dataIndex: 'mark',sortable: false, align: 'center'}
         ],
         listeners: {
@@ -137,7 +136,7 @@ Ext.onReady(function () {
         },
         columnLines: true,
         loadMask: true,
-        width: 1100,
+        width: 1000,
         height: 500,
         frame: true,
         title: '主页',
@@ -173,11 +172,7 @@ Ext.onReady(function () {
                     var record = Ext.getCmp('grid2').getSelectionModel().getSelection();
                     // getSelection()
                     //var records = grid.getSelectionModel().getSelection();
-                    if (record) {
-                        if(record.length==0){
-                            alert("请先选择一家单位吧！");
-                            return false;
-                        }
+                    if (record.length>0) {
                         var itcIds = [];
                         //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
                         for (var i = 0; i < record.length; i++) {
@@ -190,7 +185,7 @@ Ext.onReady(function () {
                                 ids: Ext.JSON.encode(itcIds)
                             },
                             success: function (response) {
-                                alert("取消成功！");
+                                Ext.Msg.alert("提示","取消成功！");
                                 serviceManagestore.removeAll();
                                 serviceManagestore.load({
                                     params: {
@@ -203,7 +198,7 @@ Ext.onReady(function () {
                         });
 
                     } else {
-                        alert('请选择一条记录');
+                        Ext.Msg.alert("警告","请选择一条记录！");
                     }
 
                 }
@@ -553,7 +548,7 @@ function addBill(comId,companyName,sal_state,sal_date) {
 }
 
 var salList=Ext.create("Ext.form.Panel",{
-    width: 700,
+    width: 480,
     height: 300,
     bodyPadding: 10,
     labelWidth:50,
@@ -584,7 +579,7 @@ var salList=Ext.create("Ext.form.Panel",{
             id:'salaryTime',
             xtype : 'displayfield',
             readonly:true,
-            width:150,
+            width:200,
             name: 'salaryTime',
             fieldLabel:'月份'
         } ,
@@ -593,6 +588,7 @@ var salList=Ext.create("Ext.form.Panel",{
             xtype : 'numberfield',
             width:300,
             name: 'billNo',
+            allowBlank: false,
             emptyText: "请输入发票编号",
             fieldLabel:'发票编号'
         } ,
@@ -601,6 +597,7 @@ var salList=Ext.create("Ext.form.Panel",{
             xtype : 'textfield',
             width:300,
             name: 'billItem',
+            allowBlank: false,
             emptyText: "请输入发票项目",
             fieldLabel:'发票项目'
         } ,
@@ -609,6 +606,7 @@ var salList=Ext.create("Ext.form.Panel",{
             xtype : 'numberfield',
             width:300,
             name: 'billValue',
+            allowBlank: false,
             emptyText: "请输入金额",
             fieldLabel:'金额'
         } ,
@@ -622,7 +620,7 @@ var salList=Ext.create("Ext.form.Panel",{
             fieldLabel:'备注'
         }
     ],
-    bbar: [
+    buttons: [
         {
             text: '提交',
             handler: function () {
@@ -633,17 +631,10 @@ var salList=Ext.create("Ext.form.Panel",{
                 var billItem =   Ext.getCmp("billItem").getValue();
                 var billValue =   Ext.getCmp("billValue").getValue();
                 var remarks =   Ext.getCmp("billRemarks").getValue();
-                if(billNo==null){
-                    alert("请您先输入发票编号！");
-                    return;
-                }
-                if(billItem==null){
-                    alert("请您先输入发票项目！");
-                    return;
-                }
-                if(billValue==null){
-                    alert("请您先输入发票金额！");
-                    return;
+                var submitInfo = this.up('form').getForm().isValid();
+                if(!submitInfo){
+                    Ext.Msg.alert("警告！","请输入完整的信息！");
+                    return false;
                 }
                 Ext.Ajax.request({
                     url: "index.php?action=ExtSalaryBill&mode=addInvoice",

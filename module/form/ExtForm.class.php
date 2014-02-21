@@ -50,6 +50,8 @@ class ExtForm extends BaseForm
                 return "ext/view/finance/financeIndex.php";
             case "toServiceIndex":
                 return "ext/view/service/ServiceIndex.php";
+            case "toSocialSecurityIndex":
+                return "ext/view/socialSecurity/socialsecurityIndex.php";
             case "toTaxInfo":
                 return "ext/view/finance/taxInfo.php";
             case "toBusiness":

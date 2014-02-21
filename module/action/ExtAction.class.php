@@ -77,6 +77,9 @@ class ExtAction extends BaseAction{
             case "toServiceIndex":
                 $this->toServiceIndex();
                 break;
+            case "toSocialSecurityIndex":
+                $this->toSocialSecurityIndex();
+                break;
             case "toTaxInfo":
                 $this->toTaxInfo();
                 break;
@@ -133,6 +136,10 @@ class ExtAction extends BaseAction{
 
     function toServiceIndex(){
         $this->mode =   "toServiceIndex";
+    }
+
+    function toSocialSecurityIndex(){
+        $this->mode =   "toSocialSecurityIndex";
     }
 
     function toTaxInfo(){

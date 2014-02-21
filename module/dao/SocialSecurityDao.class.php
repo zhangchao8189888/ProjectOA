@@ -11,11 +11,18 @@ class SocialSecurityDao extends BaseDao {
         parent::BaseDao ();
     }
 
+    function loginType(){
+        $id = $_SESSION ['admin'] ['id'];
+        $sql="SELECT admin_type  FROM  OA_admin  WHERE  id=$id";
+        $result=$this->g_db_query($sql);
+        return mysql_fetch_array($result);
+    }
+
     /**
      * 搜索变更业务dao
      */
-    function searchBusinessCount($businessLog) {
-        $sql = "SELECT COUNT(id) AS cnt FROM oa_business";
+    function searchBusinessCount($businessLog,$where) {
+        $sql = "SELECT COUNT(id) AS cnt FROM OA_business";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
@@ -30,7 +37,7 @@ class SocialSecurityDao extends BaseDao {
     }
 
     function searchBusinessPage($start = NULL, $limit = NULL, $sort = NULL, $where = null){
-        $sql = "SELECT * FROM oa_business";
+        $sql = "SELECT * FROM OA_business";
         if ($sort) {
             $sql .= " order by $sort";
         }
@@ -45,7 +52,7 @@ class SocialSecurityDao extends BaseDao {
      */
     function addBusinessLog($businessLog) {
         $sql = "
-        insert into OA_business (submitTime,companyId,companyName,employId,employName,businessName,adminId,adminName,remarks,socialSecurityStateId,socialSecurityState,employStateId,employState)
+        insert into OA_business (submitTime,companyId,companyName,employId,employName,businessName,serviceId,serviceName,remarks,socialSecurityStateId,socialSecurityState,employStateId,employState)
         values
     	     (now(),
     	     '{$businessLog['companyId']}',
@@ -53,13 +60,31 @@ class SocialSecurityDao extends BaseDao {
     	     '{$businessLog['employName']}',
     	     '{$businessLog['employNumber']}',
     	     '{$businessLog['businessName']}',
-    	     '{$businessLog['adminId']}',
-    	     '{$businessLog['adminName']}',
+    	     '{$businessLog['serviceId']}',
+    	     '{$businessLog['serviceName']}',
     	     '{$businessLog['remarks']}',
     	     '{$businessLog['socialSecurityStateId']}',
     	     '{$businessLog['socialSecurityState']}',
     	     '{$businessLog['employStateId']}',
     	     '{$businessLog['employState']}') ";
+        $result = $this->g_db_query($sql);
+        return $result;
+    }
+
+    /**
+     * 变更业务状态
+     */
+    function updateBusinessLog($adminType,$upId,$updateTypeid,$updateType) {
+        $name = $_SESSION ['admin'] ['name'];
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = " UPDATE OA_business SET socialSecurityStateId =$updateTypeid,
+                socialSecurityState ='$updateType'";
+        if($adminType==3){
+            $sql .=",serviceId = $id,serviceName =  '$name'";
+        }else if($adminType==5){
+            $sql .=",adminId = $id,adminName =  '$name',updateTime=now()";
+        }
+        $sql .=" WHERE id=$upId";
         $result = $this->g_db_query($sql);
         return $result;
     }
