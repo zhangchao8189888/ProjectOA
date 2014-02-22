@@ -133,7 +133,7 @@ class ExtSalaryBillAction extends BaseAction {
             $opLog ['Subject'] = OP_LOG_ADD_BILL_ZHI;
             $billState = 2;
         } else {
-            $billname = "到账支票";
+            $billname = "银行到账";
             $opLog ['Subject'] = OP_LOG_ADD_BILL_ZHIDAO;
             $billState = 3;
         }

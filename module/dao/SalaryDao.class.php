@@ -343,6 +343,21 @@ class SalaryDao extends BaseDao {
 		$list = $this->g_db_query ( $sql );
 		return $list;
 	}
+    //查询带条件的公司BY孙瑞鹏
+    function searchCompanyListByName($start = NULL, $limit = NULL, $sort = NULL, $where = '1=1') {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where
+  and a.companyId = c.id  and  a.adminId = $id";
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        // echo $sql;
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
 	// 计算个税合计BY孙瑞鹏
 	function searhGeshuiListPage($where = null,$id = null) {
 

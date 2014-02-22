@@ -342,7 +342,7 @@ function addCheque(comId,companyName,sal_state,sal_date) {
 
     var winSal = Ext.create('Ext.window.Window', {
         title: "添加支票", // 窗口标题
-        width:500, // 窗口宽度
+        width:460, // 窗口宽度
         height:300, // 窗口高度
         layout:"border",// 布局
         minimizable:true, // 最大化
@@ -368,7 +368,7 @@ function addCheque(comId,companyName,sal_state,sal_date) {
 }
 
 var salList=Ext.create("Ext.form.Panel",{
-    width: 700,
+    width: 450,
     height: 260,
     bodyPadding: 10,
     labelWidth:50,
@@ -438,7 +438,7 @@ var salList=Ext.create("Ext.form.Panel",{
             fieldLabel:'备注'
         }
     ],
-    bbar: [
+    buttons: [
     {
         text: '提交',
         handler: function () {

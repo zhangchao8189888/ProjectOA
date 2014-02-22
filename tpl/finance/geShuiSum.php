@@ -132,6 +132,7 @@
                     }
                 ]
             });
+
             geshuiListstore.on("beforeload",function(){
                 Ext.apply(geshuiListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 

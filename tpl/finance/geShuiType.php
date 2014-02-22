@@ -146,6 +146,7 @@
     				onTriggerClick : function(src) {
    				     }
 				},
+
                 {
                     xtype : 'button',
                     id : 'benyue',
