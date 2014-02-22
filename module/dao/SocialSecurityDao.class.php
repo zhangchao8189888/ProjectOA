@@ -88,5 +88,15 @@ class SocialSecurityDao extends BaseDao {
         $result = $this->g_db_query($sql);
         return $result;
     }
+    /**
+     * 增减员状态
+     */
+    function updateZengjian($upid,$uptype) {
+        $name = $_SESSION ['admin'] ['name'];
+        $sql = " UPDATE OA_security  SET shenbaozhuangtai ='$uptype',
+                caozuoren ='$name'  WHERE id=$upid ";
+        $result = $this->g_db_query($sql);
+        return $result;
+    }
 }
 ?>
