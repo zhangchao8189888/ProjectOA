@@ -47,7 +47,7 @@ Ext.onReady(function(){
         width:1000,
         x:0,
         y:0,
-        title: '增减员查看',
+        title: '增减员添加',
         renderTo: 'demo',
         viewConfig: {
             id: 'gv',
@@ -160,14 +160,7 @@ Ext.onReady(function(){
                 fieldLabel: '请输入数据',
                 defaultType: 'checkboxfield',
                 items: [
-                    {
-                        xtype: 'textfield',
-                        id:"kefuName" ,
-                        emptyText: "输入客服姓名",
-                        allowBlank: false,
-                        fieldLabel: '客服'
 
-                    },
                     {
                         xtype: 'textfield',
                         id:"companyName" ,
@@ -283,23 +276,6 @@ Ext.onReady(function(){
                         fieldLabel: '用人单位基数'
                     },
                     {
-                        xtype: 'combobox',
-                        id:"shenbao" ,
-                        editable: false,
-                        emptyText: "请选择申报状态",
-                        allowBlank: false,
-                        store: {
-                            fields: ['abbr', 'name'],
-                            data: [
-                                {"abbr": "完成", "name": "完成"},
-                                {"abbr": "未完成", "name": "未完成"}
-                            ]
-                        },
-                        valueField: 'abbr',
-                        displayField: 'name',
-                        fieldLabel: '申报状态'
-                    },
-                    {
                         xtype: 'textareafield',
                         id:"beizhu",
                         width:400,
@@ -326,11 +302,9 @@ Ext.onReady(function(){
                     var shebao =  Ext.getCmp("shebao").setValue("");
                     var caozuo =  Ext.getCmp("caozuo").setValue("");
                     var leibie =  Ext.getCmp("leibie").setValue("");
-                    var kefuName =  Ext.getCmp("kefuName").setValue("");
                     var companyName =  Ext.getCmp("companyName").setValue("");
                     var employName  =  Ext.getCmp("employName").setValue("");
                     var employNumber  =  Ext.getCmp("employNumber").setValue("");
-                    var shenbao =   Ext.getCmp("shenbao").setValue("");
                     var beizhu =   Ext.getCmp("beizhu").setValue("");
                 }
             }
@@ -378,11 +352,9 @@ Ext.onReady(function(){
                 shebao: Ext.getCmp("shebao").getValue(),
                 caozuo: Ext.getCmp("caozuo").getValue(),
                 leibie: Ext.getCmp("leibie").getValue(),
-                kefuName: Ext.getCmp("kefuName").getValue(),
                 companyName: Ext.getCmp("companyName").getValue(),
                 employName: Ext.getCmp("employName").getValue(),
                 employNumber: Ext.getCmp("employNumber").getValue(),
-                shenbao: Ext.getCmp("shenbao").getValue(),
                 beizhu: Ext.getCmp("beizhu").getValue()
             },
             success : function(response) {

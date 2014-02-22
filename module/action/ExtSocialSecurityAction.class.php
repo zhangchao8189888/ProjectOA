@@ -50,6 +50,9 @@ class ExtSocialSecurityAction extends BaseAction {
             case "updateBusiness":
                 $this->updateBusiness();
                 break;
+            case "updateZengjianyuan":
+                $this->updateZengjianyuan();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -215,6 +218,30 @@ class ExtSocialSecurityAction extends BaseAction {
         echo "操作成功！";
         exit;
     }
+
+    function updateZengjianyuan(){
+        $updateId    =   $_POST["updateId"];
+        $updateType    =   $_POST["updateType"];
+        $this->objDao = new SocialSecurityDao();
+        $exmsg=new EC();//设置错误信息类
+        if($updateId==null){
+            echo "没有找到编号！";
+            exit;
+        }
+        $result = $this->objDao->updateZengjian($updateId,$updateType);
+            if(!$result){
+                $exmsg->setError(__FUNCTION__, "add business faild ");
+                //事务回滚
+                $this->objDao->rollback();
+                echo("操作失败了，请重新尝试一下！")  ;
+                throw new Exception ($exmsg->error());
+
+        }
+        echo "操作成功！";
+        exit;
+    }
+
+
 }
 
 $objModel = new ExtSocialSecurityAction($actionPath);
