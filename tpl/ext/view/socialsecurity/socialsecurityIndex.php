@@ -36,7 +36,18 @@ Ext.onReady(function () {
             {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
             {text: "员工状态id", width: 100, dataIndex: 'employStateId', sortable: false,hidden:true},
             {text: "员工状态", width: 100, dataIndex: 'employState', sortable: false},
-            {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false},
+            {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false,
+                renderer: function (val, cellmeta, record) {
+                    if (val == "生育津贴") {
+                        return '<a href="#" title="添加金额" onclick=insertState(' + record.data['id'] + ')><span style="color: slateblue"> 生育津贴 </span></a>';
+                    } else if (val ==2) {
+                        return '<a href="#" title="修改状态" onclick=insertState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
+                    } else if (val ==3) {
+                        return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                    }
+                    return val;
+                }
+            },
             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false},
             {text: "办理情况", width: 200, dataIndex: 'socialSecurityStateId', sortable: false,
@@ -78,6 +89,162 @@ Ext.onReady(function () {
 
 });
 
+function insertState(updateId){
+    var items=[addBusinessWindow];
+    winSal = Ext.create('Ext.window.Window', {
+        title: "业务变更", // 窗口标题
+        width:600, // 窗口宽度
+        height:360, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                window.minimizable = true;
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    winSal.show();
+}
+var addBusinessWindow = Ext.create('Ext.form.Panel', {
+    bodyPadding: 15,
+    width: 580,
+    height: 320,
+    items: [
+        {
+            xtype: 'fieldcontainer',
+            fieldLabel: '请输入数据',
+            defaultType: 'checkboxfield',
+            items: [
+                {
+                    xtype: 'textfield',
+                    id:"employNumber",
+                    allowBlank: false,
+                    emptyText: "请输入身份证号",
+                    onBlur:function(){
+                        var title="修改余额";
+                        var url = "index.php?action=ExtSalary&mode=searchEmploy";
+                        Ext.Ajax.request({
+                            url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+                            method : 'POST',
+                            params: {
+                                employNumber: Ext.getCmp("employNumber").getValue()
+                            },
+                            success: function(response){
+                                var json = Ext.JSON.decode(response.responseText);
+                                Ext.getCmp("employName").setValue(json.e_name);
+                                Ext.getCmp("companyName").setValue(json.e_company);
+
+                            }
+                        });
+
+                    } ,
+                    fieldLabel: '身份证号<span style="color: red;font-size: 12px">(必填)</span>'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"employName",
+                    emptyText: "请输入姓名",
+                    allowBlank: false,
+                    fieldLabel: '姓名'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"companyName" ,
+                    emptyText: "选择公司",
+                    allowBlank: false,
+                    fieldLabel: '单位'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"business",
+                    emptyText: "请输入办理的业务",
+                    allowBlank: false,
+                    fieldLabel: '办理的业务'
+                },
+                {
+                    xtype: 'combobox',
+                    id:"employState" ,
+                    emptyText: "请选择社保状态",
+                    editable: false,
+                    allowBlank: false,
+                    store: {
+                        fields: ['abbr', 'name'],
+                        data: [
+                            {"abbr": "1", "name": "在职"},
+                            {"abbr": "2", "name": "离职"},
+                            {"abbr": "3", "name": "合同到期"},
+                        ]
+                    },
+                    valueField: 'abbr',
+                    displayField: 'name',
+                    fieldLabel: '员工状态'
+                },
+                {
+                    xtype: 'textareafield',
+                    id:"remarks",
+                    width:400,
+                    height:80,
+                    emptyText: "请输入备注信息",
+                    fieldLabel: '备注'
+                }
+            ]
+        }
+    ],
+    buttons: [
+        {
+            text: '提交',
+            handler: function () {
+                var companyName = Ext.getCmp("companyName").getValue();
+                var employName = Ext.getCmp("employName").getValue();
+                var employNumber = Ext.getCmp("employNumber").getValue();
+                var business = Ext.getCmp("business").getValue();
+                var employState = Ext.getCmp("employState").getValue();
+                var remarks = Ext.getCmp("remarks").getValue();
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                Ext.Ajax.request({
+                    url: "index.php?action=ExtSocialSecurity&mode=changeBusiness",
+                    method: 'POST',
+                    params: {
+                        companyName: companyName,
+                        employName: employName,
+                        employNumber: employNumber,
+                        business: business,
+                        employState: employState,
+                        remarks: remarks
+                    },
+                    success: function (response) {
+                        var text = response.responseText;
+                        alert(text);
+                        document.location = 'index.php?action=Ext&mode=toBusiness';
+                    }
+                });
+
+            }
+        }
+        ,
+        {
+            text: '清空',
+            handler: function () {
+                this.up('form').getForm().reset();
+            }
+        }
+    ]
+});
 function changeState(updateId) {
     Ext.MessageBox.show({
         title:'更改状态',

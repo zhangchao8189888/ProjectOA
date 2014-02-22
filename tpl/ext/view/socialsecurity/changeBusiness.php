@@ -25,6 +25,7 @@
                 columns: [
                 {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
                 {text: "提交日期", width: 100, dataIndex: 'submitTime', sortable: true},
+                {text: "处理日期", width: 100, dataIndex: 'updateTime',align: 'center', sortable: true},
                 {text: "单位id", width: 100, dataIndex: 'companyId', sortable: false,hidden:true},
                 {text: "单位名称", width: 150, dataIndex: 'companyName', sortable: true},
                 {text: "员工姓名", width: 100, dataIndex: 'employName', sortable: true},

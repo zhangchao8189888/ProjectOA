@@ -327,7 +327,7 @@ Ext.define('oa.common.socialSecurity.business', {
         {name: 'updateTime', type: 'date'},
         {name: 'companyId', type: 'int'},
         {name: 'companyName', type: 'string'},
-        {name: 'employId', type: 'int'},
+        {name: 'employId', type: 'string'},
         {name: 'employName', type: 'string'},
         {name: 'employStateId', type: 'int'},
         {name: 'employState', type: 'string'},
@@ -337,6 +337,7 @@ Ext.define('oa.common.socialSecurity.business', {
         {name: 'adminName', type: 'string'},
         {name: 'businessName', type: 'string'},
         {name: 'remarks', type: 'string'},
+        {name: 'updateTime', type: 'string'},
         {name: 'socialSecurityStateId', type: 'int'},
         {name: 'socialSecurityState', type: 'string'},
     ]

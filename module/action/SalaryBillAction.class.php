@@ -71,6 +71,10 @@ class SalaryBillAction extends BaseAction {
             case "toShebaoExt" :
                 $this->toShebaoExt ();
                 break;
+            case "toShebaoJieshouExt" :
+                $this->toShebaoJieshouExt ();
+                break;
+
 			case "searchSalaryTongji" :
 				$this->searchSalaryTongji ();
 				break;
@@ -316,7 +320,7 @@ class SalaryBillAction extends BaseAction {
 		if ($result) {
 			// 1代表$billState发票已开
 			$result = $this->objDao->updateSalaryTimeState ( $billState, $salaryTimeId );
-			$errormsg = $billname . "发放成功";
+			$errormsg =  "发放成功";
 			$adminPO = $_SESSION ['admin'];
 			$opLog = array ();
 			$opLog ['who'] = $adminPO ['id'];
@@ -333,7 +337,7 @@ class SalaryBillAction extends BaseAction {
 				throw new Exception ( $exmsg->error () );
 			}
 		} else {
-			$errormsg = $billname . "发放失败！";
+			$errormsg =  "发放失败！";
 		}
 		$this->objForm->setFormData ( "warn", $errormsg );
 		$this->toSendSalary ();
@@ -352,6 +356,10 @@ class SalaryBillAction extends BaseAction {
     //FIXME 社保BY孙瑞鹏
     function toShebaoExt() {
         $this->mode = "toShebaoExt";
+    }
+    //FIXME 社保接受BY孙瑞鹏
+    function toShebaoJieshouExt() {
+        $this->mode = "toShebaoJieshouExt";
     }
 	//FIXME 搜索指定公司工资统计
 	function searchSalaryTongji() {
@@ -705,6 +713,7 @@ class SalaryBillAction extends BaseAction {
 		$this->searchBill ( $comid );
 	}
 	function getCompanyListByName() {
+        $salayString=null;
 		$comName = $_POST ['comName'];
 		$this->objDao = new SalaryDao ();
 		$result = $this->objDao->getCompanyLisyByName ( $comName );

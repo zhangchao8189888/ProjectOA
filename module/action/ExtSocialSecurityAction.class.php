@@ -116,6 +116,11 @@ class ExtSocialSecurityAction extends BaseAction {
             $comList ['items'] [$i] ['employState'] = $row ['employState'];
             $comList ['items'] [$i] ['businessName'] = $row ['businessName'];
             $comList ['items'] [$i] ['remarks'] = $row ['remarks'];
+            if($row ['updateTime']){
+                $comList ['items'] [$i] ['updateTime'] = date("Y-m-d",strtotime($row ['updateTime']));
+            } else{
+                $comList ['items'] [$i] ['updateTime'] = "<span>- - - -</span>";
+            }
             $comList ['items'] [$i] ['socialSecurityStateId'] = $row ['socialSecurityStateId'];
             $comList ['items'] [$i] ['socialSecurityStateId'] = $row ['socialSecurityStateId'];
             $comList ['items'] [$i] ['socialSecurityState'] = $row ['socialSecurityState'];
