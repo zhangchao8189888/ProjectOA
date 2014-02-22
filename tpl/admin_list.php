@@ -1,4 +1,4 @@
-<?php 
+<?php
 $errorMsg=$form_data['error'];
 $succ=$form_data['succ'];
 $adminList=$form_data['adminlist'];
@@ -53,7 +53,7 @@ $admin=$_SESSION['admin'];
 	  <td width="89%">
 		<table cellpadding=4 cellspacing=0 width="100%">
           <tr class="form-action-bar">
-            <td width="99%"><div align="center"><strong>管理员管理</strong></div></td>            
+            <td width="99%"><div align="center"><strong>管理员管理</strong></div></td>
           </tr>
         </table>
 <form  name="iform"  id="iform" action="index.php?action=Admin&mode=add" method="post">
@@ -77,21 +77,26 @@ $admin=$_SESSION['admin'];
                 <td><div align="right">管理员级别：</div></td>
                 <td class="bz_gray"  style="font-size: 12px">
 				<label for="productionYes">
-                  <input type="radio" name="user_type" value="1" id="user_type"/> 
-                  系统管理员</label>
-                  <label for="productionNo">
-                  <input type="radio" name="user_type" value="2" id="user_type" checked="checked"/>
-				管理员				
+                  <input type="radio" name="user_type" value="1" id="user_type" checked="checked"/>
+                  系统管理员
+                </label>
+                <label for="productionNo">
+                  <input type="radio" name="user_type" value="2" id="user_type"/>
+				  管理员
 				</label>
 				<br>
 				<label for="productionNo">
-                <input type="radio" name="user_type" value="3" id="user_type" checked="checked"/>
-				客服&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="radio" name="user_type" value="3" id="user_type"/>
+				  客服&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</label>
 				<label for="productionNo">
-                  <input type="radio" name="user_type" value="4" id="user_type" checked="checked"/>
-				财务
+                  <input type="radio" name="user_type" value="4" id="user_type"/>
+				  财务
 				</label>
+                <label for="productionNo">
+                   <input type="radio" name="user_type" value="5" id="user_type"/>
+                   社保
+                </label>
 				</td>
               </tr>
               <tr>
@@ -131,8 +136,8 @@ $admin=$_SESSION['admin'];
           <th><div>备注</div></th>
           <th><div>操作</div></th>
         </tr>
-         <?php 
-         
+         <?php
+
          while($row=mysql_fetch_array($adminList)){
             ?>
         <tr>
@@ -148,7 +153,7 @@ $admin=$_SESSION['admin'];
 </div></td>
 
         </tr>
-         <?php 
+         <?php
            }
             ?>
       </table>

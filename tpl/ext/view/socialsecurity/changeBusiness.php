@@ -235,7 +235,7 @@
                         height:80,
                         emptyText: "请输入备注信息",
                         fieldLabel: '备注'
-                    },
+                    }
                 ]
             }
         ],

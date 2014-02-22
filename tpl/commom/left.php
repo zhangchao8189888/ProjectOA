@@ -9,9 +9,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Admin&mode=input">添加管理员</a>
 		</div>
-		<div class="item">
-			<a href="index.php?action=Admin&mode=modifyPass">修改密码</a>
-		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
+        </div>
 		<div class="item">
 			<a href="index.php?action=Admin&mode=toOpLog">日志查询</a>
 		</div>
@@ -114,9 +114,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class='item'>
 			<a href='index.php?action=Admin&mode=toOpLog'>日志查询</a>
 		</div>
-		<div class="item">
-			<a href="index.php?action=Admin&mode=modifyPass">修改密码</a>
-		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
+        </div>
 		<div class="title">工资管理</div>
 		<div class="item">
 			<a href="index.php?action=Salary&mode=input">文件上传</a>
@@ -194,9 +194,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class='item'>
 			<a href='index.php?action=Admin&mode=toOpLog'>日志查询</a>
 		</div>
-		<div class="item">
-			<a href="index.php?action=Admin&mode=modifyPass">修改密码</a>
-		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
+        </div>
 		<div class="title">工资管理</div>
 		<div class="item">
 			<a href="index.php?action=Salary&mode=input">文件上传</a>
@@ -262,6 +262,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
             </div>
             <div class="item">
                 <a href="index.php?action=Ext&mode=toBusiness">业务变更</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
             </div>
         </div>
         <img id="imgload" style="display: none" src="common/image/load.gif" />

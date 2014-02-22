@@ -189,13 +189,13 @@ class AdminAction extends BaseAction{
    */
   function modifyPass(){
   	$pass= $_POST['nowpass'];
+    $newpass	=	 $_POST['newpass'];
+    $repass	=	 $_POST['repass'];
   	$this->objDao=new AdminDao();
   	$name=$_SESSION['admin']['name'];
     $exmsg=new EC();//设置错误信息类
     $getpassword=$this->objDao->getPass($name);
    	$nowpass	=	$getpassword['password'];
-  	$newpass	=	 $_POST['newpass'];
-  	$repass	=	 $_POST['repass'];
   	if ($newpass) {  // new password 不为空
   		if ($pass==$nowpass) {
   			if ($newpass==$repass) {
@@ -204,13 +204,20 @@ class AdminAction extends BaseAction{
   					$exmsg->setError(__FUNCTION__, "update admin   faild ");
   					//事务回滚
   					$this->objDao->rollback();
-  					$this->objForm->setFormData("warn","抱歉，修改密码操作失败！");
+  					echo "抱歉，修改密码操作失败！";
   					throw new Exception ($exmsg->error());
+                    exit;
   				}
+                echo "修改成功！";
   				$this->logoff();
+                exit;
   			}
   		}
   	}
+    else{
+        echo "修改密码失败！";
+        $this->checklogin();
+    }
   }
   
   function checklogin(){

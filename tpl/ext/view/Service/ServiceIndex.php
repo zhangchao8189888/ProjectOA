@@ -345,7 +345,7 @@ Ext.onReady(function () {
                         });
 
                     } else {
-                        alert('请选择一条记录');
+                        Ext.Msg.alert("警告","请选择一条记录！");
                     }
                 },
                 text: '添加管理',
@@ -496,7 +496,7 @@ function addFa() {
 
 function addBill(comId,companyName,sal_state,sal_date) {
     if(sal_state==0){
-        alert("没有发工资是不能开发票的！");
+        Ext.Msg.alert("警告","没有发工资是不能开发票的");
         return false;
     }
     var p = Ext.create("Ext.grid.Panel",{
