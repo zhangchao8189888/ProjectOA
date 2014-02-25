@@ -589,7 +589,7 @@ var serviceManagestore = Ext.create('Ext.data.Store', {
 
 
 /**
- * select 变更业务公司列表
+ * 变更业务公司列表
  */
 var businessLogstore = Ext.create('Ext.data.Store', {
     //分页大小
@@ -606,7 +606,7 @@ var businessLogstore = Ext.create('Ext.data.Store', {
             update : 'POST',
             destroy: 'POST'
         },
-        url : 'index.php?action=ExtSocialSecurity&mode=searchbusinessInfoListJson',
+        url : 'index.php?action=ExtSocialSecurity&mode=searchBusinessInfoListJson',
 
         reader: {
             root: 'items',

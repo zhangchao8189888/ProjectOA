@@ -175,20 +175,6 @@ $admin = $_SESSION ['admin'];
                   //displayInfo : true,
                   emptyMsg : "没有数据显示"
               });
-              var salTimeList=Ext.define('salTimeList',{
-                  extend: 'Ext.data.Model',
-                  fields: [
-                      {name: 'salTimeId', type: 'int'},
-                      {name: 'salaryTime', type: 'string'}
-                  ]
-              });
-              var salTimeListStore = Ext.create('Ext.data.Store', {
-                  model: salTimeList,
-                  proxy: {
-                      type: 'ajax',
-                      url : 'index.php?action=SaveSalary&mode=searchNianSalaryByIdJson'
-                  }
-              });
   //通过ajax获取表头以及表格数据
             	  function checkSalWin(timeId,time) {
                       //加载数据遮罩
@@ -196,20 +182,6 @@ $admin = $_SESSION ['admin'];
                   	msg:'加载数据中，请稍候！',removeMask:true
                   	});
                   	mk.show();
-                  var p = Ext.create("Ext.grid.Panel",{
-                      id:"salTimeListP",
-                      title:"导航",
-                      width:150,
-                      region:"west",
-                      columns : [],
-                      listeners: {
-                          'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
-                          }
-                      },
-                      split:true,
-                      colspan: 3,
-                      collapsible:true
-                  });
                   var items=[salList];
 
                   var winSal = Ext.create('Ext.window.Window', {

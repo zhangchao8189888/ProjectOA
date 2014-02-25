@@ -41,11 +41,20 @@ class ExtSocialSecurityAction extends BaseAction {
 
     function controller() {
         switch ($this->mode) {
-            case "searchbusinessInfoListJson":
-                $this->searchbusinessInfoListJson();
+            case "searchBusinessInfoListJson":
+                $this->searchBusinessInfoListJson();
                 break;
             case "changeBusiness":
                 $this->changeBusiness();
+                break;
+            case "searchBusinessInfoById":
+                $this->searchBusinessInfoById();
+                break;
+            case "searchBusinessInfoByIdJson":
+                $this->searchBusinessInfoByIdJson();
+                break;
+            case "updateZengjianyuan":
+                $this->updateZengjianyuan();
                 break;
             case "updateBusiness":
                 $this->updateBusiness();
@@ -80,8 +89,47 @@ class ExtSocialSecurityAction extends BaseAction {
         return $time;
     }
 
-    function searchbusinessInfoListJson(){
+    function searchBusinessInfoById(){
         $this->objDao = new SocialSecurityDao();
+        $id = $_REQUEST ['id'];
+        $result =$this->objDao->searchBusinessById($id);
+        echo json_encode ( $result );
+        exit();
+    }
+
+    function searchBusinessInfoByIdJson(){
+        $this->objDao = new SocialSecurityDao();
+        $id = $_REQUEST ['id'];
+        $result =$this->objDao->searchBusinessById($id);
+        $i = 0;
+        $businessArray  =array();
+        global $businessTable ;
+        foreach ( $businessTable as $key => $value ) {
+            if(!$result[$key]){
+                continue;
+            }
+            $rowSalCol = array ();
+            $rowFields = array ();
+            if ($i == 0) {
+                $rowSalCol ['text'] = $value;
+                $rowSalCol ["dataIndex"] = $key;
+
+                // summaryType: 'count',
+                $businessArray ['columns'] [] = $rowSalCol;
+            }
+            $rowFields ["name"] = $key;
+            $businessArray ['fields'] [] = $rowFields;
+            $rowData [$key] = $result [$key];
+        }
+        $businessArray ['data'] [] = $rowData;
+        $i ++;
+        echo json_encode ( $businessArray );
+        exit();
+    }
+
+    function searchBusinessInfoListJson(){
+        $this->objDao = new SocialSecurityDao();
+        $searchType =   $_POST['searchType'];
         $start = $_REQUEST ['start'];
         $limit = $_REQUEST ['limit'];
         $sorts = $_REQUEST ['sort'];
@@ -99,6 +147,7 @@ class ExtSocialSecurityAction extends BaseAction {
         }
         $where = array ();
         $comList = array ();
+        $where['businessName']=$searchType;
         $sum =$this->objDao->searchBusinessCount($businessLog,$where);
         $result=$this->objDao->searchBusinessPage($start,$limit,$sorts." ".$dir,$where);
         $comList['total']=$sum;
@@ -196,17 +245,33 @@ class ExtSocialSecurityAction extends BaseAction {
     function updateBusiness(){
         $companylist    =   $_POST["ids"];
         $updateType    =   $_POST["updateType"];
+        $other  =   array();
+
+        $other['reimbursementTime']     =   $_POST["reimbursementTime"];
+        $other['reimbursementValue']     =   $_POST["reimbursementValue"];
+        $other['accountTime']    =   $_POST["accountTime"];
+        $other['accountValue']    =   $_POST["accountValue"];
+        $other['grantTime']   =   $_POST["grantTime"];
+        $other['grantValue']    =   $_POST["grantValue"];
+        $other['accountComTime']    =   $_POST["accountComTime"];
+        $other['accountComValue']    =   $_POST["accountComValue"];
+        $other['accountPersonTime']   =   $_POST["accountPersonTime"];
+        $other['accountPersonValue']    =   $_POST["accountPersonValue"];
+        $other['remarks']  =   $_POST["remarks"];
+        $other['retireTime'] =    $_POST["retireTime"];
         $this->objDao = new SocialSecurityDao();
         $loginType = $this->objDao->loginType();
         $exmsg=new EC();//设置错误信息类
         global $businessState;
+
         $arr=json_decode($companylist);
         if($arr==null){
            echo "没有找到编号！";
            exit;
         }
+
         foreach($arr as $key=>$value){
-            $result = $this->objDao->updateBusinessLog($loginType['admin_type'],$value,$updateType,$businessState[$updateType]);
+            $result = $this->objDao->updateBusinessLog($loginType['admin_type'],$value,$updateType,$businessState[$updateType],$other);
             if(!$result){
                 $exmsg->setError(__FUNCTION__, "add business faild ");
                 //事务回滚

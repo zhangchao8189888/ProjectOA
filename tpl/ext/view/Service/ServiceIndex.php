@@ -254,7 +254,7 @@ Ext.onReady(function () {
                 id: 'operationTime',
                 name: 'operationTime',
                 xtype: 'datefield',
-                width:100,
+                width:240,
                 format: "Y-m-d",
                 readOnly: false,
                 anchor: '95%'
@@ -734,9 +734,8 @@ function selectinfo(timeId) {
         },
         closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
     });
-    var title="";
-    var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
 
+    var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
     Ext.Ajax.request({
         url: url,  //从json文件中读取数据，也可以从其他地方获取数据
         method : 'POST',

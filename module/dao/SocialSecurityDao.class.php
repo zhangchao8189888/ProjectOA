@@ -14,8 +14,8 @@ class SocialSecurityDao extends BaseDao {
     function loginType(){
         $id = $_SESSION ['admin'] ['id'];
         $sql="SELECT admin_type  FROM  OA_admin  WHERE  id=$id";
-        $result=$this->g_db_query($sql);
-        return mysql_fetch_array($result);
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
     }
 
     /**
@@ -27,6 +27,12 @@ class SocialSecurityDao extends BaseDao {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
             }
+            if ($where ['businessName'] != "") {
+                $sql .= " and businessName like '%{$where['businessName']}%' ";
+            }
+            if ($where ['submitTime'] != "") {
+                $sql .= " and submitTime like '%{$where['submitTime']}%' ";
+            }
         }
         $result = $this->g_db_query ( $sql );
         if (! $result) {
@@ -37,7 +43,18 @@ class SocialSecurityDao extends BaseDao {
     }
 
     function searchBusinessPage($start = NULL, $limit = NULL, $sort = NULL, $where = null){
-        $sql = "SELECT * FROM OA_business";
+        $sql = "SELECT * FROM OA_business where 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['businessName'] != "") {
+                $sql .= " and businessName ='{$where['businessName']}' ";
+            }
+            if ($where ['submitTime'] != "") {
+                $sql .= " and submitTime like '%{$where['submitTime']}%' ";
+            }
+        }
         if ($sort) {
             $sql .= " order by $sort";
         }
@@ -57,8 +74,8 @@ class SocialSecurityDao extends BaseDao {
     	     (now(),
     	     '{$businessLog['companyId']}',
     	     '{$businessLog['companyName']}',
-    	     '{$businessLog['employName']}',
     	     '{$businessLog['employNumber']}',
+    	     '{$businessLog['employName']}',
     	     '{$businessLog['businessName']}',
     	     '{$businessLog['serviceId']}',
     	     '{$businessLog['serviceName']}',
@@ -74,7 +91,7 @@ class SocialSecurityDao extends BaseDao {
     /**
      * 变更业务状态
      */
-    function updateBusinessLog($adminType,$upId,$updateTypeid,$updateType) {
+    function updateBusinessLog($adminType,$upId,$updateTypeid,$updateType,$other) {
         $name = $_SESSION ['admin'] ['name'];
         $id = $_SESSION ['admin'] ['id'];
         $sql = " UPDATE OA_business SET socialSecurityStateId =$updateTypeid,
@@ -83,11 +100,41 @@ class SocialSecurityDao extends BaseDao {
             $sql .=",serviceId = $id,serviceName =  '$name'";
         }else if($adminType==5){
             $sql .=",adminId = $id,adminName =  '$name',updateTime=now()";
+            if($other['reimbursementTime']){
+                $sql .=",reimbursementTime =  '{$other['reimbursementTime']}',
+                reimbursementValue =  '{$other['reimbursementValue']}'";
+            }
+            if($other['accountTime']){
+                $sql .=",accountTime =  '{$other['accountTime']}',
+                accountValue =  '{$other['accountValue']}'";
+            }
+            if($other['grantTime']){
+                $sql .=",grantTime =  '{$other['grantTime']}',
+                grantValue =  '{$other['grantValue']}'";
+            }
+            if($other['retireTime']){
+                $sql .=",retireTime =  '{$other['retireTime']}'";
+            }
+            if($other['accountComTime']){
+                $sql .=",accountComTime =  '{$other['accountComTime']}',
+                accountComValue =  '{$other['accountComValue']}'";
+            }
+            if($other['accountPersonTime']){
+                $sql .=",accountPersonTime =  '{$other['accountPersonTime']}',
+                accountPersonValue =  '{$other['accountPersonValue']}'";
+            }
         }
         $sql .=" WHERE id=$upId";
         $result = $this->g_db_query($sql);
         return $result;
     }
+
+    function searchBusinessById($id) {
+        $sql = "SELECT * FROM OA_business where id =$id";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
+
     /**
      * 增减员状态
      */

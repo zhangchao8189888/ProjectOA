@@ -228,4 +228,29 @@ $businessState=array(
     '3'=>'已完成',
 );
 
+global $businessTable;
+$businessTable=array(
+    'submitTime' => '提交日期',
+    'updateTime' => '更新日期',
+    'companyName' => '单位名称',
+    'employName' => '员工姓名',
+    'employId' => '身份证号',
+    'employState' => '员工状态',
+    'businessName' => '业务名称',
+    'remarks' => '备注',
+    'serviceName' => '申请客服',
+    'socialSecurityState' => '办理情况',
+    'reimbursementTime' => '报销时间',
+    'reimbursementValue' => '报销金额',
+    'accountTime' => '到账时间',
+    'accountValue' => '到账金额',
+    'grantTime' => '发放时间',
+    'grantValue' => '发放金额',
+    'retireTime' => '退休时间',
+    'accountComTime' => '返单位时间',
+    'accountComValue' => '返单位金额',
+    'accountPersonTime' => '返个人时间',
+    'accountPersonValue' => '返个人金额',
+);
+
 ?>
