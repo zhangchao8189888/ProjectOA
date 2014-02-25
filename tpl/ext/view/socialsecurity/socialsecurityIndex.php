@@ -78,7 +78,7 @@ Ext.onReady(function () {
                     }
                     return val;
                 }
-            },
+            }
         ],
         height:600,
         width:1000,

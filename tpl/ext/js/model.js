@@ -319,7 +319,7 @@ Ext.define('oa.common.service.list', {
 /**
  * 业务变更model
  */
-Ext.define('oa.common.socialSecurity.business', {
+Ext.define('oa.common.socialsecurity.business', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int'},

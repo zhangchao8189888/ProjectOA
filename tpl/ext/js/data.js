@@ -594,7 +594,7 @@ var serviceManagestore = Ext.create('Ext.data.Store', {
 var businessLogstore = Ext.create('Ext.data.Store', {
     //分页大小
     pageSize: 50,
-    model: 'oa.common.socialSecurity.business',
+    model: 'oa.common.socialsecurity.business',
     //是否在服务端排序
     remoteSort: true,
     proxy: {
