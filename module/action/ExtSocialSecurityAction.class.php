@@ -120,9 +120,9 @@ class ExtSocialSecurityAction extends BaseAction {
             $rowFields ["name"] = $key;
             $businessArray ['fields'] [] = $rowFields;
             $rowData [$key] = $result [$key];
+            $i ++;
         }
         $businessArray ['data'] [] = $rowData;
-        $i ++;
         echo json_encode ( $businessArray );
         exit();
     }

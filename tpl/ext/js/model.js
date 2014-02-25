@@ -339,7 +339,7 @@ Ext.define('oa.common.socialsecurity.business', {
         {name: 'remarks', type: 'string'},
         {name: 'updateTime', type: 'string'},
         {name: 'socialSecurityStateId', type: 'int'},
-        {name: 'socialSecurityState', type: 'string'},
+        {name: 'socialSecurityState', type: 'string'}
     ]
 
 });
