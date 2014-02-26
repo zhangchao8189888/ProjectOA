@@ -41,6 +41,9 @@ class ExtSocialSecurityAction extends BaseAction {
 
     function controller() {
         switch ($this->mode) {
+            case "searchSocialsecurityInfoList":
+                $this->searchSocialsecurityInfoList();
+                break;
             case "searchBusinessInfoListJson":
                 $this->searchBusinessInfoListJson();
                 break;
@@ -89,6 +92,27 @@ class ExtSocialSecurityAction extends BaseAction {
         return $time;
     }
 
+    function searchSocialsecurityInfoList(){
+        $this->objDao = new SocialSecurityDao();
+        global $businessInfo ;
+        $where = array ();
+        $infoList = array ();
+        $i=0;
+        foreach ( $businessInfo as $key => $value ) {
+            $where['businessName']=  $key;
+            $result =$this->objDao->searchBusinessCount($where);
+            $comList ['items'] [$i] ["mattername"] = $value;
+            $comList ['items'] [$i] ["matter"] = $result;
+            $i++;
+        }
+
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount();
+        $comList ['items'] [$i] ["mattername"] = "增减员信息";
+        $comList ['items'] [$i] ["matter"] = $resultEmp;
+        echo json_encode($comList);
+        exit ();
+    }
+
     function searchBusinessInfoById(){
         $this->objDao = new SocialSecurityDao();
         $id = $_REQUEST ['id'];
@@ -109,14 +133,12 @@ class ExtSocialSecurityAction extends BaseAction {
                 continue;
             }
             $rowSalCol = array ();
-            $rowFields = array ();
-            if ($i == 0) {
-                $rowSalCol ['text'] = $value;
-                $rowSalCol ["dataIndex"] = $key;
+            $rowFields = array();
 
-                // summaryType: 'count',
-                $businessArray ['columns'] [] = $rowSalCol;
-            }
+            $rowSalCol ['text'] = $value;
+            $rowSalCol ["dataIndex"] = $key;
+            $businessArray ['columns'] [] = $rowSalCol;
+
             $rowFields ["name"] = $key;
             $businessArray ['fields'] [] = $rowFields;
             $rowData [$key] = $result [$key];
@@ -129,13 +151,22 @@ class ExtSocialSecurityAction extends BaseAction {
 
     function searchBusinessInfoListJson(){
         $this->objDao = new SocialSecurityDao();
+        $where = array ();
+        $comList = array ();
         $searchType =   $_POST['searchType'];
         $start = $_REQUEST ['start'];
         $limit = $_REQUEST ['limit'];
         $sorts = $_REQUEST ['sort'];
         $dir = $_REQUEST ['dir'];
+        $socialSecurityStateId  =   $_REQUEST['socialSecurityStateId'];
         $businessLog    = $_REQUEST ['businessLog'];
         $date   =   $_REQUEST['date'];
+        if($searchType=="其他"){
+            $where['otherName'] ="其他";
+        } else{
+            $where['businessName']=$searchType;
+        }
+        $where['socialSecurityStateId']=$socialSecurityStateId;
         if (! $start) {
             $start = 0;
         }
@@ -145,10 +176,7 @@ class ExtSocialSecurityAction extends BaseAction {
         if (! $sorts) {
             $sorts = "uncheckid";
         }
-        $where = array ();
-        $comList = array ();
-        $where['businessName']=$searchType;
-        $sum =$this->objDao->searchBusinessCount($businessLog,$where);
+        $sum =$this->objDao->searchBusinessCount($where);
         $result=$this->objDao->searchBusinessPage($start,$limit,$sorts." ".$dir,$where);
         $comList['total']=$sum;
         $i=0;
@@ -173,7 +201,18 @@ class ExtSocialSecurityAction extends BaseAction {
             } else{
                 $comList ['items'] [$i] ['updateTime'] = "<span>- - - -</span>";
             }
-            $comList ['items'] [$i] ['socialSecurityStateId'] = $row ['socialSecurityStateId'];
+            $comList ['items'] [$i] ['reimbursementTime'] = $row ['reimbursementTime'];
+            $comList ['items'] [$i] ['reimbursementValue'] = $row ['reimbursementValue'];
+            $comList ['items'] [$i] ['accountTime'] = $row ['accountTime'];
+            $comList ['items'] [$i] ['accountValue'] = $row ['accountValue'];
+            $comList ['items'] [$i] ['grantTime'] = $row ['grantTime'];
+            $comList ['items'] [$i] ['grantValue'] = $row ['grantValue'];
+            $comList ['items'] [$i] ['retireTime'] = $row ['retireTime'];
+            $comList ['items'] [$i] ['accountComTime'] = $row ['accountComTime'];
+            $comList ['items'] [$i] ['accountComValue'] = $row ['accountComValue'];
+            $comList ['items'] [$i] ['accountPersonTime'] = $row ['accountPersonTime'];
+            $comList ['items'] [$i] ['accountPersonValue'] = $row ['accountPersonValue'];
+
             $comList ['items'] [$i] ['socialSecurityStateId'] = $row ['socialSecurityStateId'];
             $comList ['items'] [$i] ['socialSecurityState'] = $row ['socialSecurityState'];
             $i ++;

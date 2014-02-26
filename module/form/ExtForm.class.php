@@ -58,6 +58,8 @@ class ExtForm extends BaseForm
                 return "ext/view/finance/taxInfo.php";
             case "toBusiness":
                 return"ext/view/socialsecurity/changeBusiness.php";
+            case "todemo":
+                return"ext/view/demo/demoIndex.php";
            default :
                 return "BaseConfig.php";
         }

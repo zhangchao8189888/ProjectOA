@@ -284,6 +284,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
             <div class="item">
                 <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
             </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=todemo">演示功能</a>
+            </div>
         </div>
         <img id="imgload" style="display: none" src="common/image/load.gif" />
     </div>

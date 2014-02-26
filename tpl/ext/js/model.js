@@ -339,7 +339,31 @@ Ext.define('oa.common.socialsecurity.business', {
         {name: 'remarks', type: 'string'},
         {name: 'updateTime', type: 'string'},
         {name: 'socialSecurityStateId', type: 'int'},
-        {name: 'socialSecurityState', type: 'string'}
+        {name: 'socialSecurityState', type: 'string'} ,
+        {name: 'reimbursementTime', type: 'string'},
+        {name: 'reimbursementValue', type: 'string'},
+        {name: 'accountTime', type: 'string'},
+        {name: 'accountValue', type: 'string'},
+        {name: 'grantTime', type: 'int'},
+        {name: 'grantValue', type: 'string'},
+        {name: 'retireTime', type: 'string'},
+        {name: 'accountComTime', type: 'string'},
+        {name: 'accountComValue', type: 'string'},
+        {name: 'accountPersonTime', type: 'string'},
+        {name: 'accountPersonValue', type: 'int'}
+    ]
+
+});
+
+/**
+ *社保首页model
+ */
+Ext.define('oa.common.socialsecurity.socialsecurityinfo', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'mattername', type: 'string'},
+        {name: 'matter', type: 'string'},
+
     ]
 
 });

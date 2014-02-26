@@ -463,7 +463,7 @@ class SalaryDao extends BaseDao {
     }
     // 增减员统计BY孙瑞鹏
     function searhZengjianTongjiPage($where = null) {
-        $sql = "SELECT count(*)  FROM OA_security WHERE 1=1";
+        $sql = "SELECT count(id) as cnt FROM OA_security WHERE 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and Dept like '%{$where['companyName']}%' ";
@@ -471,10 +471,13 @@ class SalaryDao extends BaseDao {
             if ($where ['zengjian'] != "") {
                 $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
             }
-
         }
-        $list = $this->g_db_query ( $sql );
-        return $list;
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
     }
     // 到账BY孙瑞鹏
     function searhDaozhangListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {

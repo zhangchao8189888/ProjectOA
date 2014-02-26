@@ -253,4 +253,14 @@ $businessTable=array(
     'accountPersonValue' => '返个人金额',
 );
 
+global $businessInfo;
+$businessInfo   =   array(
+    '1' => '医疗报销',
+    '2' => '工伤报销',
+    '3' => '失业申报',
+    '4' => '生育医疗申报',
+    '5' => '生育津贴申报',
+    '10' => '退休',
+)   ;
+
 ?>

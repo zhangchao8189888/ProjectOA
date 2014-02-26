@@ -21,17 +21,26 @@ class SocialSecurityDao extends BaseDao {
     /**
      * 搜索变更业务dao
      */
-    function searchBusinessCount($businessLog,$where) {
-        $sql = "SELECT COUNT(id) AS cnt FROM OA_business";
+    function searchBusinessCount($where) {
+        $sql = "SELECT COUNT(id) AS cnt FROM OA_business where 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
             }
+            if ($where ['employName'] != "") {
+                $sql .= " and employName = '{$where['companyName']}' ";
+            }
+            if ($where ['socialSecurityStateId'] != "") {
+                $sql .= " and socialSecurityStateId = '{$where['socialSecurityStateId']}' ";
+            }
             if ($where ['businessName'] != "") {
-                $sql .= " and businessName like '%{$where['businessName']}%' ";
+                $sql .= " and businessName = '{$where['businessName']}' ";
             }
             if ($where ['submitTime'] != "") {
                 $sql .= " and submitTime like '%{$where['submitTime']}%' ";
+            }
+            if ($where ['otherName'] != "") {
+                $sql .= " AND businessName NOT IN (1,2,3,4,5,6,7,8,9,10) ";
             }
         }
         $result = $this->g_db_query ( $sql );
@@ -43,16 +52,25 @@ class SocialSecurityDao extends BaseDao {
     }
 
     function searchBusinessPage($start = NULL, $limit = NULL, $sort = NULL, $where = null){
-        $sql = "SELECT * FROM OA_business where 1=1";
+        $sql = "SELECT * FROM OA_business WHERE 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
-                $sql .= " and company_name like '%{$where['companyName']}%' ";
+                $sql .= " AND company_name LIKE '%{$where['companyName']}%' ";
+            }
+            if ($where ['employName'] != "") {
+                $sql .= " and employName = '{$where['companyName']}' ";
+            }
+            if ($where ['socialSecurityStateId'] != "") {
+                $sql .= " and socialSecurityStateId = '{$where['socialSecurityStateId']}' ";
             }
             if ($where ['businessName'] != "") {
-                $sql .= " and businessName ='{$where['businessName']}' ";
+                $sql .= " and businessName = '{$where['businessName']}' ";
             }
             if ($where ['submitTime'] != "") {
-                $sql .= " and submitTime like '%{$where['submitTime']}%' ";
+                $sql .= " AND submitTime LIKE '%{$where['submitTime']}%' ";
+            }
+            if ($where ['otherName'] != "") {
+                $sql .= " AND businessName NOT IN (1,2,3,4,5,6,7,8,9,10) ";
             }
         }
         if ($sort) {
@@ -133,6 +151,24 @@ class SocialSecurityDao extends BaseDao {
         $sql = "SELECT * FROM OA_business where id =$id";
         $result = $this->g_db_query ( $sql );
         return mysql_fetch_array ( $result );
+    }
+
+    function searhZengjianTongjiCount($where = null) {
+        $sql = "SELECT count(id) as cnt FROM OA_security WHERE 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and Dept like '%{$where['companyName']}%' ";
+            }
+            if ($where ['zengjian'] != "") {
+                $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
+            }
+        }
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
     }
 
     /**

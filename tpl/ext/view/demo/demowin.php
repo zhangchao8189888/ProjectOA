@@ -1,7 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>业务记录</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
@@ -101,6 +100,13 @@ Ext.onReady(function () {
                 },
                 text : '查看详细',
                 iconCls : 'chakan'
+            },
+            {
+                xtype : 'hidden',
+                id : 'searchType',
+                value:"1",
+                text : '分类',
+                iconCls : 'chakan'
             }
         ],
         bbar: Ext.create('Ext.PagingToolbar', {
@@ -111,7 +117,7 @@ Ext.onReady(function () {
         })
     });
     businessLogstore.on("beforeload", function () {
-
+        Ext.apply(businessLogstore.proxy.extraParams, {searchType: Ext.getCmp("searchType").getValue()});
     });
     businessLogstore.loadPage(1);
 
@@ -523,18 +529,9 @@ function checkSalWin(id) {
     //winSal.items=[p,salList];
     winSal.show();
 }
-
 </script>
 </head>
 <body>
-<?php include("tpl/commom/top.html"); ?>
-<div id="main" style="min-width: 960px">
-    <?php include("tpl/commom/left.php"); ?>
-    <div id="right">
-        <div id="demo"></div>
-        <div id="demo2"></div>
-    </div>
-
-</div>
+ <div id="demo"></div>
 </body>
 </html>

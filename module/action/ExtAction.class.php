@@ -89,6 +89,9 @@ class ExtAction extends BaseAction{
             case "toBusiness":
                 $this->toBusiness();
                 break;
+            case "todemo":
+                $this->todemo();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -172,6 +175,9 @@ class ExtAction extends BaseAction{
     	exit;
     }
 
+    function todemo(){
+        $this->mode="todemo";
+    }
 }
 
 

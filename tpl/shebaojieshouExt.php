@@ -67,7 +67,7 @@ Ext.onReady(function(){
             stripeRows: false
         },
         bbar: Ext.create('Ext.PagingToolbar', {
-            store: geshuiListstore,
+            store: zengjianListstore,
             displayInfo: true,
             displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
             emptyMsg: "没有数据"
