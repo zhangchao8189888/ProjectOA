@@ -214,6 +214,7 @@ Ext.define('oa.common.zengjian.list',{
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int'},
+        {name: 'submitTime', type: 'string'},
         {name: 'CName', type: 'string'},
         {name: 'Dept', type: 'string'},
         {name: 'EName', type: 'string'},
@@ -225,6 +226,7 @@ Ext.define('oa.common.zengjian.list',{
         {name: 'sum', type: 'double'},
         {name: 'danweijishu', type: 'string'},
         {name: 'caozuoren', type: 'string'},
+        {name: 'updateTime', type: 'string'},
         {name: 'shenbaozhuangtai', type: 'string'},
         {name: 'beizhu', type: 'string'}
     ]
@@ -362,7 +364,7 @@ Ext.define('oa.common.socialsecurity.socialsecurityinfo', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'mattername', type: 'string'},
-        {name: 'matter', type: 'string'},
+        {name: 'matter', type: 'string'}
 
     ]
 

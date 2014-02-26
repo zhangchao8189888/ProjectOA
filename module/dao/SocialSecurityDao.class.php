@@ -25,19 +25,19 @@ class SocialSecurityDao extends BaseDao {
         $sql = "SELECT COUNT(id) AS cnt FROM OA_business where 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
-                $sql .= " and company_name like '%{$where['companyName']}%' ";
+                $sql .= " and companyName like '%{$where['companyName']}%' ";
+            }
+            if ($where ['submitTime'] != "") {
+                $sql .= " and submitTime <= '{$where['submitTime']}' ";
             }
             if ($where ['employName'] != "") {
-                $sql .= " and employName = '{$where['companyName']}' ";
+                $sql .= " and employName LIKE '%{$where['employName']}%' ";
             }
             if ($where ['socialSecurityStateId'] != "") {
                 $sql .= " and socialSecurityStateId = '{$where['socialSecurityStateId']}' ";
             }
             if ($where ['businessName'] != "") {
                 $sql .= " and businessName = '{$where['businessName']}' ";
-            }
-            if ($where ['submitTime'] != "") {
-                $sql .= " and submitTime like '%{$where['submitTime']}%' ";
             }
             if ($where ['otherName'] != "") {
                 $sql .= " AND businessName NOT IN (1,2,3,4,5,6,7,8,9,10) ";
@@ -55,19 +55,19 @@ class SocialSecurityDao extends BaseDao {
         $sql = "SELECT * FROM OA_business WHERE 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
-                $sql .= " AND company_name LIKE '%{$where['companyName']}%' ";
+                $sql .= " AND companyName LIKE '%{$where['companyName']}%' ";
+            }
+            if ($where ['submitTime'] != "") {
+                $sql .= " and submitTime <= '{$where['submitTime']}' ";
             }
             if ($where ['employName'] != "") {
-                $sql .= " and employName = '{$where['companyName']}' ";
+                $sql .= " and employName LIKE '%{$where['employName']}%' ";
             }
             if ($where ['socialSecurityStateId'] != "") {
                 $sql .= " and socialSecurityStateId = '{$where['socialSecurityStateId']}' ";
             }
             if ($where ['businessName'] != "") {
                 $sql .= " and businessName = '{$where['businessName']}' ";
-            }
-            if ($where ['submitTime'] != "") {
-                $sql .= " AND submitTime LIKE '%{$where['submitTime']}%' ";
             }
             if ($where ['otherName'] != "") {
                 $sql .= " AND businessName NOT IN (1,2,3,4,5,6,7,8,9,10) ";
@@ -176,7 +176,7 @@ class SocialSecurityDao extends BaseDao {
      */
     function updateZengjian($upid,$uptype) {
         $name = $_SESSION ['admin'] ['name'];
-        $sql = " UPDATE OA_security  SET shenbaozhuangtai ='$uptype',
+        $sql = " UPDATE OA_security  SET shenbaozhuangtai ='$uptype', updateTime=now(),
                 caozuoren ='$name'  WHERE id=$upid ";
         $result = $this->g_db_query($sql);
         return $result;

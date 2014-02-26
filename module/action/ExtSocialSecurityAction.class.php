@@ -96,8 +96,12 @@ class ExtSocialSecurityAction extends BaseAction {
         $this->objDao = new SocialSecurityDao();
         global $businessInfo ;
         $where = array ();
-        $infoList = array ();
+        $comList = array ();
         $i=0;
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount();
+        $comList ['items'] [$i] ["mattername"] = "增减员信息";
+        $comList ['items'] [$i] ["matter"] = $resultEmp;
+        $i++;
         foreach ( $businessInfo as $key => $value ) {
             $where['businessName']=  $key;
             $result =$this->objDao->searchBusinessCount($where);
@@ -106,9 +110,7 @@ class ExtSocialSecurityAction extends BaseAction {
             $i++;
         }
 
-        $resultEmp   =   $this->objDao->searhZengjianTongjiCount();
-        $comList ['items'] [$i] ["mattername"] = "增减员信息";
-        $comList ['items'] [$i] ["matter"] = $resultEmp;
+
         echo json_encode($comList);
         exit ();
     }
@@ -124,27 +126,33 @@ class ExtSocialSecurityAction extends BaseAction {
     function searchBusinessInfoByIdJson(){
         $this->objDao = new SocialSecurityDao();
         $id = $_REQUEST ['id'];
-        $result =$this->objDao->searchBusinessById($id);
-        $i = 0;
-        $businessArray  =array();
+        $ids = $_REQUEST ['ids'];
+        $ids=json_decode($ids);
         global $businessTable ;
-        foreach ( $businessTable as $key => $value ) {
-            if(!$result[$key]){
-                continue;
+        $businessArray  =array();
+        $rowSalCol = array ();
+        $rowFields = array();
+        $i = 0;
+        foreach($ids as $key=>$value){
+            $result =$this->objDao->searchBusinessById($value);
+            foreach ( $businessTable as $key => $value ) {
+                if(!$result[$key]){
+                    continue;
+                }
+                if($i==0){
+                    $rowSalCol ['text'] = $value;
+                    $rowSalCol ["dataIndex"] = $key;
+                    $businessArray ['columns'] [] = $rowSalCol;
+                    $rowFields ["name"] = $key;
+                    $businessArray ['fields'] [] = $rowFields;
+                    $rowData [$key] = $result [$key];
+                }
+
             }
-            $rowSalCol = array ();
-            $rowFields = array();
-
-            $rowSalCol ['text'] = $value;
-            $rowSalCol ["dataIndex"] = $key;
-            $businessArray ['columns'] [] = $rowSalCol;
-
-            $rowFields ["name"] = $key;
-            $businessArray ['fields'] [] = $rowFields;
-            $rowData [$key] = $result [$key];
-            $i ++;
+            $i++;
+            $businessArray ['data'] [] = $rowData;
         }
-        $businessArray ['data'] [] = $rowData;
+
         echo json_encode ( $businessArray );
         exit();
     }
@@ -154,18 +162,28 @@ class ExtSocialSecurityAction extends BaseAction {
         $where = array ();
         $comList = array ();
         $searchType =   $_POST['searchType'];
+        $companyName    = $_POST['companyName'];
+        $employName    = $_POST['employName'];
+        $date =   $_POST['submitTime'];
         $start = $_REQUEST ['start'];
         $limit = $_REQUEST ['limit'];
         $sorts = $_REQUEST ['sort'];
         $dir = $_REQUEST ['dir'];
         $socialSecurityStateId  =   $_REQUEST['socialSecurityStateId'];
         $businessLog    = $_REQUEST ['businessLog'];
-        $date   =   $_REQUEST['date'];
+        if($date!=null) {
+            $time   =   $this->AssignTabMonth($date,0);
+            $where['submitTime']=$time["last"];
+        }else{
+
+        }
         if($searchType=="其他"){
             $where['otherName'] ="其他";
         } else{
             $where['businessName']=$searchType;
         }
+        $where['companyName']=$companyName;
+        $where['employName']=$employName;
         $where['socialSecurityStateId']=$socialSecurityStateId;
         if (! $start) {
             $start = 0;

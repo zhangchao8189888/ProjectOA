@@ -413,7 +413,49 @@ function changeState(updateId) {
         },
         icon: Ext.MessageBox.INFO
     })
-}
+} ;
+function changezengjianState(updateId) {
+    Ext.MessageBox.show({
+        title:'更改状态',
+        msg: '请选择修改的状态',
+        buttonText:{ok: '正在办理', yes: '办理成功'},
+        animateTarget: 'mb4',
+        fn: function (btn) {
+            var updateType;
+            if(updateId==null){
+                return false;
+            }
+            if("ok"==btn){
+                updateType="正在办理";
+            } else if("yes"==btn){
+                updateType="办理成功";
+            }else{
+                return false;
+            }
+
+            Ext.Ajax.request({
+                url: 'index.php?action=ExtSocialSecurity&mode=updateZengjianyuan',
+                method: 'post',
+                params: {
+                    updateId:updateId,
+                    updateType:updateType
+                },
+                success: function (response) {
+                    var text = response.responseText;
+                    Ext.Msg.alert("提示",text);
+                    zengjianListstore.load( {
+                            params: {
+                                start: 0,
+                                limit: 50
+                            }
+                        }
+                    );
+                }
+            });
+        },
+        icon: Ext.MessageBox.INFO
+    })
+};
 
 var salList = Ext.create("Ext.grid.Panel", {
     title: '',
@@ -432,7 +474,7 @@ var salList = Ext.create("Ext.grid.Panel", {
     emptyMsg: "没有数据显示"
 });
 
-function checkSalWin(id) {
+function checkSalWin(itcIds) {
     //加载数据遮罩
     var mk=new Ext.LoadMask(Ext.getBody(),{
         msg:'加载数据中，请稍候！',removeMask:true
@@ -473,7 +515,7 @@ function checkSalWin(id) {
         url: url,  //从json文件中读取数据，也可以从其他地方获取数据
         method : 'POST',
         params: {
-            id : id
+            ids : Ext.JSON.encode(itcIds)
         },
         success : function(response) {
             //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
@@ -484,7 +526,6 @@ function checkSalWin(id) {
                 fields : json.fields,//把json的fields赋给fields
                 data : json.data     //把json的data赋给data
             });
-
             //根据store和column构造表格
             Ext.getCmp("configGrid").reconfigure(store, json.columns);
 //            //重新渲染表格

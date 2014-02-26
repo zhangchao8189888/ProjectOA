@@ -110,9 +110,9 @@ class ExtFinanceAction extends BaseAction {
         $where['companyName']=$companyName;
         if($date!=null) {
             $time   =   $this->AssignTabMonth($date,0);
-                $where['$salTime']=$time["month"];
+                $where['salTime']=$time["month"];
         }else{
-            $where['$salTime']=date('Y-m',time())."-01";
+            $where['salTime']=date('Y-m',time())."-01";
         }
 
         // 查询公司列表
@@ -124,7 +124,7 @@ class ExtFinanceAction extends BaseAction {
         while ( $row = mysql_fetch_array ( $result ) ) {
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
-            $sal = $this->objDao->searchByComIdAndSalTime($row['id'], $where['$salTime']);
+            $sal = $this->objDao->searchByComIdAndSalTime($row['id'], $where['salTime']);
             $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
             $comList ['items'] [$i] ['sal_state'] =0;
@@ -156,7 +156,7 @@ class ExtFinanceAction extends BaseAction {
             if($sal ['salaryTime'])  {
                 $comList ['items'] [$i]  ['sal_date'] = date("Y-m-d",strtotime($sal["salaryTime"]));
             } else{
-                $comList ['items'] [$i]  ['sal_date'] = date("Y-m-d",strtotime($where['$salTime']));
+                $comList ['items'] [$i]  ['sal_date'] = date("Y-m-d",strtotime($where['salTime']));
             }
 
             $i ++;
