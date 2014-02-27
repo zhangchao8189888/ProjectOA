@@ -103,6 +103,12 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
             <a href="index.php?action=Ext&mode=toBusiness">业务变更</a>
         </div>
         <div class="item">
+            <a href="index.php?action=Ext&mode=toInsurance">个人保险</a>
+        </div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toPersonsalary">个人工资</a>
+        </div>
+        <div class="item">
             <a href="index.php?action=SalaryBill&mode=toShebaoExt">增减员添加</a>
         </div>
 		<div class="item">
@@ -259,6 +265,12 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
             </div>
             <div class="item">
                 <a href="index.php?action=Ext&mode=toBusiness">业务变更</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toInsurance">个人保险</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toPersonsalary">个人工资</a>
             </div>
             <div class="item">
                 <a href="index.php?action=SalaryBill&mode=toShebaoJieshouExt">增减员查看</a>

@@ -369,3 +369,34 @@ Ext.define('oa.common.socialsecurity.socialsecurityinfo', {
     ]
 
 });
+
+/**
+ * 保险
+ */
+Ext.define('oa.common.socialsecurity.insurance', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'submitTime', type: 'string'},
+        {name: 'companyName', type: 'string'},
+        {name: 'employId', type: 'string'},
+        {name: 'employName', type: 'string'},
+        {name: 'idClass', type: 'string'},
+        {name: 'serviceId', type: 'string'},
+        {name: 'serviceName', type: 'string'},
+        {name: 'adminId', type: 'string'},
+        {name: 'adminName', type: 'string'},
+        {name: 'base', type: 'string'},
+        {name: 'paymentStartTime', type: 'string'},
+        {name: 'paymentEndTime', type: 'string'},
+        {name: 'paymentTime', type: 'string'},
+        {name: 'paymentValue', type: 'float'},
+        {name: 'paymentType', type: 'string'},
+        {name: 'remark', type: 'string'},
+        {name: 'unInsuranceReason', type: 'string'},
+        {name: 'explainInfo', type: 'string'},
+        {name: 'entryTime', type: 'string'},
+        {name: 'tel', type: 'string'}
+    ]
+
+});

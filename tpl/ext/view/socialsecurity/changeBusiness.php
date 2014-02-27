@@ -295,6 +295,8 @@
                     Ext.Ajax.request({
                         url: "index.php?action=ExtSocialSecurity&mode=changeBusiness",
                         method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
                         params: {
                             companyName: companyName,
                             employName: employName,

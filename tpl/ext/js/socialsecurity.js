@@ -535,3 +535,92 @@ function checkSalWin(itcIds) {
     //winSal.items=[p,salList];
     winSal.show();
 }
+
+
+function pay(id) {
+    var items=[paysal];
+    Ext.getCmp("upid").setValue(id);
+    winSal = Ext.create('Ext.window.Window', {
+        title: "添加个人上保险", // 窗口标题
+        width:380, // 窗口宽度
+        height:150, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                window.minimizable = true;
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    winSal.show();
+
+}
+var paysal = Ext.create('Ext.form.Panel', {
+    bodyPadding: 15,
+    width: 360,
+    height: 150,
+    items: [
+        {
+            id: 'upid',
+            xtype: 'numberfield',
+            hidden:true,
+            allowBlank: false
+        },
+        {
+            id: 'payValue',
+            name: 'payValue',
+            xtype: 'numberfield',
+            allowBlank: false,
+            emptyText: "请输入缴费金额",
+            fieldLabel: '缴费金额'
+        }
+    ],
+    buttons: [
+        {
+            text: '提交',
+            handler: function () {
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                this.up('form').getForm().submit(
+                    {
+                        url: "index.php?action=ExtSocialSecurity&mode=updateInsurance",
+                        method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
+                        success: function (form,action) {
+                            var text = form.responseText;
+                            Ext.Msg.alert("提示", action.result.info);
+//                        document.location = 'index.php?action=Ext&mode=toInsurance';
+                        },
+                        failure:function(form,action){
+                            Ext.Msg.alert('提示',action.result.info);
+                        }
+                    }
+                );
+
+
+            }
+        }
+        ,
+        {
+            text: '清空',
+            handler: function () {
+                this.up('form').getForm().reset();
+            }
+        }
+    ]
+});

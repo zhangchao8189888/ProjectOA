@@ -56,21 +56,25 @@ class ExtSocialSecurityAction extends BaseAction {
             case "searchBusinessInfoByIdJson":
                 $this->searchBusinessInfoByIdJson();
                 break;
+            case "searchInsuranceList":
+                $this->searchInsuranceList();
+                break;
+            case "addInsurance":
+                $this->addInsurance();
+                break;
+            case "updateInsurance":
+                $this->updateInsurance();
+                break;
             case "updateZengjianyuan":
                 $this->updateZengjianyuan();
                 break;
             case "updateBusiness":
                 $this->updateBusiness();
                 break;
-            case "updateZengjianyuan":
-                $this->updateZengjianyuan();
-                break;
             default :
                 $this->modelInput();
                 break;
         }
-
-
     }
 
     function AssignTabMonth($date, $step) {
@@ -109,8 +113,15 @@ class ExtSocialSecurityAction extends BaseAction {
             $comList ['items'] [$i] ["matter"] = $result;
             $i++;
         }
-
-
+        $where['disType']   =   "1";
+        $resultsal   =   $this->objDao->searchInsuranceCount($where);
+        $comList ['items'] [$i] ["mattername"] = "个人保险";
+        $comList ['items'] [$i] ["matter"] = $resultsal;
+        $where['disType']   =   "0";
+        $i++;
+        $resultin   =   $this->objDao->searchInsuranceCount($where);
+        $comList ['items'] [$i] ["mattername"] = "个人工资";
+        $comList ['items'] [$i] ["matter"] = $resultin;
         echo json_encode($comList);
         exit ();
     }
@@ -237,6 +248,131 @@ class ExtSocialSecurityAction extends BaseAction {
         }
         echo json_encode($comList);
         exit ();
+    }
+    //FIXME!! 保险list
+    function searchInsuranceList(){
+        $this->objDao = new SocialSecurityDao();
+        $where = array ();
+        $comList = array ();
+        $where['disType']   =$_POST['disType'];
+        $companyName    = $_POST['companyName'];
+        $employName    = $_POST['employName'];
+        $date =   $_POST['submitTime'];
+        $start = $_REQUEST ['start'];
+        $limit = $_REQUEST ['limit'];
+        $sorts = $_REQUEST ['sort'];
+        $dir = $_REQUEST ['dir'];
+        if($date!=null) {
+            $time   =   $this->AssignTabMonth($date,0);
+            $where['submitTime']=$time["last"];
+        }
+        $where['companyName']=$companyName;
+        $where['employName']=$employName;
+        if (! $start) {
+            $start = 0;
+        }
+        if (! $limit) {
+            $limit = 50;
+        }
+        if (! $sorts) {
+            $sorts = "uncheckid";
+        }
+        $sum =$this->objDao->searchInsuranceCount($where);
+        $result=$this->objDao->searchInsurancePage($start,$limit,$sorts." ".$dir,$where);
+        $comList['total']=$sum;
+        $i=0;
+        while ( $row = mysql_fetch_array ( $result ) ) {
+            if(date("m-d",strtotime($row ['paymentTime']))<date('m-d')){
+                $comList ['items'] [$i] ['paymentTime'] =0;
+            }else{
+                $comList ['items'] [$i] ['paymentTime'] =date("Y-m-d",strtotime($row ['paymentTime']));
+            };
+            $comList ['items'] [$i] ['id'] = $row ['id'];
+            $comList ['items'] [$i] ['submitTime'] = $row ['submitTime'];
+            $comList ['items'] [$i] ['companyName'] = $row ['companyName'];
+            $comList ['items'] [$i] ['employId'] = $row ['employId'];
+            $comList ['items'] [$i] ['employName'] = $row ['employName'];
+            $comList ['items'] [$i] ['idClass'] = $row ['idClass'];
+            $comList ['items'] [$i] ['serviceId'] = $row ['serviceId'];
+            $comList ['items'] [$i] ['serviceName'] = $row ['serviceName'];
+            $comList ['items'] [$i] ['base'] = $row ['base'];
+            $comList ['items'] [$i] ['paymentStartTime'] =date("Y-m-d",strtotime($row ['paymentStartTime']));
+            $comList ['items'] [$i] ['paymentEndTime'] =date("Y-m-d",strtotime($row ['paymentEndTime']));
+            $comList ['items'] [$i] ['paymentValue'] = $row ['paymentValue'];
+            $comList ['items'] [$i] ['paymentType'] = $row ['paymentType'];
+            $comList ['items'] [$i] ['remark'] = $row ['remark'];
+            $comList ['items'] [$i] ['unInsuranceReason'] = $row ['unInsuranceReason'];
+            $comList ['items'] [$i] ['explainInfo'] = $row ['explainInfo'];
+            $comList ['items'] [$i] ['entryTime'] = $row ['entryTime'];
+            $comList ['items'] [$i] ['tel'] = $row ['tel'];
+            $i ++;
+        }
+        echo json_encode($comList);
+        exit ();
+    }
+
+    function addInsurance(){
+        $insuranceInfo = array();
+        $info = array();
+        $adminId=$_SESSION['admin']['id'];
+        $adminName  =  $_SESSION['admin']['name'];
+        $this->objDao = new SocialSecurityDao();
+        $exmsg=new EC();//设置错误信息类
+        $insuranceInfo['companyName']  =$_REQUEST['companyName-inputEl'];
+        $insuranceInfo['employId']  =$_REQUEST['employId-inputEl'];
+        $insuranceInfo['employName']  =$_REQUEST['employName-inputEl'];
+        $insuranceInfo['idClass']  =$_REQUEST['idClass-inputEl'];
+        $insuranceInfo['serviceId']  =$adminId;
+        $insuranceInfo['serviceName']  =$adminName;
+        $insuranceInfo['base']  =$_REQUEST['base-inputEl'];
+        $insuranceInfo['paymentStartTime']  =$_REQUEST['payStart-inputEl'];
+        $insuranceInfo['paymentEndTime']  =$_REQUEST['payEnd-inputEl'];
+        $insuranceInfo['paymentTime']  =$_REQUEST['payTime-inputEl'];
+        $insuranceInfo['paymentValue']  =$_REQUEST['payValue'];
+        $insuranceInfo['paymentType']  =$_REQUEST['payType-inputEl'];
+        $insuranceInfo['remark']  =$_REQUEST['remark-inputEl'];
+        $insuranceInfo['unInsuranceReason']  =$_REQUEST['unInsuranceReason-inputEl'];
+        $insuranceInfo['explainInfo']  =$_REQUEST['explainInfo-inputEl'];
+        $insuranceInfo['entryTime']  =$_REQUEST['entryTime-inputEl'];
+        $insuranceInfo['tel']  =$_REQUEST['tel-inputEl'];
+
+        $result = $this->objDao->addInsurance($insuranceInfo);
+        if(!$result){
+            $exmsg->setError(__FUNCTION__, "add business faild ");
+            //事务回滚
+            $this->objDao->rollback();
+            $info['success']    =   false;
+            $info['info']   =   "提交信息失败，请重试！";
+            throw new Exception ($exmsg->error());
+        }
+        else{
+            $info['info']   =   "提交信息成功，请等待办理！";
+            $info['success']    =   true;
+        }
+        echo json_encode($info);
+        exit;
+    }
+
+    function updateInsurance(){
+        $this->objDao = new SocialSecurityDao();
+        $exmsg=new EC();//设置错误信息类
+        $paymentValue   =   $_POST["payValue"] ;
+        $upId   =   $_POST["upid-inputEl"] ;
+        $result = $this->objDao->updateInsurance($upId,$paymentValue);
+        if(!$result){
+            $exmsg->setError(__FUNCTION__, "add business faild ");
+            //事务回滚
+            $this->objDao->rollback();
+            $info['success']    =   false;
+            $info['info']   =   "提交信息失败，请重试！";
+            throw new Exception ($exmsg->error());
+        }
+        else{
+            $info['info']   =   "提交信息成功，请等待办理！";
+            $info['success']    =   true;
+        }
+        echo json_encode($info);
+        exit;
     }
 
     /**

@@ -89,6 +89,12 @@ class ExtAction extends BaseAction{
             case "toBusiness":
                 $this->toBusiness();
                 break;
+            case "toInsurance":
+                $this->toInsurance();
+                break;
+            case "toPersonsalary":
+                $this->toPersonsalary();
+                break;
             case "todemo":
                 $this->todemo();
                 break;
@@ -158,6 +164,14 @@ class ExtAction extends BaseAction{
 
     function toBusiness(){
         $this->mode="toBusiness";
+    }
+
+    function toInsurance(){
+        $this->mode="toInsurance";
+    }
+
+    function toPersonsalary(){
+        $this->mode =   "toPersonsalary";
     }
 
     function getExtJosn(){

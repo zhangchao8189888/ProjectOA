@@ -1066,6 +1066,132 @@ Ext.onReady(function () {
                 }
             } ,
             {
+                title: '个人保险',
+                items:[
+                    Ext.create('Ext.grid.Panel',{
+                        store: insurancestore,
+                        id : 'comlist',
+                        columns: [
+                            {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
+                            {text: "提交日期", width: 100, dataIndex: 'submitTime', sortable: true},
+                            {text: "单位名称", width: 150, dataIndex: 'companyName', sortable: true},
+                            {text: "员工姓名", width: 100, dataIndex: 'employName', sortable: true},
+                            {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
+                            {text: "员工身份类别", width: 100, dataIndex: 'idClass', sortable: false},
+                            {text: "基数", width: 100, dataIndex: 'base', sortable: true},
+                            {text: "缴费开始日期", width: 100, dataIndex: 'paymentStartTime', sortable: false},
+                            {text: "缴费结束日期", width: 100, dataIndex: 'paymentEndTime', sortable: false},
+                            {text: "缴费日期", width: 100, dataIndex: 'paymentTime', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val==0){
+                                        return '<a href="#" title="修改状态" onclick=pay(' + record.data['id'] + ')><span style="color: red;font-size: 14px">需要缴费</span>';
+                                    }
+                                    return val;
+                                }
+                            },
+                            {text: "金额", width: 100, dataIndex: 'paymentValue', sortable: true},
+                            {text: "缴费方式", width: 100, dataIndex: 'paymentType', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
+                            {text: "备注", width: 100, dataIndex: 'remark', sortable: false}
+                        ],
+                        height:560,
+                        width:1000,
+                        bbar: Ext.create('Ext.PagingToolbar', {
+                            store: insurancestore,
+                            displayInfo: true,
+                            displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                            emptyMsg: "没有数据"
+                        }),
+
+                        tbar : [
+                            {
+                                xtype : 'button',
+                                id : 'addin',
+                                handler : function(src) {
+                                    checkSalWin();
+                                },
+                                text : '添加业务',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'disTypei',
+                                hidden:true,
+                                value:"0" ,
+                                text : '显示个人保险',
+                                iconCls : 'chakan'
+                            }
+                        ]
+                    })
+                ],
+                listeners: {
+                    activate: function (tab) {
+                        insurancestore.on("beforeload", function () {
+                            Ext.apply(insurancestore.proxy.extraParams, {disType:"0"});
+                        });
+                        insurancestore.loadPage(1);
+                    }
+                }
+            },
+            {
+                title: '个人工资',
+                items:[
+                    Ext.create('Ext.grid.Panel',{
+                        store: insurancestore,
+                        id : 'personsal',
+                        columns: [
+                            {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
+                            {text: "提交日期", width: 100, dataIndex: 'submitTime', sortable: true},
+                            {text: "单位名称", width: 150, dataIndex: 'companyName', sortable: true},
+                            {text: "员工姓名", width: 100, dataIndex: 'employName', sortable: true},
+                            {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
+                            {text: "员工身份类别", width: 100, dataIndex: 'idClass', sortable: false},
+                            {text: "负责客服", width: 100, dataIndex: 'serviceName', sortable: false,hidden:true},
+                            {text: "未上保险原因", width: 100, dataIndex: 'unInsuranceReason', sortable: false},
+                            {text: "说明", width: 100, dataIndex: 'explainInfo', sortable: false},
+                            {text: "入职时间", width: 100, dataIndex: 'entryTime', sortable: false},
+                            {text: "备注", width: 100, dataIndex: 'remark', sortable: false}
+                        ],
+                        height:560,
+                        width:1000,
+                        bbar: Ext.create('Ext.PagingToolbar', {
+                            store: insurancestore,
+                            displayInfo: true,
+                            displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                            emptyMsg: "没有数据"
+                        }),
+
+                        tbar : [
+                            {
+                                xtype : 'button',
+                                id : 'addsar',
+                                handler : function(src) {
+                                    checkSalWin();
+                                },
+                                text : '添加业务',
+                                iconCls : 'chakan'
+                            }  ,
+                            {
+                                xtype : 'button',
+                                id : 'disTypes',
+                                hidden:true,
+                                value:"1" ,
+                                text : '显示个人工资',
+                                iconCls : 'chakan'
+                            }
+                        ]
+                    })
+                ],
+                listeners: {
+                    activate: function (tab) {
+                        insurancestore.on("beforeload", function () {
+                            Ext.apply(insurancestore.proxy.extraParams, {disType:"1"});
+                        });
+                        insurancestore.loadPage(1);
+                    }
+                }
+            },
+            {
                 title: '其他',
                 items:[
                     Ext.create('Ext.grid.Panel',{
@@ -1186,6 +1312,8 @@ Ext.onReady(function () {
                     }
                 }
             }
+
+
         ]
     });
 });

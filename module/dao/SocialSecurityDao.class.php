@@ -18,6 +18,12 @@ class SocialSecurityDao extends BaseDao {
         return mysql_fetch_array ( $result );
     }
 
+    function searchBusinessById($id) {
+        $sql = "SELECT * FROM OA_business where id =$id";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
+
     /**
      * 搜索变更业务dao
      */
@@ -82,6 +88,7 @@ class SocialSecurityDao extends BaseDao {
         $result = $this->g_db_query($sql);
         return $result;
     }
+
     /**
      * 增加变更业务dao
      */
@@ -147,10 +154,102 @@ class SocialSecurityDao extends BaseDao {
         return $result;
     }
 
-    function searchBusinessById($id) {
-        $sql = "SELECT * FROM OA_business where id =$id";
+    function searchInsuranceCount($where){
+        $sql = "SELECT COUNT(id) AS cnt FROM OA_insurance where 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and companyName like '%{$where['companyName']}%' ";
+            }
+            if ($where ['submitTime'] != "") {
+//                $sql .= " and submitTime <= '{$where['submitTime']}' ";
+            }
+            if ($where ['employName'] != "") {
+                $sql .= " and employName LIKE '%{$where['employName']}%' ";
+            }
+            if ($where ['disType'] != "") {
+                if ($where ['disType'] == "1") {
+                    $sql .= " and unInsuranceReason IS NOT NULL  AND unInsuranceReason <> '' ";
+                }
+                if ($where ['disType'] == "0") {
+                    $sql .= " and unInsuranceReason ='' and paymentTime>now() ";
+                }
+            }
+        }
         $result = $this->g_db_query ( $sql );
-        return mysql_fetch_array ( $result );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
+
+    function searchInsurancePage($start = NULL, $limit = NULL, $sort = NULL, $where = null){
+        $sql = "SELECT * FROM OA_insurance WHERE 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " AND companyName LIKE '%{$where['companyName']}%' ";
+            }
+            if ($where ['submitTime'] != "") {
+//                $sql .= " and submitTime <= '{$where['submitTime']}' ";
+            }
+            if ($where ['employName'] != "") {
+                $sql .= " and employName LIKE '%{$where['employName']}%' ";
+            }
+            if ($where ['disType'] != "") {
+                if ($where ['disType'] == "1") {
+                    $sql .= " and unInsuranceReason IS NOT NULL AND unInsuranceReason <> ''";
+                }
+                if ($where ['disType'] == "0") {
+                    $sql .= " and unInsuranceReason ='' and paymentTime>now()";
+                }
+            }
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        $result = $this->g_db_query($sql);
+
+        return $result;
+    }
+
+    function addInsurance($insuranceInfo){
+        $sql = "
+        insert into OA_insurance (submitTime,companyName,employId,employName,idClass,serviceId,serviceName,base,paymentStartTime,paymentEndTime,paymentTime,paymentValue,paymentType,remark,unInsuranceReason,explainInfo,entryTime,tel)
+        values
+    	     (now(),
+    	     '{$insuranceInfo['companyName']}',
+    	     '{$insuranceInfo['employId']}',
+    	     '{$insuranceInfo['employName']}',
+    	     '{$insuranceInfo['idClass']}',
+    	     '{$insuranceInfo['serviceId']}',
+    	     '{$insuranceInfo['serviceName']}',
+    	     '{$insuranceInfo['base']}',
+    	     '{$insuranceInfo['paymentStartTime']}',
+    	     '{$insuranceInfo['paymentEndTime']}',
+    	     '{$insuranceInfo['paymentTime']}',
+    	     '{$insuranceInfo['paymentValue']}',
+    	     '{$insuranceInfo['paymentType']}',
+    	     '{$insuranceInfo['remark']}',
+    	     '{$insuranceInfo['unInsuranceReason']}',
+    	     '{$insuranceInfo['explainInfo']}',
+    	     '{$insuranceInfo['entryTime']}',
+    	     '{$insuranceInfo['tel']}') ";
+        $result = $this->g_db_query($sql);
+
+        return $result;
+    }
+
+    function  updateInsurance($upId,$paymentValue){
+        $name = $_SESSION ['admin'] ['name'];
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = " UPDATE OA_insurance SET paymentValue =$paymentValue,
+                paymentTime =now() ,adminId = $id,adminName =  '$name',updateTime=now()  WHERE id=$upId";
+        $result = $this->g_db_query($sql);
+        echo($sql);
+        return $result;
     }
 
     function searhZengjianTongjiCount($where = null) {
