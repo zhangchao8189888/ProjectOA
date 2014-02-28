@@ -103,6 +103,12 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
             <a href="index.php?action=Ext&mode=toBusiness">业务变更</a>
         </div>
         <div class="item">
+            <a href="index.php?action=Ext&mode=toInsurance">个人保险</a>
+        </div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toPersonsalary">个人工资</a>
+        </div>
+        <div class="item">
             <a href="index.php?action=SalaryBill&mode=toShebaoExt">增减员添加</a>
         </div>
 		<div class="item">
@@ -261,11 +267,37 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
                 <a href="index.php?action=Ext&mode=toBusiness">业务变更</a>
             </div>
             <div class="item">
-                <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
+                <a href="index.php?action=Ext&mode=toInsurance">个人保险</a>
             </div>
-
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toPersonsalary">个人工资</a>
+            </div>
             <div class="item">
                 <a href="index.php?action=SalaryBill&mode=toShebaoJieshouExt">增减员查看</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toCare">医疗报销</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toInjuries">工伤报销</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toUnemployment">失业申报</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toBirthMedical">生育医疗</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toRetirement">退休办理</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toMaternityAllowance">生育津贴</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
+            </div>
+            <div class="item">
+                <a href="index.php?action=Ext&mode=todemo">演示功能</a>
             </div>
         </div>
         <img id="imgload" style="display: none" src="common/image/load.gif" />

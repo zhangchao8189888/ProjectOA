@@ -371,7 +371,9 @@ class ExtSalaryAction extends BaseAction{
         $dir=$_REQUEST['dir'];
         $companyName=$_REQUEST['companyName'];
         $zengjian=$_REQUEST['zengjian'];
-        $salTime=null;
+        $shenbaozhuangtai   =   $_REQUEST['shenbaozhuangtai'];
+        $submitTime =   $_REQUEST['submitTime'];
+        $ename  =   $_REQUEST['EName'];
         if(!$start){
             $start=0;
         }
@@ -379,10 +381,12 @@ class ExtSalaryAction extends BaseAction{
             $limit=50;
         }
         $where=array();
-        if($salTime) {
-            $time=$this->AssignTabMonth($salTime,0);
-            $where['salaryTime']=$time["month"];
+        if($submitTime) {
+            $time=$this->AssignTabMonth($submitTime,0);
+            $where['submitTime']=$time["last"];
         }
+        $where['ename']=$ename;
+        $where['shenbaozhuangtai']=$shenbaozhuangtai;
         $where['companyName']=$companyName;
         $where['zengjian']=$zengjian;
         $sum =$this->objDao->searhZengjianTongjiPage($where);
@@ -392,6 +396,7 @@ class ExtSalaryAction extends BaseAction{
         $i=0;
         while ($row=mysql_fetch_array($salaryTimeList) ){
             $josnArray['items'][$i]['id']=$row['id'];
+            $josnArray['items'][$i]['submitTime']=$row['submitTime'];
             $josnArray['items'][$i]['CName']=$row['CName'];
             $josnArray['items'][$i]['Dept']=$row['Dept'];
             $josnArray['items'][$i] ['EName'] = $row ['EName'];
@@ -403,6 +408,7 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i]['sum']=$row['sum'];
             $josnArray['items'][$i]['danweijishu']=$row['danweijishu'];
             $josnArray['items'][$i]['caozuoren']=$row['caozuoren'];
+            $josnArray['items'][$i]['updateTime']=$row['updateTime'];
             $josnArray['items'][$i]['shenbaozhuangtai']=$row['shenbaozhuangtai'];
             $josnArray['items'][$i]['beizhu']=$row['beizhu'];
             $i++;

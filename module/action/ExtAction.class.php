@@ -89,6 +89,15 @@ class ExtAction extends BaseAction{
             case "toBusiness":
                 $this->toBusiness();
                 break;
+            case "toInsurance":
+                $this->toInsurance();
+                break;
+            case "toPersonsalary":
+                $this->toPersonsalary();
+                break;
+            case "todemo":
+                $this->todemo();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -157,6 +166,14 @@ class ExtAction extends BaseAction{
         $this->mode="toBusiness";
     }
 
+    function toInsurance(){
+        $this->mode="toInsurance";
+    }
+
+    function toPersonsalary(){
+        $this->mode =   "toPersonsalary";
+    }
+
     function getExtJosn(){
     	$jsonList=array();
     	//['salDate', 'op_salaryTime', 'company_name','salStat']
@@ -172,6 +189,9 @@ class ExtAction extends BaseAction{
     	exit;
     }
 
+    function todemo(){
+        $this->mode="todemo";
+    }
 }
 
 

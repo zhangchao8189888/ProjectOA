@@ -1,120 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<title>业务记录</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
-<link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
-<link href="common/css/admin.css" rel="stylesheet" type="text/css"/>
-<script language="javascript" type="text/javascript" src="common/ext/ext-all-debug.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
-<style type="text/css">
-    <!--
-    A { text-decoration: none}
-    -->
-</style>
-<script type="text/javascript">
-Ext.require([
-    'Ext.grid.*',
-    'Ext.toolbar.Paging',
-    'Ext.data.*'
-]);
-Ext.onReady(function () {
-    var businessLogWindow = Ext.create('Ext.grid.Panel',{
-        store: businessLogstore,
-        selType: 'checkboxmodel',
-        id : 'comlist',
-        columns: [
-            {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
-            {text: "提交日期", width: 100, dataIndex: 'submitTime', sortable: true},
-            {text: "单位id", width: 100, dataIndex: 'companyId', sortable: false,hidden:true},
-            {text: "单位名称", width: 150, dataIndex: 'companyName', sortable: true},
-            {text: "员工姓名", width: 100, dataIndex: 'employName', sortable: true},
-            {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
-            {text: "员工状态id", width: 100, dataIndex: 'employStateId', sortable: false,hidden:true},
-            {text: "员工状态", width: 100, dataIndex: 'employState', sortable: false},
-            {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false,
-                renderer: function (val, cellmeta, record) {
-                    switch (val){
-                        case "1":
-                            return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 医疗报销 </span></a>';
-                            break;
-                        case "2":
-                            return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 工伤报销 </span></a>';
-                            break;
-                        case "3":
-                            return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 失业申报 </span></a>';
-                            break;
-                        case "4":
-                            return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 生育医疗申报 </span></a>';
-                            break;
-                        case "5":
-                            return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 生育津贴申报 </span></a>';
-                            break;
-                        case "10":
-                            return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 退休 </span></a>';
-                            break;
-                        default :
-                            return val;
-                    }
-                    return val;
+/**
+ * Created by Alice on 14-2-25.
+ */
+var incexWin    =   Ext.create('Ext.grid.Panel',{
+    store: businessLogstore,
+    selType: 'checkboxmodel',
+    id : 'win',
+    columns: [
+        {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
+        {text: "提交日期", width: 100, dataIndex: 'submitTime', sortable: true},
+        {text: "单位id", width: 100, dataIndex: 'companyId', sortable: false,hidden:true},
+        {text: "单位名称", width: 150, dataIndex: 'companyName', sortable: true},
+        {text: "员工姓名", width: 100, dataIndex: 'employName', sortable: true},
+        {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
+        {text: "员工状态id", width: 100, dataIndex: 'employStateId', sortable: false,hidden:true},
+        {text: "员工状态", width: 100, dataIndex: 'employState', sortable: false},
+        {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false,
+            renderer: function (val, cellmeta, record) {
+                switch (val){
+                    case "1":
+                        return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 医疗报销 </span></a>';
+                        break;
+                    case "2":
+                        return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 工伤报销 </span></a>';
+                        break;
+                    case "3":
+                        return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 失业申报 </span></a>';
+                        break;
+                    case "4":
+                        return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 生育医疗申报 </span></a>';
+                        break;
+                    case "5":
+                        return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 生育津贴申报 </span></a>';
+                        break;
+                    case "10":
+                        return '<a href="#" title="添加信息" onclick=insertState(' + record.data['id'] + ',' + record.data['socialSecurityStateId'] + ',' + record.data['businessName'] + ')><span style="color: slateblue"> 退休 </span></a>';
+                        break;
+                    default :
+                        return val;
                 }
+                return val;
+            }
+        },
+        {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+        {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false},
+        {text: "办理情况", width: 200, dataIndex: 'socialSecurityStateId', sortable: false,
+            renderer: function (val, cellmeta, record) {
+                if (val == 0) {
+                    return '<span style="color: gray"> 已取消 </span>';
+                } else if (val == 1) {
+                    return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: red"> 等待办理 </span></a>';
+                } else if (val ==2) {
+                    return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
+                } else if (val ==3) {
+                    return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                }
+                return val;
+            }
+        }
+    ],
+    height:360,
+    width:760,
+    tbar : [
+        {
+            xtype : 'button',
+            id : 'searchSalBu',
+            handler : function(src) {
+                var model = businessLogWindow.getSelectionModel();
+                var sel=model.getLastSelected();
+                checkSalWin(sel.data.id);
             },
-            {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
-            {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false},
-            {text: "办理情况", width: 200, dataIndex: 'socialSecurityStateId', sortable: false,
-                renderer: function (val, cellmeta, record) {
-                    if (val == 0) {
-                        return '<span style="color: gray"> 已取消 </span>';
-                    } else if (val == 1) {
-                        return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: red"> 等待办理 </span></a>';
-                    } else if (val ==2) {
-                        return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
-                    } else if (val ==3) {
-                        return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
-                    }
-                    return val;
-                }
-            }
-        ],
-        height:600,
-        width:1000,
-        x:0,
-        y:0,
-        title: '业务记录',
-        renderTo: 'demo',
-        viewConfig: {
-            id: 'gv',
-            trackOver: false,
-            stripeRows: false
-        },  tbar : [
-            {
-                xtype : 'button',
-                id : 'searchSalBu',
-                handler : function(src) {
-                    var model = businessLogWindow.getSelectionModel();
-                    var sel=model.getLastSelected();
-                    checkSalWin(sel.data.id);
-                },
-                text : '查看详细',
-                iconCls : 'chakan'
-            }
-        ],
-        bbar: Ext.create('Ext.PagingToolbar', {
-            store: businessLogstore,
-            displayInfo: true,
-            displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
-            emptyMsg: "没有数据"
-        })
-    });
-    businessLogstore.on("beforeload", function () {
-
-    });
-    businessLogstore.loadPage(1);
-
+            text : '查看详细',
+            iconCls : 'chakan'
+        },
+        {
+            xtype : 'hidden',
+            id : 'searchT',
+            value:"1",
+            text : '分类',
+            iconCls : 'chakan'
+        }
+    ],
+    bbar: Ext.create('Ext.PagingToolbar', {
+        store: businessLogstore,
+        displayInfo: true,
+        displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+        emptyMsg: "没有数据"
+    })
 });
 
 function insertState(updateId,stateId,businessName){
@@ -442,7 +413,49 @@ function changeState(updateId) {
         },
         icon: Ext.MessageBox.INFO
     })
-}
+} ;
+function changezengjianState(updateId) {
+    Ext.MessageBox.show({
+        title:'更改状态',
+        msg: '请选择修改的状态',
+        buttonText:{ok: '正在办理', yes: '办理成功'},
+        animateTarget: 'mb4',
+        fn: function (btn) {
+            var updateType;
+            if(updateId==null){
+                return false;
+            }
+            if("ok"==btn){
+                updateType="正在办理";
+            } else if("yes"==btn){
+                updateType="办理成功";
+            }else{
+                return false;
+            }
+
+            Ext.Ajax.request({
+                url: 'index.php?action=ExtSocialSecurity&mode=updateZengjianyuan',
+                method: 'post',
+                params: {
+                    updateId:updateId,
+                    updateType:updateType
+                },
+                success: function (response) {
+                    var text = response.responseText;
+                    Ext.Msg.alert("提示",text);
+                    zengjianListstore.load( {
+                            params: {
+                                start: 0,
+                                limit: 50
+                            }
+                        }
+                    );
+                }
+            });
+        },
+        icon: Ext.MessageBox.INFO
+    })
+};
 
 var salList = Ext.create("Ext.grid.Panel", {
     title: '',
@@ -461,7 +474,7 @@ var salList = Ext.create("Ext.grid.Panel", {
     emptyMsg: "没有数据显示"
 });
 
-function checkSalWin(id) {
+function checkSalWin(itcIds) {
     //加载数据遮罩
     var mk=new Ext.LoadMask(Ext.getBody(),{
         msg:'加载数据中，请稍候！',removeMask:true
@@ -502,7 +515,7 @@ function checkSalWin(id) {
         url: url,  //从json文件中读取数据，也可以从其他地方获取数据
         method : 'POST',
         params: {
-            id : id
+            ids : Ext.JSON.encode(itcIds)
         },
         success : function(response) {
             //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
@@ -513,7 +526,6 @@ function checkSalWin(id) {
                 fields : json.fields,//把json的fields赋给fields
                 data : json.data     //把json的data赋给data
             });
-
             //根据store和column构造表格
             Ext.getCmp("configGrid").reconfigure(store, json.columns);
 //            //重新渲染表格
@@ -524,17 +536,91 @@ function checkSalWin(id) {
     winSal.show();
 }
 
-</script>
-</head>
-<body>
-<?php include("tpl/commom/top.html"); ?>
-<div id="main" style="min-width: 960px">
-    <?php include("tpl/commom/left.php"); ?>
-    <div id="right">
-        <div id="demo"></div>
-        <div id="demo2"></div>
-    </div>
 
-</div>
-</body>
-</html>
+function pay(id) {
+    var items=[paysal];
+    Ext.getCmp("upid").setValue(id);
+    winSal = Ext.create('Ext.window.Window', {
+        title: "添加个人上保险", // 窗口标题
+        width:380, // 窗口宽度
+        height:150, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                window.minimizable = true;
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    winSal.show();
+
+}
+var paysal = Ext.create('Ext.form.Panel', {
+    bodyPadding: 15,
+    width: 360,
+    height: 150,
+    items: [
+        {
+            id: 'upid',
+            xtype: 'numberfield',
+            hidden:true,
+            allowBlank: false
+        },
+        {
+            id: 'payValue',
+            name: 'payValue',
+            xtype: 'numberfield',
+            allowBlank: false,
+            emptyText: "请输入缴费金额",
+            fieldLabel: '缴费金额'
+        }
+    ],
+    buttons: [
+        {
+            text: '提交',
+            handler: function () {
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                this.up('form').getForm().submit(
+                    {
+                        url: "index.php?action=ExtSocialSecurity&mode=updateInsurance",
+                        method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
+                        success: function (form,action) {
+                            var text = form.responseText;
+                            Ext.Msg.alert("提示", action.result.info);
+//                        document.location = 'index.php?action=Ext&mode=toInsurance';
+                        },
+                        failure:function(form,action){
+                            Ext.Msg.alert('提示',action.result.info);
+                        }
+                    }
+                );
+
+
+            }
+        }
+        ,
+        {
+            text: '清空',
+            handler: function () {
+                this.up('form').getForm().reset();
+            }
+        }
+    ]
+});

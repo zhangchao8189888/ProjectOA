@@ -18,7 +18,7 @@ Ext.require([
 Ext.onReady(function(){
     var addBusinessWindow = Ext.create('Ext.form.Panel', {
         title:"修改密码",
-        bodyPadding: 15,
+        bodyPadding: 10,
         width: 580,
         height: 320,
         items: [
@@ -68,6 +68,7 @@ Ext.onReady(function(){
                         xtype : 'displayfield',
                         readonly:true,
                         width:200,
+                        height:50,
                         value:"<span style='color: red'><br>注：修改密码成功需要重新登录。</span>",
                         name: 'hint'
                     }

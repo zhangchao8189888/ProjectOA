@@ -32,7 +32,33 @@
                 {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
                 {text: "员工状态id", width: 100, dataIndex: 'employStateId', sortable: false,hidden:true},
                 {text: "员工状态", width: 100, dataIndex: 'employState', sortable: false},
-                {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false},
+                {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false,
+                    renderer: function (val, cellmeta, record) {
+                        switch (val){
+                            case "1":
+                                return '<span style="color: slateblue"> 医疗报销 </span></a>';
+                                break;
+                            case "2":
+                                return '<span style="color: slateblue"> 工伤报销 </span></a>';
+                                break;
+                            case "3":
+                                return '<span style="color: slateblue"> 失业申报 </span></a>';
+                                break;
+                            case "4":
+                                return '<span style="color: slateblue"> 生育医疗申报 </span></a>';
+                                break;
+                            case "5":
+                                return '<span style="color: slateblue"> 生育津贴申报 </span></a>';
+                                break;
+                            case "10":
+                                return '<span style="color: slateblue"> 退休 </span></a>';
+                                break;
+                            default :
+                                return val;
+                        }
+                        return val;
+                    }
+                },
                 {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
                 {text: "办理情况", width: 200, dataIndex: 'socialSecurityStateId', sortable: false,
                     renderer: function (val, cellmeta, record) {
@@ -49,7 +75,7 @@
                         }
                         return val;
                     }
-                },
+                }
             ],
             height:600,
             width:1000,
@@ -63,7 +89,7 @@
                 stripeRows: false
             },
             bbar: Ext.create('Ext.PagingToolbar', {
-                store: geshuiListstore,
+                store: businessLogstore,
                 displayInfo: true,
                 displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
                 emptyMsg: "没有数据"
@@ -78,7 +104,7 @@
                         var sel=model.getSelection();
                         if (sel.length>0) {
                             var ids = [];
-                            for(var i = 0; i < sel.length ;i++){
+                            for(var i = 0; i<sel.length ;i++){
                                 ids.push(sel[i].data.id);
                             }
 
@@ -171,7 +197,6 @@
                         allowBlank: false,
                         emptyText: "请输入身份证号",
                         onBlur:function(){
-                            var title="修改余额";
                             var url = "index.php?action=ExtSalary&mode=searchEmploy";
                             Ext.Ajax.request({
                                 url: url,  //从json文件中读取数据，也可以从其他地方获取数据
@@ -183,10 +208,8 @@
                                     var json = Ext.JSON.decode(response.responseText);
                                     Ext.getCmp("employName").setValue(json.e_name);
                                     Ext.getCmp("companyName").setValue(json.e_company);
-
                                 }
                             });
-
                         } ,
                         fieldLabel: '身份证号<span style="color: red;font-size: 12px">(必填)</span>'
                     },
@@ -205,10 +228,24 @@
                         fieldLabel: '单位'
                     },
                     {
-                        xtype: 'textfield',
+                        xtype: 'combobox',
                         id:"business",
                         emptyText: "请输入办理的业务",
                         allowBlank: false,
+                        editable: true,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "1", "name": "医疗报销"},
+                                {"abbr": "2", "name": "工伤报销"},
+                                {"abbr": "3", "name": "失业申报"},
+                                {"abbr": "4", "name": "生育医疗申报"},
+                                {"abbr": "5", "name": "生育津贴申报"},
+                                {"abbr": "10", "name": "退休"}
+                            ]
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
                         fieldLabel: '办理的业务'
                     },
                     {
@@ -222,7 +259,7 @@
                             data: [
                                 {"abbr": "1", "name": "在职"},
                                 {"abbr": "2", "name": "离职"},
-                                {"abbr": "3", "name": "合同到期"},
+                                {"abbr": "3", "name": "合同到期"}
                             ]
                         },
                         valueField: 'abbr',
@@ -258,6 +295,8 @@
                     Ext.Ajax.request({
                         url: "index.php?action=ExtSocialSecurity&mode=changeBusiness",
                         method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
                         params: {
                             companyName: companyName,
                             employName: employName,
@@ -268,7 +307,7 @@
                         },
                         success: function (response) {
                             var text = response.responseText;
-                            alert(text);
+                            Ext.Msg.alert("提示", text);
                             document.location = 'index.php?action=Ext&mode=toBusiness';
                         }
                     });

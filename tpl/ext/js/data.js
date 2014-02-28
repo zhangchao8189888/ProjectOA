@@ -616,12 +616,12 @@ var serviceManagestore = Ext.create('Ext.data.Store', {
 
 
 /**
- * select 变更业务公司列表
+ * 变更业务公司列表
  */
 var businessLogstore = Ext.create('Ext.data.Store', {
     //分页大小
     pageSize: 50,
-    model: 'oa.common.socialSecurity.business',
+    model: 'oa.common.socialsecurity.business',
     //是否在服务端排序
     remoteSort: true,
     proxy: {
@@ -633,7 +633,7 @@ var businessLogstore = Ext.create('Ext.data.Store', {
             update : 'POST',
             destroy: 'POST'
         },
-        url : 'index.php?action=ExtSocialSecurity&mode=searchbusinessInfoListJson',
+        url : 'index.php?action=ExtSocialSecurity&mode=searchBusinessInfoListJson',
 
         reader: {
             root: 'items',
@@ -649,3 +649,67 @@ var businessLogstore = Ext.create('Ext.data.Store', {
     }]
 });
 
+/**
+ * 社保首页store
+ */
+var socialsecurityInfostore = Ext.create('Ext.data.Store', {
+    //分页大小
+    pageSize: 50,
+    model: 'oa.common.socialsecurity.socialsecurityinfo',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSocialSecurity&mode=searchSocialsecurityInfoList',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
+
+var insurancestore = Ext.create('Ext.data.Store', {
+    //分页大小
+    pageSize: 50,
+    model: 'oa.common.socialsecurity.insurance',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSocialSecurity&mode=searchInsuranceList',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});

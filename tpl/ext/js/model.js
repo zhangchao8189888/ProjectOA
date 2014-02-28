@@ -221,6 +221,7 @@ Ext.define('oa.common.zengjian.list',{
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int'},
+        {name: 'submitTime', type: 'string'},
         {name: 'CName', type: 'string'},
         {name: 'Dept', type: 'string'},
         {name: 'EName', type: 'string'},
@@ -232,6 +233,7 @@ Ext.define('oa.common.zengjian.list',{
         {name: 'sum', type: 'double'},
         {name: 'danweijishu', type: 'string'},
         {name: 'caozuoren', type: 'string'},
+        {name: 'updateTime', type: 'string'},
         {name: 'shenbaozhuangtai', type: 'string'},
         {name: 'beizhu', type: 'string'}
     ]
@@ -326,7 +328,7 @@ Ext.define('oa.common.service.list', {
 /**
  * 业务变更model
  */
-Ext.define('oa.common.socialSecurity.business', {
+Ext.define('oa.common.socialsecurity.business', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int'},
@@ -346,7 +348,62 @@ Ext.define('oa.common.socialSecurity.business', {
         {name: 'remarks', type: 'string'},
         {name: 'updateTime', type: 'string'},
         {name: 'socialSecurityStateId', type: 'int'},
-        {name: 'socialSecurityState', type: 'string'},
+        {name: 'socialSecurityState', type: 'string'} ,
+        {name: 'reimbursementTime', type: 'string'},
+        {name: 'reimbursementValue', type: 'string'},
+        {name: 'accountTime', type: 'string'},
+        {name: 'accountValue', type: 'string'},
+        {name: 'grantTime', type: 'int'},
+        {name: 'grantValue', type: 'string'},
+        {name: 'retireTime', type: 'string'},
+        {name: 'accountComTime', type: 'string'},
+        {name: 'accountComValue', type: 'string'},
+        {name: 'accountPersonTime', type: 'string'},
+        {name: 'accountPersonValue', type: 'int'}
+    ]
+
+});
+
+/**
+ *社保首页model
+ */
+Ext.define('oa.common.socialsecurity.socialsecurityinfo', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'mattername', type: 'string'},
+        {name: 'matter', type: 'string'}
+
+    ]
+
+});
+
+/**
+ * 保险
+ */
+Ext.define('oa.common.socialsecurity.insurance', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'submitTime', type: 'string'},
+        {name: 'companyName', type: 'string'},
+        {name: 'employId', type: 'string'},
+        {name: 'employName', type: 'string'},
+        {name: 'idClass', type: 'string'},
+        {name: 'serviceId', type: 'string'},
+        {name: 'serviceName', type: 'string'},
+        {name: 'adminId', type: 'string'},
+        {name: 'adminName', type: 'string'},
+        {name: 'base', type: 'string'},
+        {name: 'paymentStartTime', type: 'string'},
+        {name: 'paymentEndTime', type: 'string'},
+        {name: 'paymentTime', type: 'string'},
+        {name: 'paymentValue', type: 'float'},
+        {name: 'paymentType', type: 'string'},
+        {name: 'remark', type: 'string'},
+        {name: 'unInsuranceReason', type: 'string'},
+        {name: 'explainInfo', type: 'string'},
+        {name: 'entryTime', type: 'string'},
+        {name: 'tel', type: 'string'}
     ]
 
 });

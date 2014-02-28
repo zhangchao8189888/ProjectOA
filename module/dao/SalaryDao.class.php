@@ -453,10 +453,18 @@ class SalaryDao extends BaseDao {
             if ($where ['companyName'] != "") {
                 $sql .= " and Dept like '%{$where['companyName']}%' ";
             }
+            if ($where ['shenbaozhuangtai'] != "") {
+                $sql .= " and Dept like '%{$where['companyName']}%' ";
+            }
+            if ($where ['shenbaozhuangtai'] != "") {
+                $sql .= " and shenbaozhuangtai = '{$where['shenbaozhuangtai']}' ";
+            }
+            if ($where ['ename'] != "") {
+                $sql .= " and EName like '%{$where['ename']}%' ";
+            }
             if ($where ['zengjian'] != "") {
                 $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
             }
-
         }
         if ($sort) {
             $sql .= " order by $sort";
@@ -469,18 +477,30 @@ class SalaryDao extends BaseDao {
     }
     // 增减员统计BY孙瑞鹏
     function searhZengjianTongjiPage($where = null) {
-        $sql = "SELECT count(*)  FROM OA_security WHERE 1=1";
+        $sql = "SELECT count(id) as cnt FROM OA_security WHERE 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and Dept like '%{$where['companyName']}%' ";
             }
+            if ($where ['shenbaozhuangtai'] != "") {
+                $sql .= " and Dept like '%{$where['companyName']}%' ";
+            }
+            if ($where ['shenbaozhuangtai'] != "") {
+                $sql .= " and shenbaozhuangtai = '{$where['shenbaozhuangtai']}' ";
+            }
+            if ($where ['ename'] != "") {
+                $sql .= " and EName like '%{$where['ename']}%' ";
+            }
             if ($where ['zengjian'] != "") {
                 $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
             }
-
         }
-        $list = $this->g_db_query ( $sql );
-        return $list;
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
     }
     // 到账BY孙瑞鹏
     function searhDaozhangListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
@@ -670,8 +690,8 @@ class SalaryDao extends BaseDao {
     }
     // 增员BY孙瑞鹏
     function setZengyuan($CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi) {
-        $sql = "insert into OA_security (CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi)
-                   values ('{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}',{$sum1},'{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}')";
+        $sql = "insert into OA_security (submitTime,CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi)
+                   values (now(),'{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}',{$sum1},'{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}')";
         $list = $this->g_db_query ( $sql );
         return $list;
     }

@@ -563,7 +563,7 @@ class SaveSalaryAction extends BaseAction {
         $employName = $_REQUEST ['employName'];
         $employNumber = $_REQUEST ['employNumber'];
         $beizhu = $_REQUEST ['beizhu'];
-        $shenbao =  '等待受理';
+        $shenbao =  '等待办理';
         $kefuName= $_SESSION ['admin'] ['name'];
         $this->jisuan = new sumSalary();
         $sum= $this->jisuan->getSumShebao($leibie,$shebao);
