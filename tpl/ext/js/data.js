@@ -418,7 +418,34 @@ var geShuiExcelExportStore = Ext.create('Ext.data.Store', {
         direction: 'DESC'
     }]
 });
+//年终奖设置BY孙瑞鹏
+var nianxuanStore = Ext.create('Ext.data.Store', {
+    model: 'oa.common.nianjiang.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSalary&mode=getCnameListExt',
 
+        reader: {
+            root: 'items'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'companyid',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
 //员工查询BY孙瑞鹏
 var empExtListStore = Ext.create('Ext.data.Store', {
     //分页大小

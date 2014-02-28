@@ -46,10 +46,10 @@
                     stripeRows: false
                 },
                 bbar: Ext.create('Ext.PagingToolbar', {
-//                    store: geshuiTypestore,
-//                    displayInfo: true,
-//                    displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
-//                    emptyMsg: "没有数据"
+                    store: geshuiTypestore,
+                    displayInfo: true,
+                    displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                    emptyMsg: "没有数据"
                 }),
                 tbar : [
 //                         {
@@ -182,7 +182,25 @@
                     },
                     text : '本月报上月',
                     iconCls : 'shangyue'
-                }],
+                },
+                {
+                        xtype : 'button',
+                        id : 'mianshui',
+                        disabled: false,
+                        handler : function(src) {
+                            var model = salTimeListGrid.getSelectionModel();
+                            var sel=model.getLastSelected();
+                            setMianshui(sel.data.id);
+
+                            geshuiTypestore.load( {
+                                params: {
+
+                                }
+                            }  );
+                        },
+                        text : '免税公司',
+                        iconCls : 'mianshui'
+                    }],
                 //displayInfo : true,
                 emptyMsg : "没有数据显示"
             });
@@ -208,7 +226,7 @@
 
                 var winSal = Ext.create('Ext.window.Window', {
                     title: "个税类型", // 窗口标题
-                    width:500, // 窗口宽度
+                    width:600, // 窗口宽度
                     height:100, // 窗口高度
                     layout:"border",// 布局
                     minimizable:true, // 最大化
@@ -254,7 +272,21 @@
                 });
                 winSal.show();
             }
-
+            //通过ajax设置类型
+            function setMianshui(timeId) {
+                var url = "index.php?action=SaveSalary&mode=setMianshuiType";
+                Ext.Ajax.request({
+                    url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+                    method : 'POST',
+                    params: {
+                        timeId : timeId
+                    },
+                    success : function(response) {
+//                        Ext.getCmp("shangyue").setDisabled(true);
+//                        Ext.getCmp("benyue").setDisabled(false);
+                    }
+                });
+            }
 			//通过ajax设置类型
             function setShangyue(timeId) {
                 var url = "index.php?action=SaveSalary&mode=setShangyueType";

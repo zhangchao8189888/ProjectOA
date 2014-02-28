@@ -111,6 +111,9 @@ class SaveSalaryAction extends BaseAction {
 			case "setShangyueType" :
 				$this->setShangyueType ();
 				break;
+            case "setMianshuiType" :
+                $this->setMianshuiType ();
+                break;
 			case "setBenyueType" :
 				$this->setBenyueType ();
 				break;
@@ -445,17 +448,20 @@ class SaveSalaryAction extends BaseAction {
 	function searchGeshuiByIdJosn() {
 		$salaryTimeId = $_REQUEST ['timeId'];
 		$salaryTime = $_REQUEST ['time'];
+        $nian = $_REQUEST ['nian'];
         $salaryTime=str_replace('\"','"',$salaryTime);
         $salaryTimeId=str_replace('\"','"',$salaryTimeId);
+        $nian=str_replace('\"','"',$nian);
         $salaryTimeId=json_decode($salaryTimeId);
         $salaryTime=json_decode($salaryTime);
+        $nian=json_decode($nian);
         $salaryTimeId = preg_replace("#\\\u([0-9a-f]{4})#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $salaryTimeId);
 		$this->objDao = new SalaryDao ();
 		$i = 0;
         $josnArray = array ();
        for($h=0;$h<(count($salaryTimeId));$h++){
 
-           $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h] );
+           $salaryList = $this->objDao->searchGeshuiBy_SalaryTimeId ( $salaryTimeId[$h], $salaryTime[$h],$nian[$h] );
            while ( $row = mysql_fetch_array ( $salaryList ) ) {
                $josnArray ['items'] [$i] ['company_id'] = $row ['company_id'];
                $josnArray ['items'] [$i] ['ename'] = $row ['ename'];
@@ -515,6 +521,15 @@ class SaveSalaryAction extends BaseAction {
 		echo json_encode ( $salaryListArray );
 		exit ();
 	}
+    // 个税类型修改免税BY孙瑞鹏
+    function setMianshuiType() {
+        // $this->mode="salaryList";
+        $salaryTimeId = $_REQUEST ['timeId'];
+        $this->objDao = new SalaryDao ();
+        $this->objDao->setTypeMianshui ( $salaryTimeId );
+        // echo json_encode($salaryListArray);
+        exit ();
+    }
 	
 	// 个税类型修改上月BY孙瑞鹏
 	function setShangyueType() {

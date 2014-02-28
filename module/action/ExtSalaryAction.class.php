@@ -75,6 +75,10 @@ class ExtSalaryAction extends BaseAction{
             case "searchEmploy":
                 $this->searchEmploy();
                 break;
+
+            case "getCnameListExt":
+                 $this->getCnameListExt();
+                  break;
             default :
                 $this->modelInput();
                 break;
@@ -330,6 +334,21 @@ class ExtSalaryAction extends BaseAction{
         echo json_encode ( $josnArray );
         exit();
     }
+    //是否查询年终奖设置记录BY孙瑞鹏
+    function getCnameListExt(){
+        $this->objDao=new SalaryDao();
+        $where = $_REQUEST ['cname'];
+        $salaryTimeList= $this->objDao->searchCompanyListByName($where);
+        $josnArray=array();
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['companyid']=$row['id'];
+            $josnArray['items'][$i]['companyname']=$row['company_name'];
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
    //删除增减员记录BY孙瑞鹏
     function deleteZengjianyuan(){
         $this->objDao=new SalaryDao();
@@ -491,7 +510,7 @@ class ExtSalaryAction extends BaseAction{
             }
 
     	$sum =$this->objDao->searhSalaryTimeCount();
-        $salaryNameList=$this->objDao->searchCompanyList();
+        $salaryNameList=$this->objDao->searchCompanyListByName($companyName);
     	$josnArray=array();
     	$josnArray['total']=$sum;
     	$i=0;
@@ -503,10 +522,9 @@ class ExtSalaryAction extends BaseAction{
     		$josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
             $josnArray['items'][$i] ['daikou'] = $row ['daikou'];
             $josnArray['items'][$i] ['bukou'] = $row ['bukou'];
-            $josnArray['items'][$i] ['nian'] = $row ['nian'];
     		$josnArray['items'][$i]['geshuiSum']=$row['geshuiSum'];
             if(!$josnArray['items'][$i]['salaryTime']){
-                $josnArray['items'][$i]['salaryTime']='<span style="color: red">未作工资</span>';
+                $josnArray['items'][$i]['salaryTime']='<span style="color: red">未作工资或免税</span>';
             }
 
     		$i++;
@@ -550,7 +568,9 @@ class ExtSalaryAction extends BaseAction{
     		}
     		elseif ($row['geshui_dateType']==2){
     			$josnArray['items'][$i]['geshui_dateType']="本月报上月";
-    		}
+    		}	elseif ($row['geshui_dateType']==3){
+                $josnArray['items'][$i]['geshui_dateType']="免税公司";
+            }
     		$i++;
     	}
     	echo json_encode($josnArray);

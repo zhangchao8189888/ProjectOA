@@ -344,17 +344,13 @@ class SalaryDao extends BaseDao {
         return $list;
     }
     //查询带条件的公司BY孙瑞鹏
-    function searchCompanyListByName($start = NULL, $limit = NULL, $sort = NULL, $where = '1=1') {
+    function searchCompanyListByName($where=null) {
         $id = $_SESSION ['admin'] ['id'];
-        $sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where $where
-  and a.companyId = c.id  and  a.adminId = $id";
-        if ($sort) {
-            $sql .= " order by $sort";
+        $sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where
+   a.companyId = c.id  and  a.adminId = $id";
+        if ($where) {
+            $sql .= " and c.company_name  like '%{$where}%' ";
         }
-        if ($start >= 0 && $limit) {
-            $sql .= " limit $start,$limit";
-        }
-        // echo $sql;
         $result = $this->g_db_query ( $sql );
         return $result;
     }
@@ -362,38 +358,48 @@ class SalaryDao extends BaseDao {
     function searhGeshuiListPage($where = null,$id = null) {
 
         $time = date ( "Y-m", strtotime ( "last month", strtotime ( $where ['salaryTime'] ) ) );
-        $sql = "SELECT yi.companyId company_id,yi.salaryTime,yi.e_company company_name,yi.su daikou,er.su bukou, nian.su nian,(IFNULL(yi.su,0)+IFNULL(er.su,0)+IFNULL(nian.su,0))  geshuiSum FROM
+        $sql = "SELECT yi.companyId company_id,yi.salaryTime,yi.e_company company_name,yi.su daikou,er.su bukou, (IFNULL(yi.su,0)+IFNULL(er.su,0))  geshuiSum FROM
 			(
-			SELECT t.companyId,  t.salaryTime  ,e_company,SUM(s.per_daikoushui) su
-			FROM OA_salary s ,OA_employ emp,OA_salarytime t
+			SELECT  diyi.companyId,  diyi.salaryTime  ,diyi.e_company, SUM(diyi.per_daikoushui) su
+			FROM
+      (
+     SELECT t.companyId,  t.salaryTime  ,e_company,
+     CASE (e_teshu_state)
+     when 0 then s.per_daikoushui
+     when 1 then s.per_daikoushui/2
+     END per_daikoushui
+    FROM OA_salary s ,OA_employ emp,OA_salarytime t
 			WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
 			AND convert( emp.e_company  using utf8) = (
             SELECT  company_name  FROM OA_company c
-            WHERE    c.id=$id
+            WHERE   c.geshui_dateType <> 3  AND c.id=$id
              )
       AND (
     			(t.salaryTime like '%{$where ['salaryTime']}%'  AND convert(e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 1))
     			OR
     			(t.salaryTime like '%{$time}%'  AND convert(e_company using utf8) IN (SELECT company_name FROM OA_company WHERE geshui_dateType = 2))
     			)
-			GROUP BY e_company,t.salaryTime
-			) yi
+
+			) diyi
+      GROUP BY diyi.e_company,diyi.salaryTime
+      ) yi
 			LEFT JOIN
 			 (
-			SELECT  t.salaryTime,e_company,SUM(e.bukoushui) su
-			FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
+			SELECT  dier.salaryTime,dier.e_company,SUM(dier.bukoushui) su
+			FROM
+     (
+     SELECT  t.salaryTime,e_company,
+     CASE (e_teshu_state)
+     when 0 then e.bukoushui
+     when 1 then e.bukoushui /2
+     END bukoushui
+      FROM
+      OA_er_salary e ,OA_employ emp,OA_salarytime_other t
 			WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
-			GROUP BY e_company,t.salaryTime
+     ) dier
+			GROUP BY dier.e_company,dier.salaryTime
 			) er
 			ON yi.e_company = er.e_company AND yi.salaryTime = er.salaryTime
-			LEFT JOIN
-			(
-			SELECT   t.salaryTime,e_company,SUM(n.nian_daikoushui) su
-			FROM OA_nian_salary n  ,OA_employ emp,OA_salarytime_other t
-			WHERE n.employid = emp.e_num AND n.salaryTimeId = t.id
-			GROUP BY e_company, t.salaryTime
-			) nian
-			ON  yi.e_company = nian.e_company AND yi.salaryTime = nian.salaryTime
     		where 1=1";
         if ($where != null) {
             if ($where ['companyName'] != "") {
@@ -573,10 +579,16 @@ class SalaryDao extends BaseDao {
         return $list;
     }
     // 个税详细BY孙瑞鹏
-    function searchGeshuiBy_SalaryTimeId($sid, $stime) {
+    function searchGeshuiBy_SalaryTimeId($sid, $stime,$nian) {
+        $time = date('Y',strtotime("-1 year"));
+        if ($nian==1) {
         $sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,yi.su daikou,er.su bukou,nian.su nian,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
     	(
-    	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,IFNULL(SUM(s.per_daikoushui),0) su
+    	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,
+    CASE (e_teshu_state)
+     when 0 then  IFNULL(SUM(s.per_daikoushui),0)
+     when 1 then  IFNULL(SUM(s.per_daikoushui),0)/2
+     END   su
     	FROM OA_salary s ,OA_employ emp,OA_salarytime t
     	WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
     	AND e_company = '$sid'
@@ -586,7 +598,11 @@ class SalaryDao extends BaseDao {
     	) yi
     	LEFT JOIN
     	(
-    	SELECT emp.e_name, t.salaryTime,e_company,IFNULL(SUM(e.bukoushui),0) su
+    	SELECT emp.e_name, t.salaryTime,e_company,
+       CASE (e_teshu_state)
+     when 0 then  IFNULL(SUM(e.bukoushui),0)
+     when 1 then  IFNULL(SUM(e.bukoushui),0) /2
+     END   su
     	FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
     	WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
     	AND e_company = '$sid'
@@ -596,15 +612,52 @@ class SalaryDao extends BaseDao {
     	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime
     	LEFT JOIN
     	(
-    	SELECT  emp.e_name,   t.salaryTime,e_company,IFNULL(SUM(n.nian_daikoushui),0) su
+    	SELECT  emp.e_name,   t.salaryTime,e_company,
+    CASE (e_teshu_state)
+     when 0 then  IFNULL(SUM(n.nian_daikoushui),0)
+     when 1 then  IFNULL(SUM(n.nian_daikoushui),0) /2
+     END   su
     	FROM OA_nian_salary n  ,OA_employ emp,OA_salarytime_other t
     	WHERE n.employid = emp.e_num AND n.salaryTimeId = t.id
     	AND e_company = '$sid'
-    	AND t.salaryTime = '$stime'
+    	AND t.salaryTime like '%{$time}%'
     	GROUP BY n.employid,t.salaryTime
     	) nian
     	ON  yi.e_name = nian.e_name AND yi.salaryTime = nian.salaryTime
     	where 1=1";
+        }elseif($nian == 0){
+            $sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,yi.su daikou,er.su bukou,(yi.su+IFNULL(er.su,0)) geshuiSum FROM
+    	(
+    	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,
+    CASE (e_teshu_state)
+     when 0 then  IFNULL(SUM(s.per_daikoushui),0)
+     when 1 then  IFNULL(SUM(s.per_daikoushui),0)/2
+     END   su
+    	FROM OA_salary s ,OA_employ emp,OA_salarytime t
+    	WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
+    	AND e_company = '$sid'
+    	AND t.salaryTime = '$stime'
+    	GROUP BY s.employid,t.salaryTime
+    	ORDER BY e_name
+    	) yi
+    	LEFT JOIN
+    	(
+    	SELECT emp.e_name, t.salaryTime,e_company,
+       CASE (e_teshu_state)
+     when 0 then  IFNULL(SUM(e.bukoushui),0)
+     when 1 then  IFNULL(SUM(e.bukoushui),0) /2
+     END   su
+    	FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
+    	WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
+    	AND e_company = '$sid'
+    	AND t.salaryTime = '$stime'
+    	GROUP BY e.employid,t.salaryTime
+    	) er
+    	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime
+    	where 1=1";
+
+        }
+
         $list = $this->g_db_query ( $sql );
         return $list;
     }
@@ -632,6 +685,12 @@ class SalaryDao extends BaseDao {
     // 个税类型设置上月BY孙瑞鹏
     function setTypeShangyue($sid) {
         $sql = "UPDATE OA_company SET geshui_dateType = 2 WHERE id = $sid";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 个税类型设置上月BY孙瑞鹏
+    function setTypeMianshui($sid) {
+        $sql = "UPDATE OA_company SET geshui_dateType = 3 WHERE id = $sid";
         $list = $this->g_db_query ( $sql );
         return $list;
     }

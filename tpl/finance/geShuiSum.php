@@ -22,25 +22,24 @@
             'Ext.toolbar.Paging',
             'Ext.data.*'
 
+
     ]);
         Ext.onReady(function(){
-
             //创建Grid
             var salTimeListGrid = Ext.create('Ext.grid.Panel',{
                 store: geshuiListstore,
                 selType: 'checkboxmodel',
                 id : 'comlist',
                 columns: [
-                    {text: "编号", width: 120, dataIndex: 'company_id', sortable: true},
+                    {text: "查年终奖", flex: 120, dataIndex: 'company_id', sortable: true},
                     {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true},
                     {text: "个税日期", flex: 200, dataIndex: 'salaryTime', sortable: true},
                     {text: "代扣税", flex: 200, dataIndex: 'daikou', sortable: true},
                     {text: "补扣税", flex: 200, dataIndex: 'bukou', sortable: true},
-                    {text: "年终奖扣税", flex: 200, dataIndex: 'nian', sortable: true},
                     {text: "个税合计", flex: 200, dataIndex: 'geshuiSum', sortable: true}
                 ],
                 height:700,
-                width:1000,
+                width:800,
                 x:0,
                 y:0,
                 title: '个税统计',
@@ -52,32 +51,41 @@
                     trackOver: false,
                     stripeRows: false
                 },
-                bbar: Ext.create('Ext.PagingToolbar', {
-                    store: geshuiListstore,
-                    displayInfo: true,
-                    displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
-                    emptyMsg: "没有数据"
-                }),
+//                bbar: Ext.create('Ext.PagingToolbar', {
+////                    store: geshuiListstore,
+////                    displayInfo: true,
+////                    displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+////                    emptyMsg: "没有数据"
+//                }),
 
                 tbar : [
 
                     {
                         xtype : 'button',
                         id : 'searchSalBu',
-                        disabled: true,
                         handler : function(src) {
-                            var model = salTimeListGrid.getSelectionModel();
-                            var sel=model.getSelection();
                             var times = [];
                             var names = [];
-                            for(var i = 0; i < sel.length ;i++){
-                                times.push(sel[i].data.salaryTime);
-                                names.push(sel[i].data.company_name);
-                            }
+                            var nian = [];
+                            var model = salTimeListGrid.getSelectionModel();
+                            var i = 0;
+                            geshuiListstore.each(function(record) {
+                                    if(record.data.salaryTime != '<span style=\"color: red\">未作工资或免税</span>'){
+                                     times.push(record.data.salaryTime);
+                                     names.push(record.data.company_name);
+                                        if(model.isSelected(i)){
+                                            nian.push(1);
+                                        }else{
+                                            nian.push(0);
+                                        }
+                                     }
+                                i++;
+                        });
                             geShuiExcelExportStore.load( {
                                     params: {
                                         timeId : Ext.JSON.encode(names),
-                                        time:Ext.JSON.encode(times)
+                                        time:Ext.JSON.encode(times),
+                                        nian:Ext.JSON.encode(nian)
                                     }
                                 }
                             );
@@ -137,13 +145,7 @@
                 Ext.apply(geshuiListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),companyName:Ext.getCmp("comname").getValue()});
 
             });
-            var onSelectChange = function(selModel, selections){
-                alert("");
-            };
-            salTimeListGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
-                //var sel=model.getLastSelected();
-                Ext.getCmp("searchSalBu").setDisabled(selections.length === 0);
-            }, this);
+
             /**
              * 定义工资table
              */
@@ -250,6 +252,99 @@
                 });
                 win.show();
             }
+            var salTimeListGrid1 = Ext.create('Ext.grid.Panel',{
+               store: nianxuanStore,
+                selType: 'checkboxmodel',
+                id : 'comlist1',
+                columns: [
+                    {text: "编号", width: 80, dataIndex: 'companyid', sortable: true},
+                    {text: "公司名称", width: 240, dataIndex: 'companyname', sortable: true}
+                ],
+                height:700,
+                width:350,
+                x:800,
+                y:-700,
+                title: '年终奖选择',
+                disableSelection: false,
+                loadMask: true,
+                renderTo: 'demo',
+                viewConfig: {
+                    id: 'gv1',
+                    trackOver: false,
+                    stripeRows: false
+                },
+                tbar : [
+
+                    '名称', {
+                        id:'cname',
+                        xtype : 'trigger',
+                        name: 'companyname',
+                        onTriggerClick : function(src) {
+                            nianxuanStore.removeAll();
+                            nianxuanStore.load( {
+                                params : {
+                                    cname : this.getValue()
+                                }
+                            });
+                        }
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'xuanzhong',
+                        disabled: false,
+                        handler: function () {
+                            var model = salTimeListGrid1.getSelectionModel();
+                            var model1 = salTimeListGrid.getSelectionModel();
+                            var sel=model.getSelection();
+                            var datas = [];
+                            for(var i = 0; i < sel.length ;i++){
+                                var m=0;
+                                geshuiListstore.each(function(record) {
+                                    if(record.data.company_id ==   sel[i].data.companyid || model1.isSelected(m)){
+                                       // salTimeListGrid.getSelectionModel().select(m);
+                                        datas.push(geshuiListstore.getAt(m));
+                                    }
+                                    m++;
+                                });
+
+                            }
+
+                            salTimeListGrid.getSelectionModel().select(datas);
+
+                        },
+                        text: '选中'
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'paichu',
+                        disabled: false,
+                        handler: function () {
+                            var model = salTimeListGrid1.getSelectionModel();
+                            var model1 = salTimeListGrid.getSelectionModel();
+                            var sel=model.getSelection();
+                            var datas = [];
+                            for(var i = 0; i < sel.length ;i++){
+                                var m=0;
+                                geshuiListstore.each(function(record) {
+                                    if(record.data.company_id ==   sel[i].data.companyid){
+                                        // salTimeListGrid.getSelectionModel().select(m);
+                                        datas.push(geshuiListstore.getAt(m));
+                                    }
+                                    m++;
+                                });
+
+                            }
+
+                            salTimeListGrid.getSelectionModel().deselect(datas);
+
+                        },
+                        text: '排除'
+                    }
+                ]
+
+            });
+            nianxuanStore.loadPage(1);
+
         });
 
     </script>

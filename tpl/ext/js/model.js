@@ -28,9 +28,16 @@ Ext.define('oa.common.geshui.list',{
         {name: 'salaryTime', type: 'string'},
         {name: 'daikou', type: 'double'},
         {name: 'bukou', type: 'double'},
-        {name: 'nian', type: 'double'},
         {name: 'geshuiSum', type: 'double'},
         {name: 'salary_state', type: 'int'}
+    ]
+});
+//BY孙瑞鹏
+Ext.define('oa.common.nianjiang.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'companyid', type: 'int'},
+        {name: 'companyname', type: 'string'}
     ]
 });
 //BY孙瑞鹏
