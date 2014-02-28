@@ -643,7 +643,7 @@ class SalaryDao extends BaseDao {
     	AND t.salaryTime like '%{$time}%'
     	GROUP BY n.employid,t.salaryTime
     	) nian
-    	ON  yi.e_name = nian.e_name AND yi.salaryTime = nian.salaryTime
+    	ON  yi.e_name = nian.e_name
     	where 1=1";
         }elseif($nian == 0){
             $sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,yi.su daikou,er.su bukou,(yi.su+IFNULL(er.su,0)) geshuiSum FROM

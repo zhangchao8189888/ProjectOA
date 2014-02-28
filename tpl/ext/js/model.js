@@ -182,7 +182,7 @@ Ext.define('oa.common.geshui.detail.list',{
         {name: 'daikou', type: 'string'},
         {name: 'bukou', type: 'string'},
         {name: 'nian', type: 'string'},
-        {name: 'geshuiSum', type: 'int'}
+        {name: 'geshuiSum', type: 'double'}
     ]
 });
 
