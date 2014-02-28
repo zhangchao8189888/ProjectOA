@@ -261,7 +261,7 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class='menu'>
             <div class='title'>社保管理</div>
             <div class='item'>
-                <a href='index.php?action=Ext&mode=toSocialSecurityIndex'>主页</a>
+                <a href='index.php?action=Ext&mode=todemo'>主页</a>
             </div>
             <div class="item">
                 <a href="index.php?action=Ext&mode=toBusiness">业务变更</a>

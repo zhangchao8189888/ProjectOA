@@ -84,7 +84,7 @@ Ext.onReady(function () {
 function checkSalWin() {
     var items=[addInsurancWindow];
     winSal = Ext.create('Ext.window.Window', {
-        title: "添加个人上保险", // 窗口标题
+        title: "添加个人工资", // 窗口标题
         width:600, // 窗口宽度
         height:500, // 窗口高度
         layout:"border",// 布局

@@ -1108,7 +1108,7 @@ Ext.onReady(function () {
                                 xtype : 'button',
                                 id : 'addin',
                                 handler : function(src) {
-                                    checkSalWin();
+                                    addin();
                                 },
                                 text : '添加业务',
                                 iconCls : 'chakan'
@@ -1166,7 +1166,7 @@ Ext.onReady(function () {
                                 xtype : 'button',
                                 id : 'addsar',
                                 handler : function(src) {
-                                    checkSalWin();
+                                    addsalary();
                                 },
                                 text : '添加业务',
                                 iconCls : 'chakan'

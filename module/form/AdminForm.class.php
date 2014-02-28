@@ -39,7 +39,7 @@ class AdminForm extends BaseForm
             case "toFinance":
             	return "ext/view/finance/financeIndex.php";
             case "toSocialSecurity":
-                return "ext/view/socialSecurity/socialsecurityIndex.php";
+                return "ext/view/demo/demoIndex.php";
            	case "modifyPass":
             	return "modifyPassword.php";
            default :

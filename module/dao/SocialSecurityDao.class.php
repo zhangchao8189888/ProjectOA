@@ -171,7 +171,7 @@ class SocialSecurityDao extends BaseDao {
                     $sql .= " and unInsuranceReason IS NOT NULL  AND unInsuranceReason <> '' ";
                 }
                 if ($where ['disType'] == "0") {
-                    $sql .= " and unInsuranceReason ='' and paymentTime>now() ";
+                    $sql .= " and unInsuranceReason ='' and paymentEndTime>now() ";
                 }
             }
         }
@@ -200,7 +200,7 @@ class SocialSecurityDao extends BaseDao {
                     $sql .= " and unInsuranceReason IS NOT NULL AND unInsuranceReason <> ''";
                 }
                 if ($where ['disType'] == "0") {
-                    $sql .= " and unInsuranceReason ='' and paymentTime>now()";
+                    $sql .= " and unInsuranceReason ='' and paymentEndTime>now()";
                 }
             }
         }
@@ -248,7 +248,6 @@ class SocialSecurityDao extends BaseDao {
         $sql = " UPDATE OA_insurance SET paymentValue =$paymentValue,
                 paymentTime =now() ,adminId = $id,adminName =  '$name',updateTime=now()  WHERE id=$upId";
         $result = $this->g_db_query($sql);
-        echo($sql);
         return $result;
     }
 

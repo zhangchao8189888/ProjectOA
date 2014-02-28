@@ -624,3 +624,308 @@ var paysal = Ext.create('Ext.form.Panel', {
         }
     ]
 });
+
+function addsalary() {
+    var items=[addInsurancWindow];
+    winSal = Ext.create('Ext.window.Window', {
+        title: "添加个人工资", // 窗口标题
+        width:600, // 窗口宽度
+        height:400, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                window.minimizable = true;
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    winSal.show();
+
+}
+var addInsurancWindow = Ext.create('Ext.form.Panel', {
+    bodyPadding: 15,
+    width: 580,
+    height: 460,
+    items: [
+        {
+            xtype: 'fieldcontainer',
+            fieldLabel: '请输入数据',
+            defaultType: 'checkboxfield',
+            items: [
+                {
+                    xtype: 'textfield',
+                    id:"inemployId",
+                    allowBlank: false,
+                    emptyText: "请输入身份证号",
+                    fieldLabel: '身份证号'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"inemployName",
+                    emptyText: "请输入姓名",
+                    allowBlank: false,
+                    fieldLabel: '姓名'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"incompanyName" ,
+                    emptyText: "请输入所在公司",
+                    allowBlank: false,
+                    fieldLabel: '单位'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"unInsuranceReason" ,
+                    emptyText: "请输入未上保险原因",
+                    allowBlank: false,
+                    fieldLabel: '未上保险原因'
+                },
+                {
+                    id: 'entryTime',
+                    xtype: 'datefield',
+                    width:255,
+                    format: "Y-m-d",
+                    emptyText: "请选择入职时间",
+                    allowBlank: false,
+                    readOnly: false,
+                    fieldLabel: '入职时间'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"explainInfo" ,
+                    emptyText: "请输入说明",
+                    allowBlank: false,
+                    fieldLabel: '说明'
+                },
+                {
+                    xtype: 'textareafield',
+                    id:"remarks",
+                    width:400,
+                    height:80,
+                    emptyText: "请输入备注信息",
+                    fieldLabel: '备注'
+                }
+            ]
+        }
+    ],
+    buttons: [
+        {
+            text: '提交',
+            handler: function () {
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                this.up('form').getForm().submit(
+                    {
+                        url: "index.php?action=ExtSocialSecurity&mode=addInsurance",
+                        method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
+                        success: function (form,action) {
+                            var text = form.responseText;
+                            Ext.Msg.alert("提示", action.result.info);
+                            document.location = 'index.php?action=Ext&mode=todemo';
+                        },
+                        failure:function(form,action){
+                            Ext.Msg.alert('提示',action.result.info);
+                        }
+                    }
+                );
+
+
+            }
+        }
+        ,
+        {
+            text: '清空',
+            handler: function () {
+                this.up('form').getForm().reset();
+            }
+        }
+    ]
+});
+
+
+function addin() {
+    var items=[addinwin];
+    winSal = Ext.create('Ext.window.Window', {
+        title: "添加个人保险", // 窗口标题
+        width:600, // 窗口宽度
+        height:500, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                window.minimizable = true;
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    winSal.show();
+
+}
+var addinwin = Ext.create('Ext.form.Panel', {
+    bodyPadding: 15,
+    width: 580,
+    height: 460,
+    items: [
+        {
+            xtype: 'fieldcontainer',
+            fieldLabel: '请输入数据',
+            defaultType: 'checkboxfield',
+            items: [
+                {
+                    xtype: 'textfield',
+                    id:"employId",
+                    allowBlank: false,
+                    emptyText: "请输入身份证号",
+                    fieldLabel: '身份证号'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"employName",
+                    emptyText: "请输入姓名",
+                    allowBlank: false,
+                    fieldLabel: '姓名'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"base" ,
+                    emptyText: "请输入基数",
+                    allowBlank: false,
+                    fieldLabel: '基数'
+                },
+                {
+                    xtype: 'combobox',
+                    id:"idClass" ,
+                    emptyText: "请选择身份类别",
+                    editable: false,
+                    allowBlank: false,
+                    store: {
+                        fields: ['abbr', 'name'],
+                        data: [
+                            {"abbr": "本市城镇职工", "name": "本市城镇职工"},
+                            {"abbr": "外埠城镇职工", "name": "外埠城镇职工"},
+                            {"abbr": "本市农村劳动力", "name": "本市农村劳动力"},
+                            {"abbr": "外地农村劳动力", "name": "外地农村劳动力"}
+                        ]
+                    },
+                    valueField: 'abbr',
+                    displayField: 'name',
+                    fieldLabel: '身份类别'
+                },
+                {
+                    id: 'payStart',
+                    xtype: 'datefield',
+                    width:255,
+                    format: "Y-m-d",
+                    emptyText: "请选择缴费开始时间",
+                    allowBlank: false,
+                    readOnly: false,
+                    fieldLabel: '缴费开始时间'
+                },
+                {
+                    id: 'payEnd',
+                    xtype: 'datefield',
+                    width:255,
+                    format: "Y-m-d",
+                    emptyText: "请选择缴费结束时间",
+                    allowBlank: false,
+                    readOnly: false,
+                    fieldLabel: '缴费结束时间'
+                },
+                {
+                    xtype: 'numberfield',
+                    id:"payValue" ,
+                    emptyText: "请输入缴费金额",
+                    allowBlank: false,
+                    fieldLabel: '金额'
+                },
+                {
+                    id: 'payTime',
+                    xtype: 'datefield',
+                    width:255,
+                    format: "Y-m-d",
+                    emptyText: "请选择缴费时间",
+                    allowBlank: false,
+                    readOnly: false,
+                    fieldLabel: '缴费时间'
+                },
+                {
+                    id: 'entryTime',
+                    xtype: 'textfield',
+                    emptyText: "请输入联系方式",
+                    fieldLabel: '联系方式'
+                },
+                {
+                    xtype: 'textareafield',
+                    id:"saremarks",
+                    width:400,
+                    height:80,
+                    emptyText: "请输入备注信息",
+                    fieldLabel: '备注'
+                }
+            ]
+        }
+    ],
+    buttons: [
+        {
+            text: '提交',
+            handler: function () {
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                this.up('form').getForm().submit(
+                    {
+                        url: "index.php?action=ExtSocialSecurity&mode=addInsurance",
+                        method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
+                        success: function (form,action) {
+                            var text = form.responseText;
+                            Ext.Msg.alert("提示", action.result.info);
+                            document.location = 'index.php?action=Ext&mode=todemo';
+                        },
+                        failure:function(form,action){
+                            Ext.Msg.alert('提示',action.result.info);
+                        }
+                    }
+                );
+
+
+            }
+        }
+        ,
+        {
+            text: '清空',
+            handler: function () {
+                this.up('form').getForm().reset();
+            }
+        }
+    ]
+});

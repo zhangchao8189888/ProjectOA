@@ -318,8 +318,29 @@ class ExtSocialSecurityAction extends BaseAction {
         $adminName  =  $_SESSION['admin']['name'];
         $this->objDao = new SocialSecurityDao();
         $exmsg=new EC();//设置错误信息类
-        $insuranceInfo['companyName']  =$_REQUEST['companyName-inputEl'];
-        $insuranceInfo['employId']  =$_REQUEST['employId-inputEl'];
+        if($_REQUEST['employId-inputEl']) {
+            $insuranceInfo['employId']  =$_REQUEST['employId-inputEl'];
+        } else{
+            $insuranceInfo['employId']  =$_REQUEST['inemployId-inputEl'];
+        }
+        if($_REQUEST['employId-inputEl']) {
+            $insuranceInfo['employId']  =$_REQUEST['employId-inputEl'];
+        } else{
+            $insuranceInfo['employId']  =$_REQUEST['inemployId-inputEl'];
+        }
+
+        if($_REQUEST['companyName-inputEl']) {
+            $insuranceInfo['companyName']  =$_REQUEST['companyName-inputEl'];
+        } else{
+            $insuranceInfo['incompanyName']  =$_REQUEST['incompanyName-inputEl'];
+        }
+
+        if($_REQUEST['employName-inputEl']) {
+            $insuranceInfo['employName']  =$_REQUEST['employName-inputEl'];
+        } else{
+            $insuranceInfo['inemployName']  =$_REQUEST['inemployName-inputEl'];
+        }
+
         $insuranceInfo['employName']  =$_REQUEST['employName-inputEl'];
         $insuranceInfo['idClass']  =$_REQUEST['idClass-inputEl'];
         $insuranceInfo['serviceId']  =$adminId;
@@ -330,7 +351,7 @@ class ExtSocialSecurityAction extends BaseAction {
         $insuranceInfo['paymentTime']  =$_REQUEST['payTime-inputEl'];
         $insuranceInfo['paymentValue']  =$_REQUEST['payValue'];
         $insuranceInfo['paymentType']  =$_REQUEST['payType-inputEl'];
-        $insuranceInfo['remark']  =$_REQUEST['remark-inputEl'];
+        $insuranceInfo['remark']  =$_REQUEST['remarks-inputEl'];
         $insuranceInfo['unInsuranceReason']  =$_REQUEST['unInsuranceReason-inputEl'];
         $insuranceInfo['explainInfo']  =$_REQUEST['explainInfo-inputEl'];
         $insuranceInfo['entryTime']  =$_REQUEST['entryTime-inputEl'];
