@@ -86,7 +86,7 @@ function checkSalWin() {
     winSal = Ext.create('Ext.window.Window', {
         title: "添加个人工资", // 窗口标题
         width:600, // 窗口宽度
-        height:500, // 窗口高度
+        height:370, // 窗口高度
         layout:"border",// 布局
         minimizable:true, // 最大化
         maximizable:true, // 最小化

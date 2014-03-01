@@ -133,7 +133,6 @@ var paysal = Ext.create('Ext.form.Panel', {
         },
         {
             id: 'payValue',
-            name: 'payValue',
             xtype: 'numberfield',
             allowBlank: false,
             emptyText: "请输入缴费金额",
@@ -184,7 +183,7 @@ function checkSalWin() {
     winSal = Ext.create('Ext.window.Window', {
         title: "添加个人保险", // 窗口标题
         width:600, // 窗口宽度
-        height:500, // 窗口高度
+        height:450, // 窗口高度
         layout:"border",// 布局
         minimizable:true, // 最大化
         maximizable:true, // 最小化

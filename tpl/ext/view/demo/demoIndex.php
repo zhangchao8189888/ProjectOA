@@ -1070,7 +1070,7 @@ Ext.onReady(function () {
                 items:[
                     Ext.create('Ext.grid.Panel',{
                         store: insurancestore,
-                        id : 'comlist',
+                        id : personIn,
                         columns: [
                             {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
                             {text: "提交日期", width: 100, dataIndex: 'submitTime', sortable: true},
