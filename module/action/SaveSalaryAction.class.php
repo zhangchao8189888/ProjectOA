@@ -108,17 +108,11 @@ class SaveSalaryAction extends BaseAction {
 			case "searchGeshuiTypeByIdJosn" :
 				$this->searchGeshuiTypeByIdJosn ();
 				break;
-			case "setShangyueType" :
-				$this->setShangyueType ();
-				break;
-            case "setMianshuiType" :
-                $this->setMianshuiType ();
+            case "setTypeGeshui" :
+                $this->setTypeGeshui ();
                 break;
-			case "setBenyueType" :
-				$this->setBenyueType ();
-				break;
-            case "addZengyuan" :
-				$this->addZengyuan ();
+            case "insGeshuijilu" :
+				$this->insGeshuijilu ();
 				break;
 
 			default :
@@ -521,35 +515,47 @@ class SaveSalaryAction extends BaseAction {
 		echo json_encode ( $salaryListArray );
 		exit ();
 	}
-    // 个税类型修改免税BY孙瑞鹏
-    function setMianshuiType() {
-        // $this->mode="salaryList";
+
+	// 个税类型修改BY孙瑞鹏
+	function setTypeGeshui() {
+		// $this->mode="salaryList";
+		$salaryTimeId = $_REQUEST ['timeId'];
+        $type = $_REQUEST ['type'];
+		$this->objDao = new SalaryDao ();
+		$this->objDao->setTypeGeshui ( $salaryTimeId,$type );
+		// echo json_encode($salaryListArray);
+		exit ();
+	}
+    // 个税已报标识BY孙瑞鹏
+    function insGeshuijilu() {
+        $time = date('Y',strtotime("-1 year"));
         $salaryTimeId = $_REQUEST ['timeId'];
+        $salaryTime = $_REQUEST ['time'];
+        $nian = $_REQUEST ['nian'];
+        $salaryTime=str_replace('\"','"',$salaryTime);
+        $salaryTimeId=str_replace('\"','"',$salaryTimeId);
+        $nian=str_replace('\"','"',$nian);
+        $salaryTimeId=json_decode($salaryTimeId);
+        $salaryTime=json_decode($salaryTime);
+        $nian=json_decode($nian);
         $this->objDao = new SalaryDao ();
-        $this->objDao->setTypeMianshui ( $salaryTimeId );
-        // echo json_encode($salaryListArray);
+        for($h=0;$h<(count($salaryTimeId));$h++){
+            $type1=$this->objDao->isGeshui ($salaryTimeId[$h], $salaryTime[$h],1);
+            $type2=$this->objDao->isYueGeshui ($salaryTimeId[$h], $salaryTime[$h]);
+            if(mysql_fetch_array ( $type1 ) == null && mysql_fetch_array ( $type2 ) != null){
+             $this->objDao->insertGeshui ($salaryTimeId[$h], $salaryTime[$h],1);
+             if($nian[$h] == 1 ){
+                 $typenian1=$this->objDao->isGeshui ($salaryTimeId[$h], $time,2);
+                 $typenian2=$this->objDao->isNianGeshui ($salaryTimeId[$h], $time);
+                 if(mysql_fetch_array ( $typenian1 ) == null && mysql_fetch_array ( $typenian2 ) != null){
+                 $this->objDao->insertNianGeshui ($salaryTimeId[$h], $time,2);
+                 }
+             }
+        }
+
+    }
         exit ();
     }
-	
-	// 个税类型修改上月BY孙瑞鹏
-	function setShangyueType() {
-		// $this->mode="salaryList";
-		$salaryTimeId = $_REQUEST ['timeId'];
-		$this->objDao = new SalaryDao ();
-		$this->objDao->setTypeShangyue ( $salaryTimeId );
-		// echo json_encode($salaryListArray);
-		exit ();
-	}
-	
-	// 个税类型修改本月BY孙瑞鹏
-	function setBenyueType() {
-		// $this->mode="salaryList";
-		$salaryTimeId = $_REQUEST ['timeId'];
-		$this->objDao = new SalaryDao ();
-		$this->objDao->setTypeBenyue ( $salaryTimeId );
-		// echo json_encode($salaryListArray);
-		exit ();
-	}
 
     // 增员BY孙瑞鹏
     function addZengyuan() {

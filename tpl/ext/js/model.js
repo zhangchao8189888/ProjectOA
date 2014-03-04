@@ -301,7 +301,8 @@ Ext.define('oa.common.tax.list',{
         {name: 'mouth9', type: 'string'},
         {name: 'mouth10', type: 'string'},
         {name: 'mouth11', type: 'string'},
-        {name: 'mouth12', type: 'string'}
+        {name: 'mouth12', type: 'string'},
+        {name: 'mouth13', type: 'string'}
     ]
 });
 

@@ -26,7 +26,7 @@ Ext.onReady(function () {
         stripeRows:true,
         columns: [
             {text: "id", width: 45, dataIndex: 'id', sortable: true,align:'center'},
-            {text: "公司名称", flex: 280, dataIndex: 'company_name', sortable: true},
+            {text: "公司名称", flex: 200, dataIndex: 'company_name', sortable: true},
             {text: "一月", flex: 110, dataIndex: 'mouth1', sortable: false,align:'center'},
             {text: "二月", flex: 110, dataIndex: 'mouth2', sortable: false,align:'center'},
             {text: "三月", flex: 110, dataIndex: 'mouth3', sortable: false,align:'center'},
@@ -38,7 +38,8 @@ Ext.onReady(function () {
             {text: "九月", flex: 110, dataIndex: 'mouth9', sortable: false,align:'center'},
             {text: "十月", flex: 110, dataIndex: 'mouth10', sortable: false,align:'center'},
             {text: "十一月", flex: 110, dataIndex: 'mouth11', sortable: false,align:'center'},
-            {text: "十二月", flex: 110, dataIndex: 'mouth12', sortable: false,align:'center'}
+            {text: "十二月", flex: 110, dataIndex: 'mouth12', sortable: false,align:'center'},
+            {text: "年终奖", flex: 110, dataIndex: 'mouth13', sortable: false,align:'center'},
         ],
         height: 700,
         width: 1100,
