@@ -117,13 +117,9 @@ Ext.onReady(function () {
         listeners: {
             'cellclick': function (iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
                 var rowEl = Ext.get(iEvent.getTarget());
-                var zRec = iView.getRecord(iRowEl);
                 var type = rowEl.getAttribute('id');
                 if (iColIdx == 3 || iColIdx == 4 || iColIdx == 5) {
-                    if (type == 'make') {
-                        var comId = rowEl.getAttribute('companyId');
-                        makeSalWin('做工资');
-                    } else if (type == 'check') {
+                    if (type == 'check') {
                         var timeId = rowEl.getAttribute('salTimeId');
                         checkSalWin("查看工资", iColIdx, timeId, rowEl);
                     }

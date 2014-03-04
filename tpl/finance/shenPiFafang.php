@@ -52,6 +52,8 @@ if(empty($warn)){
         		  $("#iform").submit(); 
         		}
         	function opShenpi(id,type){
+                alert(id);
+                return false;
         		$("#billId").val(id);
         		$("#shenPiType").val(type);
         		var massge="";

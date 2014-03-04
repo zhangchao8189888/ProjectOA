@@ -277,7 +277,8 @@ Ext.define('oa.common.finance.list',{
         {name: 'sal_state', type: 'string'},
         {name: 'bill_state', type: 'string'},
         {name: 'cheque_account', type: 'string'},
-        {name: 'sal_approve', type: 'string'}
+        {name: 'sal_approve', type: 'string'},
+        {name: 'sal_approve_id', type:'string'}
     ]
 });
 
