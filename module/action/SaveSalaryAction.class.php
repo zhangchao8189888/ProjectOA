@@ -569,12 +569,13 @@ class SaveSalaryAction extends BaseAction {
         $employName = $_REQUEST ['employName'];
         $employNumber = $_REQUEST ['employNumber'];
         $beizhu = $_REQUEST ['beizhu'];
+        $tel = $_REQUEST ['tel'];
         $shenbao =  '等待办理';
         $kefuName= $_SESSION ['admin'] ['name'];
         $this->jisuan = new sumSalary();
         $sum= $this->jisuan->getSumShebao($leibie,$shebao);
         $this->objDao = new SalaryDao ();
-        $this->objDao->setZengyuan ($kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$sum,$yongren,null,$shenbao,$beizhu,$caozuo);
+        $this->objDao->setZengyuan ($kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$sum,$yongren,null,$shenbao,$beizhu,$caozuo,$tel);
         exit ();
     }
 	

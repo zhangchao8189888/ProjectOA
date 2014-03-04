@@ -226,6 +226,7 @@ $businessState=array(
     '1'=>'等待处理',
     '2'=>'正在办理',
     '3'=>'已完成',
+    '4'=>'无法办理',
 );
 
 global $businessTable;
@@ -237,6 +238,7 @@ $businessTable=array(
     'employId' => '身份证号',
     'employState' => '员工状态',
     'businessName' => '业务名称',
+    'tel' => '联系方式',
     'remarks' => '备注',
     'serviceName' => '申请客服',
     'socialSecurityState' => '办理情况',

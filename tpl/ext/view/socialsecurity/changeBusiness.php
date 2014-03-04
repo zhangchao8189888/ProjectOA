@@ -32,7 +32,7 @@
                 {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
                 {text: "员工状态id", width: 100, dataIndex: 'employStateId', sortable: false,hidden:true},
                 {text: "员工状态", width: 100, dataIndex: 'employState', sortable: false},
-                {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false,
+                {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: true,
                     renderer: function (val, cellmeta, record) {
                         switch (val){
                             case "1":
@@ -60,6 +60,7 @@
                     }
                 },
                 {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                 {text: "办理情况", width: 200, dataIndex: 'socialSecurityStateId', sortable: false,
                     renderer: function (val, cellmeta, record) {
                         if (val == 0) {
@@ -72,6 +73,8 @@
                         }
                         else if (val ==3) {
                             return '<span style="color: green"> 办理成功 </span>';
+                        } else if (val ==4) {
+                            return '<span style="color: darkviolet"> 无法办理 </span>';
                         }
                         return val;
                     }
@@ -123,8 +126,7 @@
                                                 start: 0,
                                                 limit: 50
                                             }
-                                        }
-                                    );
+                                    });
                                 }
                             });
 
@@ -136,7 +138,6 @@
                     text : '取消提交',
                     iconCls : 'shanchu'
                 },
-
                 {
                     xtype : 'button',
                     id : 'searchSalBu',
@@ -145,6 +146,38 @@
                     },
                     text : '申请变更业务',
                     iconCls : 'chakan'
+                },
+                {
+                    xtype: 'combobox',
+                    id:"businessN" ,
+                    emptyText: "请选择业务名称",
+                    width:130,
+                    store: {
+                        fields: ['abbr', 'name'],
+                        data: [
+                            {"abbr": "1", "name": "医疗报销"},
+                            {"abbr": "2", "name": "工伤报销"},
+                            {"abbr": "3", "name": "失业申报"},
+                            {"abbr": "4", "name": "生育医疗申报"},
+                            {"abbr": "5", "name": "生育津贴申报"},
+                            {"abbr": "10", "name": "退休"},
+                            {"abbr": "其他", "name": "其他"}
+                        ]
+                    },
+                    listeners: {
+                        select: function (tab) {
+                            businessLogstore.removeAll();
+                            businessLogstore.load( {
+                                params: {
+                                    searchType : Ext.getCmp("businessN").getValue(),
+                                    start: 0,
+                                    limit: 50
+                                }
+                            });
+                        }
+                    },
+                    valueField: 'abbr',
+                    displayField: 'name'
                 }
             ]
         });
@@ -267,6 +300,12 @@
                         fieldLabel: '员工状态'
                     },
                     {
+                        xtype: 'textfield',
+                        id:"tel" ,
+                        emptyText: "请输入联系方式",
+                        fieldLabel: '联系方式'
+                    },
+                    {
                         xtype: 'textareafield',
                         id:"remarks",
                         width:400,
@@ -287,6 +326,7 @@
                     var business = Ext.getCmp("business").getValue();
                     var employState = Ext.getCmp("employState").getValue();
                     var remarks = Ext.getCmp("remarks").getValue();
+                    var tel = Ext.getCmp("tel").getValue();
                     var submitInfo = this.up('form').getForm().isValid();
                     if (!submitInfo) {
                         Ext.Msg.alert("警告！", "请输入完整的信息！");
@@ -303,7 +343,8 @@
                             employNumber: employNumber,
                             business: business,
                             employState: employState,
-                            remarks: remarks
+                            remarks: remarks  ,
+                            tel: tel
                         },
                         success: function (response) {
                             var text = response.responseText;

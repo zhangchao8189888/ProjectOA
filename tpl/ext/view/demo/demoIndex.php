@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>演示主页</title>
+<title>主页</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
@@ -25,11 +25,9 @@ Ext.require([
     'Ext.data.*'
 ]);
 Ext.onReady(function () {
-    var searchType;
     var tabs2 = Ext.widget('tabpanel', {
-        renderTo: "demo",
         activeTab: 0,
-        width: 1030,
+        width: 1230,
         height: 620,
         plain: true,
         defaults: {
@@ -46,9 +44,19 @@ Ext.onReady(function () {
                         columns: [
                             {text: "业务名称", width: 200, dataIndex: 'mattername', sortable: false
                             },
-                            {text: "待办事项", width: 100, dataIndex: 'matter', sortable: true,
+                            {text: "等待办理事项", width: 100, dataIndex: 'matterWait', sortable: true,
                                 renderer: function (val, cellmeta, record) {
                                     return '<span style="color: red;font-size: 16px"> '+val+' </span>';
+                                }
+                            },
+                            {text: "正在办理事项", width: 100, dataIndex: 'matterDoing', sortable: true,
+                                renderer: function (val, cellmeta, record) {
+                                    return '<span style="color: blue;font-size: 16px"> '+val+' </span>';
+                                }
+                            },
+                            {text: "完成办理事项", width: 100, dataIndex: 'matterClear', sortable: true,
+                                renderer: function (val, cellmeta, record) {
+                                    return '<span style="color: green;font-size: 16px"> '+val+' </span>';
                                 }
                             }
                         ] ,
@@ -79,6 +87,8 @@ Ext.onReady(function () {
                                         return '<a href="#" title="修改状态" onclick=changezengjianState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
                                     } else if (val =="办理成功") {
                                         return '<a href="#" title="修改状态" onclick=changezengjianState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    } else if (val =="无法办理") {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
                                     }
                                     return val;
                                 }
@@ -89,6 +99,7 @@ Ext.onReady(function () {
                             {text: "员工姓名", width: 100, dataIndex: 'EName', sortable: true},
                             {text: "身份证号", width: 100, dataIndex: 'EmpNo', sortable: true},
                             {text: "身份类别", width: 100, dataIndex: 'EmpType', sortable: true},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: true},
                             {text: "操作标志", width: 100, dataIndex: 'zengjianbiaozhi', sortable: true},
                             {text: "社保基数", width: 100, dataIndex: 'shebaojishu', sortable: true},
                             {text: "外区转入/新参保", width: 200, dataIndex: 'waiquzhuanru', sortable: true},
@@ -99,7 +110,7 @@ Ext.onReady(function () {
                             {text: "备注", width: 100, dataIndex: 'beizhu', sortable: true}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         bbar: Ext.create('Ext.PagingToolbar', {
                             store: zengjianListstore,
                             displayInfo: true,
@@ -129,8 +140,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "等待办理", "name": "等待办理"},
                                         {"abbr": "正在办理", "name": "正在办理"},
-                                        {"abbr": "已完成", "name": "已完成"},
-                                        {"abbr": "已取消", "name": "已取消"}
+                                        {"abbr": "办理成功", "name": "办理成功"},
+                                        {"abbr": "无法办理", "name": "无法办理"}
                                     ]
                                 },
                                 valueField: 'abbr',
@@ -210,6 +221,8 @@ Ext.onReady(function () {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
                                     } else if (val ==3) {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    }else if (val ==4) {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
                                     }
                                     return val;
                                 }
@@ -227,11 +240,12 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
 
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         tbar : [
                             {
                                 xtype : 'button',
@@ -275,7 +289,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "1", "name": "等待办理"},
                                         {"abbr": "2", "name": "正在办理"},
-                                        {"abbr": "3", "name": "已完成"},
+                                        {"abbr": "3", "name": "办理成功"},
+                                        {"abbr": "4", "name": "无法办理"},
                                         {"abbr": "0", "name": "已取消"}
                                     ]
                                 },
@@ -356,6 +371,8 @@ Ext.onReady(function () {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
                                     } else if (val ==3) {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    } else if (val ==4) {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
                                     }
                                     return val;
                                 }
@@ -373,10 +390,11 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         tbar : [
                             {
                                 xtype : 'button',
@@ -420,7 +438,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "1", "name": "等待办理"},
                                         {"abbr": "2", "name": "正在办理"},
-                                        {"abbr": "3", "name": "已完成"},
+                                        {"abbr": "3", "name": "办理成功"},
+                                        {"abbr": "4", "name": "无法办理"},
                                         {"abbr": "0", "name": "已取消"}
                                     ]
                                 },
@@ -501,6 +520,8 @@ Ext.onReady(function () {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
                                     } else if (val ==3) {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    } else if (val ==4) {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
                                     }
                                     return val;
                                 }
@@ -518,10 +539,11 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         tbar : [
                             {
                                 xtype : 'button',
@@ -565,7 +587,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "1", "name": "等待办理"},
                                         {"abbr": "2", "name": "正在办理"},
-                                        {"abbr": "3", "name": "已完成"},
+                                        {"abbr": "3", "name": "办理成功"},
+                                        {"abbr": "4", "name": "无法办理"},
                                         {"abbr": "0", "name": "已取消"}
                                     ]
                                 },
@@ -646,6 +669,8 @@ Ext.onReady(function () {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
                                     } else if (val ==3) {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    } else if (val ==4) {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
                                     }
                                     return val;
                                 }
@@ -663,10 +688,11 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         tbar : [
                             {
                                 xtype : 'button',
@@ -710,7 +736,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "1", "name": "等待办理"},
                                         {"abbr": "2", "name": "正在办理"},
-                                        {"abbr": "3", "name": "已完成"},
+                                        {"abbr": "3", "name": "办理成功"},
+                                        {"abbr": "4", "name": "无法办理"},
                                         {"abbr": "0", "name": "已取消"}
                                     ]
                                 },
@@ -778,7 +805,6 @@ Ext.onReady(function () {
                 items:[
                     Ext.create('Ext.grid.Panel',{
                         store: businessLogstore,
-                        selType: 'checkboxmodel',
                         id : 'winshengyujin',
                         columns: [
                             {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
@@ -792,6 +818,8 @@ Ext.onReady(function () {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
                                     } else if (val ==3) {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    } else if (val ==4) {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
                                     }
                                     return val;
                                 }
@@ -809,10 +837,11 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         tbar : [
                             {
                                 xtype : 'button',
@@ -856,7 +885,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "1", "name": "等待办理"},
                                         {"abbr": "2", "name": "正在办理"},
-                                        {"abbr": "3", "name": "已完成"},
+                                        {"abbr": "3", "name": "办理成功"},
+                                        {"abbr": "4", "name": "无法办理"},
                                         {"abbr": "0", "name": "已取消"}
                                     ]
                                 },
@@ -924,7 +954,6 @@ Ext.onReady(function () {
                 items:[
                     Ext.create('Ext.grid.Panel',{
                         store: businessLogstore,
-                        selType: 'checkboxmodel',
                         id : 'wintui',
                         columns: [
                             {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
@@ -938,6 +967,8 @@ Ext.onReady(function () {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
                                     } else if (val ==3) {
                                         return '<a href="#" title="修改状态" onclick=changeState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    } else if (val ==4) {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
                                     }
                                     return val;
                                 }
@@ -955,10 +986,11 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         tbar : [
                             {
                                 xtype : 'button',
@@ -1002,7 +1034,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "1", "name": "等待办理"},
                                         {"abbr": "2", "name": "正在办理"},
-                                        {"abbr": "3", "name": "已完成"},
+                                        {"abbr": "3", "name": "办理成功"},
+                                        {"abbr": "4", "name": "无法办理"},
                                         {"abbr": "0", "name": "已取消"}
                                     ]
                                 },
@@ -1070,7 +1103,7 @@ Ext.onReady(function () {
                 items:[
                     Ext.create('Ext.grid.Panel',{
                         store: insurancestore,
-                        id : personIn,
+                        id : 'personIn',
                         columns: [
                             {text: "编号", width: 100, dataIndex: 'id', sortable: false,hidden:true},
                             {text: "提交日期", width: 100, dataIndex: 'submitTime', sortable: true},
@@ -1095,7 +1128,7 @@ Ext.onReady(function () {
                             {text: "备注", width: 100, dataIndex: 'remark', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         bbar: Ext.create('Ext.PagingToolbar', {
                             store: insurancestore,
                             displayInfo: true,
@@ -1145,6 +1178,7 @@ Ext.onReady(function () {
                             {text: "单位名称", width: 150, dataIndex: 'companyName', sortable: true},
                             {text: "员工姓名", width: 100, dataIndex: 'employName', sortable: true},
                             {text: "身份证号", width: 100, dataIndex: 'employId', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "员工身份类别", width: 100, dataIndex: 'idClass', sortable: false},
                             {text: "负责客服", width: 100, dataIndex: 'serviceName', sortable: false,hidden:true},
                             {text: "未上保险原因", width: 100, dataIndex: 'unInsuranceReason', sortable: false},
@@ -1153,7 +1187,7 @@ Ext.onReady(function () {
                             {text: "备注", width: 100, dataIndex: 'remark', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         bbar: Ext.create('Ext.PagingToolbar', {
                             store: insurancestore,
                             displayInfo: true,
@@ -1222,10 +1256,11 @@ Ext.onReady(function () {
                             {text: "员工状态", width: 100, dataIndex: 'employState', sortable: false},
                             {text: "业务名称", width: 100, dataIndex: 'businessName', sortable: false},
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
-                        width:1000,
+                        width:1200,
                         tbar : [
                             {
                                 xtype:'textfield',
@@ -1249,7 +1284,8 @@ Ext.onReady(function () {
                                     data: [
                                         {"abbr": "1", "name": "等待办理"},
                                         {"abbr": "2", "name": "正在办理"},
-                                        {"abbr": "3", "name": "已完成"},
+                                        {"abbr": "3", "name": "办理成功"},
+                                        {"abbr": "4", "name": "无法办理"},
                                         {"abbr": "0", "name": "已取消"}
                                     ]
                                 },
@@ -1281,7 +1317,6 @@ Ext.onReady(function () {
                                             limit : 50
                                         }
                                     });
-                                    businessLogstore.loadPage(1);
                                 },
                                 text : '筛选',
                                 iconCls : 'chakan'
@@ -1312,19 +1347,68 @@ Ext.onReady(function () {
                     }
                 }
             }
-
-
         ]
     });
-});
 
+    var items=[tabs2];
+    var indexWin = Ext.create('Ext.window.Window', {
+        title: "欢迎使用中企基业社保功能", // 窗口标题
+        width:1240, // 窗口宽度
+        height:690, // 窗口高度
+        layout:"border",// 布局
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"left", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        buttons:[
+            {
+                xtype:"button",
+                text:"刷新页面" ,
+                handler : function(src) {
+                    document.location = 'index.php?action=Ext&mode=todemo';
+                },
+                iconCls : 'chakan'
+            },
+            {
+                xtype:"button",
+                text:"修改密码" ,
+                handler : function(src) {
+                    modifyPass();
+                },
+                iconCls : 'chakan'
+            }
+        ],
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                mk.hide();
+                window.minimizable = true;
+            },
+            close:function(){
+                Ext.MessageBox.confirm('提示', '请问确定退出吗？', clientExit);
+            }
+        },
+        closeAction:'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    indexWin.show();
+    function clientExit(btn){
+        if(btn=="yes"){
+            document.location = 'index.php?action=Admin&mode=logoff';
+        }else{
+            indexWin.show();
+            return false;
+        }
+    }
+});
 
 
 </script>
 </head>
 <body>
-<?php include("tpl/commom/top.html"); ?>
-        <div id="demo"></div>
-</div>
+<div id="demo"></div>
 </body>
 </html>

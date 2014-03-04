@@ -41,6 +41,7 @@ Ext.onReady(function(){
             {text: "用人单位基数", width: 150, dataIndex: 'danweijishu', sortable: true},
             {text: "操作人姓名", width: 150, dataIndex: 'caozuoren', sortable: true},
             {text: "申报状态", width: 100, dataIndex: 'shenbaozhuangtai', sortable: true},
+            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: true},
             {text: "备注", width: 100, dataIndex: 'beizhu', sortable: true}
         ],
         height:600,
@@ -164,7 +165,7 @@ Ext.onReady(function(){
                     {
                         xtype: 'textfield',
                         id:"companyName" ,
-                        emptyText: "选择公司",
+                        emptyText: "请输入单位名称",
                         allowBlank: false,
                         fieldLabel: '单位'
 
@@ -173,29 +174,14 @@ Ext.onReady(function(){
                         xtype: 'textfield',
                         id:"employName",
                         emptyText: "请输入姓名",
+                        allowBlank: false,
                         fieldLabel: '姓名'
                     },
                     {
                         xtype: 'textfield',
                         id:"employNumber",
                         emptyText: "请输入身份证号",
-                        onBlur:function(){
-                            var url = "index.php?action=ExtSalary&mode=searchEmploy";
-                            Ext.Ajax.request({
-                                url: url,  //从json文件中读取数据，也可以从其他地方获取数据
-                                method : 'POST',
-                                params: {
-                                    employNumber: Ext.getCmp("employNumber").getValue()
-                                },
-                                success: function(response){
-                                    var json = Ext.JSON.decode(response.responseText);
-                                    Ext.getCmp("employName").setValue(json.e_name);
-                                    Ext.getCmp("companyName").setValue(json.e_company);
-
-                                }
-                            });
-
-                        } ,
+                        allowBlank: false,
                         fieldLabel: '身份证号'
                     },
                     {
@@ -276,6 +262,12 @@ Ext.onReady(function(){
                         fieldLabel: '用人单位基数'
                     },
                     {
+                        xtype: 'textfield',
+                        id:"tel",
+                        emptyText: "请输入电话号码",
+                        fieldLabel: '联系方式'
+                    },
+                    {
                         xtype: 'textareafield',
                         id:"beizhu",
                         width:400,
@@ -305,6 +297,7 @@ Ext.onReady(function(){
                     var companyName =  Ext.getCmp("companyName").setValue("");
                     var employName  =  Ext.getCmp("employName").setValue("");
                     var employNumber  =  Ext.getCmp("employNumber").setValue("");
+                    var tel =   Ext.getCmp("tel").setValue("");
                     var beizhu =   Ext.getCmp("beizhu").setValue("");
                 }
             }
@@ -355,7 +348,8 @@ Ext.onReady(function(){
                 companyName: Ext.getCmp("companyName").getValue(),
                 employName: Ext.getCmp("employName").getValue(),
                 employNumber: Ext.getCmp("employNumber").getValue(),
-                beizhu: Ext.getCmp("beizhu").getValue()
+                beizhu: Ext.getCmp("beizhu").getValue(),
+                tel: Ext.getCmp("tel").getValue()
             },
             success : function(response) {
                 winSal.hide();

@@ -102,26 +102,44 @@ class ExtSocialSecurityAction extends BaseAction {
         $where = array ();
         $comList = array ();
         $i=0;
-        $resultEmp   =   $this->objDao->searhZengjianTongjiCount();
+        $where['shenbaozhuangtai']  =   "等待办理";
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
         $comList ['items'] [$i] ["mattername"] = "增减员信息";
-        $comList ['items'] [$i] ["matter"] = $resultEmp;
+        $comList ['items'] [$i] ["matterWait"] = $resultEmp;
+        $where['shenbaozhuangtai']  =   "正在办理";
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
+        $comList ['items'] [$i] ["mattername"] = "增减员信息";
+        $comList ['items'] [$i] ["matterDoing"] = $resultEmp;
+        $where['shenbaozhuangtai']  =   "办理成功";
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
+        $comList ['items'] [$i] ["mattername"] = "增减员信息";
+        $comList ['items'] [$i] ["matterClear"] = $resultEmp;
         $i++;
         foreach ( $businessInfo as $key => $value ) {
             $where['businessName']=  $key;
+            $where['socialSecurityStateId']= 1;
             $result =$this->objDao->searchBusinessCount($where);
             $comList ['items'] [$i] ["mattername"] = $value;
-            $comList ['items'] [$i] ["matter"] = $result;
+            $comList ['items'] [$i] ["matterWait"] = $result;
+            $where['socialSecurityStateId']= 2;
+            $result =$this->objDao->searchBusinessCount($where);
+            $comList ['items'] [$i] ["mattername"] = $value;
+            $comList ['items'] [$i] ["matterDoing"] = $result;
+            $where['socialSecurityStateId']= 3;
+            $result =$this->objDao->searchBusinessCount($where);
+            $comList ['items'] [$i] ["mattername"] = $value;
+            $comList ['items'] [$i] ["matterClear"] = $result;
             $i++;
         }
         $where['disType']   =   "1";
-        $resultsal   =   $this->objDao->searchInsuranceCount($where);
-        $comList ['items'] [$i] ["mattername"] = "个人保险";
-        $comList ['items'] [$i] ["matter"] = $resultsal;
-        $where['disType']   =   "0";
-        $i++;
         $resultin   =   $this->objDao->searchInsuranceCount($where);
         $comList ['items'] [$i] ["mattername"] = "个人工资";
-        $comList ['items'] [$i] ["matter"] = $resultin;
+        $comList ['items'] [$i] ["matterDoing"] = $resultin;
+        $where['disType']   =   "0";
+        $i++;
+        $resultsal   =   $this->objDao->searchInsuranceCount($where);
+        $comList ['items'] [$i] ["mattername"] = "个人保险";
+        $comList ['items'] [$i] ["matterDoing"] = $resultsal;
         echo json_encode($comList);
         exit ();
     }
@@ -241,7 +259,7 @@ class ExtSocialSecurityAction extends BaseAction {
             $comList ['items'] [$i] ['accountComValue'] = $row ['accountComValue'];
             $comList ['items'] [$i] ['accountPersonTime'] = $row ['accountPersonTime'];
             $comList ['items'] [$i] ['accountPersonValue'] = $row ['accountPersonValue'];
-
+            $comList ['items'] [$i] ['tel'] = $row ['tel'];
             $comList ['items'] [$i] ['socialSecurityStateId'] = $row ['socialSecurityStateId'];
             $comList ['items'] [$i] ['socialSecurityState'] = $row ['socialSecurityState'];
             $i ++;
@@ -412,6 +430,7 @@ class ExtSocialSecurityAction extends BaseAction {
         $business = $_REQUEST['business'];
         $employStateNow = $_REQUEST['employState'];
         $remarks = $_REQUEST['remarks'];
+        $tel = $_REQUEST['tel'];
         if(!$employName){
            echo("添加失败！您没有输入员工姓名！");
            exit;
@@ -440,6 +459,7 @@ class ExtSocialSecurityAction extends BaseAction {
         $addBusinessLog["remarks"]=$remarks;
         $addBusinessLog["socialSecurityStateId"]="1";
         $addBusinessLog["socialSecurityState"]=$businessState['1'];
+        $addBusinessLog["tel"]=$tel;
         $addBusinessLog["employStateId"]=$employStateNow;
         $addBusinessLog["employState"]=$employState[$employStateNow];
         $result = $this->objDao->addBusinessLog($addBusinessLog);
@@ -460,7 +480,6 @@ class ExtSocialSecurityAction extends BaseAction {
         $companylist    =   $_POST["ids"];
         $updateType    =   $_POST["updateType"];
         $other  =   array();
-
         $other['reimbursementTime']     =   $_POST["reimbursementTime"];
         $other['reimbursementValue']     =   $_POST["reimbursementValue"];
         $other['accountTime']    =   $_POST["accountTime"];
@@ -501,13 +520,14 @@ class ExtSocialSecurityAction extends BaseAction {
     function updateZengjianyuan(){
         $updateId    =   $_POST["updateId"];
         $updateType    =   $_POST["updateType"];
+        $other['remarks']  =   $_POST["remarks"];
         $this->objDao = new SocialSecurityDao();
         $exmsg=new EC();//设置错误信息类
         if($updateId==null){
             echo "没有找到编号！";
             exit;
         }
-        $result = $this->objDao->updateZengjian($updateId,$updateType);
+        $result = $this->objDao->updateZengjian($updateId,$updateType, $other['remarks']);
             if(!$result){
                 $exmsg->setError(__FUNCTION__, "add business faild ");
                 //事务回滚

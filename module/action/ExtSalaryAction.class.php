@@ -412,6 +412,7 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i]['updateTime']=$row['updateTime'];
             $josnArray['items'][$i]['shenbaozhuangtai']=$row['shenbaozhuangtai'];
             $josnArray['items'][$i]['beizhu']=$row['beizhu'];
+            $josnArray['items'][$i]['tel']=$row['tel'];
             $i++;
         }
         echo json_encode($josnArray);

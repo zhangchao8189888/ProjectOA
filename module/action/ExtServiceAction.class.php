@@ -44,6 +44,9 @@ class ExtServiceAction extends BaseAction {
             case "searchComListJosn" :
                 $this->searchComListJosn();
                 break;
+            case "salarySend":
+                $this->salarySend();
+                break;
             case "data" :
                 $this->data();
                 break;
@@ -120,8 +123,8 @@ class ExtServiceAction extends BaseAction {
         while ($row = mysql_fetch_array($result)) {
             //查询当月工资是否发放
             $results = $this->objDao->searchByComIdAndSalTime($row['id'], $where);
-            $comList ['items'] [$i] ['id'] = $row ['id'];
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
+            $comList ['items'] [$i] ['id'] = $results['id'];
             if ($results["salaryTime"]) {
                 $comList ['items'] [$i] ['salDate'] = date("Y-m-d", strtotime($results["salaryTime"]));
             } else {
@@ -139,14 +142,16 @@ class ExtServiceAction extends BaseAction {
                 $comList ['items'] [$i]['fa_state'] = -1;
                 $result['id'] = 0;
             } else {
+                $comList ['items'] [$i]['fa_state'] = -1;
                 $comList ['items'] [$i]['salStat'] = $results['id'];
                 $comList ['items'] [$i]['salTimeid'] = $results['id'];
                 $this->billInfo = new SalaryDao();
                 $bill_fa = $this->billInfo->searchBillBySalaryTimeId($results['id'], 4);
                 if ($bill = mysql_fetch_array($bill_fa)) {
-                    $comList ['items'] [$i]['fa_state'] = $bill['bill_value'];
-                } else {
-                    $comList ['items'] [$i]['fa_state'] = "<span style=\"color: red\"> 未批准发放 </span>";
+                    if($bill['bill_value']){
+                        $comList ['items'] [$i]['fa_state'] = $bill['bill_value'];
+                    };
+
                 }
             }
             $comList ['items'] [$i]['salNianStat'] = 0;
@@ -173,6 +178,52 @@ class ExtServiceAction extends BaseAction {
         }
         echo json_encode($comList);
         exit();
+    }
+
+    function salarySend() {
+        $exmsg = new EC();
+        //$this->mode="toSendSalary";
+        $salaryTimeId = $_REQUEST['timeid'];
+        $adminPO = $_SESSION['admin'];
+        $billState = 4; //工资发放
+        $billArray = array();
+        $billArray['salaryTime_id'] = $salaryTimeId;
+        $billArray['bill_type'] = $billState;
+        $billArray['bill_date'] = date('Y-m-d H:i:s');
+        $billArray['bill_item'] = "工资发放";
+        $billArray['bill_value'] = 0; //等待审核
+        $billArray['bill_state'] = $billState; //对应$billState['']=>""
+        $billArray['op_id'] = $adminPO['id'];
+        $billArray['text'] = "工资发放";
+        $this->objDao = new SalaryDao();
+        $result = $this->objDao->saveSalaryBill($billArray);
+        $lastid = $this->objDao->g_db_last_insert_id();
+        $errormsg = "";
+        if ($result) {
+            $info   =   "操作成功！";
+            //1代表$billState发票已开
+            $result = $this->objDao->updateSalaryTimeState($billState, $salaryTimeId);
+            //$errormsg=$billname."发放成功";
+            $adminPO = $_SESSION['admin'];
+            $opLog = array();
+            $opLog['who'] = $adminPO['id'];
+            $opLog['what'] = $lastid;
+            $opLog['Subject'] = OP_LOG_SEND_SALARY;
+            $opLog['memo'] = '';
+            //{$OpLog['who']},{$OpLog['what']},{$OpLog['Subject']},{$OpLog['time']},{$OpLog['memo']}
+            $rasult = $this->objDao->addOplog($opLog);
+            if (!$rasult) {
+                $exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
+                //事务回滚
+                $this->objDao->rollback();
+                throw new Exception ($exmsg->error());
+                $info="抱歉，发放失败！";
+            }
+        } else {
+            $info  =   "抱歉，操作失败！";
+        }
+        echo($info);
+        exit;
     }
 
     function  selectManageCompany() {

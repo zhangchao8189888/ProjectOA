@@ -103,16 +103,13 @@ Ext.onReady(function () {
                 text: "审批状态",
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<font color=red>申请发放审批中</font>';
+                        return '<span style="color: blue">申请审批中</span>';
                     } else if (val == 1) {
-                        return '<font color=green>批准发放</font>';
-                    } else if (val == 2) {
-                        return '<a href="#" onclick="send(' + record.data['salTimeid'] + ')" target="_self"><font color=red>未批准发放</font></a>';
+                        return '<span style="color: green">批准发放</span>';
                     } else if (val == -1) {
-                        return '<font color=red>未批准发放</font>';
+                        return '<a href="#" onclick="send(' + record.data['id'] + ')"><span style="color: red">未批准发放</span></a>';
                     }
-                    return "<span style=\"color: red\"> 未批准发放 </span>";
-                    return '<a href="#" onclick="send(' + record.data['salTimeid'] + ')" target="_self">' + val + '</font></a>';
+                    return val;
                 },
                 dataIndex: 'fa_state',sortable: false, align: 'center'},
             {text: "备注", dataIndex: 'mark',sortable: false, align: 'center'}
@@ -136,7 +133,7 @@ Ext.onReady(function () {
         },
         columnLines: true,
         loadMask: true,
-        width: 1000,
+        width: 1050,
         height: 500,
         frame: true,
         title: '主页',
@@ -482,12 +479,41 @@ function cancel(id) {
     }
 }
 function send(eid) {
-    if (confirm('确定要申请发放工资吗?')) {
-        $("#iform").attr("action", "index.php?action=Service&mode=salarySend");
-        $("#timeid").val(eid)
-        $("#iform").submit();
-        //
-    }
+    Ext.MessageBox.show({
+        title:'发放工资',
+        msg: '是否要申请发放工资？',
+        buttonText:{ok: '确认',no:'取消'},
+        animateTarget: 'mb4',
+        fn: function (btn) {
+            if(eid=="0"){
+                Ext.Msg.alert('警告','没有做工资无法申请发放！');
+                return false;
+            }
+           if("no"==btn){
+               return false;
+           }
+            Ext.Ajax.request({
+                url: 'index.php?action=ExtService&mode=salarySend',
+                method: 'post',
+                params: {
+                    timeid:eid
+                },
+                success: function (response) {
+                    var text = response.responseText;
+                    Ext.Msg.alert("提示",text);
+                    serviceManagestore.load( {
+                            params: {
+                                start: 0,
+                                limit: 50
+                            }
+                        }
+                    );
+                }
+
+            });
+        },
+        icon: Ext.MessageBox.INFO
+    })
 }
 function addFa() {
     $("#iform").attr("action", "index.php?action=SalaryBill&mode=toAddInvoice");
