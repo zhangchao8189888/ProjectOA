@@ -256,7 +256,7 @@ class ExtFinanceAction extends BaseAction {
             $sorts = "uncheckid";
         }
         if(!$year){
-            $year="2014";
+            $year = date('Y');
         }
         $where = array ();
         $where ['companyName'] = $companyName;
@@ -277,13 +277,20 @@ class ExtFinanceAction extends BaseAction {
                 } else {
                     $date = $year . "-" . $i . "-01";
                 }
-                $resul = $this->objDao->searchTaxTimeByDateAndComId ( $date, $row ['id'] );
-                if ($resul && $resul ['geSui_type'] == 1) {
+                $resul = $this->objDao->searchTaxTimeByDateAndComId ( $date, $row ['id'] ,1);
+                if ($resul && $resul ['geshui_state'] == 1&& $resul ['geSui_type']==1 ) {
                     $josnArray['items'][$j]['mouth'.$i] = "<span style='color: green'>已报个税</span>";
                 } else {
                     $josnArray['items'][$j]['mouth'.$i] = "<span style='color: red'>未报个税</span>";
                 }
             }
+            $resul = $this->objDao->searchTaxTimeByDateAndComId ( $year, $row ['id'] ,2);
+            if ($resul && $resul ['geshui_state'] == 1&& $resul ['geSui_type']==2 ) {
+                $josnArray['items'][$j]['mouth13'] = "<span style='color: green'>已报个税</span>";
+            } else {
+                $josnArray['items'][$j]['mouth13'] = "<span style='color: red'>未报个税</span>";
+            }
+
             $j++;
         }
         echo json_encode ( $josnArray );

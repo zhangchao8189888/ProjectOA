@@ -180,6 +180,7 @@
                         handler : function() {
                             $("#iform").attr("action","importGeshui.php");
                             $("#iform").submit();
+                            Ext.Msg.confirm("提示","是否插入已报个税标识？",updateGeshuiType);
                         },
                         text : '导出',
                         iconCls : 'toExcel'
@@ -191,7 +192,43 @@
 
 
             });
+//插入已报个税记录
+            function updateGeshuiType(btn) {
+                if(btn=="yes")
+                {
+                    var times = [];
+                    var names = [];
+                    var nian = [];
+                    var model = salTimeListGrid.getSelectionModel();
+                    var i = 0;
+                    geshuiListstore.each(function(record) {
+                        if(record.data.salaryTime != '<span style=\"color: red\">未作工资或免税</span>'){
+                            times.push(record.data.salaryTime);
+                            names.push(record.data.company_id);
+                            if(model.isSelected(i)){
+                                nian.push(1);
+                            }else{
+                                nian.push(0);
+                            }
+                        }
+                        i++;
+                    });
+                    var url = "index.php?action=SaveSalary&mode=insGeshuijilu";
+                    Ext.Ajax.request({
+                        url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+                        method : 'POST',
+                        params: {
+                            timeId : Ext.JSON.encode(names),
+                            time:Ext.JSON.encode(times),
+                            nian:Ext.JSON.encode(nian)
+                        },
+                        success : function(response) {
 
+                        }
+                    });
+                }
+
+            }
 //通过ajax获取表头已经表格数据
             function checkSalWin() {
                 var p = Ext.create("Ext.grid.Panel",{
@@ -277,16 +314,48 @@
 
                     '名称', {
                         id:'cname',
+                        width:80,
                         xtype : 'trigger',
                         name: 'companyname',
                         onTriggerClick : function(src) {
                             nianxuanStore.removeAll();
                             nianxuanStore.load( {
                                 params : {
-                                    cname : this.getValue()
+                                    cname : this.getValue(),
+                                    leixing :  Ext.getCmp("leixing").getValue()
                                 }
                             });
                         }
+                    },
+                    {
+                        xtype: 'combobox',
+                        id:"leixing" ,
+                        width:100,
+                        editable: false,
+                        emptyText: "请选择",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": 1, "name": "已报年终奖"},
+                                {"abbr": 2, "name": "未报年终奖"},
+                                {"abbr": 3, "name": "全部公司"}
+                            ]
+                        },
+                        listeners: {
+                            select: function () {
+                                nianxuanStore.removeAll();
+                                nianxuanStore.load( {
+                                    params : {
+                                        cname : Ext.getCmp("cname").getValue(),
+                                        leixing :  Ext.getCmp("leixing").getValue()
+                                    }
+                                });
+                            }
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: ''
                     },
                     {
                         xtype: 'button',

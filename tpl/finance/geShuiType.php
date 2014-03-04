@@ -90,22 +90,54 @@
                             });
                         }
                     },
-                    '个税类型(输入数字：1.报本月、2.报上月)', {
-                        id:'salTime',
-                        xtype : 'trigger',
-                        triggerClass : 'x-form-search-trigger',
-                        name: 'salTime',
-                        onTriggerClick : function(src) {
+                    {
+                        xtype: 'combobox',
+                        id:"salTime" ,
+                        editable: false,
+                        emptyText: "请选择个税类型",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": 1, "name": "本月报本月"},
+                                {"abbr": 2, "name": "本月报上月"},
+                                {"abbr": 3, "name": "免税公司"}
+                            ]
+                        },
+                        listeners: {
+                            select: function () {
+                                geshuiTypestore.removeAll();
+                                geshuiTypestore.load( {
+                                    params : {
+                                        companyName : Ext.getCmp("comname").getValue(),
+                                        salTime :  Ext.getCmp("salTime").getValue(),
+                                        start : 0,
+                                        limit : 50
+                                    }
+                                });
+                            }
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '个税类型'
+                    },
+                    {
+                        xtype : 'button',
+                        id : 'chaxun',
+                        disabled: false,
+                        handler : function(src) {
                             geshuiTypestore.removeAll();
                             geshuiTypestore.load( {
                                 params : {
                                     companyName : Ext.getCmp("comname").getValue(),
-                                    salTime : this.getValue(),
+                                    salTime :  Ext.getCmp("salTime").getValue(),
                                     start : 0,
                                     limit : 50
                                 }
                             });
-                        }
+                        },
+                        text : '查询',
+                        iconCls : 'chaxun'
                     }
                 ]
             });
@@ -154,7 +186,7 @@
                     handler : function(src) {
                   	  var model = salTimeListGrid.getSelectionModel();
                       var sel=model.getLastSelected();
-                      setBenyue(sel.data.id);
+                        setTypeGeshui(sel.data.id,1);
 
                         geshuiTypestore.load( {
                             params: {
@@ -172,7 +204,7 @@
                     handler : function(src) {
                        var model = salTimeListGrid.getSelectionModel();
                        var sel=model.getLastSelected();
-                       setShangyue(sel.data.id);
+                        setTypeGeshui(sel.data.id,2);
 
                         geshuiTypestore.load( {
                             params: {
@@ -190,7 +222,7 @@
                         handler : function(src) {
                             var model = salTimeListGrid.getSelectionModel();
                             var sel=model.getLastSelected();
-                            setMianshui(sel.data.id);
+                            setTypeGeshui(sel.data.id,3);
 
                             geshuiTypestore.load( {
                                 params: {
@@ -273,47 +305,17 @@
                 winSal.show();
             }
             //通过ajax设置类型
-            function setMianshui(timeId) {
-                var url = "index.php?action=SaveSalary&mode=setMianshuiType";
+            function setTypeGeshui(timeId,type) {
+                var url = "index.php?action=SaveSalary&mode=setTypeGeshui";
                 Ext.Ajax.request({
                     url: url,  //从json文件中读取数据，也可以从其他地方获取数据
                     method : 'POST',
                     params: {
-                        timeId : timeId
+                        timeId : timeId,
+                        type : type
                     },
                     success : function(response) {
-//                        Ext.getCmp("shangyue").setDisabled(true);
-//                        Ext.getCmp("benyue").setDisabled(false);
-                    }
-                });
-            }
-			//通过ajax设置类型
-            function setShangyue(timeId) {
-                var url = "index.php?action=SaveSalary&mode=setShangyueType";
-                Ext.Ajax.request({
-                    url: url,  //从json文件中读取数据，也可以从其他地方获取数据
-                    method : 'POST',
-                    params: {
-                        timeId : timeId
-                    },
-                    success : function(response) {
-//                        Ext.getCmp("shangyue").setDisabled(true);
-//                        Ext.getCmp("benyue").setDisabled(false);
-                    }
-                });
-            }
-            //通过ajax设置类型
-            function setBenyue(timeId) {
-                var url = "index.php?action=SaveSalary&mode=setBenyueType";
-                Ext.Ajax.request({
-                    url: url,  //从json文件中读取数据，也可以从其他地方获取数据
-                    method : 'POST',
-                    params: {
-                        timeId : timeId
-                    },
-                    success : function(response) {
-//                       Ext.getCmp("benyue").setDisabled(true);
-//                       Ext.getCmp("shangyue").setDisabled(false);
+
                     }
                 });
             }

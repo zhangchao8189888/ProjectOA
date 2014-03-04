@@ -344,14 +344,22 @@ class SalaryDao extends BaseDao {
         return $list;
     }
     //查询带条件的公司BY孙瑞鹏
-    function searchCompanyListByName($where=null) {
+    function searchCompanyListByName($where=null,$type=null) {
         $id = $_SESSION ['admin'] ['id'];
+        $time = date('Y',strtotime("-1 year"));
         $sql = "select c.id,c.company_name from OA_company c,OA_admin_company a  where
    a.companyId = c.id  and  a.adminId = $id";
         if ($where) {
             $sql .= " and c.company_name  like '%{$where}%' ";
         }
+        if ($type == 1) {
+            $sql .= " AND c.id   in (SELECT comId FROM OA_gesui  WHERE salTime LIKE '%{$time}%' AND geshui_state = 1  and geSui_type = 2) ";
+        }
+        if ($type == 2) {
+            $sql .= " AND c.id  NOT in (SELECT comId FROM OA_gesui  WHERE salTime LIKE '%{$time}%' AND geshui_state = 1  and geSui_type = 2) ";
+        }
         $result = $this->g_db_query ( $sql );
+
         return $result;
     }
     // 计算个税合计BY孙瑞鹏
@@ -682,6 +690,38 @@ class SalaryDao extends BaseDao {
         return $list;
     }
 
+    // 插入个税标识BY孙瑞鹏
+    function insertGeshui($salaryTimeId, $salaryTime,$type) {
+        $sql = "insert into OA_gesui (salaryTimeId,salTime,geSui_type,comId,geshui_state)
+                   values ((SELECT id FROM OA_salarytime WHERE companyId = '$salaryTimeId' AND salaryTime = '$salaryTime'),'$salaryTime','$type', '$salaryTimeId' ,1)";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 插入年终奖个税标识BY孙瑞鹏
+    function insertNianGeshui($salaryTimeId, $salaryTime,$type) {
+        $sql = "insert into OA_gesui (salaryTimeId,salTime,geSui_type,comId,geshui_state)
+                   values ((SELECT id FROM OA_salarytime_other WHERE companyId = '$salaryTimeId' AND salaryTime  like '%{$salaryTime}%' and  salaryType = 5),(SELECT salaryTime FROM OA_salarytime_other WHERE companyId = '$salaryTimeId' AND salaryTime  like '%{$salaryTime}%' and  salaryType = 5),'$type', '$salaryTimeId' ,1)";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 判断个税标识是否存在BY孙瑞鹏
+    function isGeshui($salaryTimeId, $salaryTime,$type) {
+        $sql = "SELECT id FROM OA_gesui WHERE comId = '$salaryTimeId' AND salTime  like '%{$salaryTime}%' and geSui_type = '$type'";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 判断年个税标识是否存在BY孙瑞鹏
+    function isNianGeshui($salaryTimeId, $salaryTime) {
+        $sql = "SELECT id FROM OA_salarytime_other WHERE companyId = '$salaryTimeId' AND salaryTime  like '%{$salaryTime}%' and  salaryType = 5";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 判断单月个税标识是否存在BY孙瑞鹏
+    function isYueGeshui($salaryTimeId, $salaryTime) {
+        $sql = "SELECT id FROM OA_salarytime WHERE companyId = '$salaryTimeId' AND salaryTime = '$salaryTime' ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
     // 个税类型设置BY孙瑞鹏
     function searchGeshuiBy_SalaryTypeId($sid) {
         $sql = "SELECT geshui_dateType ,company_name FROM OA_company WHERE id=$sid";
@@ -695,22 +735,9 @@ class SalaryDao extends BaseDao {
         $list = $this->g_db_query ( $sql );
         return $list;
     }
-    // 个税类型设置本月BY孙瑞鹏
-    function setTypeBenyue($sid) {
-        $sql = "UPDATE OA_company SET geshui_dateType = 1 WHERE id = $sid";
-        $list = $this->g_db_query ( $sql );
-        return $list;
-    }
-
-    // 个税类型设置上月BY孙瑞鹏
-    function setTypeShangyue($sid) {
-        $sql = "UPDATE OA_company SET geshui_dateType = 2 WHERE id = $sid";
-        $list = $this->g_db_query ( $sql );
-        return $list;
-    }
-    // 个税类型设置上月BY孙瑞鹏
-    function setTypeMianshui($sid) {
-        $sql = "UPDATE OA_company SET geshui_dateType = 3 WHERE id = $sid";
+    // 个税类型设置BY孙瑞鹏
+    function setTypeGeshui($sid,$type) {
+        $sql = "UPDATE OA_company SET geshui_dateType = $type WHERE id = $sid";
         $list = $this->g_db_query ( $sql );
         return $list;
     }

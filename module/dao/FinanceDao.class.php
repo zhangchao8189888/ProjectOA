@@ -137,8 +137,8 @@ class FinanceDao extends BaseDao
         $result=$this->g_db_query($sql);
         return $result;
     }
-    function searchTaxTimeByDateAndComId($date, $comId) {
-        $sql = "select *  from OA_gesui where salTime='$date' and comId=$comId ";
+    function searchTaxTimeByDateAndComId($date, $comId,$type) {
+        $sql = "select *  from OA_gesui where salTime like '%{$date}%' and comId=$comId and  geSui_type='$type'";
         $result = $this->g_db_query ( $sql );
         return mysql_fetch_array ( $result );
     }

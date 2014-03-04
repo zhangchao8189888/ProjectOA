@@ -338,7 +338,8 @@ class ExtSalaryAction extends BaseAction{
     function getCnameListExt(){
         $this->objDao=new SalaryDao();
         $where = $_REQUEST ['cname'];
-        $salaryTimeList= $this->objDao->searchCompanyListByName($where);
+        $type = $_REQUEST ['leixing'];
+        $salaryTimeList= $this->objDao->searchCompanyListByName($where,$type);
         $josnArray=array();
         $i=0;
         while ($row=mysql_fetch_array($salaryTimeList) ){
@@ -516,7 +517,7 @@ class ExtSalaryAction extends BaseAction{
             }
 
     	$sum =$this->objDao->searhSalaryTimeCount();
-        $salaryNameList=$this->objDao->searchCompanyListByName($companyName);
+        $salaryNameList=$this->objDao->searchCompanyListByName($companyName,null);
     	$josnArray=array();
     	$josnArray['total']=$sum;
     	$i=0;
