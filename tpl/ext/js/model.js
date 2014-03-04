@@ -235,7 +235,8 @@ Ext.define('oa.common.zengjian.list',{
         {name: 'caozuoren', type: 'string'},
         {name: 'updateTime', type: 'string'},
         {name: 'shenbaozhuangtai', type: 'string'},
-        {name: 'beizhu', type: 'string'}
+        {name: 'beizhu', type: 'string'},
+        {name: 'tel', type: 'string'}
     ]
 });
 
@@ -359,7 +360,8 @@ Ext.define('oa.common.socialsecurity.business', {
         {name: 'accountComTime', type: 'string'},
         {name: 'accountComValue', type: 'string'},
         {name: 'accountPersonTime', type: 'string'},
-        {name: 'accountPersonValue', type: 'int'}
+        {name: 'accountPersonValue', type: 'int'} ,
+        {name: 'tel', type: 'int'}
     ]
 
 });
@@ -371,8 +373,9 @@ Ext.define('oa.common.socialsecurity.socialsecurityinfo', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'mattername', type: 'string'},
-        {name: 'matter', type: 'string'}
-
+        {name: 'matterWait', type: 'string'},
+        {name: 'matterDoing', type: 'string'},
+        {name: 'matterClear', type: 'string'}
     ]
 
 });

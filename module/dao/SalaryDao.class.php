@@ -689,10 +689,11 @@ class SalaryDao extends BaseDao {
         return $list;
     }
     // 增员BY孙瑞鹏
-    function setZengyuan($CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi) {
-        $sql = "insert into OA_security (submitTime,CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi)
-                   values (now(),'{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}',{$sum1},'{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}')";
+    function setZengyuan($CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi,$tel) {
+        $sql = "insert into OA_security (submitTime,CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi,tel)
+                   values (now(),'{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}',{$sum1},'{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}','{$tel}')";
         $list = $this->g_db_query ( $sql );
+        echo($sql);
         return $list;
     }
     // 个税类型设置本月BY孙瑞鹏
@@ -1083,19 +1084,6 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         return $list;
     }
     function saveSalaryBill($billArray) {
-        /**
-         * `id` int(11) NOT NULL AUTO_INCREMENT,
-         * `salaryTime_id` int(11) NOT NULL,
-         * `bill_type` int(2) NOT NULL,
-         * `bill_date` date DEFAULT NULL,
-         * `bill_item` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
-         * `bill_value` double(10,2) DEFAULT NULL,
-         * `bill_state` int(2) DEFAULT NULL,
-         * `op_id` int(11) DEFAULT NULL,
-         * PRIMARY KEY (`id`)
-         *
-         * @var unknown_type
-         */
         $sql = "INSERT INTO OA_bill (salaryTime_id,bill_no,bill_type,bill_date,bill_item,bill_value,bill_state,text) VALUES
     	     ({$billArray['salaryTime_id']},'{$billArray['bill_no']}',{$billArray['bill_type']},'{$billArray['bill_date']}',
     	     '{$billArray['bill_item']}',{$billArray['bill_value']},{$billArray['bill_state']},'{$billArray['text']}')";

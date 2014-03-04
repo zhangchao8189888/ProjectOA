@@ -8,7 +8,7 @@ $admin=$_SESSION['admin'];
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title></title>
+    <title>添加管理员</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
    <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
    <link href="common/css/validator.css" rel="stylesheet" type="text/css" />
@@ -41,7 +41,7 @@ $admin=$_SESSION['admin'];
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
             <!--导航栏-->
-            <div class="navigate">{$navigate}</div>
+            <div class="navigate"></div>
             <div class="form">
                <div id="span_msg"><font color="red"><?php if($errorMsg)echo $errorMsg?></font>
 			<font color="green"><?php if($succ)echo $succ?></font></div>
@@ -142,7 +142,7 @@ $admin=$_SESSION['admin'];
             ?>
         <tr>
           <td><div align="center"><?php echo $row['name'];?></div></td>
-          <td><div align="center"><?php if($row['admin_type']==2)echo '普通管理员'; elseif($row['admin_type']==1)echo '系统管理员';elseif($row['admin_type']==3)echo '客服管理员';elseif($row['admin_type']==4)echo '财务管理员';?> </div></td>
+          <td><div align="center"><?php if($row['admin_type']==2)echo '普通管理员'; elseif($row['admin_type']==1)echo '系统管理员';elseif($row['admin_type']==3)echo '客服管理员';elseif($row['admin_type']==4)echo '财务管理员';elseif($row['admin_type']==5)echo '社保管理员';?> </div></td>
           <td class="bz_disabled"><div align="center"><?php echo $row['last_login_time'];?></div></td>
            <td class="bz_disabled"><div align="center"><?php echo $row['create_time'];?></div></td>
           <td><div align="center"><?php echo $row['memo'];?></div></td>

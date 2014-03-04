@@ -94,7 +94,7 @@ class SocialSecurityDao extends BaseDao {
      */
     function addBusinessLog($businessLog) {
         $sql = "
-        insert into OA_business (submitTime,companyId,companyName,employId,employName,businessName,serviceId,serviceName,remarks,socialSecurityStateId,socialSecurityState,employStateId,employState)
+        insert into OA_business (submitTime,companyId,companyName,employId,employName,businessName,serviceId,serviceName,remarks,socialSecurityStateId,socialSecurityState,employStateId,employState,tel)
         values
     	     (now(),
     	     '{$businessLog['companyId']}',
@@ -108,7 +108,8 @@ class SocialSecurityDao extends BaseDao {
     	     '{$businessLog['socialSecurityStateId']}',
     	     '{$businessLog['socialSecurityState']}',
     	     '{$businessLog['employStateId']}',
-    	     '{$businessLog['employState']}') ";
+    	     '{$businessLog['employState']}',
+    	     '{$businessLog['tel']}') ";
         $result = $this->g_db_query($sql);
         return $result;
     }
@@ -147,6 +148,8 @@ class SocialSecurityDao extends BaseDao {
             if($other['accountPersonTime']){
                 $sql .=",accountPersonTime =  '{$other['accountPersonTime']}',
                 accountPersonValue =  '{$other['accountPersonValue']}'";
+            } if($other['remarks']){
+                $sql .=",remarks =  '{$other['remarks']}'";
             }
         }
         $sql .=" WHERE id=$upId";
@@ -260,6 +263,9 @@ class SocialSecurityDao extends BaseDao {
             if ($where ['zengjian'] != "") {
                 $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
             }
+            if($where ['shenbaozhuangtai'] != ""){
+                $sql .= "  and shenbaozhuangtai = '{$where['shenbaozhuangtai']}' ";
+            }
         }
         $result = $this->g_db_query ( $sql );
         if (! $result) {
@@ -272,10 +278,14 @@ class SocialSecurityDao extends BaseDao {
     /**
      * 增减员状态
      */
-    function updateZengjian($upid,$uptype) {
+    function updateZengjian($upid,$uptype,$remark) {
         $name = $_SESSION ['admin'] ['name'];
         $sql = " UPDATE OA_security  SET shenbaozhuangtai ='$uptype', updateTime=now(),
-                caozuoren ='$name'  WHERE id=$upid ";
+                caozuoren ='$name'";
+        if($remark!=""){
+            $sql .=",beizhu = '$remark'";
+        }
+        $sql .=" WHERE id=$upid";
         $result = $this->g_db_query($sql);
         return $result;
     }

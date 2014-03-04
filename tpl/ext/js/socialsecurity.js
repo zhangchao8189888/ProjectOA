@@ -375,7 +375,8 @@ function changeState(updateId) {
     Ext.MessageBox.show({
         title:'更改状态',
         msg: '请选择修改的状态',
-        buttonText:{ok: '正在办理', yes: '办理成功'},
+        width:300,
+        buttonText:{ok: '正在办理', yes: '办理成功',no:'无法办理'},
         animateTarget: 'mb4',
         fn: function (btn) {
             var updateType;
@@ -386,6 +387,8 @@ function changeState(updateId) {
                 updateType=2;
             } else if("yes"==btn){
                 updateType=3;
+            }else if("no"==btn){
+                updateType=4;
             }else{
                 return false;
             }
@@ -401,6 +404,38 @@ function changeState(updateId) {
                 success: function (response) {
                     var text = response.responseText;
                     Ext.Msg.alert("提示",text);
+                    if("no"==btn){
+                        Ext.MessageBox.show({
+                            title: '无法办理',
+                            msg: '请输入无法办理原因：',
+                            width:300,
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            multiline: true,
+                            fn: function(btn, text){
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=ExtSocialSecurity&mode=updateBusiness',
+                                    method: 'post',
+                                    params: {
+                                        ids: Ext.JSON.encode(itcIds),
+                                        updateType:4,
+                                        remarks:text
+                                    },
+                                    success: function (response) {
+                                        var text = response.responseText;
+                                        Ext.Msg.alert("提示",text);
+                                        businessLogstore.load( {
+                                                params: {
+                                                    start: 0,
+                                                    limit: 50
+                                                }
+                                            }
+                                        );
+                                    }
+                                });
+                            },
+                            animateTarget: 'mb3'
+                        });
+                    } ;
                     businessLogstore.load( {
                             params: {
                                 start: 0,
@@ -413,12 +448,13 @@ function changeState(updateId) {
         },
         icon: Ext.MessageBox.INFO
     })
-} ;
+}
 function changezengjianState(updateId) {
     Ext.MessageBox.show({
         title:'更改状态',
         msg: '请选择修改的状态',
-        buttonText:{ok: '正在办理', yes: '办理成功'},
+        width:300,
+        buttonText:{ok: '正在办理', yes: '办理成功',no:'无法办理'},
         animateTarget: 'mb4',
         fn: function (btn) {
             var updateType;
@@ -429,6 +465,8 @@ function changezengjianState(updateId) {
                 updateType="正在办理";
             } else if("yes"==btn){
                 updateType="办理成功";
+            }else if("no"==btn){
+                updateType="无法办理";
             }else{
                 return false;
             }
@@ -443,6 +481,38 @@ function changezengjianState(updateId) {
                 success: function (response) {
                     var text = response.responseText;
                     Ext.Msg.alert("提示",text);
+                    if("no"==btn){
+                        Ext.MessageBox.show({
+                            title: '无法办理',
+                            msg: '请输入无法办理原因：',
+                            width:300,
+                            buttons: Ext.MessageBox.OKCANCEL,
+                            multiline: true,
+                            fn: function(btn, text){
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=ExtSocialSecurity&mode=updateZengjianyuan',
+                                    method: 'post',
+                                    params: {
+                                        updateId:updateId,
+                                        updateType:updateType,
+                                        remarks:text
+                                    },
+                                    success: function (response) {
+                                        var text = response.responseText;
+                                        Ext.Msg.alert("提示",text);
+                                        zengjianListstore.load( {
+                                                params: {
+                                                    start: 0,
+                                                    limit: 50
+                                                }
+                                            }
+                                        );
+                                    }
+                                });
+                            },
+                            animateTarget: 'mb3'
+                        });
+                    };
                     zengjianListstore.load( {
                             params: {
                                 start: 0,
@@ -485,7 +555,7 @@ function checkSalWin(itcIds) {
     var winSal = Ext.create('Ext.window.Window', {
         title: "查看详细信息", // 窗口标题
         width:1200, // 窗口宽度
-        height:300, // 窗口高度
+        height:200, // 窗口高度
         layout:"border",// 布局
         minimizable:true, // 最大化
         maximizable:true, // 最小化
@@ -929,3 +999,127 @@ var addinwin = Ext.create('Ext.form.Panel', {
         }
     ]
 });
+
+//FIXME!!  修改密码window
+var addBusinessWindow = Ext.create('Ext.form.Panel', {
+    bodyPadding: 10,
+    width: 480,
+    height: 240,
+    items: [
+        {
+            xtype: 'fieldcontainer',
+            fieldLabel: '请输入数据',
+            defaultType: 'checkboxfield',
+            items: [
+                {
+                    xtype: 'textfield',
+                    id:"nowpass",
+                    allowBlank: false,
+                    emptyText: "请输入当前密码",
+                    fieldLabel: '当前密码<span style="color: red;font-size: 12px">(必填)</span>'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"newpass",
+                    inputType: 'password',
+                    emptyText: "新密码",
+                    regex: /^([a-zA-Z0-9]{6,})$/i,
+                    regexText: '密码必须包含字母或数字,且最少有6位',
+                    allowBlank: false,
+                    fieldLabel: '请输入新密码'
+                },
+                {
+                    xtype: 'textfield',
+                    id:"repass",
+                    inputType: 'password',
+                    emptyText: "确认密码",
+                    regex: /^([a-zA-Z0-9]{6,})$/i,
+                    regexText: '密码必须包含字母或数字,且最少有6位',
+                    allowBlank: false,
+                    fieldLabel: '请再输入一次',
+                    validator: function(value){
+                        var pw = this.previousSibling().value;
+                        if(value != pw){
+                            return '两次输入的密码不一致';
+                        }else{
+                            return true;
+                        }
+
+                    }
+                },
+                {
+                    id:'hint',
+                    xtype : 'displayfield',
+                    readonly:true,
+                    width:200,
+                    height:50,
+                    value:"<span style='color: red'><br>注：修改密码成功需要重新登录。</span>",
+                    name: 'hint'
+                }
+            ]
+        }
+    ],
+    buttons: [
+        {
+            text: '提交',
+            handler: function () {
+                var nowpass = Ext.getCmp("nowpass").getValue();
+                var newpass = Ext.getCmp("newpass").getValue();
+                var repass = Ext.getCmp("repass").getValue();
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                Ext.Ajax.request({
+                    url: "index.php?action=Admin&mode=modifyPass",
+                    method: 'POST',
+                    params: {
+                        nowpass: nowpass,
+                        newpass: newpass,
+                        repass: repass
+                    },
+                    success: function (response) {
+                        var text = response.responseText;
+                        Ext.Msg.alert("提示！", text);
+                        window.location.reload();
+                    }
+                });
+            }
+        },
+        {
+            text: '清空',
+            handler: function () {
+                this.up('form').getForm().reset();
+            }
+        }
+    ]
+});
+
+function modifyPass(){
+    var items=[addBusinessWindow];
+    modi = Ext.create('Ext.window.Window', {
+        title: "修改账户密码", // 窗口标题
+        width:500, // 窗口宽度
+        height:260, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                window.minimizable = true;
+            }
+        },
+        closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    modi.show();
+}
