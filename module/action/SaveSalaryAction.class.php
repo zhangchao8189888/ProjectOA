@@ -473,7 +473,7 @@ class SaveSalaryAction extends BaseAction {
         //导出
         $hang=0;
         $salaryListExcel=array();
-        $salaryListExcel[$hang][0]="个人所得税";
+        $salaryListExcel[$hang][0]="个人编号";
         $salaryListExcel[$hang][1]="姓名";
         $salaryListExcel[$hang][2]="身份证号";
         $salaryListExcel[$hang][3]="个税日期";

@@ -9,7 +9,6 @@
     <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
     <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
     <link href="common/css/admin.css" rel="stylesheet" type="text/css" />
-
     <script language="javascript" type="text/javascript" src="common/ext/ext-all.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
     <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
@@ -91,10 +90,10 @@
                             );
                             checkSalWin();
                         },
-                        text : '个税查看导出',
+                        text : '详细查看导出',
                         iconCls : 'chakan'
                     },
-                    '公司名称查询', {
+                    '公司名称', {
                         id:'comname',
                         xtype : 'trigger',
                         triggerClass : 'x-form-search-trigger',
@@ -137,6 +136,32 @@
 
                         },
                         text: '月份查找'
+                    },
+                    {
+                        xtype : 'button',
+                        id : 'toExcelBySum',
+                        handler : function() {
+                            $("#iform1").attr("action","importGeshuiBySum.php");
+                            $("#iform1").submit();
+                        },
+                        text : '公司导出',
+                        iconCls : 'toExcelBySum'
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'xianshi',
+                        disabled: false,
+                        handler: function () {
+
+                           if(salTimeListGrid1.isHidden())
+                           {
+                            salTimeListGrid1.show();
+                           }else{
+                               salTimeListGrid1.hide();
+                           }
+
+                        },
+                        text: '显示/隐藏辅助框'
                     }
                 ]
             });
@@ -413,6 +438,7 @@
 
             });
             nianxuanStore.loadPage(1);
+            salTimeListGrid1.hide();
 
         });
 
@@ -427,6 +453,8 @@
     </div>
 </div>
 <form id="iform" action="" method="post">
+</form>
+<form id="iform1" action="" method="post">
 </form>
 </body>
 </html>
