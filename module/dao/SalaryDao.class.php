@@ -936,7 +936,16 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         $sql = "select st.*,st.id  as stId,e.* ,e.id as  eId,s.*,s.id as sId  from OA_salarytime st,OA_employ e,OA_salary s
     	      where  st.id=s.salaryTimeId  and e.e_num=s.employid and s.employid='{$emp['eno']}' ";
         if (! empty ( $emp ['sTime'] )) {
-
+            $sql .= " and st.salaryTime='{$emp['sTime']}'";
+        }
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+    // 查询员工个人工资根据员工姓名
+    function searchSalaryListBy_SalaryEmpName($emp) {
+        $sql = "select st.*,st.id  as stId,e.* ,e.id as  eId,s.*,s.id as sId  from OA_salarytime st,OA_employ e,OA_salary s
+    	      where  st.id=s.salaryTimeId  and e.e_num=s.employid and e.e_name='{$emp['e_name']}' ";
+        if (! empty ( $emp ['sTime'] )) {
             $sql .= " and st.salaryTime='{$emp['sTime']}'";
         }
         $result = $this->g_db_query ( $sql );

@@ -1042,11 +1042,9 @@ class SalaryAction extends BaseAction {
 		$canbaofei = ($_POST ['canbaofei'] - 1);
 		$laowufei = ($_POST ['laowufei'] - 1);
 		$danganfei = ($_POST ['danganfei'] - 1);
-		// print_r($addArray);
-		// print_r($delArray);
 		session_start ();
 		$salaryList = $_SESSION ['salarylist'];
-		$jisuan_var = array ();
+
 		$error = array ();
 		$this->objDao = new EmployDao ();
 		// 根据身份证号查询出员工身份类别
@@ -1056,13 +1054,13 @@ class SalaryAction extends BaseAction {
 			if ($employ) {
 				if ($com != '' && $com != - 1) {
 					if ($salaryList [Sheet1] [$i] [$com] != $employ ['e_company']) {
-						echo $salaryList [Sheet1] [$i] [$com] . '|' . $employ ['e_company'];
+//						echo $salaryList [Sheet1] [$i] [$com] . '|' . $employ ['e_company'];
 						$error [$i] ["error_com"] = "<font color='red'>{$salaryList[Sheet1][$i][$shenfenzheng]}</font>:公司名称不一致！系统：{$employ['e_company']},导入文件：{$salaryList[Sheet1][$i][$com]}";
 					}
 				}
 				if ($name != '' && $name != - 1) {
 					if ($salaryList [Sheet1] [$i] [$name] != $employ ['e_name']) {
-						echo $salaryList [Sheet1] [$i] [$com] . '|' . $employ ['e_company'];
+//						echo $salaryList [Sheet1] [$i] [$com] . '|' . $employ ['e_company'];
 						$error [$i] ["error_ename"] = "<font color='red'>{$salaryList[Sheet1][$i][$shenfenzheng]}</font>:姓名不一致！系统：{$employ['e_name']},导入文件：{$salaryList[Sheet1][$i][$name]}";
 					}
 				}
@@ -1106,11 +1104,29 @@ class SalaryAction extends BaseAction {
 						$error [$i] ["error_danganfei"] = "<font color='red'>{$salaryList[Sheet1][$i][$shenfenzheng]}</font>:档案费不一致！系统：{$employ['danganfei']},导入文件：{$salaryList[Sheet1][$i][$danganfei]}";
 					}
 				}
-				/*
-				 * $salaryList[Sheet1][$i]['yinhangkahao']=$employ['bank_num']; $salaryList[Sheet1][$i]['shenfenleibie']=$employ['e_type']; $salaryList[Sheet1][$i]['shebaojishu']=$employ['shebaojishu']; $salaryList[Sheet1][$i]['gongjijinjishu']=$employ['gongjijinjishu']; $salaryList[Sheet1][$i]['laowufei']=$employ['laowufei']; $salaryList[Sheet1][$i]['canbaojin']=$employ['canbaojin']; $salaryList[Sheet1][$i]['danganfei']=$employ['danganfei'];
-				 */
+                $error [$i] ["br"]  ="<br>";
 			} else {
 				$error [$i] ["error_shenfen"] = "<font color='red'>{$salaryList[Sheet1][$i][$shenfenzheng]}</font>:未查询到该员工身份类别！";
+                $employByName = $this->objDao->getEmByEname( $salaryList[Sheet1][$i][$name]);
+                    $error [$i] ["error_shenfen"].="<br>";
+                $error [$i] ["error_shenfen"].="根据姓名查找信息如下：<br>";
+                while ($row=mysql_fetch_array($employByName) ){
+                    $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 姓名：".$row["e_name"]."</span>";
+                    $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 身份证号：".$row["e_num"]."</span>";
+                    $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 所在公司：".$row["e_company"]."</span>";
+                    $comid = $this->objDao->searchCompanyidByName($row["e_company"]);
+                    while($companyId=mysql_fetch_array($comid)){
+                        $adminlist = $this->objDao->getAdminBycomId($companyId["id"]);
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 管理者姓名：</span>";
+                        while($admin=mysql_fetch_array($adminlist)){
+                            $adminName = $this->objDao->getAdminById($admin["adminId"]);
+                            if ($adminName) {
+                                $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> ".$adminName["name"]."</span>";
+                            }
+                        }
+                    }
+                }
+                $error [$i] ["error_shenfen"].="<br>";
 				continue;
 			}
 		}
@@ -1121,24 +1137,10 @@ class SalaryAction extends BaseAction {
 		$this->objForm->setFormData ( "excelList", $salaryList [Sheet1] );
 	}
 	function salPerDuibi() {
-		/**
-		 * 身份证：<input type="text" name="shenfenzheng" id="shenfenzheng" value="" size="1"/>
-		 * 工资月份（<font color='red'>2011-01-01</font>）：<input type="text" name="salTime" id="salTime" value="" />
-		 * 个人失业：<input type="text" name="pershiye" value="" size="1"/>
-		 * 个人医疗：<input type="text" name="peryiliao" value="" size="1"/>
-		 * 个人养老：<input type="text" name="peryanglao" value="" size="1"/>
-		 * 个人公积金：<input type="text" name="pergongjijin" value="" size="1"/>
-		 * </div>
-		 * <div class="manage">
-		 * 单位失业：<input type="text" name="comshiye" value="" size="1"/>
-		 * 单位医疗：<input type="text" name="comyiliao" value="" size="1"/>
-		 * 单位养老：<input type="text" name="comyanglao" value="" size="1"/>
-		 * 单位工伤：<input type="text" name="comgongshang" value="" size="1"/>
-		 * 单位生育：<input type="text" name="comshengyu" value="" size="1"/>
-		 */
 		set_time_limit ( 0 );
 		$this->mode = "duibiError";
 		$shenfenzheng = ($_POST ['shenfenzheng_com'] - 1);
+        $empname = ($_POST ['name_com'] - 1);
 		$salTime = $_POST ['salTime_com'];
 		$pershiye = ($_POST ['pershiye_com'] - 1);
 		$peryiliao = ($_POST ['peryiliao_com'] - 1);
@@ -1149,8 +1151,6 @@ class SalaryAction extends BaseAction {
 		$comyanglao = ($_POST ['comyanglao_com'] - 1);
 		$comgongshang = ($_POST ['comgongshang_com'] - 1);
 		$comshengyu = ($_POST ['comshengyu_com'] - 1);
-		// print_r($addArray);
-		// print_r($delArray);
 		session_start ();
 		$salaryList = $_SESSION ['salarylist'];
 		$jisuan_var = array ();
@@ -1158,25 +1158,11 @@ class SalaryAction extends BaseAction {
 		$this->objDao = new SalaryDao ();
 		// 根据身份证号查询出员工身份类别
 		for($i = 1; $i < count ( $salaryList [Sheet1] ); $i ++) {
-			// echo $salaryList[Sheet1][$i][$shenfenzheng]."!!!!!!!!!".$shenfenzheng.$salTime;
 			$emp = array ();
 			$emp ['eno'] = $salaryList [Sheet1] [$i] [$shenfenzheng];
+            $emp ['e_name'] = $salaryList [Sheet1] [$i] [$empname];
 			$emp ['sTime'] = $salTime;
 			$employ = mysql_fetch_array ( $this->objDao->searchSalaryListBy_SalaryEmpId ( $emp ) );
-			/**
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['per_yiliao'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['per_yanglao'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['per_gongjijin'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['per_daikoushui'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['per_koukuangheji'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['per_shifaheji'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['com_shiye'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['com_yiliao'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['com_yanglao'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['com_gongshang'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['com_shengyu'].'</td>';
-			 * echo '<td align="left" width="150px" style="word-wrap:break-word;">'.$value['com_gongjijin'].'</td>';
-			 */
 			if ($employ) {
 				if ($pershiye != '' && $pershiye != - 1) {
 					if ($salaryList [Sheet1] [$i] [$pershiye] != $employ ['per_shiye']) {
@@ -1224,8 +1210,28 @@ class SalaryAction extends BaseAction {
 					}
 				}
 			} else {
-				$error [$i] ["error_shenfen"] = "<td>{$employ['e_name']}</td><td>{$employ['e_company']}</td><td>{$salaryList[Sheet1][$i][$shenfenzheng]}</font></td><td>:未查询到该员工{$salTime}月份下的工资！</td>";
-				continue;
+				$error [$i] ["error_shenfen"] = "<span style=\"color: red\"> {$employ['e_name']} {$employ['e_company']} {$salaryList[Sheet1][$i][$shenfenzheng]} </span>未查询到该员工{$salTime}月份下的工资！<br>";
+                $employByName = $this->objDao->searchSalaryListBy_SalaryEmpName( $emp);
+                while ($row=mysql_fetch_array($employByName) ){
+                    if($row){
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 根据姓名查找信息如下：</span><br>";
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\">姓名：". $row["e_name"]."</span>";
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 身份证号：".$row["e_num"]."</span>";
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 所在公司：".$row["e_company"]."</span>";
+                        $adminlist = $this->objDao->getAdminBycomId($row["companyId"]);
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 管理者姓名：</span>";
+                        while($admin=mysql_fetch_array($adminlist)){
+                            $adminName = $this->objDao->getAdminById($admin["adminId"]);
+                            if ($adminName) {
+                                $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> ".$adminName["name"]."</span>";
+                            }
+                        }
+                        $error [$i] ["error_shenfen"].="<br><br>";
+                    } else{
+                        $error [$i] ["error_shenfen"].= "<span style=\"color: blue\"> 抱歉，根据姓名也未找到该员工信息。</span><br>";
+                    }
+                }
+                continue;
 			}
 		}
 		if (count ( $error ) == 0) {
@@ -1237,6 +1243,7 @@ class SalaryAction extends BaseAction {
 	function jishuDuibi() {
 		$this->mode = "duibiError";
 		$shenfenzheng = ($_POST ['shenfenzheng_jishu'] - 1);
+        $empname = ($_POST ['name_jishu'] - 1);
 		$shiye = ($_POST ['shiye_jishu'] - 1);
 		$yiliao = ($_POST ['yiliao_jishu'] - 1);
 		$yanglao = ($_POST ['yanglao_jishu'] - 1);
@@ -1296,7 +1303,30 @@ class SalaryAction extends BaseAction {
 					}
 				}
 			} else {
-				$error [$i] ["error_shenfen"] = "<font color='red'>{$salaryList[Sheet1][$i][$shenfenzheng]}</font>:未查询到该员工身份类别！";
+				$error [$i] ["error_shenfen"] = "<span style=\"color: red\"> {$salaryList[Sheet1][$i][$shenfenzheng]} </span>:未查询到该员工身份类别！<br>";
+                $employByName = $this->objDao->getEmByEname( $salaryList[Sheet1][$i][$empname]);
+                while ($row=mysql_fetch_array($employByName) ){
+                    if($row){
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 根据姓名查找信息如下：</span><br>";
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 姓名：".$row["e_name"]."</span>";
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 身份证号：".$row["e_num"]."</span>";
+                        $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 所在公司：".$row["e_company"]."</span>";
+                        $comid = $this->objDao->searchCompanyidByName($row["e_company"]);
+                        while($companyId=mysql_fetch_array($comid)){
+                            $adminlist = $this->objDao->getAdminBycomId($companyId["id"]);
+                            $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 管理者姓名：</span>";
+                            while($admin=mysql_fetch_array($adminlist)){
+                                $adminName = $this->objDao->getAdminById($admin["adminId"]);
+                                if ($adminName) {
+                                    $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> ".$adminName["name"]."</span>";
+                                }
+                            }
+                        }
+                        $error [$i] ["error_shenfen"].="<br><br>";
+                    } else{
+                        $error [$i] ["error_shenfen"].= "<span style=\"color: blue\"> 抱歉，根据姓名也未找到该员工信息。</span><br>";
+                    }
+                }
 				continue;
 			}
 		}
