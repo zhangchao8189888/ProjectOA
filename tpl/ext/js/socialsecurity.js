@@ -1001,7 +1001,7 @@ var addinwin = Ext.create('Ext.form.Panel', {
 });
 
 //FIXME!!  修改密码window
-var addBusinessWindow = Ext.create('Ext.form.Panel', {
+var changePassWindow = Ext.create('Ext.form.Panel', {
     bodyPadding: 10,
     width: 480,
     height: 240,
@@ -1097,7 +1097,7 @@ var addBusinessWindow = Ext.create('Ext.form.Panel', {
 });
 
 function modifyPass(){
-    var items=[addBusinessWindow];
+    var items=[changePassWindow];
     modi = Ext.create('Ext.window.Window', {
         title: "修改账户密码", // 窗口标题
         width:500, // 窗口宽度

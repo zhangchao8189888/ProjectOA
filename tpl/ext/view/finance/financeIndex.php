@@ -69,7 +69,21 @@ Ext.onReady(function () {
                     return val;
                 }
             },
-            {text: "工资发放", flex: 120, dataIndex: 'sal_approve', sortable: false,align:'center'}
+            {text: "工资发放", flex: 120, dataIndex: 'sal_approve', sortable: false,align:'center',
+                renderer:function(val,cellmeta,record){
+                    if(val == 0){
+                        return '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color: blue">等待审批</span></a>';
+                    } else if(val ==1){
+                        return  '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color:green ">审批通过</span></a>';
+                    } else if(val ==2){
+                        return '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color:gray ">审批未通过</span></a>';
+                    } else if(val ==-1){
+                        return "<span style='color: fuchsia'>暂无审核</span>"
+                    }
+                    return val;
+                }
+            },
+            {text: "工资发放id", flex: 120, dataIndex: 'sal_approve_id', sortable: false,align:'center',hidden:true}
         ],
         height: 600,
         width: 1000,
@@ -186,7 +200,7 @@ Ext.onReady(function () {
         ]
     });
     caiwuListStore.on("beforeload", function () {
-        Ext.apply(caiwuListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opComname").getValue()});
+        Ext.apply(caiwuListStore.proxy.extraParams, {Key: Ext.getCmp("opComname").getValue(),companyName:Ext.getCmp("opComname").getValue(),date:Ext.getCmp("STime").getValue()});
     });
     caiwuListStore.loadPage(1);
 
@@ -270,7 +284,7 @@ Ext.onReady(function () {
         }]
     });
     comListStore.on("beforeload",function(){
-        Ext.apply(comListStore.proxy.extraParams, {Key:Ext.getCmp("comnameid").getValue()});
+        Ext.apply(comListStore.proxy.extraParams, {Key:Ext.getCmp("comnameid").getValue(),companyName:Ext.getCmp("opComname").getValue()});
     });
 
     // Create a window
@@ -313,26 +327,11 @@ Ext.onReady(function () {
 /**
  * 添加支票的方法
  */
-
 function addCheque(comId,companyName,sal_state,sal_date) {
-//    if(sal_state==0){
-//        alert("没有发工资是不能开支票的！");
-//        return false;
-//    }
-    var p = Ext.create("Ext.grid.Panel",{
-        id:"salTimeListP",
-        title:"导航",
-        width:150,
-        region:"west",
-        columns : [],
-        listeners: {
-            'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
-            }
-        },
-        split:true,
-        colspan: 3,
-        collapsible:true
-    });
+    if(sal_state==0){
+        alert("没有发工资是不能开支票的！");
+        return false;
+    }
     var items=[salList];
 
     Ext.getCmp("company_id").setValue(comId);
@@ -535,20 +534,6 @@ function selectinfo(timeId) {
         msg:'加载数据中，请稍候！',removeMask:true
     });
     mk.show();
-    var p = Ext.create("Ext.grid.Panel",{
-        id:"salTimeListP",
-        title:"详细信息",
-        width:150,
-        region:"west",
-        columns : [],
-        listeners: {
-            'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
-            }
-        },
-        split:true,
-        colspan: 3,
-        collapsible:true
-    });
 
     var items=[infolist];
 
@@ -606,6 +591,53 @@ function selectinfo(timeId) {
         }
     });
     wininfo.show();
+}
+
+function updateSal(eid){
+    Ext.MessageBox.show({
+        title:'审核工资',
+        msg: '请选择审核结果：',
+        width:300,
+        buttonText:{ok: '同意',yes:'拒绝',no:'取消'},
+        animateTarget: 'mb4',
+        fn: function (btn) {
+            var shenPiType;
+            if(eid=="0"){
+                Ext.Msg.alert('警告','没有做工资无法审核发放！');
+                return false;
+            }
+            if("ok"==btn){
+               shenPiType  =   1;
+            }
+            if("yes"==btn){
+                shenPiType  =   2;
+            }
+            if("no"==btn){
+               return false;
+            }
+            Ext.Ajax.request({
+                url: 'index.php?action=ExtFinance&mode=opShenPi',
+                method: 'post',
+                params: {
+                    billId:eid ,
+                    shenPiType  :   shenPiType
+                },
+                success: function (response) {
+                    var text = response.responseText;
+                    Ext.Msg.alert("提示",text);
+                    caiwuListStore.load( {
+                            params: {
+                                start: 0,
+                                limit: 50
+                            }
+                        }
+                    );
+                }
+
+            });
+        },
+        icon: Ext.MessageBox.INFO
+    })
 }
 </script>
 </head>

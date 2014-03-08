@@ -140,6 +140,20 @@ class ExtSocialSecurityAction extends BaseAction {
         $resultsal   =   $this->objDao->searchInsuranceCount($where);
         $comList ['items'] [$i] ["mattername"] = "个人保险";
         $comList ['items'] [$i] ["matterDoing"] = $resultsal;
+        $i++;
+        $where['businessName']=  "其他";
+        $where['socialSecurityStateId']= 1;
+        $result =$this->objDao->searchBusinessCount($where);
+        $comList ['items'] [$i] ["mattername"] = "其他";
+        $comList ['items'] [$i] ["matterWait"] = $result;
+        $where['socialSecurityStateId']= 2;
+        $result =$this->objDao->searchBusinessCount($where);
+        $comList ['items'] [$i] ["mattername"] = "其他";
+        $comList ['items'] [$i] ["matterDoing"] = $result;
+        $where['socialSecurityStateId']= 3;
+        $result =$this->objDao->searchBusinessCount($where);
+        $comList ['items'] [$i] ["mattername"] = "其他";
+        $comList ['items'] [$i] ["matterClear"] = $result;
         echo json_encode($comList);
         exit ();
     }

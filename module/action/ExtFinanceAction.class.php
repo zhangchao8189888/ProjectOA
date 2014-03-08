@@ -49,6 +49,9 @@ class ExtFinanceAction extends BaseAction {
             case "comTaxListJosn":
                 $this->comTaxListJosn();
                 break;
+            case "opShenPi":
+                $this->opShenPi();
+                break;
             case "cancelManage":
                 $this->cancelManage();
                 break;
@@ -134,22 +137,17 @@ class ExtFinanceAction extends BaseAction {
             // 查询发票，支票，到账，是否发放
             $comList ['items'] [$i] ['bill_state'] = 0;
             $comList ['items'] [$i] ['cheque_account'] = 0;
-            $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: blue\">未处理审批</span>";
+            $comList ['items'] [$i] ['sal_approve'] = -1;
             if ($sal) {
                 $billList = $this->objDao->searchBillBySalaryTimeId ( $sal ['id'] );
                 while ( $bill = mysql_fetch_array ( $billList ) ) {
+                    $comList ['items'] [$i] ['sal_approve_id'] =$bill ['id'];
                     if ($bill ['bill_type'] == $billType ['发票']) {
                         $comList ['items'] [$i] ['bill_state'] = 1;
                     }elseif ($bill ['bill_type'] == $billType ['到账支票']) {
                         $comList ['items'] [$i] ['cheque_account'] = 3;
                     } elseif ($bill ['bill_type'] == $billType ['工资发放']) {
-                        if ($bill ['bill_value'] == 0) {
-                            $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: blue\">等待审批</span>";
-                        } elseif ($bill ['bill_value'] == 1) {
-                            $comList ['items'] [$i] ['sal_approve'] =  "<span style=\"color: green\">审批通过</span>";
-                        } elseif ($bill ['bill_value'] == 2) {
-                            $comList ['items'] [$i] ['sal_approve'] = "<span style=\"color: red\">审批未通过</span>";
-                        }
+                        $comList ['items'] [$i] ['sal_approve'] =$bill ['bill_value'];
                     }
                 }
             }
@@ -232,6 +230,25 @@ class ExtFinanceAction extends BaseAction {
         foreach($arr as $key=>$value){
             $this->objDao->cancelManage($value);
         }
+        exit;
+    }
+
+    /**
+     * 审核工资
+     */
+    function opShenPi() {
+        // $this->mode="billUpdate";
+        $bill = array ();
+        $bill ['id'] = $_POST ['billId'];
+        $bill ['bill_item'] = '审批发放';
+        $bill ['bill_value'] = $_POST ['shenPiType'];
+        $this->objDao = new SalaryDao ();
+        $result = $this->objDao->updateBillById ( $bill );
+        if (! $result) {
+            echo("操作失败，请重试！");
+            exit;
+        }
+        echo("操作成功！");
         exit;
     }
 

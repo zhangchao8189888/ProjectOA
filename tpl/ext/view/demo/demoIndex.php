@@ -27,6 +27,7 @@ Ext.require([
 Ext.onReady(function () {
     var tabs2 = Ext.widget('tabpanel', {
         activeTab: 0,
+        id:'tabindex',
         width: 1230,
         height: 620,
         plain: true,
@@ -42,7 +43,31 @@ Ext.onReady(function () {
                         store: socialsecurityInfostore,
                         id : 'comlist',
                         columns: [
-                            {text: "业务名称", width: 200, dataIndex: 'mattername', sortable: false
+                            {text: "业务名称", width: 200, dataIndex: 'mattername', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if (val == "增减员信息") {
+                                        return '<a href="#" onclick="loadz(1)"><span>'+val+'</span></a>' ;
+                                    }else  if (val == "医疗报销") {
+                                        return '<a href="#" onclick="loadz(2)"><span>'+val+'</span></a>' ;
+                                    }else  if (val == "工伤报销") {
+                                        return '<a href="#" onclick="loadz(3)"><span>'+val+'</span></a>' ;
+                                    }else  if (val == "失业申报") {
+                                        return '<a href="#" onclick="loadz(4)"><span>'+val+'</span></a>' ;
+                                    } else  if (val == "生育医疗申报") {
+                                        return '<a href="#" onclick="loadz(5)"><span>'+val+'</span></a>' ;
+                                    } else  if (val == "生育津贴申报") {
+                                        return '<a href="#" onclick="loadz(6)"><span>'+val+'</span></a>' ;
+                                    }else  if (val == "退休") {
+                                        return '<a href="#" onclick="loadz(7)"><span>'+val+'</span></a>' ;
+                                    } else  if (val == "个人保险") {
+                                        return '<a href="#" onclick="loadz(8)"><span>'+val+'</span></a>' ;
+                                    } else  if (val == "个人工资") {
+                                        return '<a href="#" onclick="loadz(9)"><span>'+val+'</span></a>' ;
+                                    } else  if (val == "其他") {
+                                        return '<a href="#" onclick="loadz(10)"><span>'+val+'</span></a>' ;
+                                    }
+                                    return '<a href="#" onclick="send(' + record.data['id'] + ')"><span style="color: red">111</span></a>' ;;
+                                }
                             },
                             {text: "等待办理事项", width: 100, dataIndex: 'matterWait', sortable: true,
                                 renderer: function (val, cellmeta, record) {
@@ -1405,6 +1430,9 @@ Ext.onReady(function () {
     }
 });
 
+function loadz(id){
+    Ext.getCmp('tabindex').setActiveTab(id);
+}
 
 </script>
 </head>
