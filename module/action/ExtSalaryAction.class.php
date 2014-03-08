@@ -537,6 +537,34 @@ class ExtSalaryAction extends BaseAction{
 
     		$i++;
     	}
+
+        //导出
+        $hang=0;
+        $salaryListExcel=array();
+        $salaryListExcel[$hang][0]="公司编号";
+        $salaryListExcel[$hang][1]="单位名称";
+        $salaryListExcel[$hang][2]="个税日期";
+        $salaryListExcel[$hang][3]="代扣税";
+        $salaryListExcel[$hang][4]="补扣税";
+        $salaryListExcel[$hang][5]="个税合计";
+        $hang++;
+
+        foreach ($josnArray['items'] as $value) {
+            $salaryListExcel[$hang][0]=$value['company_id'];
+            $salaryListExcel[$hang][1]=$value['company_name'];
+            $salaryListExcel[$hang][2]=$value['salaryTime'];
+            if( $salaryListExcel[$hang][2]=='<span style="color: red">未作工资或免税</span>'){
+                $salaryListExcel[$hang][2]='未作或免税';
+            }
+            $salaryListExcel[$hang][3]=$value['daikou'];
+            $salaryListExcel[$hang][4]=$value['bukou'];
+            $salaryListExcel[$hang][5]=$value['geshuiSum'];
+            $hang++;
+
+        }
+        // var_dump($salaryListExcel);
+        session_start();
+        $_SESSION['excelListGeshuiBySum']=$salaryListExcel;
     	echo json_encode($josnArray);
     	exit;
     }
