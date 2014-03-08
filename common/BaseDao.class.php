@@ -18,11 +18,22 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+    function getEmByEname($eName) {
+        $sql = "select *  from OA_employ  where e_name='{$eName}'";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+
 	function searchCompanyByName($companyName) {
 		$sql = "select * from  OA_company where company_name='{$companyName}'";
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+    function searchCompanyidByName($companyName) {
+        $sql = "select id from  OA_company where company_name='{$companyName}'";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
 	function getCompanyById($comId) {
 		$sql = "select *  from OA_company where  id=$comId";
 		$result = $this->g_db_query ( $sql );
@@ -226,8 +237,11 @@ class BaseDao extends db {
             return false;
         }
     }
-	/*
-	 * function getOpCompanyOperByComId(){ }
-	 */
+
+    function getAdminBycomId($comid) {
+        $sql = "select *  from OA_admin_company where companyId='$comid'";
+        $admin = $this->g_db_query ( $sql );
+        return $admin;
+    }
 }
 ?>

@@ -23,11 +23,6 @@ class EmployDao extends BaseDao
 		$result=$this->g_db_query($sql);
 		return $result;
     }
-    function getEmByEno($eNo){
-    	$sql="select *  from OA_employ  where e_num='{$eNo}'";
-    	$result=$this->g_db_query($sql);
-		return mysql_fetch_array($result);
-    }
     function getEmlistbyComname($comName,$eStat=null,$empName=null,$empNo=null){
     	echo  $eStat;
     	$sql="select *  from  OA_employ  where 1=1";
