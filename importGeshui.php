@@ -13,8 +13,11 @@ require 'tools/php-excel.class.php';
 
 //var_dump($salaryList);
 // generate file (constructor parameters are optional)
+$time = date('Y-m-d');
+
 $xls = new Excel_XML('UTF-8', false, 'My Test Sheet');
+
 $xls->addArray($salaryList);
-$xls->generateXML('my-test');
+$xls->generateXML('ByXiangxi'.$time);
 
 ?>
