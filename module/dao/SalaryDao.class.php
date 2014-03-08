@@ -383,7 +383,7 @@ class SalaryDao extends BaseDao {
             WHERE   c.geshui_dateType <> 3  AND c.id=$id
              )
        AND (
-    			(t.salaryTime like '%{$where ['salaryTime']}%'  AND  (SELECT geshui_dateType FROM OA_company WHERE id  = $id )=1 AND t.companyId = $id)
+    			(t.salaryTime like '%{$where ['salaryTime']}%'  AND  (SELECT geshui_dateType FROM OA_company WHERE id  =$id )=1 AND t.companyId = $id)
     			OR
     			(t.salaryTime like '%{$time}%'  AND  (SELECT geshui_dateType FROM OA_company WHERE id  = $id )=2 AND t.companyId = $id)
     			)
