@@ -396,7 +396,7 @@
                                 var m=0;
                                 geshuiListstore.each(function(record) {
                                     if(record.data.company_id ==   sel[i].data.companyid || model1.isSelected(m)){
-                                       // salTimeListGrid.getSelectionModel().select(m);
+
                                         datas.push(geshuiListstore.getAt(m));
                                     }
                                     m++;

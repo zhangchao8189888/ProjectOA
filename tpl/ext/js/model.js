@@ -51,6 +51,42 @@ Ext.define('oa.common.geshuitype.list',{
     ]
 });
 
+//BY孙瑞鹏
+Ext.define('oa.common.canjirenType.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'emp_name', type: 'string'},
+        {name: 'emp_num', type: 'string'},
+        {name: 'company_name', type: 'string'},
+        {name: 'canjiren_Type', type: 'string'}
+
+    ]
+});
+//BY孙瑞鹏
+Ext.define('oa.common.canjirenXiangxi.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id1', type: 'int'},
+        {name: 'emp_name1', type: 'string'},
+        {name: 'emp_num1', type: 'string'},
+        {name: 'company_name1', type: 'string'},
+        {name: 'canjiren_Type1', type: 'string'}
+
+    ]
+});
+//BY孙瑞鹏
+Ext.define('oa.common.canjirentongji.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'com_id', type: 'int'},
+        {name: 'com_name', type: 'string'},
+        {name: 'sumCanjiren', type: 'string'}
+
+
+    ]
+});
+
 /**
  * 审核公司数据源
  */

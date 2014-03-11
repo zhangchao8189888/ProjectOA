@@ -64,6 +64,8 @@ class ExtForm extends BaseForm
                 return "ext/view/socialsecurity/addSalary.php";
             case "todemo":
                 return"ext/view/demo/demoIndex.php";
+            case "toTeshushenfen":
+                return"finance/canjirenshezhi.php";
            default :
                 return "BaseConfig.php";
         }

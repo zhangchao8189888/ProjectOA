@@ -75,10 +75,19 @@ class ExtSalaryAction extends BaseAction{
             case "searchEmploy":
                 $this->searchEmploy();
                 break;
-
+            case "searchCanjirenType":
+                $this->searchCanjirenType();
+                break;
             case "getCnameListExt":
                  $this->getCnameListExt();
                   break;
+            case "getCanjirenListExt":
+                 $this->getCanjirenListExt();
+                  break;
+            case "searchCanjirenXiangxi":
+                 $this->searchCanjirenXiangxi();
+                  break;
+
             default :
                 $this->modelInput();
                 break;
@@ -334,6 +343,24 @@ class ExtSalaryAction extends BaseAction{
         echo json_encode ( $josnArray );
         exit();
     }
+
+    //残疾人统计BY孙瑞鹏
+    function getCanjirenListExt(){
+        $this->objDao=new SalaryDao();
+        $where = $_REQUEST ['cname'];
+        $salaryTimeList= $this->objDao->searchCompanyListByCanjiren($where);
+        $josnArray=array();
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['com_id']=$row['id'];
+            $josnArray['items'][$i]['com_name']=$row['company_name'];
+            $josnArray['items'][$i]['sumCanjiren']=$row['sumcanjiren'];
+            $josnArray['items'][$i]['sumCanjiren']=$josnArray['items'][$i]['sumCanjiren'].'人';
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
     //是否查询年终奖设置记录BY孙瑞鹏
     function getCnameListExt(){
         $this->objDao=new SalaryDao();
@@ -568,8 +595,73 @@ class ExtSalaryAction extends BaseAction{
     	echo json_encode($josnArray);
     	exit;
     }
-    
-    
+
+    //残疾人详细BY孙瑞鹏
+    function searchCanjirenXiangxi(){
+        $this->objDao=new SalaryDao();
+        $cid=$_REQUEST['cid'];
+        $salaryTimeList=$this->objDao->searhCanjirenXiangxi($cid);
+        $josnArray=array();
+        $josnArray['total']=null;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['id1']=$row['id'];
+            $josnArray['items'][$i]['emp_name1']=$row['e_name'];
+            $josnArray['items'][$i]['emp_num1']=$row['e_num'];
+            $josnArray['items'][$i]['company_name1']=$row['e_company'];
+            if($row['e_teshu_state']==0){
+                $josnArray['items'][$i]['canjiren_Type1']="非残疾人";
+            }
+            elseif ($row['e_teshu_state']==1){
+                $josnArray['items'][$i]['canjiren_Type1']="残疾人";
+            }
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
+    //残疾人类型BY孙瑞鹏
+    function searchCanjirenType(){
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $ename=$_REQUEST['ename'];
+        $empnum=$_REQUEST['empnum'];
+
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where=array();
+        $where['empnum']=$empnum;
+        $where['ename']=$ename;
+        if($empnum!="" || $ename!="" ){
+        $salaryTimeList=$this->objDao->searhCanjireniTypePage($start,$limit,$sorts." ".$dir,$where);
+        }
+        $josnArray=array();
+        $josnArray['total']=null;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['id']=$row['id'];
+            $josnArray['items'][$i]['emp_name']=$row['e_name'];
+            $josnArray['items'][$i]['emp_num']=$row['e_num'];
+            $josnArray['items'][$i]['company_name']=$row['e_company'];
+            if($row['e_teshu_state']==0){
+                $josnArray['items'][$i]['canjiren_Type']="非残疾人";
+            }
+            elseif ($row['e_teshu_state']==1){
+                $josnArray['items'][$i]['canjiren_Type']="残疾人";
+            }
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
+
     //个税类型BY孙瑞鹏
     function searchGeshuiTypeJosn(){
     	$this->objDao=new SalaryDao();

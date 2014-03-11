@@ -114,6 +114,9 @@ class SaveSalaryAction extends BaseAction {
             case "insGeshuijilu" :
 				$this->insGeshuijilu ();
 				break;
+            case "setTypeCanjiren" :
+				$this->setTypeCanjiren ();
+				break;
 
 			default :
 				$this->modelInput ();
@@ -526,6 +529,17 @@ class SaveSalaryAction extends BaseAction {
 		// echo json_encode($salaryListArray);
 		exit ();
 	}
+    // 残疾人修改BY孙瑞鹏
+    function setTypeCanjiren() {
+        // $this->mode="salaryList";
+        $eid = $_REQUEST ['timeId'];
+        $type = $_REQUEST ['type'];
+        $this->objDao = new SalaryDao ();
+        $this->objDao->setTypeCanjiren ( $eid,$type );
+        // echo json_encode($salaryListArray);
+        exit ();
+    }
+
     // 个税已报标识BY孙瑞鹏
     function insGeshuijilu() {
         $time = date('Y',strtotime("-1 year"));

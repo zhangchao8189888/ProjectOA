@@ -362,6 +362,25 @@ class SalaryDao extends BaseDao {
 
         return $result;
     }
+
+    //查询带条件的公司BY孙瑞鹏
+    function searchCompanyListByCanjiren($where=null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT b.id,b.company_name,COUNT(*) sumcanjiren FROM
+(select c.id,c.company_name from OA_company c,OA_admin_company a  where
+   a.companyId = c.id  and  a.adminId = $id) b,
+(SELECT * FROM OA_employ WHERE e_teshu_state = 1) emp
+WHERE convert( emp.e_company  using utf8)  = b.company_name
+
+";
+        if ($where != ""&&$where!= null) {
+            $sql .= " and b.company_name like '%{$where}%' ";
+        }
+        $sql.="GROUP BY emp.e_company";
+        $result = $this->g_db_query ( $sql );
+
+        return $result;
+    }
     // 计算个税合计BY孙瑞鹏
     function searhGeshuiListPage($where = null,$id = null) {
 
@@ -537,7 +556,42 @@ class SalaryDao extends BaseDao {
         $list = $this->g_db_query ( $sql );
         return $list;
     }
+    // 残疾人详细BY孙瑞鹏
+    function searhCanjirenXiangxi($cid) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT emp.id,e_name,e_company,e_num, e_teshu_state FROM OA_employ emp,
+(SELECT c.company_name  from OA_company c,OA_admin_company a
+ WHERE a.companyId = c.id  and  a.adminId = $id  AND c.id= $cid) b
+WHERE convert( emp.e_company  using utf8) = b.company_name
+and emp.e_teshu_state=1
+";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 残疾人链表BY孙瑞鹏
+    function searhCanjireniTypePage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT emp.id,e_name,e_company,e_num, e_teshu_state FROM OA_employ emp,
+(SELECT c.company_name  from OA_company c,OA_admin_company a
+ WHERE a.companyId = c.id  and  a.adminId = $id ) b
+WHERE convert( emp.e_company  using utf8) = b.company_name";
+        if ($where ['ename'] != "") {
+                $sql .= " and emp.e_name like '%{$where['ename']}%' ";
+            }
+        if ($where ['empnum'] != "") {
+                $sql .= " and emp.e_num ='{$where['empnum']}' ";
+            }
 
+//        if ($sort) {
+//            $sql .= " order by $sort";
+//        }
+//        if ($start >= 0 && $limit) {
+//            $sql .= " limit $start,$limit";
+//        }
+        // $sql.=" order by op_salaryTime desc ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
     // 个税类型BY孙瑞鹏
     function searhGeshuiTypePage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $id = $_SESSION ['admin'] ['id'];
@@ -739,6 +793,12 @@ class SalaryDao extends BaseDao {
     // 个税类型设置BY孙瑞鹏
     function setTypeGeshui($sid,$type) {
         $sql = "UPDATE OA_company SET geshui_dateType = $type WHERE id = $sid";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 残疾人设置BY孙瑞鹏
+    function setTypeCanjiren($sid,$type) {
+        $sql = "UPDATE OA_employ SET e_teshu_state = $type WHERE id = $sid";
         $list = $this->g_db_query ( $sql );
         return $list;
     }

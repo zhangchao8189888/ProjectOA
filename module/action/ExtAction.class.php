@@ -98,9 +98,13 @@ class ExtAction extends BaseAction{
             case "todemo":
                 $this->todemo();
                 break;
+            case "toTeshushenfen":
+                $this->toTeshushenfen();
+                break;
             default :
                 $this->modelInput();
                 break;
+
         }
 
 
@@ -174,6 +178,9 @@ class ExtAction extends BaseAction{
         $this->mode =   "toPersonsalary";
     }
 
+    function toTeshushenfen(){
+        $this->mode =   "toTeshushenfen";
+    }
     function getExtJosn(){
     	$jsonList=array();
     	//['salDate', 'op_salaryTime', 'company_name','salStat']
