@@ -1104,13 +1104,13 @@ class SalaryAction extends BaseAction {
 						$error [$i] ["error_danganfei"] = "<font color='red'>{$salaryList[Sheet1][$i][$shenfenzheng]}</font>:档案费不一致！系统：{$employ['danganfei']},导入文件：{$salaryList[Sheet1][$i][$danganfei]}";
 					}
 				}
-                $error [$i] ["br"]  ="<br>";
 			} else {
+                $error [$i] ["error_shenfen"]  ="<br>";
 				$error [$i] ["error_shenfen"] = "<font color='red'>{$salaryList[Sheet1][$i][$shenfenzheng]}</font>:未查询到该员工身份类别！";
                 $employByName = $this->objDao->getEmByEname( $salaryList[Sheet1][$i][$name]);
                     $error [$i] ["error_shenfen"].="<br>";
-                $error [$i] ["error_shenfen"].="根据姓名查找信息如下：<br>";
                 while ($row=mysql_fetch_array($employByName) ){
+                    $error [$i] ["error_shenfen"].="根据姓名查找信息如下：<br>";
                     $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 姓名：".$row["e_name"]."</span>";
                     $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 身份证号：".$row["e_num"]."</span>";
                     $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 所在公司：".$row["e_company"]."</span>";
@@ -1305,6 +1305,12 @@ class SalaryAction extends BaseAction {
 			} else {
 				$error [$i] ["error_shenfen"] = "<span style=\"color: red\"> {$salaryList[Sheet1][$i][$shenfenzheng]} </span>:未查询到该员工身份类别！<br>";
                 $employByName = $this->objDao->getEmByEname( $salaryList[Sheet1][$i][$empname]);
+                $rc = mysql_affected_rows();
+                if($rc>0){
+
+                }else{
+                    $error [$i] ["error_shenfen"].= "<span style=\"color: blue\"> 抱歉，根据姓名'{$salaryList[Sheet1][$i][$empname]}'也未找到该员工信息。</span><br>";
+                }  ;
                 while ($row=mysql_fetch_array($employByName) ){
                     if($row){
                         $error [$i] ["error_shenfen"].="<span style=\"color: blue\"> 根据姓名查找信息如下：</span><br>";

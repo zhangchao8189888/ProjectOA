@@ -267,6 +267,8 @@ class EmployAction extends BaseAction {
                     $j++;
                     continue;
                 }
+                $employList[$i]["e_name"]    =  trim($employList[$i]["e_name"]) ;
+                $employList[$i]["e_name"]=str_replace(" ","",$employList[$i]["e_name"]);
                 $retult = $this->objDao->addEm($employList[$i]);
 
                 if ($retult) {

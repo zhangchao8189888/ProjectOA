@@ -90,6 +90,7 @@ Ext.onReady(function () {
         viewConfig: {
             id: 'gv',
             trackOver: false,
+            enableTextSelection:true,
             stripeRows: false
         },
         bbar: Ext.create('Ext.PagingToolbar', {
@@ -185,25 +186,88 @@ Ext.onReady(function () {
     businessLogWindow.getSelectionModel().on('selectionchange', function (selModel, selections) {
     }, this);
     businessLogstore.loadPage(1);
-    businessLogWindow.on("itemcontextmenu",function(view,record,item,index,e){
-        e.preventDefault();
-        contextmenu.showAt(e.getXY());
-    });
+//    businessLogWindow.on("itemcontextmenu",function(view,record,item,index,e){
+//        var record = businessLogWindow.getSelectionModel().getSelection();
+//        if(record == undefined) {
+//            Ext.Msg.alert('提示信息','未选择任何数据！');
+//        }
+//        else {
+//            var i=0;
+//            var model = businessLogWindow.getSelectionModel();
+//            businessLogstore.each(function(record) {
+//                if(model.isSelected(i)){
+//                    copyToClipboard(record.data.id+"\t"+record.data.submitTime+"");
+//                }else{
+//
+//                }
+//                i++;
+//
+//
+//            });
+//
+//        }
+//    });
+
     var contextmenu = new Ext.menu.Menu({
-        id:'theContextMenu',
-        items:[{
-            text:'查看详情',
-            handler:function(gridPanel, rowIndex, e){
-                Ext.Msg.alert("系统提示","测试");
-                var record =  Ext.getCmp('comlist').getSelectionModel().getSelected();
-//open_receive_detailWindow(record.data.smsIndex);
-                alert(record.data.companyName);
-//record.data.taskId
+        id: 'theContextMenu',
+        items: [
+            {
+                id: 'rMenu1',
+                text: '复制',
+                handler: function (gridPanel, rowIndex, e) {
+                    var record = businessLogWindow.getSelectionModel().getSelection();
+                    if(record == undefined) {
+                        Ext.Msg.alert('提示信息','未选择任何数据！');
+                    }
+                    else {
+                        var recor = businessLogWindow.getStore().getAt(rowIndex);
+                        Ext.Msg.alert('提示信息',rowIndex);
+                    }
+                }
+            } ,
+            {
+                id: 'rMenu2',
+                text: '右键菜单2',
+                handler: function () {
+                    alert('dd');
+                }
             }
-        }]
+        ]
     });
 });
 
+
+function copyToClipboard(txt) {
+    if(window.clipboardData) {
+        window.clipboardData.clearData();
+        window.clipboardData.setData("Text", txt);
+    } else if(navigator.userAgent.indexOf("Opera") != -1) {
+        window.location = txt;
+    } else if (window.netscape) {
+        try {
+            netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+        } catch (e) {
+            alert("被浏览器拒绝！");
+        }
+        var clip = Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard);
+        if (!clip)
+            return;
+        var trans = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable);
+        if (!trans)
+            return;
+        trans.addDataFlavor('text/unicode');
+        var str = new Object();
+        var len = new Object();
+        var str = Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString);
+        var copytext = txt;
+        str.data = copytext;
+        trans.setTransferData("text/unicode",str,copytext.length*2);
+        var clipid = Components.interfaces.nsIClipboard;
+        if (!clip)
+            return false;
+        clip.setData(trans,null,clipid.kGlobalClipboard);
+    }
+}
 
 function checkSalWin() {
     var items = [addBusinessWindow];

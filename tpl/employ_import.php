@@ -23,7 +23,7 @@ $emList=$form_data['emList'];
 	  function b(){
 		  
 		  if($("#file").val()==""){
-              alert("选择导入的文件");
+              alert("请先上传文件！");
               return;  
           }
 	  $("#iform").attr("action","index.php?action=Employ&mode=emImport"); 
