@@ -159,7 +159,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businesszengjian",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -176,7 +176,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"zengjian",
                                 emptyText: "筛选增减员类型",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -199,8 +199,8 @@ Ext.onReady(function () {
                                 xtype : 'button',
                                 id : 'searchzengjiani',
                                 handler : function(src) {
-                                    businessLogstore.removeAll();
-                                    businessLogstore.load( {
+                                    zengjianListstore.removeAll();
+                                    zengjianListstore.load( {
                                         params : {
                                             shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),
                                             zengjian : Ext.getCmp("zengjian").getValue(),
@@ -214,6 +214,26 @@ Ext.onReady(function () {
                                     zengjianListstore.loadPage(1);
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'clearzengjian',
+                                handler : function(src) {
+                                    Ext.getCmp("businesszengjian").setValue("");
+                                    Ext.getCmp("zengjian").setValue("");
+                                    Ext.getCmp("zengjianTime").setValue("");
+                                    Ext.getCmp("zengjiancom").setValue("");
+                                    Ext.getCmp("zengjianemp").setValue("");
+                                    zengjianListstore.removeAll();
+                                    zengjianListstore.load( {
+                                        params : {
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             }
                         ]
@@ -265,7 +285,14 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
-                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
 
                         ],
@@ -308,7 +335,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businessyiliao",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -350,6 +377,26 @@ Ext.onReady(function () {
                                     businessLogstore.loadPage(1);
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'clearyiliao',
+                                handler : function(src) {
+                                    Ext.getCmp("businessyiliao").setValue("");
+                                    Ext.getCmp("yiliaoTime").setValue("");
+                                    Ext.getCmp("yiliaocom").setValue("");
+                                    Ext.getCmp("yiliaoemp").setValue("");
+                                    businessLogstore.removeAll();
+                                    businessLogstore.load( {
+                                        params : {
+                                            searchType:1,
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             },
                             {
@@ -415,7 +462,14 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
-                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
@@ -457,7 +511,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businessgongshang",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -488,7 +542,7 @@ Ext.onReady(function () {
                                     businessLogstore.load( {
                                         params : {
                                             socialSecurityStateId : Ext.getCmp("businessgongshang").getValue(),
-                                            submitTime:Ext.getCmp("gongshangTime").getValue,
+                                            submitTime:Ext.getCmp("gongshangTime").getValue(),
                                             companyName:Ext.getCmp("gongshangcom").getValue(),
                                             employName: Ext.getCmp("gongshangemp").getValue(),
                                             searchType:2,
@@ -496,9 +550,28 @@ Ext.onReady(function () {
                                             limit : 50
                                         }
                                     });
-                                    businessLogstore.loadPage(1);
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'cleargongshang',
+                                handler : function(src) {
+                                    Ext.getCmp("businessgongshang").setValue("");
+                                    Ext.getCmp("gongshangTime").setValue("");
+                                    Ext.getCmp("gongshangcom").setValue("");
+                                    Ext.getCmp("gongshangemp").setValue("");
+                                    businessLogstore.removeAll();
+                                    businessLogstore.load( {
+                                        params : {
+                                            searchType:2,
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             },
                             {
@@ -564,7 +637,14 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
-                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
@@ -606,7 +686,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businessshiye",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -645,9 +725,28 @@ Ext.onReady(function () {
                                             limit : 50
                                         }
                                     });
-                                    businessLogstore.loadPage(1);
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'clearshiye',
+                                handler : function(src) {
+                                    Ext.getCmp("businessshiye").setValue("");
+                                    Ext.getCmp("shiyeTime").setValue("");
+                                    Ext.getCmp("shiyecom").setValue("");
+                                    Ext.getCmp("shiyeemp").setValue("");
+                                    businessLogstore.removeAll();
+                                    businessLogstore.load( {
+                                        params : {
+                                            searchType:3,
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             },
                             {
@@ -713,7 +812,14 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
-                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
@@ -755,7 +861,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businessshengyu",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -794,9 +900,28 @@ Ext.onReady(function () {
                                             limit : 50
                                         }
                                     });
-                                    businessLogstore.loadPage(1);
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'clearshengyu',
+                                handler : function(src) {
+                                    Ext.getCmp("businessshengyu").setValue("");
+                                    Ext.getCmp("shengyuTime").setValue("");
+                                    Ext.getCmp("shengyucom").setValue("");
+                                    Ext.getCmp("shengyuemp").setValue("");
+                                    businessLogstore.removeAll();
+                                    businessLogstore.load( {
+                                        params : {
+                                            searchType:4,
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             },
                             {
@@ -862,7 +987,14 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
-                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
@@ -904,7 +1036,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businessshengyujintie",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -943,9 +1075,28 @@ Ext.onReady(function () {
                                             limit : 50
                                         }
                                     });
-                                    businessLogstore.loadPage(1);
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'clearshengyujintiei',
+                                handler : function(src) {
+                                    Ext.getCmp("businessshengyujintie").setValue("");
+                                    Ext.getCmp("shengyujinTime").setValue("");
+                                    Ext.getCmp("shengyujincom").setValue("");
+                                    Ext.getCmp("shengyujinemp").setValue("");
+                                    businessLogstore.removeAll();
+                                    businessLogstore.load( {
+                                        params : {
+                                            searchType:5,
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             },
                             {
@@ -1011,7 +1162,14 @@ Ext.onReady(function () {
                                 }
                             },
                             {text: "备注", width: 100, dataIndex: 'remarks', sortable: false},
-                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
                             {text: "申请客服", width: 100, dataIndex: 'serviceName', sortable: false}
                         ],
                         height:560,
@@ -1053,7 +1211,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businesstuixiu",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -1087,14 +1245,33 @@ Ext.onReady(function () {
                                             submitTime : Ext.getCmp("tuixiuTime").getValue(),
                                             companyName:Ext.getCmp("tuixiucom").getValue(),
                                             employName: Ext.getCmp("tuixiuemp").getValue(),
-                                            searchType:4,
+                                            searchType:10,
                                             start : 0,
                                             limit : 50
                                         }
                                     });
-                                    businessLogstore.loadPage(1);
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'cleartuixiui',
+                                handler : function(src) {
+                                    Ext.getCmp("businesstuixiu").setValue("");
+                                    Ext.getCmp("tuixiuTime").setValue("");
+                                    Ext.getCmp("tuixiucom").setValue("");
+                                    Ext.getCmp("tuixiuemp").setValue("");
+                                    businessLogstore.removeAll();
+                                    businessLogstore.load( {
+                                        params : {
+                                            searchType:10,
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             },
                             {
@@ -1229,7 +1406,7 @@ Ext.onReady(function () {
                                 },
                                 text : '添加业务',
                                 iconCls : 'chakan'
-                            }  ,
+                            },
                             {
                                 xtype : 'button',
                                 id : 'disTypes',
@@ -1303,7 +1480,7 @@ Ext.onReady(function () {
                                 xtype: 'combobox',
                                 id:"businessqita",
                                 emptyText: "筛选业务状态",
-                                editable: true,
+                                editable: false,
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
@@ -1344,6 +1521,26 @@ Ext.onReady(function () {
                                     });
                                 },
                                 text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'clearqita',
+                                handler : function(src) {
+                                    Ext.getCmp("businessqita").setValue("");
+                                    Ext.getCmp("qitaTime").setValue("");
+                                    Ext.getCmp("qitacom").setValue("");
+                                    Ext.getCmp("qitaemp").setValue("");
+                                    businessLogstore.removeAll();
+                                    businessLogstore.load( {
+                                        params : {
+                                            searchType:"其他",
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
                                 iconCls : 'chakan'
                             },
                             {
