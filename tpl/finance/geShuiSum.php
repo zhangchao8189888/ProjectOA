@@ -143,6 +143,7 @@
                         handler : function() {
                             $("#iform1").attr("action","importGeshuiBySum.php");
                             $("#iform1").submit();
+                            Ext.Msg.confirm("提示","是否插入已报个税标识？",updateGeshuiType);
                         },
                         text : '公司导出',
                         iconCls : 'toExcelBySum'
