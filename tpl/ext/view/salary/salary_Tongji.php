@@ -149,6 +149,12 @@
                 trackOver: false,
                 stripeRows: false
             },
+	        listeners: {
+		        'cellclick': function (iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+			        var rowEl = Ext.get(iEvent.getTarget());
+			        var type = rowEl.getAttribute('id');
+		        }
+	        },
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: salTongjistore,
                 displayInfo: true,
@@ -163,11 +169,6 @@
                     handler: function (src) {
                         var model2 = salTimeListGrid2.getSelectionModel();
                         var sel2=model2.getLastSelected();
-                        if(sel2.data.id){
-
-                        }else{
-                            Ext.Msg.alert("请先选择详细");
-                        }
                         selectinfo(sel2.data.id);
                     },
                     text: '查看详细',

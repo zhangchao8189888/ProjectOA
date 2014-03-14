@@ -97,7 +97,7 @@ Ext.onReady(function(){
                     var sel=model.getLastSelected();
                     checkSalWin(sel.data.id);
                 },
-                text : '查看二次工资',
+                text : '查看二次工资'
             },
             '公司名称查询', {
                 id:'comname',
