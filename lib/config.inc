@@ -113,6 +113,9 @@ $salaryTable=array(
     '部门' =>'部门',
     '姓名' =>'姓名',
     '身份证号' =>'身份证号',
+	'per_shifaheji' =>'实发合计',
+	'per_daikoushui' =>'代扣税',
+	'paysum_zhongqi' =>'缴中企基业合计',
     '基本工资' =>'基本工资',
     '考核工资' =>'考核工资',
     '职务工资' =>'职务工资',
@@ -125,9 +128,7 @@ $salaryTable=array(
   	'per_yiliao' =>'个人医疗',
   	'per_yanglao' =>'个人养老',
   	'per_gongjijin' =>'个人公积金',
-  	'per_daikoushui' =>'代扣税',
   	'per_koukuangheji' =>'个人扣款合计',
-  	'per_shifaheji' =>'实发合计',
   	'com_shiye' =>'单位失业',
   	'com_yiliao' =>'单位医疗',
   	'com_yanglao' =>'单位养老',
@@ -138,7 +139,6 @@ $salaryTable=array(
   	'laowufei' =>'劳务费',
   	'canbaojin' =>'残保金',
   	'danganfei' =>'档案费',
-  	'paysum_zhongqi' =>'交中企基业合计',
 );
 
 //工资表字段
