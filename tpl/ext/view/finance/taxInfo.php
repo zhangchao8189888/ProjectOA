@@ -39,7 +39,7 @@ Ext.onReady(function () {
             {text: "十月", flex: 110, dataIndex: 'mouth10', sortable: false,align:'center'},
             {text: "十一月", flex: 110, dataIndex: 'mouth11', sortable: false,align:'center'},
             {text: "十二月", flex: 110, dataIndex: 'mouth12', sortable: false,align:'center'},
-            {text: "年终奖", flex: 110, dataIndex: 'mouth13', sortable: false,align:'center'},
+            {text: "年终奖", flex: 110, dataIndex: 'mouth13', sortable: false,align:'center'}
         ],
         height: 700,
         width: 1100,

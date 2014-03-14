@@ -49,6 +49,10 @@ class ExtFinanceAction extends BaseAction {
             case "comTaxListJosn":
                 $this->comTaxListJosn();
                 break;
+            case "searchGongzibiao":
+                $this->searchGongzibiao();
+                break;
+
             case "opShenPi":
                 $this->opShenPi();
                 break;
@@ -306,6 +310,66 @@ class ExtFinanceAction extends BaseAction {
                 $josnArray['items'][$j]['mouth13'] = "<span style='color: green'>已报个税</span>";
             } else {
                 $josnArray['items'][$j]['mouth13'] = "<span style='color: red'>未报个税</span>";
+            }
+
+            $j++;
+        }
+        echo json_encode ( $josnArray );
+        exit ();
+    }
+//工资查看BY孙瑞鹏
+    function searchGongzibiao(){
+        $this->objDao = new FinanceDao ();
+        $this->sDao = new SalaryDao ();
+        $start = $_REQUEST ['start'];
+        $limit = $_REQUEST ['limit'];
+        $sorts = $_REQUEST ['sort'];
+        $dir = $_REQUEST ['dir'];
+        $companyName = $_REQUEST ['company_name'];
+        $year = $_REQUEST ['year'];
+        if (! $start) {
+            $start = 0;
+        }
+        if (! $limit) {
+            $limit = 50;
+        }
+        if (! $sorts) {
+            $sorts = "uncheckid";
+        }
+        if(!$year){
+            $year = date('Y');
+        }
+        $where = array ();
+        $where ['companyName'] = $companyName;
+        $sum =$this->objDao->searchTaxListCount($where);
+        $result=$this->objDao->searchTaxListPage($start,$limit,$sorts." ".$dir,$where);
+        $josnArray = array ();
+        $josnArray ['total'] = $sum;
+        $j = 0;
+        while ( $row = mysql_fetch_array ( $result ) ) {
+            $josnArray['items'][$j]['id']=$row['id'];
+            $josnArray['items'][$j]['company_name']=$row['company_name'];
+            // 查询12个月的工资状况包括年终奖
+
+            for($i = 1; $i <= 12; $i ++) {
+
+                if ($i < 10) {
+                    $date = $year . "-0" . $i . "-01";
+                } else {
+                    $date = $year . "-" . $i . "-01";
+                }
+                $resul = $this->sDao->searhSalaryTimeListByComIdAndDate ( $date, $row ['id'] );
+                if ($resul) {
+                    $josnArray['items'][$j]['mouth'.$i] = "<span style='color: green'>已做工资</span>";
+                } else {
+                    $josnArray['items'][$j]['mouth'.$i] = "<span style='color: red'>未做工资</span>";
+                }
+            }
+            $resul = $this->sDao->searhNianSalaryTimeListByComIdAndDate ( $year, $row ['id'] );
+            if ($resul) {
+                $josnArray['items'][$j]['mouth13'] = "<span style='color: green'>已报年终奖</span>";
+            } else {
+                $josnArray['items'][$j]['mouth13'] = "<span style='color: red'>未报年终奖</span>";
             }
 
             $j++;

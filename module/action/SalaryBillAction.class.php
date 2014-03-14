@@ -126,41 +126,6 @@ class SalaryBillAction extends BaseAction {
     }
     function salaryComList() {
         $this->mode = "salComlist";
-        $this->objDao = new SalaryDao ();
-        $year = $_POST ['year'];
-        if (empty ( $year )) {
-            $year = '2013';
-        }
-        $comList = $this->objDao->searchCompanyList ();
-        $salList = array ();
-        $j = 0;
-        while ( $row = mysql_fetch_array ( $comList ) ) {
-            // 查询12个月的工资状况包括年终奖
-            for($i = 1; $i <= 12; $i ++) {
-                if ($i < 10) {
-                    $date = $year . "-0" . $i . "-01";
-                } else {
-                    $date = $year . "-" . $i . "-01";
-                }
-                $result = $this->objDao->searhSalaryTimeListByComIdAndDate ( $date, $row ['id'] );
-                if ($result) {
-                    $salList [$j] ['date' . $i] = "<font color=green>已做工资</font>";
-                } else {
-                    $salList [$j] ['date' . $i] = "<font color=red>未做工资</font>";
-                }
-            }
-            $result = $this->objDao->searhNianSalaryTimeListByComIdAndDate ( $year, $row ['id'] );
-            if ($result) {
-                $salList [$j] ['nian'] = "<font color=green>已做年终奖</font>";
-            } else {
-                $salList [$j] ['nian'] = "<font color=red>未做年终奖</font>";
-            }
-            $salList [$j] ['name'] = $row ['company_name'];
-            $j ++;
-        }
-        // var_dump($salList);
-        $this->objForm->setFormData ( "year", $year );
-        $this->objForm->setFormData ( "comList", $salList );
     }
     function toAddCheque() {
         $this->mode = "tocheque";

@@ -187,7 +187,7 @@ class SalaryDao extends BaseDao {
         return mysql_fetch_array ( $result );
     }
     function searhNianSalaryTimeListByComIdAndDate($date, $comid) {
-        $sql = "select * from OA_salarytime_other  where  salaryTime like'%{$date}%' and companyId=$comid ";
+        $sql = "select * from OA_salarytime_other  where  salaryTime like'%{$date}%' and companyId=$comid and  salaryType = 5";
         $result = $this->g_db_query ( $sql );
         return mysql_fetch_array ( $result );
     }
@@ -363,7 +363,7 @@ class SalaryDao extends BaseDao {
         return $result;
     }
 
-    //查询带条件的公司BY孙瑞鹏
+    //查询残疾人带条件的公司BY孙瑞鹏
     function searchCompanyListByCanjiren($where=null) {
         $id = $_SESSION ['admin'] ['id'];
         $sql = "SELECT b.id,b.company_name,COUNT(*) sumcanjiren FROM

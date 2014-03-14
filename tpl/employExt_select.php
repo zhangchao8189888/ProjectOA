@@ -143,7 +143,7 @@
 
 
                 var winSal = Ext.create('Ext.window.Window', {
-                    title: "查看个税", // 窗口标题
+                    title: "查看员工 ", // 窗口标题
                     width:1200, // 窗口宽度
                     height:500, // 窗口高度
                     layout:"border",// 布局
