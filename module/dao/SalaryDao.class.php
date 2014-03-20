@@ -492,6 +492,9 @@ WHERE convert( emp.e_company  using utf8)  = b.company_name
             if ($where ['zengjian'] != "") {
                 $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
             }
+            if ($where ['first'] != "") {
+                $sql .= "  and submitTime >= '{$where['first']}' and submitTime <=  '{$where['last']}'  ";
+            }
         }
         if ($sort) {
             $sql .= " order by $sort";
@@ -520,6 +523,9 @@ WHERE convert( emp.e_company  using utf8)  = b.company_name
             }
             if ($where ['zengjian'] != "") {
                 $sql .= "  and zengjianbiaozhi like '%{$where['zengjian']}%' ";
+            }
+            if ($where ['first'] != "") {
+                $sql .= "  and submitTime >{$where['first']} and submitTime < {$where['last']}";
             }
         }
         $result = $this->g_db_query ( $sql );
@@ -783,9 +789,16 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
         return $list;
     }
     // 增员BY孙瑞鹏
-    function setZengyuan($CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi,$tel) {
-        $sql = "insert into OA_security (submitTime,CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi,tel)
-                   values (now(),'{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}',{$sum1},'{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}','{$tel}')";
+    function setZengyuan($CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi,$tel,$gongjijin,$gongjijinsum) {
+        $sql = "insert into OA_security (submitTime,CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi,tel,gongjijinjishu,gongjijinsum)
+                   values (now(),'{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}','{$sum1}','{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}','{$tel}','{$gongjijin}','{$gongjijinsum}')";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+
+    // 离职设置BY孙瑞鹏
+    function setTypeLizhi($sid) {
+        $sql = "UPDATE OA_employ SET e_state =1 where e_num = '{$sid}' ";
         $list = $this->g_db_query ( $sql );
         echo($sql);
         return $list;

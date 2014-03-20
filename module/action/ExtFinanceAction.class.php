@@ -52,7 +52,6 @@ class ExtFinanceAction extends BaseAction {
             case "searchGongzibiao":
                 $this->searchGongzibiao();
                 break;
-
             case "opShenPi":
                 $this->opShenPi();
                 break;

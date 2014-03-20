@@ -127,8 +127,10 @@ Ext.onReady(function () {
                             {text: "联系方式", width: 100, dataIndex: 'tel', sortable: true},
                             {text: "操作标志", width: 100, dataIndex: 'zengjianbiaozhi', sortable: true},
                             {text: "社保基数", width: 100, dataIndex: 'shebaojishu', sortable: true},
+                            {text: "公积金基数", width: 100, dataIndex: 'gongjijinjishu', sortable: true},
                             {text: "外区转入/新参保", width: 200, dataIndex: 'waiquzhuanru', sortable: true},
-                            {text: "金额合计", width: 100, dataIndex: 'sum', sortable: true},
+                            {text: "社保金额合计", width: 100, dataIndex: 'sum', sortable: true},
+                            {text: "公积金金额合计", width: 100, dataIndex: 'gongjijinsum', sortable: true},
                             {text: "用人单位基数", width: 150, dataIndex: 'danweijishu', sortable: true},
                             {text: "操作人姓名", width: 150, dataIndex: 'caozuoren', sortable: true},
                             {text: "更新时间", width: 100, dataIndex: 'updateTime', sortable: true},
@@ -204,7 +206,7 @@ Ext.onReady(function () {
                                         params : {
                                             shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),
                                             zengjian : Ext.getCmp("zengjian").getValue(),
-                                            submitTime: Ext.getCmp("zengjianTime").getValue(),
+                                            STime: Ext.getCmp("zengjianTime").getValue(),
                                             companyName:Ext.getCmp("zengjiancom").getValue(),
                                             EName: Ext.getCmp("zengjianemp").getValue(),
                                             start : 0,
@@ -242,7 +244,7 @@ Ext.onReady(function () {
                 listeners: {
                     activate: function (tab) {
                         zengjianListstore.on("beforeload", function () {
-                            Ext.apply(zengjianListstore.proxy.extraParams, {companyName: Ext.getCmp("zengjiancom").getValue(),zengjian: Ext.getCmp("zengjian").getValue(),shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),submitTime: Ext.getCmp("zengjianTime").getValue(),EName: Ext.getCmp("zengjianemp").getValue()});
+                            Ext.apply(zengjianListstore.proxy.extraParams, {companyName: Ext.getCmp("zengjiancom").getValue(),zengjian: Ext.getCmp("zengjian").getValue(),shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),STime: Ext.getCmp("zengjianTime").getValue(),EName: Ext.getCmp("zengjianemp").getValue()});
                         });
                         zengjianListstore.loadPage(1);
                     }

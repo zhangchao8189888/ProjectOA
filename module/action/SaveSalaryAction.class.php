@@ -117,7 +117,9 @@ class SaveSalaryAction extends BaseAction {
             case "setTypeCanjiren" :
 				$this->setTypeCanjiren ();
 				break;
-
+            case "addZengyuan" :
+                $this->addZengyuan ();
+                break;
 			default :
 				$this->modelInput ();
 				break;
@@ -573,7 +575,6 @@ class SaveSalaryAction extends BaseAction {
 
     // 增员BY孙瑞鹏
     function addZengyuan() {
-
         $yongren = $_REQUEST ['yongren'];
         $waiqu = $_REQUEST ['waiqu'];
         $shebao = $_REQUEST ['shebao'];
@@ -584,12 +585,18 @@ class SaveSalaryAction extends BaseAction {
         $employNumber = $_REQUEST ['employNumber'];
         $beizhu = $_REQUEST ['beizhu'];
         $tel = $_REQUEST ['tel'];
+        $gongjijin = $_REQUEST ['gongjijin'];
         $shenbao =  '等待办理';
         $kefuName= $_SESSION ['admin'] ['name'];
         $this->jisuan = new sumSalary();
-        $sum= $this->jisuan->getSumShebao($leibie,$shebao);
+        $gongjijinsum= $this->jisuan->getSumGongjijin($leibie,$gongjijin);
+        $shebaosum= $this->jisuan->getSumShebao($leibie,$shebao);
         $this->objDao = new SalaryDao ();
-        $this->objDao->setZengyuan ($kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$sum,$yongren,null,$shenbao,$beizhu,$caozuo,$tel);
+        $this->objDao->setZengyuan ($kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$shebaosum,$yongren,null,$shenbao,$beizhu,$caozuo,$tel,$gongjijin,$gongjijinsum);
+        if($caozuo=='减员'){
+            $this->objDao->setTypeLizhi($employNumber);
+        }
+
         exit ();
     }
 	

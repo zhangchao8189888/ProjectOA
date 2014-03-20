@@ -265,6 +265,8 @@ Ext.define('oa.common.zengjian.list',{
         {name: 'EmpType', type: 'string'},
         {name: 'zengjianbiaozhi', type: 'string'},
         {name: 'shebaojishu', type: 'string'},
+        {name: 'gongjijinjishu', type: 'string'},
+        {name: 'gongjijinsum', type: 'double'},
         {name: 'waiquzhuanru', type: 'string'},
         {name: 'sum', type: 'double'},
         {name: 'danweijishu', type: 'string'},
