@@ -14,6 +14,7 @@
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"src="tpl/ext/js/MonthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
 <script type="text/javascript">
 Ext.require([
@@ -29,15 +30,19 @@ Ext.onReady(function(){
         id : 'comlist',
         columns: [
             {text: "编号", width: 100, dataIndex: 'id', sortable: true},
+            {text: "提交时间", width: 100, dataIndex: 'submitTime', sortable: true},
             {text: "客服姓名", width: 100, dataIndex: 'CName', sortable: true},
             {text: "部门", width: 150, dataIndex: 'Dept', sortable: true},
             {text: "员工姓名", width: 100, dataIndex: 'EName', sortable: true},
             {text: "身份证号", width: 100, dataIndex: 'EmpNo', sortable: true},
             {text: "身份类别", width: 100, dataIndex: 'EmpType', sortable: true},
+            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: true},
             {text: "操作标志", width: 100, dataIndex: 'zengjianbiaozhi', sortable: true},
             {text: "社保基数", width: 100, dataIndex: 'shebaojishu', sortable: true},
+            {text: "公积金基数", width: 100, dataIndex: 'gongjijinjishu', sortable: true},
             {text: "外区转入/新参保", width: 200, dataIndex: 'waiquzhuanru', sortable: true},
-            {text: "金额合计", width: 100, dataIndex: 'sum', sortable: true},
+            {text: "社保金额合计", width: 100, dataIndex: 'sum', sortable: true},
+            {text: "公积金金额合计", width: 100, dataIndex: 'gongjijinsum', sortable: true},
             {text: "用人单位基数", width: 150, dataIndex: 'danweijishu', sortable: true},
             {text: "操作人姓名", width: 150, dataIndex: 'caozuoren', sortable: true},
             {text: "申报状态", width: 100, dataIndex: 'shenbaozhuangtai', sortable: true},
@@ -120,6 +125,7 @@ Ext.onReady(function(){
                     zengjianListstore.load( {
                         params : {
                             companyName : this.getValue(),
+                            STime :  Ext.getCmp("STime").getValue(),
                             zengjian : Ext.getCmp("zengjian").getValue(),
                             start : 0,
                             limit : 50
@@ -127,22 +133,47 @@ Ext.onReady(function(){
                     });
                 }
             },
-            '增减类型查询', {
-                id:'zengjian',
-                xtype : 'trigger',
-                triggerClass : 'x-form-search-trigger',
-                name: 'zengjian',
-                onTriggerClick : function(src) {
+            {
+                xtype: 'combobox',
+                id:"zengjian",
+                emptyText: "筛选增减员类型",
+                editable: false,
+                store: {
+                    fields: ['abbr', 'name'],
+                    data: [
+                        {"abbr": "增员", "name": "增员"},
+                        {"abbr": "减员", "name": "减员"}
+                    ]
+                },
+                valueField: 'abbr',
+                displayField: 'name'
+            },
+            {
+                id:'STime',
+                name: 'STime',
+                xtype : 'monthfield',
+                editable: false,
+                width: 150,
+                labelAlign: 'right',
+                format: 'Y-m'
+            },
+            {
+                xtype : 'button',
+                id : 'chaxun',
+                handler : function(src) {
                     zengjianListstore.removeAll();
                     zengjianListstore.load( {
                         params : {
-                            companyName : Ext.getCmp("comname").getValue(),
-                            zengjian : this.getValue(),
+                            companyName :  Ext.getCmp("comname").getValue(),
+                            STime :  Ext.getCmp("STime").getValue(),
+                            zengjian : Ext.getCmp("zengjian").getValue(),
                             start : 0,
                             limit : 50
                         }
                     });
-                }
+                },
+                text : '查询',
+                iconCls : 'chaxun'
             }
 
         ]
@@ -227,6 +258,12 @@ Ext.onReady(function(){
                         fieldLabel: '社保基数'
                     },
                     {
+                        xtype: 'textfield',
+                        id:"gongjijin",
+                        emptyText: "请输入公积金基数",
+                        fieldLabel: '公积金基数'
+                    },
+                    {
                         xtype: 'combobox',
                         id:"waiqu" ,
                         editable: false,
@@ -289,6 +326,7 @@ Ext.onReady(function(){
             {
                 text: '清空',
                 handler: function () {
+                    var gongjijin =  Ext.getCmp("gongjijin").setValue("");
                     var yongren =  Ext.getCmp("yongren").setValue("");
                     var waiqu =  Ext.getCmp("waiqu").setValue("");
                     var shebao =  Ext.getCmp("shebao").setValue("");
@@ -340,6 +378,7 @@ Ext.onReady(function(){
             url: url,  //从json文件中读取数据，也可以从其他地方获取数据
             method : 'POST',
             params: {
+                gongjijin: Ext.getCmp("gongjijin").getValue(),
                 yongren: Ext.getCmp("yongren").getValue(),
                 waiqu: Ext.getCmp("waiqu").getValue(),
                 shebao: Ext.getCmp("shebao").getValue(),

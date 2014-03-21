@@ -397,6 +397,11 @@ class ExtSalaryAction extends BaseAction{
         $limit=$_REQUEST['limit'];
         $sorts=$_REQUEST['sort'];
         $dir=$_REQUEST['dir'];
+        $STime=$_REQUEST['STime'];
+        if($STime) {
+            $time1=$this->AssignTabMonth($STime,0);
+        }
+
         $companyName=$_REQUEST['companyName'];
         $zengjian=$_REQUEST['zengjian'];
         $shenbaozhuangtai   =   $_REQUEST['shenbaozhuangtai'];
@@ -413,6 +418,8 @@ class ExtSalaryAction extends BaseAction{
             $time=$this->AssignTabMonth($submitTime,0);
             $where['submitTime']=$time["last"];
         }
+        $where['first']=$time1['first'];
+        $where['last']=$time1['last'];
         $where['ename']=$ename;
         $where['shenbaozhuangtai']=$shenbaozhuangtai;
         $where['companyName']=$companyName;
@@ -422,6 +429,8 @@ class ExtSalaryAction extends BaseAction{
         $josnArray=array();
         $josnArray['total']=$sum;
         $i=0;
+        $sumShebao = 0;
+        $sumGongjijin = 0;
         while ($row=mysql_fetch_array($salaryTimeList) ){
             $josnArray['items'][$i]['id']=$row['id'];
             $josnArray['items'][$i]['submitTime']=$row['submitTime'];
@@ -440,8 +449,14 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i]['shenbaozhuangtai']=$row['shenbaozhuangtai'];
             $josnArray['items'][$i]['beizhu']=$row['beizhu'];
             $josnArray['items'][$i]['tel']=$row['tel'];
+            $josnArray['items'][$i]['gongjijinjishu']=$row['gongjijinjishu'];
+            $josnArray['items'][$i]['gongjijinsum']=$row['gongjijinsum'];
+            $sumShebao +=  $josnArray['items'][$i]['sum'];
+            $sumGongjijin += $josnArray['items'][$i]['gongjijinsum'];
             $i++;
         }
+        $josnArray['items'][$i]['sum'] +=  $sumShebao;
+        $josnArray['items'][$i]['gongjijinsum'] +=  $sumGongjijin;
         echo json_encode($josnArray);
         exit;
     }

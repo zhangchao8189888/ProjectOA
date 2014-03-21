@@ -35,6 +35,22 @@ const  jijinshu=3500;
             }
         return  $jisuan_sum['sum'];
     }
+    function getSumGongjijin($leibie,$gongjijin){
+        /**公积金金额合计
+         *
+         */
+        $jisuan_sum = array();
+        $userType=$this->getShenfenleibie($leibie);
+        $jisuan_sum['gongjijinjishu']=$gongjijin;
+        if($userType!=-1){
+            $jisuan_sum['gerengongjijin']=round($this->jisuan_geren_gongjijin($jisuan_sum['gongjijinjishu']));
+            $jisuan_sum['danweigongjijin']=round($this->jisuan_geren_gongjijin($jisuan_sum['gongjijinjishu']));
+            $jisuan_sum['sum']= $jisuan_sum['gerengongjijin']+ $jisuan_sum['danweigongjijin'];
+        }else{
+            $jisuan_sum['sum']=-1;
+        }
+        return  $jisuan_sum['sum'];
+    }
 	function getSumSalary(&$jisuan_var){
 		//$shebaojishu,$shenfenleibie
 		//var_dump($jisuan_var);

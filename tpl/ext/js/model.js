@@ -265,6 +265,8 @@ Ext.define('oa.common.zengjian.list',{
         {name: 'EmpType', type: 'string'},
         {name: 'zengjianbiaozhi', type: 'string'},
         {name: 'shebaojishu', type: 'string'},
+        {name: 'gongjijinjishu', type: 'string'},
+        {name: 'gongjijinsum', type: 'double'},
         {name: 'waiquzhuanru', type: 'string'},
         {name: 'sum', type: 'double'},
         {name: 'danweijishu', type: 'string'},
@@ -322,6 +324,29 @@ Ext.define('oa.common.finance.list',{
  * 个税查看model
  */
 Ext.define('oa.common.tax.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'mouth1', type: 'string'},
+        {name: 'mouth2', type: 'string'},
+        {name: 'mouth3', type: 'string'},
+        {name: 'mouth4', type: 'string'},
+        {name: 'mouth5', type: 'string'},
+        {name: 'mouth6', type: 'string'},
+        {name: 'mouth7', type: 'string'},
+        {name: 'mouth8', type: 'string'},
+        {name: 'mouth9', type: 'string'},
+        {name: 'mouth10', type: 'string'},
+        {name: 'mouth11', type: 'string'},
+        {name: 'mouth12', type: 'string'},
+        {name: 'mouth13', type: 'string'}
+    ]
+});
+/**
+ * 工资查看model
+ */
+Ext.define('oa.common.gongzibiao.list',{
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int'},
