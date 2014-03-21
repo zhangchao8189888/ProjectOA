@@ -99,24 +99,18 @@ Ext.define('oa.common.checkcompany.list',{
     ]
 });
 
-/**
- * id	int(11)	No
- companyId	int(11)	No
- salaryTime	date	No
- op_salaryTime	datetime	No
- op_id	int(11)	Yes
- salary_state	int(2)	No	0
- salary_leijiyue	float(11,2)	Yes
- mark
- */
-Ext.define('oa.common.salTime.list',{
+
+Ext.define('oa.common.salaryTime.list',{
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
         {name: 'salaryTime', type: 'string'},
         {name: 'op_salaryTime', type: 'time'},
-        {name: 'salary_state', type: 'int'}
+        {name: 'salary_state', type: 'int'},
+        {name: 'sal_approve', type: 'string'},
+        {name: 'sal_approve_id', type: 'int'},
+        {name: 'fa_state', type: 'string'}
     ]
 });
 
@@ -472,4 +466,28 @@ Ext.define('oa.common.socialsecurity.insurance', {
         {name: 'tel', type: 'string'}
     ]
 
+});
+
+/**
+ * 员工信息列表
+ */
+Ext.define('oa.common.employ.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'e_name', type: 'string'},
+        {name: 'e_company', type: 'string'},
+        {name: 'e_num', type: 'string'},
+        {name: 'bank_name', type: 'string'},
+        {name: 'bank_num', type: 'string'},
+        {name: 'e_type', type: 'string'},
+        {name: 'shebaojishu', type: 'int'},
+        {name: 'gongjijinjishu', type: 'int'},
+        {name: 'laowufei', type: 'int'},
+        {name: 'canbaojin', type: 'int'},
+        {name: 'danganfei', type: 'int'},
+        {name: 'e_hetongnian', type: 'int'},
+        {name: 'e_hetong_date', type: 'string'},
+        {name: 'memo', type: 'string'}
+    ]
 });

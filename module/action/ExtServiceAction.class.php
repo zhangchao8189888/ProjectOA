@@ -198,7 +198,6 @@ class ExtServiceAction extends BaseAction {
         $this->objDao = new SalaryDao();
         $result = $this->objDao->saveSalaryBill($billArray);
         $lastid = $this->objDao->g_db_last_insert_id();
-        $errormsg = "";
         if ($result) {
             $info   =   "操作成功！";
             //1代表$billState发票已开

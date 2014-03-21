@@ -594,6 +594,10 @@ function selectinfo(timeId) {
 }
 
 function updateSal(eid){
+    if(eid=="0"){
+        Ext.Msg.alert('警告','没有做工资无法审核发放！');
+        return false;
+    }
     Ext.MessageBox.show({
         title:'审核工资',
         msg: '请选择审核结果：',
@@ -602,39 +606,56 @@ function updateSal(eid){
         animateTarget: 'mb4',
         fn: function (btn) {
             var shenPiType;
-            if(eid=="0"){
-                Ext.Msg.alert('警告','没有做工资无法审核发放！');
-                return false;
-            }
             if("ok"==btn){
                shenPiType  =   1;
+                Ext.Ajax.request({
+                    url: 'index.php?action=ExtFinance&mode=opShenPi',
+                    method: 'post',
+                    params: {
+                        billId:eid ,
+                        shenPiType  :   shenPiType
+                    },
+                    success: function (response) {
+                        var text = response.responseText;
+                        Ext.Msg.alert("提示",text);
+                        caiwuListStore.load( {
+                                params: {
+                                    start: 0,
+                                    limit: 50
+                                }
+                            }
+                        );
+                    }
+
+                });
             }
-            if("yes"==btn){
+            else if("yes"==btn){
                 shenPiType  =   2;
+                Ext.Ajax.request({
+                    url: 'index.php?action=ExtFinance&mode=opShenPi',
+                    method: 'post',
+                    params: {
+                        billId:eid ,
+                        shenPiType  :   shenPiType
+                    },
+                    success: function (response) {
+                        var text = response.responseText;
+                        Ext.Msg.alert("提示",text);
+                        caiwuListStore.load( {
+                                params: {
+                                    start: 0,
+                                    limit: 50
+                                }
+                            }
+                        );
+                    }
+
+                });
             }
-            if("no"==btn){
+            else if("no"==btn){
                return false;
             }
-            Ext.Ajax.request({
-                url: 'index.php?action=ExtFinance&mode=opShenPi',
-                method: 'post',
-                params: {
-                    billId:eid ,
-                    shenPiType  :   shenPiType
-                },
-                success: function (response) {
-                    var text = response.responseText;
-                    Ext.Msg.alert("提示",text);
-                    caiwuListStore.load( {
-                            params: {
-                                start: 0,
-                                limit: 50
-                            }
-                        }
-                    );
-                }
 
-            });
         },
         icon: Ext.MessageBox.INFO
     })
