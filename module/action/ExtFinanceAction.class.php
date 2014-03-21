@@ -231,8 +231,13 @@ class ExtFinanceAction extends BaseAction {
         $this->objDao=new BaseDao();
         $arr=json_decode($companylist);
         foreach($arr as $key=>$value){
-            $this->objDao->cancelManage($value);
+           $result  =   $this->objDao->cancelManage($value);
+            if(!$result){
+                echo("操作失败！");
+                exit;
+            }
         }
+        echo("操作成功！");
         exit;
     }
 

@@ -61,6 +61,7 @@ Ext.onReady(function () {
         selType: 'checkboxmodel',
         columns: [
             {text: "id", width: 50, dataIndex: 'id', sortable: true, align: 'center',hidden:true},
+            {text: "单位id", width: 50, dataIndex: 'company_id', sortable: true, align: 'center'},
             {text: "工资月份", dataIndex: 'salDate', width: 85,sortable: false, align: 'center'},
             {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100, sortable: false,align: 'center'},
             {
@@ -188,7 +189,7 @@ Ext.onReady(function () {
                         var itcIds = [];
                         //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
                         for (var i = 0; i < record.length; i++) {
-                            itcIds.push(record[i].data.id);
+                            itcIds.push(record[i].data.company_id);
                         }
                         Ext.Ajax.request({
                             url: 'index.php?action=ExtFinance&mode=cancelManage',
@@ -197,7 +198,8 @@ Ext.onReady(function () {
                                 ids: Ext.JSON.encode(itcIds)
                             },
                             success: function (response) {
-                                Ext.Msg.alert("提示","取消成功！");
+                                var text = response.responseText;
+                                Ext.Msg.alert("提示",text);
                                 serviceManagestore.removeAll();
                                 serviceManagestore.load({
                                     params: {

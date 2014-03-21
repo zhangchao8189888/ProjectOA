@@ -124,6 +124,7 @@ class ExtServiceAction extends BaseAction {
             //查询当月工资是否发放
             $results = $this->objDao->searchByComIdAndSalTime($row['id'], $where);
             $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
+            $comList ['items'] [$i] ['company_id'] = $row['id'];
             $comList ['items'] [$i] ['id'] = $results['id'];
             if ($results["salaryTime"]) {
                 $comList ['items'] [$i] ['salDate'] = date("Y-m-d", strtotime($results["salaryTime"]));

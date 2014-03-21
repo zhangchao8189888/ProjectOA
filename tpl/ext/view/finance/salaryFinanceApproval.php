@@ -121,7 +121,7 @@ Ext.onReady(function () {
                                     }
                                 });
                             },
-                            icon: Ext.MessageBox.INFO
+                            icon: Ext.MessageBox.WARNING
                         })
 
                     } else {

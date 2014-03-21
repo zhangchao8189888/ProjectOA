@@ -104,7 +104,7 @@ Ext.onReady(function () {
                                     success: function (response) {
                                         var text = response.responseText;
                                         // process server response here
-                                        Ext.Msg.alert('信息',text);
+                                        Ext.Msg.alert('提示',text);
                                         salTimeListstore.removeAll();
                                         salTimeListstore.load({
                                             params: {
@@ -119,7 +119,7 @@ Ext.onReady(function () {
                                     }
                                 });
                             },
-                            icon: Ext.MessageBox.INFO
+                            icon: Ext.MessageBox.WARNING
                         })
 
                     } else {

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>个税查看</title>
+<title>年度工资查看</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
@@ -26,20 +26,20 @@ Ext.onReady(function () {
         stripeRows:true,
         columns: [
             {text: "id", width: 45, dataIndex: 'id', sortable: true,align:'center'},
-            {text: "公司名称", flex: 180, dataIndex: 'company_name', sortable: true},
-            {text: "一月", flex: 110, dataIndex: 'mouth1', sortable: false,align:'center'},
-            {text: "二月", flex: 110, dataIndex: 'mouth2', sortable: false,align:'center'},
-            {text: "三月", flex: 110, dataIndex: 'mouth3', sortable: false,align:'center'},
-            {text: "四月", flex: 110, dataIndex: 'mouth4', sortable: false,align:'center'},
-            {text: "五月", flex: 110, dataIndex: 'mouth5', sortable: false,align:'center'},
-            {text: "六月", flex: 110, dataIndex: 'mouth6', sortable: false,align:'center'},
-            {text: "七月", flex: 110, dataIndex: 'mouth7', sortable: false,align:'center'},
-            {text: "八月", flex: 110, dataIndex: 'mouth8', sortable: false,align:'center'},
-            {text: "九月", flex: 110, dataIndex: 'mouth9', sortable: false,align:'center'},
-            {text: "十月", flex: 110, dataIndex: 'mouth10', sortable: false,align:'center'},
-            {text: "十一月", flex: 110, dataIndex: 'mouth11', sortable: false,align:'center'},
-            {text: "十二月", flex: 110, dataIndex: 'mouth12', sortable: false,align:'center'},
-            {text: "年终奖", flex: 130, dataIndex: 'mouth13', sortable: false,align:'center'}
+            {text: "公司名称", width: 200, dataIndex: 'company_name', sortable: true},
+            {text: "一月", width: 80, dataIndex: 'mouth1', sortable: false,align:'center'},
+            {text: "二月", width: 80, dataIndex: 'mouth2', sortable: false,align:'center'},
+            {text: "三月", width: 80, dataIndex: 'mouth3', sortable: false,align:'center'},
+            {text: "四月", width: 80, dataIndex: 'mouth4', sortable: false,align:'center'},
+            {text: "五月", width: 80, dataIndex: 'mouth5', sortable: false,align:'center'},
+            {text: "六月", width: 80, dataIndex: 'mouth6', sortable: false,align:'center'},
+            {text: "七月", width: 80, dataIndex: 'mouth7', sortable: false,align:'center'},
+            {text: "八月", width: 80, dataIndex: 'mouth8', sortable: false,align:'center'},
+            {text: "九月", width: 80, dataIndex: 'mouth9', sortable: false,align:'center'},
+            {text: "十月", width: 80, dataIndex: 'mouth10', sortable: false,align:'center'},
+            {text: "十一月", width: 80, dataIndex: 'mouth11', sortable: false,align:'center'},
+            {text: "十二月", width: 80, dataIndex: 'mouth12', sortable: false,align:'center'},
+            {text: "年终奖", width: 80, dataIndex: 'mouth13', sortable: false,align:'center'}
         ],
         height: 700,
         width: 1100,

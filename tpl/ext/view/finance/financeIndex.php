@@ -127,7 +127,8 @@ Ext.onReady(function () {
                                 ids: Ext.JSON.encode(itcIds)
                             },
                             success: function (response) {
-                                Ext.Msg.alert("提示","取消成功！");
+                                var text = response.responseText;
+                                Ext.Msg.alert("提示",text);
                                 caiwuListStore.removeAll();
                                 caiwuListStore.load({
                                     params: {

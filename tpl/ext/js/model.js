@@ -369,6 +369,7 @@ Ext.define('oa.common.service.list', {
     fields: [
         {name: 'id', type: 'int'},
         {name: 'company_name', type: 'string'},
+        {name: 'company_id', type: 'int'},
         {name: 'salDate', type: 'string'},
         {name: 'op_salaryTime', type: 'string'},
         {name: 'companyId', type: 'string'},
