@@ -1583,7 +1583,7 @@ Ext.onReady(function () {
 
     var items=[tabs2];
     var indexWin = Ext.create('Ext.window.Window', {
-        title: "欢迎使用中企基业社保功能", // 窗口标题
+        title: "欢迎使用社保功能", // 窗口标题
         width:1240, // 窗口宽度
         height:690, // 窗口高度
         layout:"border",// 布局

@@ -217,8 +217,7 @@ class ExtFinanceAction extends BaseAction {
     function companyClear() {
         $this->objDao=new FinanceDao();
         $id=$_REQUEST['comid'];
-        $company    =   $this->objDao->getCheckCompanyById($id);
-        echo($company['company_address']);
+        $company = $this->objDao->getCheckCompanyById($id);
         $this->objDao->companyClear($id,$company);
         exit();
     }
