@@ -457,6 +457,10 @@ class SaveSalaryAction extends BaseAction {
         $salaryTimeId = preg_replace("#\\\u([0-9a-f]{4})#ie", "iconv('UCS-2', 'UTF-8', pack('H4', '\\1'))", $salaryTimeId);
 		$this->objDao = new SalaryDao ();
 		$i = 0;
+        $daisum = 0;
+        $busum = 0;
+        $zongsum = 0;
+        $niansum = 0;
         $josnArray = array ();
        for($h=0;$h<(count($salaryTimeId));$h++){
 
@@ -471,10 +475,17 @@ class SaveSalaryAction extends BaseAction {
                $josnArray ['items'] [$i] ['nian'] = $row ['nian'];
                $josnArray ['items'] [$i] ['companyname'] = $row ['companyname'];
                $josnArray ['items'] [$i] ['geshuiSum'] = $row ['geshuiSum'];
+               $daisum += $josnArray['items'][$i] ['daikou'];
+               $busum +=  $josnArray['items'][$i] ['bukou'];
+               $zongsum += $josnArray['items'][$i]['geshuiSum'];
+               $niansum +=  $josnArray ['items'] [$i] ['nian'];
 			$i ++;
 		   }
         }
-
+        $josnArray['items'][$i] ['daikou']= $daisum;
+        $josnArray['items'][$i] ['bukou']= $busum;
+        $josnArray['items'][$i]['geshuiSum'] =$zongsum;
+        $josnArray ['items'] [$i] ['nian']= $niansum;
         //导出
         $hang=0;
         $salaryListExcel=array();

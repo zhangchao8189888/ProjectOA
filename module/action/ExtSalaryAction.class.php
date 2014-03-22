@@ -564,6 +564,9 @@ class ExtSalaryAction extends BaseAction{
     	$josnArray=array();
     	$josnArray['total']=$sum;
     	$i=0;
+        $daisum = 0;
+        $busum = 0;
+        $zongsum = 0;
     	while ($nameList=mysql_fetch_array($salaryNameList) ){
             $josnArray['items'][$i]['company_id']=$nameList['id'];
             $josnArray['items'][$i]['company_name']=$nameList['company_name'];
@@ -571,15 +574,20 @@ class ExtSalaryAction extends BaseAction{
             $row=mysql_fetch_array($salaryTimeList);
     		$josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
             $josnArray['items'][$i] ['daikou'] = $row ['daikou'];
+            $daisum += $josnArray['items'][$i] ['daikou'];
             $josnArray['items'][$i] ['bukou'] = $row ['bukou'];
+            $busum +=  $josnArray['items'][$i] ['bukou'];
     		$josnArray['items'][$i]['geshuiSum']=$row['geshuiSum'];
+            $zongsum += $josnArray['items'][$i]['geshuiSum'];
             if(!$josnArray['items'][$i]['salaryTime']){
                 $josnArray['items'][$i]['salaryTime']='<span style="color: red">未作工资或免税</span>';
             }
 
     		$i++;
     	}
-
+        $josnArray['items'][$i] ['daikou']= $daisum;
+        $josnArray['items'][$i] ['bukou']= $busum;
+        $josnArray['items'][$i]['geshuiSum'] =$zongsum;
         //导出
         $hang=0;
         $salaryListExcel=array();

@@ -23,7 +23,7 @@ Ext.define('oa.common.company.list',{
 Ext.define('oa.common.geshui.list',{
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'company_id', type: 'int'},
+        {name: 'company_id', type: 'string'},
         {name: 'company_name', type: 'string'},
         {name: 'salaryTime', type: 'string'},
         {name: 'daikou', type: 'double'},
@@ -210,7 +210,7 @@ Ext.define('oa.common.otherSalTime.list',{
 Ext.define('oa.common.geshui.detail.list',{
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'company_id', type: 'int'},
+        {name: 'company_id', type: 'string'},
         {name: 'ename', type: 'string'},
         {name: 'e_num', type: 'string'},
         {name: 'salaryTime', type: 'string'},
