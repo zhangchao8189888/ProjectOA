@@ -479,7 +479,7 @@ class SaveSalaryAction extends BaseAction {
                $busum +=  $josnArray['items'][$i] ['bukou'];
                $zongsum += $josnArray['items'][$i]['geshuiSum'];
                $niansum +=  $josnArray ['items'] [$i] ['nian'];
-			$i ++;
+			   $i++;
 		   }
         }
         $josnArray['items'][$i] ['daikou']= $daisum;
