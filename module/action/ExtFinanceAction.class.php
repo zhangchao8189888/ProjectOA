@@ -217,8 +217,7 @@ class ExtFinanceAction extends BaseAction {
     function companyClear() {
         $this->objDao=new FinanceDao();
         $id=$_REQUEST['comid'];
-        $company    =   $this->objDao->getCheckCompanyById($id);
-        echo($company['company_address']);
+        $company = $this->objDao->getCheckCompanyById($id);
         $this->objDao->companyClear($id,$company);
         exit();
     }
@@ -231,8 +230,13 @@ class ExtFinanceAction extends BaseAction {
         $this->objDao=new BaseDao();
         $arr=json_decode($companylist);
         foreach($arr as $key=>$value){
-            $this->objDao->cancelManage($value);
+           $result  =   $this->objDao->cancelManage($value);
+            if(!$result){
+                echo("操作失败！");
+                exit;
+            }
         }
+        echo("操作成功！");
         exit;
     }
 

@@ -23,6 +23,10 @@ $comlist = json_encode($comlist);
 <script language="javascript" type="text/javascript" src="common/js/jquery.pagination.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery.checkbox.js" charset="utf-8"></script>
 <style type="text/css">
+    body {
+        padding: 0px;
+        margin: 0px;
+    }
     <!--
     A { text-decoration: none}
     -->
@@ -34,7 +38,22 @@ Ext.require([
     'Ext.data.*'
 ]);
 Ext.onReady(function () {
-
+    var myDate = new Date();
+    if(myDate.getDate()==1){
+        Ext.MessageBox.show({
+            title:'员工合同到期提醒',
+            msg: '是否要进行查看员工合同信息',
+            buttonText:{ok: '确认',no:'取消'},
+            animateTarget: 'mb4',
+            fn: function (btn) {
+                if("no"==btn){
+                    return false;
+                }
+                document.location='index.php?action=Ext&mode=contractInfo';
+            },
+            icon: Ext.MessageBox.INFO
+        })
+    }
     var serviceManage = Ext.create('Ext.grid.Panel', {
         id: 'grid2',
         store: serviceManagestore,
@@ -42,6 +61,7 @@ Ext.onReady(function () {
         selType: 'checkboxmodel',
         columns: [
             {text: "id", width: 50, dataIndex: 'id', sortable: true, align: 'center',hidden:true},
+            {text: "单位id", width: 50, dataIndex: 'company_id', sortable: true, align: 'center'},
             {text: "工资月份", dataIndex: 'salDate', width: 85,sortable: false, align: 'center'},
             {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100, sortable: false,align: 'center'},
             {
@@ -107,7 +127,7 @@ Ext.onReady(function () {
                     } else if (val == 1) {
                         return '<span style="color: green">批准发放</span>';
                     } else if (val == -1) {
-                        return '<a href="#" onclick="send(' + record.data['id'] + ')"><span style="color: red">未批准发放</span></a>';
+                        return '<a href="#" onclick="send(' + record.data['id'] + ')"><span style="color: red">未申请发放</span></a>';
                     }
                     return val;
                 },
@@ -130,7 +150,7 @@ Ext.onReady(function () {
         columnLines: true,
         loadMask: true,
         width: 1050,
-        height: 500,
+        height: 550,
         frame: true,
         title: '主页',
         iconCls: 'icon-grid',
@@ -169,7 +189,7 @@ Ext.onReady(function () {
                         var itcIds = [];
                         //var cbgItem = Ext.getCmp('myForm').findById('cbg').items;
                         for (var i = 0; i < record.length; i++) {
-                            itcIds.push(record[i].data.id);
+                            itcIds.push(record[i].data.company_id);
                         }
                         Ext.Ajax.request({
                             url: 'index.php?action=ExtFinance&mode=cancelManage',
@@ -178,7 +198,8 @@ Ext.onReady(function () {
                                 ids: Ext.JSON.encode(itcIds)
                             },
                             success: function (response) {
-                                Ext.Msg.alert("提示","取消成功！");
+                                var text = response.responseText;
+                                Ext.Msg.alert("提示",text);
                                 serviceManagestore.removeAll();
                                 serviceManagestore.load({
                                     params: {
@@ -196,59 +217,29 @@ Ext.onReady(function () {
 
                 }
             },
-            '公司名称查询',
             {
-                id: 'comnamesecrch',
-                xtype: 'trigger',
-                triggerClass: 'x-form-search-trigger',
-                name: 'comnamesecrch',
-                onTriggerClick: function (src) {
-                    serviceManagestore.removeAll();
-                    serviceManagestore.load({
-                        params: {
-                            company_name: this.getValue(),
-                            saldate: Ext.getCmp("STime").getValue(),
-                            operationTime: Ext.getCmp("operationTime").getValue(),
-                            start: 0,
-                            limit: 50
-                        }
-                    });
-                }
+                xtype:'textfield',
+                id:'comnamesecrch',
+                width:150,
+                emptyText:"筛选公司"
             },
             {
                 id:'STime',
                 name: 'STime',
                 xtype : 'monthfield',
                 editable: false,
-                width: 100,
+                width: 120,
+                emptyText:"筛选工资月份",
                 labelAlign: 'right',
                 format: 'Y-m'
-            },
-            {
-                xtype: 'button',
-                id: 'search1',
-                disabled: false,
-                handler: function () {
-                    serviceManagestore.removeAll();
-                    serviceManagestore.load({
-                        params: {
-                            company_name: Ext.getCmp("comnamesecrch").getValue(),
-                            date: Ext.getCmp("STime").getValue(),
-                            operationTime: Ext.getCmp("operationTime").getValue(),
-                            start: 0,
-                            limit: 50
-                        }
-                    });
-
-                },
-                text: '工资月份'
             },
             {
                 id: 'operationTime',
                 name: 'operationTime',
                 xtype: 'datefield',
-                width:240,
+                width:120,
                 format: "Y-m-d",
+                emptyText:"筛选操作时间",
                 readOnly: false,
                 anchor: '95%'
             } ,
@@ -269,7 +260,7 @@ Ext.onReady(function () {
                     });
 
                 },
-                text: '操作时间'
+                text: '筛选'
             }
         ]
     });
@@ -475,16 +466,16 @@ function cancel(id) {
     }
 }
 function send(eid) {
+    if(eid=="0"){
+        Ext.Msg.alert('警告','没有做工资无法申请发放！');
+        return false;
+    }
     Ext.MessageBox.show({
         title:'发放工资',
         msg: '是否要申请发放工资？',
         buttonText:{ok: '确认',no:'取消'},
         animateTarget: 'mb4',
         fn: function (btn) {
-            if(eid=="0"){
-                Ext.Msg.alert('警告','没有做工资无法申请发放！');
-                return false;
-            }
            if("no"==btn){
                return false;
            }
@@ -787,7 +778,7 @@ function selectinfo(timeId) {
 </head>
 <body>
 <?php include("tpl/commom/top.html"); ?>
-<div id="main" style="min-width:960px">
+<div id="main" style="min-width:0px">
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <div id="tableList"></div>
@@ -798,7 +789,6 @@ function selectinfo(timeId) {
             <input type="hidden" name="sDate" id="sDate" value=""/>
             <input type="hidden" name="salType" id="salType" value=""/>
         </form>
-
     </div>
 </div>
 </body>

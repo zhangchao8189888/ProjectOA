@@ -43,7 +43,6 @@ class EmployDao extends BaseDao
     }
 //员工列表BY孙瑞鹏
     function getEmlistbyComnameExt($comName,$eStat=null,$empName=null,$empNo=null){
-        echo  $eStat;
         $sql="select *  from  OA_employ  where 1=1";
         if($comName!=null){
             $sql.=" and e_company like '%$comName%'";
@@ -60,7 +59,6 @@ class EmployDao extends BaseDao
         $result=$this->g_db_query($sql);
         return $result;
     }
-
 
     function getEmlistbyHetongriqi($comName,$hetongriqi,$hetongriqiEnd){
     	$sql="select *  from  OA_employ  where e_company like '%$comName%' and e_hetong_date>='$hetongriqi' and e_hetong_date<='$hetongriqiEnd'";

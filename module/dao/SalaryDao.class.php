@@ -336,10 +336,11 @@ class SalaryDao extends BaseDao {
         if ($sort) {
             $sql .= " order by $sort";
         }
-        if ($start >= 0 && $limit) {
-            $sql .= " limit $start,$limit";
+        if(null==$where['e_sal_approve']&&null==$where['e_fa_state']){
+            if ($start >= 0 && $limit) {
+                $sql .= " limit $start,$limit";
+            }
         }
-        // $sql.=" order by op_salaryTime desc ";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
@@ -868,6 +869,7 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
                 $sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";
             }
         }
+
         if ($sort) {
             $sql .= " order by $sort";
         }

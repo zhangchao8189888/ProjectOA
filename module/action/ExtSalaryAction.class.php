@@ -87,7 +87,9 @@ class ExtSalaryAction extends BaseAction{
             case "searchCanjirenXiangxi":
                  $this->searchCanjirenXiangxi();
                   break;
-
+            case "delSalayByTimeId":
+                $this->delSalayByTimeId();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -176,7 +178,10 @@ class ExtSalaryAction extends BaseAction{
         $companyName=$_REQUEST['companyName'];
         $salTime=$_REQUEST['salTime'];
         $opTime=$_REQUEST['opTime'];
-
+        $e_sal_approve  =   $_REQUEST['e_sal_approve'];
+        $e_fa_state  =   $_REQUEST['e_fa_state'];
+        $where['e_sal_approve']=$e_sal_approve;
+        $where['e_fa_state']=$e_fa_state;
         if(!$start){
             $start=0;
         }
@@ -200,19 +205,40 @@ class ExtSalaryAction extends BaseAction{
         $josnArray=array();
         $josnArray['total']=$sum;
         $i=0;
-        /**
-         * companyId	int(11)	No
-        salaryTime	date	No
-        op_salaryTime	datetime	No
-        op_id	int(11)	Yes
-        salary_state	int(2)	No	0
-        salary_leijiyue	float(11,2)	Yes
-         */
         while ($row=mysql_fetch_array($salaryTimeList) ){
+            $results = $this->objDao->searchByComIdAndSalTime($row['companyId'], $row['salaryTime']);
+            if (!$results) {
+                $josnArray ['items'] [$i]['fa_state'] = -1;
+                $josnArray ['items'] [$i] ['sal_approve'] = -1;
+                $result['id'] = 0;
+            } else {
+                $josnArray ['items'] [$i]['fa_state'] = -1;
+                $josnArray ['items'] [$i] ['sal_approve'] = -1;
+                $josnArray ['items'] [$i]['salStat'] = $results['id'];
+                $josnArray ['items'] [$i]['salTimeid'] = $results['id'];
+                $this->billInfo = new SalaryDao();
+                $bill_fa = $this->billInfo->searchBillBySalaryTimeId($results['id'], 4);
+                if ($bill = mysql_fetch_array($bill_fa)) {
+                    $josnArray ['items'] [$i] ['sal_approve_id'] =$bill ['id'];
+                    if($bill['bill_value']){
+                        $josnArray ['items'] [$i]['fa_state'] = $bill['bill_value'];
+                        if ($bill ['bill_type'] == '4') {
+                            $josnArray ['items'] [$i] ['sal_approve'] =$bill ['bill_value'];
+                        }
+                    }
+                }
+            }
             $josnArray['items'][$i]['id']=$row['id'];
             $josnArray['items'][$i]['company_name']=$row['company_name'];
-            $josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
-            $josnArray['items'][$i]['op_salaryTime']=$row['op_salaryTime'];
+            $josnArray['items'][$i]['salaryTime']=date("Y-m-d", strtotime($row['salaryTime']));
+            $josnArray['items'][$i]['op_salaryTime']=date("Y-m-d", strtotime($row['op_salaryTime']));
+            if(-1==$e_fa_state&&-1!= $josnArray ['items'] [$i]['sal_approve'] ){
+                continue;
+            }
+            //申请审批中
+            if(1==$e_fa_state&&0!= $josnArray ['items'] [$i]['fa_state'] ){
+                continue;
+            }
             $i++;
         }
         echo json_encode($josnArray);
@@ -774,6 +800,60 @@ class ExtSalaryAction extends BaseAction{
         exit;
     }
 
+    function delSalayByTimeId() {
+        $salaryTimeId = $_REQUEST ['timeid'];
+        $exmsg = new EC (); // 设置错误信息类
+        $this->objDao = new SalaryDao ();
+        // 开始事务
+        $ids   =   $_POST["ids"];
+        $arr=json_decode($ids);
+        foreach($arr as $key=>$value){
+            $this->objDao->beginTransaction ();
+            $salaryList = $this->objDao->searchSalaryTimeBy_id ( $value );
+            $result = $this->objDao->delSalaryMovement_BySalaryId ( $value );
+            if (! $result) {
+                $exmsg->setError ( __FUNCTION__, "del   salaryMovement  faild " );
+                // 事务回滚
+                $this->objDao->rollback ();
+                echo("删除工资动态字段时失败！");
+                throw new Exception ( $exmsg->error () );
+            }
+            $result = $this->objDao->delSalaryBy_TimeId ( $value );
+            if (! $result) {
+                $exmsg->setError ( __FUNCTION__, "del   salary  faild " );
+                // 事务回滚
+                $this->objDao->rollback ();
+                echo("删除工资固定字段时失败！");
+                throw new Exception ( $exmsg->error () );
+            }
+            $result = $this->objDao->delSalaryTimeBy_Id ( $value );
+            if (! $result) {
+                $exmsg->setError ( __FUNCTION__, "del   salaryTime  faild " );
+                // 事务回滚
+                $this->objDao->rollback ();
+                echo("删除工资时间表时失败！");
+                throw new Exception ( $exmsg->error () );
+            }
+            $adminPO = $_SESSION ['admin'];
+            $opLog = array ();
+            $opLog ['who'] = $adminPO ['id'];
+            $opLog ['what'] = 0;
+            $opLog ['Subject'] = OP_LOG_DEL_SALARY;
+            $opLog ['memo'] = $salaryList ['company_name'] . ':' . $salaryList ['salaryTime'];
+            $rasult = $this->objDao->addOplog ( $opLog );
+            if (! $rasult) {
+                $exmsg->setError ( __FUNCTION__, "delsalary  add oplog  faild " );
+                echo("添加删除工资操作日志失败！");
+                // 事务回滚
+                $this->objDao->rollback ();
+                throw new Exception ( $exmsg->error () );
+            }
+            // 事务提交
+            $this->objDao->commit ();
+        }
+        echo("操作成功！");
+        exit;
+    }
 }
 
 

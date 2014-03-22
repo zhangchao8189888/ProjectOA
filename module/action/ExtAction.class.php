@@ -101,6 +101,15 @@ class ExtAction extends BaseAction{
             case "toTeshushenfen":
                 $this->toTeshushenfen();
                 break;
+            case "contractInfo":
+                $this->contractInfo();
+                break;
+            case "toServiceApproval":
+                $this->toServiceApproval();
+                break;
+            case "toFinanceApproval":
+                $this->toFinanceApproval();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -198,6 +207,17 @@ class ExtAction extends BaseAction{
 
     function todemo(){
         $this->mode="todemo";
+    }
+
+    function contractInfo(){
+        $this->mode="contractInfo";
+    }
+
+    function toServiceApproval(){
+        $this->mode="toServiceApproval";
+    }
+    function toFinanceApproval(){
+        $this->mode="toFinanceApproval";
     }
 }
 

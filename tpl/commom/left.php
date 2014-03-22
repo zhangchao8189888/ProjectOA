@@ -111,9 +111,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class="item">
             <a href="index.php?action=SalaryBill&mode=toShebaoExt">增减员添加</a>
         </div>
-		<div class="item">
-			<a href="index.php?action=Employ&mode=toEmlist">员工列表查询</a>
-		</div>
+        <div class='item'>
+            <a href='index.php?action=Ext&mode=contractInfo'>员工信息</a>
+        </div>
         <div class="item">
             <a href="index.php?action=Ext&mode=toTeshushenfen">残疾人设置</a>
         </div>
@@ -127,9 +127,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Salary&mode=input">文件上传</a>
 		</div>
-		<div class="item">
-			<a href="index.php?action=Ext&mode=toSalTimeList">工资查询</a>
-		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toServiceApproval">工资审批</a>
+        </div>
 		<!-- 				            <div class="item"><a href="index.php?action=SaveSalary&mode=searchSalaryTime">工资查询</a></div> -->
 		<div class="item">
 			<a href="index.php?action=Ext&mode=tosearhSalaryNianTimeList">年终奖查询</a>
@@ -214,11 +214,8 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=salaryComList">工资查看</a>
 		</div>
-		<div class="item">
-			<a href="index.php?action=Ext&mode=toSalTimeList">工资查询</a>
-		</div>
         <div class="item">
-            <a href="index.php?action=Ext&mode=toSalaryComList">年度工资查询</a>
+            <a href="index.php?action=Ext&mode=toFinanceApproval">工资审批</a>
         </div>
 		<div class="item">
 			<a href="index.php?action=Ext&mode=tosearhSalaryNianTimeList">年终奖查询</a>

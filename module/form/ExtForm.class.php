@@ -66,6 +66,12 @@ class ExtForm extends BaseForm
                 return"ext/view/demo/demoIndex.php";
             case "toTeshushenfen":
                 return"finance/canjirenshezhi.php";
+            case "contractInfo";
+                return "ext/view/service/contractInfo.php";
+            case "toServiceApproval":
+                return "ext/view/service/salaryServiceApproval.php";
+            case "toFinanceApproval":
+                return "ext/view/finance/salaryfinanceApproval.php";
            default :
                 return "BaseConfig.php";
         }

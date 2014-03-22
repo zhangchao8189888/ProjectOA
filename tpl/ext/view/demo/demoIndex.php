@@ -124,7 +124,14 @@ Ext.onReady(function () {
                             {text: "员工姓名", width: 100, dataIndex: 'EName', sortable: true},
                             {text: "身份证号", width: 100, dataIndex: 'EmpNo', sortable: true},
                             {text: "身份类别", width: 100, dataIndex: 'EmpType', sortable: true},
-                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: true},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
                             {text: "操作标志", width: 100, dataIndex: 'zengjianbiaozhi', sortable: true},
                             {text: "社保基数", width: 100, dataIndex: 'shebaojishu', sortable: true},
                             {text: "公积金基数", width: 100, dataIndex: 'gongjijinjishu', sortable: true},
@@ -1576,7 +1583,7 @@ Ext.onReady(function () {
 
     var items=[tabs2];
     var indexWin = Ext.create('Ext.window.Window', {
-        title: "欢迎使用中企基业社保功能", // 窗口标题
+        title: "欢迎使用社保功能", // 窗口标题
         width:1240, // 窗口宽度
         height:690, // 窗口高度
         layout:"border",// 布局

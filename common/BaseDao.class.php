@@ -231,11 +231,7 @@ class BaseDao extends db {
         $userid = $_SESSION ['admin'] ['id'];
         $sql = "DELETE from OA_admin_company where adminId=$userid and companyId=$companyid";
         $result = $this->g_db_query ( $sql );
-        if ($result) {
-            return $this->g_db_last_insert_id ();
-        } else {
-            return false;
-        }
+        return $result;
     }
 
     function getAdminBycomId($comid) {
