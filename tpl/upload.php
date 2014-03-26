@@ -25,8 +25,8 @@ $admin=$_SESSION['admin'];
 	  $("#iform").submit();
       }
 	  function b(){
-	  $("#iform").attr("action","index.php?action=Salary&mode=upload"); 
-	  $("#iform").submit();
+	  $("#iform").attr("action","index.php?action=Salary&mode=upload");
+          $("#iform").submit();
 	  }
 	  function rename(ofname){
 		  $("#botton").attr("style","display:block"); 

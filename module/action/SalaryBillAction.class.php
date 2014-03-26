@@ -41,6 +41,9 @@ class SalaryBillAction extends BaseAction {
             case "getSalaryTimeById" :
                 $this->getSalaryTimeById ();
                 break;
+            case "getSalaryTimeByIdExt" :
+                $this->getSalaryTimeByIdExt ();
+                break;
             case "addInvoice" :
                 $this->addInvoice ();
                 break;
@@ -147,6 +150,23 @@ class SalaryBillAction extends BaseAction {
         }
         echo $salayString;
         exit ();
+    }
+    function getSalaryTimeByIdExt() {
+        $comId = $_REQUEST ['comid'];
+        $this->objDao = new SalaryDao ();
+        if($comId){
+        $salrayList = $this->objDao->getSalaryListByComId ($comId);
+        }
+        $josnArray=array();
+        $josnArray['total']=null;
+        $i=0;
+        while ($row=mysql_fetch_array($salrayList) ){
+            $josnArray['items'][$i]['id']=$row['id'];
+            $josnArray['items'][$i]['salaryTime']=$row['salaryTime'];
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
     }
     function addInvoice() {
         global $billType;

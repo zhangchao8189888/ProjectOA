@@ -285,6 +285,27 @@ Ext.define('oa.common.zengjian.list',{
         {name: 'tel', type: 'string'}
     ]
 });
+//到账发票公司名BY孙瑞鹏
+Ext.define('oa.common.gongziriqi.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+
+        {name: 'id', type: 'int'},
+        {name: 'salaryTime', type: 'string'}
+
+    ]
+});
+
+//到账发票日期BY孙瑞鹏
+Ext.define('oa.common.gongsiming.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+
+        {name: 'companyid', type: 'int'},
+        {name: 'companyname', type: 'string'}
+
+    ]
+});
 
 //发票列表BY孙瑞鹏
 Ext.define('oa.common.fapiao.list',{
@@ -294,7 +315,7 @@ Ext.define('oa.common.fapiao.list',{
         {name: 'bill_no', type: 'string'},
         {name: 'salaryTime', type: 'string'},
         {name: 'company_name', type: 'string'},
-        {name: 'bill_value', type: 'int'}
+        {name: 'bill_value', type: 'double'}
 
     ]
 });
