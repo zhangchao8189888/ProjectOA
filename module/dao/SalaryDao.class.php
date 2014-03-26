@@ -1194,6 +1194,100 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         $list = $this->g_db_query ( $sql );
         return $list;
     }
+
+    function searchSalaryTimeApprovalCount($where) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT
+	count(*) AS cnt
+FROM
+	OA_bill b,
+	OA_salarytime st,
+	(
+		SELECT
+			c.id,
+			c.company_name
+		FROM
+			OA_admin_company ac,
+			OA_company c
+		WHERE
+			c.id = ac.companyId
+		AND ac.adminId = $id
+	) a
+WHERE
+	bill_type = 4
+AND b.salaryTime_id = st.id
+AND a.id = st.companyId";
+        if($where!=null){
+            if($where['companyName']!=""){
+                $sql.=" and c.company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= " and st.salaryTime like '%{$where['salaryTime']}%' ";
+            }
+            if ($where ['op_salaryTime'] != "") {
+                $sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";
+            }
+            if ($where ['bill_value'] != "") {
+                $sql .= " and b.bill_value='{$where['bill_value']}'";
+            }
+        }
+        $result = $this->g_db_query($sql);
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
+    function searchSalaryTimeApprovalPage($start=NULL,$limit=NULL,$sort=NULL,$where) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT
+	a.company_name,
+	b.bill_value,
+	st.salaryTime,
+	st.op_salaryTime,
+	st.id
+FROM
+	OA_bill b,
+	OA_salarytime st,
+	(
+		SELECT
+			c.id,
+			c.company_name
+		FROM
+			OA_admin_company ac,
+			OA_company c
+		WHERE
+			c.id = ac.companyId
+		AND ac.adminId = $id
+	) a
+WHERE
+	bill_type = 4
+AND b.salaryTime_id = st.id
+AND a.id = st.companyId";
+        if($where!=null){
+            if($where['companyName']!=""){
+                $sql.=" and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= " and st.salaryTime like '%{$where['salaryTime']}%' ";
+            }
+            if ($where ['op_salaryTime'] != "") {
+                $sql .= " and st.op_salaryTime>='{$where['op_time']}' and st.op_salaryTime<'{$where['op_salaryTime']}' ";
+            }
+            if ($where ['bill_value'] != "") {
+                $sql .= " and b.bill_value='{$where['bill_value']}'";
+            }
+        }
+        if($sort){
+            $sql.=" order by st.$sort";
+        }
+        if($start>=0&&$limit){
+            $sql.=" limit $start,$limit";
+        }
+        $result=$this->g_db_query($sql);
+        return $result;
+    }
+
     function saveSalaryBill($billArray) {
         $sql = "INSERT INTO OA_bill (salaryTime_id,bill_no,bill_type,bill_date,bill_item,bill_value,bill_state,text) VALUES
     	     ({$billArray['salaryTime_id']},'{$billArray['bill_no']}',{$billArray['bill_type']},'{$billArray['bill_date']}',
@@ -1207,7 +1301,10 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         return $result;
     }
     function searchSalaryListByComId($comId, $it = null) {
-        $sql = "select OA_salarytime.*,OA_company.company_name  from OA_salarytime,OA_company where OA_company.id=OA_salarytime.companyId and OA_company.id=$comId";
+        $sql = "select OA_salarytime.*,OA_company.company_name  from OA_salarytime,OA_company where OA_company.id=OA_salarytime.companyId";
+        if($comId!=null){
+            $sql.=" and OA_company.id=$comId";
+        }
         if ($it == 1) {
             $sql .= " and OA_salarytime.salary_state>0";
         }
@@ -1216,7 +1313,10 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         return $result;
     }
     function searchSalaryListCountByComId($comId, $it = null) {
-        $sql = "select count(*) as cnt  from OA_salarytime,OA_company where OA_company.id=OA_salarytime.companyId and OA_company.id=$comId";
+        $sql = "select count(*) as cnt  from OA_salarytime,OA_company where OA_company.id=OA_salarytime.companyId";
+        if($comId!=null){
+            $sql.=" and OA_company.id=$comId";
+        }
         if ($it == 1) {
             $sql .= " and OA_salarytime.salary_state>0";
         }

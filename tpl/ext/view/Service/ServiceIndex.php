@@ -61,7 +61,7 @@ Ext.onReady(function () {
         selType: 'checkboxmodel',
         columns: [
             {text: "id", width: 50, dataIndex: 'id', sortable: true, align: 'center',hidden:true},
-            {text: "单位id", width: 50, dataIndex: 'company_id', sortable: true, align: 'center'},
+            {text: "单位id", width: 50, dataIndex: 'company_id', sortable: true, align: 'center',hidden:true},
             {text: "工资月份", dataIndex: 'salDate', width: 85,sortable: false, align: 'center'},
             {text: "工资操作日期", dataIndex: 'op_salaryTime', width: 100, sortable: false,align: 'center'},
             {
@@ -512,20 +512,6 @@ function addBill(comId,companyName,sal_state,sal_date) {
         Ext.Msg.alert("警告","没有发工资是不能开发票的");
         return false;
     }
-    var p = Ext.create("Ext.grid.Panel",{
-        id:"salTimeListP",
-        title:"导航",
-        width:150,
-        region:"west",
-        columns : [],
-        listeners: {
-            'cellclick': function(iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
-            }
-        },
-        split:true,
-        colspan: 3,
-        collapsible:true
-    });
     var items=[salList];
 
     Ext.getCmp("company_id").setValue(comId);

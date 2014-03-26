@@ -25,11 +25,11 @@ Ext.require([
 ]);
 Ext.onReady(function () {
     var insurancewindow = Ext.create('Ext.grid.Panel',{
-        store: salTimeListstore,
+        store: salTimeListApprovalstore,
         selType: 'checkboxmodel',
         id : 'comlist',
         columns: [
-            {text: "编号", width: 80, dataIndex: 'id', sortable: false,hidden:true},
+            {text: "编号", width: 80, dataIndex: 'id', sortable: false},
             {text: "单位名称", width: 200, dataIndex: 'company_name', sortable: true,
                 renderer: function (val, cellmeta, record) {
                     return '<a href="#" onclick="checkSalWin(' + record.data['id'] + ')">'+val+'</a>';
@@ -37,7 +37,10 @@ Ext.onReady(function () {
             },
             {text: "工资月份", width: 100, dataIndex: 'salaryTime', sortable: true},
             {text: "保存工资日期", width: 100, dataIndex: 'op_salaryTime', sortable: true},
-            {text: "状态", flex: 120, dataIndex: 'sal_approve', sortable: false,align:'center',
+            {text: "实发合计", width: 100, dataIndex: 'sum_per_shifaheji', sortable: true},
+            {text: "代扣税", width: 100, dataIndex: 'sum_per_daikoushui', sortable: true},
+            {text: "缴中企合计", width: 100, dataIndex: 'sum_paysum_zhongqi', sortable: true},
+            {text: "状态", flex: 120, dataIndex: 'bill_value', sortable: false,align:'center',
                 renderer:function(val,cellmeta,record){
                     if(val == 0){
                         return '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color: blue">等待审批</span></a>';
@@ -45,13 +48,10 @@ Ext.onReady(function () {
                         return  '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color:green ">审批通过</span></a>';
                     } else if(val ==2){
                         return '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color:gray ">审批未通过</span></a>';
-                    } else if(val ==-1){
-                        return "<span style='color: fuchsia'>暂无审核</span>"
                     }
                     return val;
                 }
-            },
-            {text: "工资发放id", flex: 120, dataIndex: 'sal_approve_id', sortable: false,align:'center',hidden:true}
+            }
         ],
         height:600,
         width:1000,
@@ -66,7 +66,7 @@ Ext.onReady(function () {
             stripeRows: false
         },
         bbar: Ext.create('Ext.PagingToolbar', {
-            store: salTimeListstore,
+            store: salTimeListApprovalstore,
             displayInfo: true,
             displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
             emptyMsg: "没有数据"
@@ -107,12 +107,12 @@ Ext.onReady(function () {
                                         var text = response.responseText;
                                         // process server response here
                                         Ext.Msg.alert('信息',text);
-                                        salTimeListstore.removeAll();
-                                        salTimeListstore.load({
+                                        salTimeListApprovalstore.removeAll();
+                                        salTimeListApprovalstore.load({
                                             params: {
                                                 companyName: Ext.getCmp("comnamesecrch").getValue(),
                                                 salTime: Ext.getCmp("salTime").getValue(),
-                                                e_sal_approve:Ext.getCmp("e_sal_approve").getValue(),
+                                                e_bill_value:Ext.getCmp("e_bill_value").getValue(),
                                                 opTime : Ext.getCmp("STime").getValue(),
                                                 start: 0,
                                                 limit: 50
@@ -157,10 +157,28 @@ Ext.onReady(function () {
                 anchor:'85%'
             },
             {
-                xtype: 'hiddenfield',
-                id:"e_sal_approve" ,
-                width:150,
-                editable:false,
+                xtype: 'combobox',
+                id:"e_b" ,
+                emptyText: "筛选工资状态",
+                store:comListStore,
+                minChars:1,
+                typeAhead : false,
+                hideLabel : true,
+
+                pageSize: 2, //设置每页显示的条数
+                listWidth: 240, //设置下拉框的宽度
+                listConfig:{
+                    emptyText :"未找到"
+                },
+                listeners: {
+
+                },
+                valueField: 'id',
+                displayField: 'company_name'
+            },
+            {
+                xtype: 'combobox',
+                id:"e_bill_value" ,
                 emptyText: "筛选工资状态",
                 store: {
                     fields: ['abbr', 'name'],
@@ -168,9 +186,35 @@ Ext.onReady(function () {
                         {"abbr": "0", "name": "等待审批"},
                         {"abbr": "1", "name": "审批通过"},
                         {"abbr": "2", "name": "审批未通过"},
-                        {"abbr": "-1", "name": "暂无审核"},
                         {"abbr": "", "name": "全部"}
                     ]
+                },
+                minChars:1,
+                typeAhead : false,
+                hideLabel : true,
+
+                pageSize: 2, //设置每页显示的条数
+                listWidth: 240, //设置下拉框的宽度
+                listConfig:{
+                    emptyText :"未找到",
+                    getInnerTpl : function() {
+                        return this.getName;
+                    }
+                },
+                listeners: {
+                    select: function (tab) {
+                        salTimeListApprovalstore.removeAll();
+                        salTimeListApprovalstore.load({
+                            params: {
+                                companyName: Ext.getCmp("comnamesecrch").getValue(),
+                                salTime: Ext.getCmp("salTime").getValue(),
+                                e_bill_value:Ext.getCmp("e_bill_value").getValue(),
+                                opTime : Ext.getCmp("STime").getValue(),
+                                start: 0,
+                                limit: 50
+                            }
+                        });
+                    }
                 },
                 valueField: 'abbr',
                 displayField: 'name'
@@ -180,12 +224,12 @@ Ext.onReady(function () {
                 id: 'search',
                 disabled: false,
                 handler: function () {
-                    salTimeListstore.removeAll();
-                    salTimeListstore.load({
+                    salTimeListApprovalstore.removeAll();
+                    salTimeListApprovalstore.load({
                         params: {
                             companyName: Ext.getCmp("comnamesecrch").getValue(),
                             salTime: Ext.getCmp("salTime").getValue(),
-                            e_sal_approve:Ext.getCmp("e_sal_approve").getValue(),
+                            e_bill_value:Ext.getCmp("e_bill_value").getValue(),
                             opTime : Ext.getCmp("STime").getValue(),
                             start: 0,
                             limit: 50
@@ -196,13 +240,13 @@ Ext.onReady(function () {
             }
         ]
     });
-    salTimeListstore.on("beforeload", function () {
-        Ext.apply(salTimeListstore.proxy.extraParams, {});
+    salTimeListApprovalstore.on("beforeload", function () {
+        Ext.apply(salTimeListApprovalstore.proxy.extraParams, {});
     });
     insurancewindow.getSelectionModel().on('selectionchange', function (selModel, selections) {
-        Ext.apply(salTimeListstore.proxy.extraParams, {});
+        Ext.apply(salTimeListApprovalstore.proxy.extraParams, {});
     }, this);
-    salTimeListstore.loadPage(1);
+    salTimeListApprovalstore.loadPage(1);
 
 });
 
@@ -227,7 +271,7 @@ function updateSal(eid){
                     success: function (response) {
                         var text = response.responseText;
                         Ext.Msg.alert("提示",text);
-                        salTimeListstore.load( {
+                        salTimeListApprovalstore.load( {
                                 params: {
                                     start: 0,
                                     limit: 50
@@ -250,7 +294,7 @@ function updateSal(eid){
                     success: function (response) {
                         var text = response.responseText;
                         Ext.Msg.alert("提示",text);
-                        salTimeListstore.load( {
+                        salTimeListApprovalstore.load( {
                                 params: {
                                     start: 0,
                                     limit: 50
@@ -284,20 +328,6 @@ var salList=Ext.create("Ext.grid.Panel",{
     columns : [], //注意此行代码，至关重要
     //displayInfo : true,
     emptyMsg : "没有数据显示"
-});
-var salTimeList=Ext.define('salTimeList',{
-    extend: 'Ext.data.Model',
-    fields: [
-        {name: 'salTimeId', type: 'int'},
-        {name: 'salaryTime', type: 'string'}
-    ]
-});
-var salTimeListStore = Ext.create('Ext.data.Store', {
-    model: salTimeList,
-    proxy: {
-        type: 'ajax',
-        url : 'index.php?action=SaveSalary&mode=searchErSalaryTimeListByIdJson'
-    }
 });
 //通过ajax获取表头已经表格数据
 function checkSalWin(timeId) {

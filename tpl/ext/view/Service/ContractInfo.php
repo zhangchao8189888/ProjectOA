@@ -52,19 +52,23 @@ Ext.onReady(function () {
             stripeRows: false
         },
         columns : [
-            {text: "编号", width: 80, dataIndex: 'id', sortable: true,locked:true},
-            {text: "姓名", width: 80, dataIndex: 'e_name', sortable: true,locked:true},
+            {text: "编号", width: 80, dataIndex: 'id', sortable: true,locked:true,hidden:true},
+            {text: "姓名", width: 80, dataIndex: 'e_name', sortable: true,locked:true,
+                renderer: function (val, cellmeta, record) {
+                    return '<a href="#" title="修改员工信息" onclick=updateEmpInfo(' + record.data['id'] + ')><span >'+val+'</span></a>';
+                }
+            },
             {text: "单位名称", width: 170, dataIndex: 'e_company', sortable: true,locked:true},
             {text: "身份证号", width: 150, dataIndex: 'e_num', sortable: true,locked:true},
             {text: "合同年份", width: 80, dataIndex: 'e_hetongnian', sortable: true},
             {text: "合同日期", width: 100, dataIndex: 'e_hetong_date', sortable: true,
                 renderer: function (val, cellmeta, record) {
                     if (val == 0) {
-                        return '<a href="#" title="修改合同" onclick=contract(' + record.data['id'] + ',"' + record.data['e_name'] + '","' + record.data['e_hetongnian'] + '","' + record.data['e_hetong_date'] + '")><span style="color: gray"> 合同已经到期 </span></a>';
+                        return '<a href="#" title="修改合同" onclick=contract(' + record.data['id'] + ')><span style="color: gray"> 合同已经到期 </span></a>';
                     }if (val == 1) {
-                        return '<a href="#" title="修改合同" onclick=contract(' + record.data['id'] + ',"' + record.data['e_name'] + '","' + record.data['e_hetongnian'] + '","' + record.data['e_hetong_date'] + '")><span style="color: red"> 合同即将到期 </span></a>';
+                        return '<a href="#" title="修改合同" onclick=contract(' + record.data['id'] + ')><span style="color: red"> 合同即将到期 </span></a>';
                     }
-                    return '<a href="#" title="修改合同" onclick=contract(' + record.data['id'] + ',"' + record.data['e_name'] + '","' + record.data['e_hetongnian'] + '","' + record.data['e_hetong_date'] + '")><span >'+val+'</span></a>';
+                    return '<a href="#" title="修改合同" onclick=contract(' + record.data['id'] + ')><span >'+val+'</span></a>';
                 }
             },
             {text: "开户行", width: 80, dataIndex: 'bank_name', sortable: true},
@@ -108,6 +112,22 @@ Ext.onReady(function () {
                         {"abbr": "", "name": "全部"}
                     ]
                 },
+                listeners: {
+                    select: function (tab) {
+                        employListstore.removeAll();
+                        employListstore.load({
+                            params: {
+                                e_name:Ext.getCmp("e_name").getValue(),
+                                contractinfo:Ext.getCmp("contractinfo").getValue(),
+                                e_type:Ext.getCmp("e_type").getValue(),
+                                e_num:Ext.getCmp("e_num").getValue(),
+                                e_company:Ext.getCmp("e_company").getValue(),
+                                start: 0,
+                                limit: 50
+                            }
+                        });
+                    }
+                },
                 valueField: 'abbr',
                 displayField: 'name',
                 id:'contractinfo',
@@ -127,6 +147,22 @@ Ext.onReady(function () {
                         {"abbr": "本市农村劳动力", "name": "本市农村劳动力"},
                         {"abbr": "外地农村劳动力", "name": "外地农村劳动力"}
                     ]
+                },
+                listeners: {
+                    select: function (tab) {
+                        employListstore.removeAll();
+                        employListstore.load({
+                            params: {
+                                e_name:Ext.getCmp("e_name").getValue(),
+                                contractinfo:Ext.getCmp("contractinfo").getValue(),
+                                e_type:Ext.getCmp("e_type").getValue(),
+                                e_num:Ext.getCmp("e_num").getValue(),
+                                e_company:Ext.getCmp("e_company").getValue(),
+                                start: 0,
+                                limit: 50
+                            }
+                        });
+                    }
                 },
                 valueField: 'abbr',
                 displayField: 'name'
@@ -175,7 +211,6 @@ Ext.onReady(function () {
     });
     employListstore.loadPage(1);
     var items=[contractWin];
-
     var indexWin = Ext.create('Ext.window.Window', {
         title: "欢迎使用员工功能", // 窗口标题
         width:1160, // 窗口宽度
@@ -250,7 +285,6 @@ function contract(id) {
         }
     });
 }
-
 var salList = Ext.create("Ext.form.Panel", {
     width: 400,
     height: 180,
@@ -278,6 +312,7 @@ var salList = Ext.create("Ext.form.Panel", {
                     xtype: 'numberfield',
                     readonly: false,
                     allowBlank: false,
+                    emptyText: "请输入合同年限",
                     width: 250,
                     fieldLabel: '合同期限'
                 },
@@ -287,7 +322,7 @@ var salList = Ext.create("Ext.form.Panel", {
                     format: "Y-m-d",
                     width: 250,
                     allowBlank: false,
-                    emptyText: "请更新合同日期",
+                    emptyText: "请输入合同日期",
                     fieldLabel: '合同年份'
                 }
             ]
@@ -321,14 +356,281 @@ var salList = Ext.create("Ext.form.Panel", {
 
 
             }
-        }
-        ,
+        },
         {
             text: '清空',
             handler: function () {
-                var id = Ext.getCmp("id").getValue();
-                this.up('form').getForm().reset();
-                Ext.getCmp("id").setValue(id);
+                Ext.getCmp("up_e_hetongnian").setValue("");
+                Ext.getCmp("up_e_hetong_date").setValue("");
+            }
+        }
+    ]
+});
+
+function updateEmpInfo(id){
+    Ext.Ajax.request({
+        url: "index.php?action=ExtEmploy&mode=searchContractInfo",  //从json文件中读取数据，也可以从其他地方获取数据
+        method : 'POST',
+        params: {
+            id : id
+        },
+        success : function(response) {
+            var json = Ext.JSON.decode(response.responseText); //获得后台传递json
+            if(null==json){
+                Ext.Msg.alert("错误！", "出现了问题，请重试！！");
+                return false;
+            }
+            Ext.getCmp("up_emp_id").setValue(id);
+            Ext.getCmp("up_emp_name").setValue(json['e_name']);
+            Ext.getCmp("up_emp_e_hetongnian").setValue(json['e_hetongnian']);
+            Ext.getCmp("up_emp_e_hetong_date").setValue(json['e_hetong_date']);
+            Ext.getCmp("up_emp_e_company").setValue(json['e_company']);
+            Ext.getCmp("up_emp_e_num").setValue(json['e_num']);
+            Ext.getCmp("up_emp_bank_name").setValue(json['bank_name']);
+            Ext.getCmp("up_emp_bank_num").setValue(json['bank_num']);
+            Ext.getCmp("up_emp_e_type").setValue(json['e_type']);
+            Ext.getCmp("up_emp_shebaojishu").setValue(json['shebaojishu']);
+            Ext.getCmp("up_emp_gongjijinjishu").setValue(json['gongjijinjishu']);
+            Ext.getCmp("up_emp_laowufei").setValue(json['laowufei']);
+            Ext.getCmp("up_emp_canbaojin").setValue(json['canbaojin']);
+            Ext.getCmp("up_emp_danganfei").setValue(json['danganfei']);
+            Ext.getCmp("up_emp_memo").setValue(json['memo']);
+            Ext.getCmp("up_emp_e_teshustate").setValue(json['e_teshustate']);
+
+            var items = [upEmpInfoPanel];
+            var updateEmpWin = Ext.create('Ext.window.Window', {
+                title: "修改员工信息", // 窗口标题
+                width: 550, // 窗口宽度
+                height: 600, // 窗口高度
+                layout: "border",// 布局
+                minimizable: false, // 最大化
+                maximizable: false, // 最小化
+                frame: true,
+                constrain: true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+                buttonAlign: "center", // 按钮显示的位置
+                modal: true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+                resizable: true, // 是否可以调整窗口大小，默认TRUE。
+                plain: true,// 将窗口变为半透明状态。
+                items: items,
+                listeners: {
+                    //最小化窗口事件
+                    minimize: function (window) {
+                        this.hide();
+                        window.minimizable = true;
+                    }
+                },
+                closeAction: 'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+            });
+            updateEmpWin.show();
+        }
+    });
+}
+var upEmpInfoPanel = Ext.create("Ext.form.Panel", {
+    width: 540,
+    height: 650,
+    bodyPadding: 10,
+    labelWidth: 50,
+    id: 'updateHetongDate',
+    items: [
+        {
+            xtype: 'fieldcontainer',
+            fieldLabel: '请输入数据',
+            defaultType: 'checkboxfield',
+            items: [
+                {
+                    id: 'up_emp_id',
+                    xtype: 'hiddenfield'
+                },
+                {
+                    id: 'up_emp_name',
+                    xtype: 'textfield',
+                    width: 250,
+                    allowBlank: false,
+                    fieldLabel: '姓名'
+                },
+                {
+                    id: 'up_emp_e_company',
+                    xtype: 'textfield',
+                    width: 250,
+                    allowBlank: false,
+                    fieldLabel: '所属公司'
+                },
+                {
+                    id: 'up_emp_e_num',
+                    xtype: 'textfield',
+                    width: 250,
+                    allowBlank: false,
+                    fieldLabel:  '身份证号<span style="color: red;font-size: 12px">*</span>'
+                },
+                {
+                    id: 'up_emp_bank_name',
+                    xtype: 'textfield',
+                    width: 250,
+                    fieldLabel: '开户银行'
+                },
+                {
+                    id: 'up_emp_bank_num',
+                    xtype: 'textfield',
+                    width: 250,
+                    fieldLabel: '银行账户'
+                },
+                {
+                    xtype: 'combobox',
+                    id:"up_emp_e_type" ,
+                    emptyText: "请选择身份类别",
+                    editable: false,
+                    width: 250,
+                    allowBlank: false,
+                    store: {
+                        fields: ['abbr', 'name'],
+                        data: [
+                            {"abbr": "本市城镇职工", "name": "本市城镇职工"},
+                            {"abbr": "外埠城镇职工", "name": "外埠城镇职工"},
+                            {"abbr": "本市农村劳动力", "name": "本市农村劳动力"},
+                            {"abbr": "外地农村劳动力", "name": "外地农村劳动力"}
+                        ]
+                    },
+                    valueField: 'abbr',
+                    displayField: 'name',
+                    fieldLabel: '身份类别'
+                },
+                {
+                    id: 'up_emp_shebaojishu',
+                    xtype: 'numberfield',
+                    width: 250,
+                    fieldLabel: '社保基数'
+                },
+                {
+                    id: 'up_emp_gongjijinjishu',
+                    xtype: 'numberfield',
+                    width: 250,
+                    allowBlank: false,
+                    fieldLabel: '公积金基数'
+                },
+                {
+                    id: 'up_emp_laowufei',
+                    xtype: 'numberfield',
+                    width: 250,
+                    allowBlank: false,
+                    fieldLabel: '劳务费'
+                },
+                {
+                    id: 'up_emp_canbaojin',
+                    xtype: 'numberfield',
+                    width: 250,
+                    allowBlank: false,
+                    fieldLabel: '参保金'
+                },
+                {
+                    id: 'up_emp_danganfei',
+                    xtype: 'numberfield',
+                    width: 250,
+                    allowBlank: false,
+                    fieldLabel: '档案费'
+                },
+                {
+                    xtype: 'combobox',
+                    id:"up_emp_e_teshustate" ,
+                    emptyText: "请选择身份类别",
+                    editable: false,
+                    allowBlank: false,
+                    width:250,
+                    store: {
+                        fields: ['abbr', 'name'],
+                        data: [
+                            {"abbr": "1", "name": "残疾人"},
+                            {"abbr": "0", "name": "非残疾人"}
+                        ]
+                    },
+                    valueField: 'abbr',
+                    displayField: 'name',
+                    fieldLabel: '特殊标示'
+                },
+                {
+                    id: 'up_emp_e_hetongnian',
+                    xtype: 'numberfield',
+                    readonly: false,
+                    allowBlank: false,
+                    width: 250,
+                    fieldLabel: '合同期限'
+                },
+                {
+                    id: 'up_emp_e_hetong_date',
+                    xtype: 'datefield',
+                    format: "Y-m-d",
+                    width: 250,
+                    allowBlank: false,
+                    emptyText: "请更新合同日期",
+                    fieldLabel: '合同年份'
+                },
+                {
+                    xtype: 'textareafield',
+                    id:"up_emp_memo",
+                    width:400,
+                    height:80,
+                    emptyText: "请输入备注信息",
+                    fieldLabel: '备注'
+                }
+            ]
+        }
+    ],
+    buttons: [
+        {
+            text: '更新信息',
+            handler: function () {
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                this.up('form').getForm().submit(
+                    {
+                        url: "index.php?action=ExtEmploy&mode=emUpdate",
+                        method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
+                        success: function (form,action) {
+                            Ext.Msg.alert("提示", action.result.info);
+                            document.location = 'index.php?action=Ext&mode=contractInfo';
+                        },
+                        failure:function(form,action){
+                            Ext.Msg.alert('提示',action.result.info);
+                        }
+                    }
+                );
+            }
+        },
+        {
+            text: '更新身份证号',
+            handler: function () {
+                var submitInfo = this.up('form').getForm().isValid();
+                if (!submitInfo) {
+                    Ext.Msg.alert("警告！", "请输入完整的信息！");
+                    return false;
+                }
+                this.up('form').getForm().submit(
+                    {
+                        url: "index.php?action=ExtEmploy&mode=emNoUpdate",
+                        method: 'POST',
+                        waitTitle : '请等待' ,
+                        waitMsg: '正在提交中',
+                        success: function (form,action) {
+                            var text = form.responseText;
+                            Ext.Msg.alert("提示", action.result.info);
+                            document.location = 'index.php?action=Ext&mode=contractInfo';
+                        },
+                        failure:function(form,action){
+                            Ext.Msg.alert('提示',action.result.info);
+                        }
+                    }
+                );
+            }
+        },
+        {
+            text: '清空',
+            handler: function () {
+                var id = Ext.getCmp("up_emp_id").getValue();
+                Ext.getCmp("up_emp_id").setValue(id);
             }
         }
     ]

@@ -11,6 +11,11 @@
 <script language="javascript" type="text/javascript" src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="tpl/ext/js/data.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
+<style type="text/css">
+    <!--
+    A { text-decoration: none}
+    -->
+</style>
 <script type="text/javascript">
     Ext.require([
         'Ext.grid.*',
@@ -18,21 +23,30 @@
         'Ext.data.*'
     ]);
     Ext.onReady(function () {
-
         //创建Grid
         var salTongjiGrid = Ext.create('Ext.grid.Panel', {
             store: caiwuListStore,
             id: 'comlist',
             title: '公司列表',
             columns: [
-                {text: "id", width: 50, dataIndex: 'id', sortable: true},
-                {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true}
+                {text: "id", width: 50, dataIndex: 'id', sortable: true,hidden:true},
+                {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: true,align:'center',
+                    renderer: function (val, cellmeta, record) {
+                        return '<a href="#" title="查询" onclick=searchcom(' + record.data['id'] + ')>'+val+'</a>';
+                    }
+                }
             ],
             height: 500,
             width: 350,
             x: 0,
             y: 0,
-
+            listeners:{
+                'cellclick': function (iView, iCellEl, iColIdx, iStore, iRowEl, iRowIdx, iEvent) {
+                    var selectionModel = salTongjiGrid.getSelectionModel();
+                    var record = selectionModel.getLastSelected();
+                    searchcom(record.get('id'));
+                }
+            },
             disableSelection: false,
             loadMask: true,
             renderTo: 'demo',
@@ -50,52 +64,38 @@
 
             tbar: [
                 {
+                    xtype:'textfield',
+                    id:'comname',
+                    width:150,
+                    emptyText:"筛选公司"
+                },
+                {
                     xtype: 'button',
                     id: 'searchSalBu',
                     disabled: false,
                     handler: function (src) {
-                        var model = salTongjiGrid.getSelectionModel();
-                        var sel=model.getLastSelected();
-                        salTongjistore.removeAll();
-                        salTongjistore.load( {
-                            params : {
-                                comid:sel.data.id,
-                                start : 0,
-                                limit : 50
-                            }
-                        });
-                    },
-                    text: '查询',
-                    iconCls: 'chakan'
-                },
-                '公司名称查询',
-                {
-                    id: 'comname',
-                    xtype: 'trigger',
-                    triggerClass: 'x-form-search-trigger',
-                    name: 'comname',
-                    onTriggerClick: function (src) {
                         caiwuListStore.removeAll();
                         caiwuListStore.load({
                             params: {
-                                companyName: this.getValue(),
+                                companyName:Ext.getCmp("comname").getValue(),
                                 start: 0,
                                 limit: 50
                             }
                         });
-                    }
+                    },
+                    text: '筛选',
+                    iconCls: 'chakan'
                 }
             ]
         });
         caiwuListStore.on("beforeload", function () {
-            Ext.apply(caiwuListStore.proxy.extraParams, {Key: Ext.getCmp("comname").getValue(), companyName: Ext.getCmp("comname").getValue()});
+            Ext.apply(caiwuListStore.proxy.extraParams, {companyName: Ext.getCmp("comname").getValue()});
         });
         salTongjiGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
             //var sel=model.getLastSelected();
             Ext.getCmp("searchSalBu").setDisabled(selections.length === 0);
         }, this);
         caiwuListStore.loadPage(1) ;
-
         /**
          * 右侧查询栏
          */
@@ -104,7 +104,7 @@
             id : 'comlist2',
             loadMask:true,
             columns : [
-                {text: "编号", width: 50, dataIndex: 'id', sortable: false,align:'center'},
+                {text: "编号", width: 50, dataIndex: 'id', sortable: false,align:'center',hidden:true},
                 {text: "工资月份",width: 90,dataIndex: 'salaryTime', sortable: true,align:'center'},
                 {text: "状态", width: 130, dataIndex: 'state', sortable: false},
                 {text: "个人实发合计", width: 100, dataIndex: 'sum_per_shifaheji', sortable: true},
@@ -415,7 +415,16 @@
 
         }
     });
-
+    function searchcom(id){
+        salTongjistore.removeAll();
+        salTongjistore.load( {
+            params : {
+                comid:id,
+                start : 0,
+                limit : 50
+            }
+        });
+    }
 
 </script>
 </head>

@@ -191,9 +191,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class='item'>
 			<a href='index.php?action=Ext&mode=toCheckCompany'>单位审批</a>
 		</div>
-		<div class='item'>
-			<a href='index.php?action=Finance&mode=getSalaryTimeListByComId'>工资发放审批</a>
-		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toFinanceApproval">工资审批</a>
+        </div>
 		<div class='item'>
 			<a href='index.php?action=Finance&mode=salCaiwuImport'>财务文件导出</a>
 		</div>
@@ -214,9 +214,6 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=SalaryBill&mode=salaryComList">工资查看</a>
 		</div>
-        <div class="item">
-            <a href="index.php?action=Ext&mode=toFinanceApproval">工资审批</a>
-        </div>
 		<div class="item">
 			<a href="index.php?action=Ext&mode=tosearhSalaryNianTimeList">年终奖查询</a>
 		</div>

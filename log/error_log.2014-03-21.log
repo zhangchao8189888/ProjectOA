@@ -1574,3 +1574,18 @@ Begin Time: 2014-03-21 17:10:33
 **********error**********
 @@@@@@@@ {"errNo":2,"errStr":"Invalid argument supplied for foreach()","errFile":"C:\\xampp\\htdocs\\ProjectOA\\tpl\\employ_import.php","errLine":86} @@@@@@@@
 Begin Time: 2014-03-21 17:10:33
+**************sql_msg**************
+@@@@@@@@  select oac.*,oc.company_name  from OA_admin_company oac ,OA_company oc where oac.companyId=oc.id and oac.adminId=  @@@@@@@@
+Begin Time: 2014-03-21 17:22:13
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Cannot use a scalar value as an array","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\ExtServiceAction.class.php","errLine":144} @@@@@@@@
+Begin Time: 2014-03-21 17:22:15
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Cannot use a scalar value as an array","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\ExtServiceAction.class.php","errLine":144} @@@@@@@@
+Begin Time: 2014-03-21 17:22:15
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Cannot use a scalar value as an array","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\ExtServiceAction.class.php","errLine":144} @@@@@@@@
+Begin Time: 2014-03-21 17:22:15
+**********error**********
+@@@@@@@@ {"errNo":2,"errStr":"Cannot use a scalar value as an array","errFile":"C:\\xampp\\htdocs\\ProjectOA\\module\\action\\ExtServiceAction.class.php","errLine":144} @@@@@@@@
+Begin Time: 2014-03-21 17:22:15
