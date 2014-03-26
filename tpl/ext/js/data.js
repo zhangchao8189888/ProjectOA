@@ -538,7 +538,50 @@ var nianxuanStore = Ext.create('Ext.data.Store', {
         direction: 'DESC'
     }]
 });
+//到账发票时间BY孙瑞鹏
+var gongziriqi = Ext.create('Ext.data.Store', {
+    model: 'oa.common.gongziriqi.list',
+    //是否在服务端排序
+    remoteSort: false,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=SalaryBill&mode=getSalaryTimeByIdExt',
 
+        reader: {
+            root: 'items'
+        },
+        simpleSortMode: true
+    }
+});
+//到账发票公司名BY孙瑞鹏
+var gongsiming = Ext.create('Ext.data.Store', {
+    model: 'oa.common.gongsiming.list',
+    //是否在服务端排序
+    remoteSort: false,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSalary&mode=getCnameListExt',
+
+        reader: {
+            root: 'items'
+        },
+        simpleSortMode: true
+    }
+});
 //残疾人统计BY孙瑞鹏
 var canjirenTongjiStore = Ext.create('Ext.data.Store', {
     model: 'oa.common.canjirentongji.list',

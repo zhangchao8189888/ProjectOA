@@ -1188,7 +1188,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         $list = $this->g_db_query ( $sql );
         return $list;
     }
-    function getSalaryListByComId($comid, $chequeType) {
+    function getSalaryListByComId($comid, $chequeType=null) {
         // $chequeTypeNum=$chequeType-1;
         $sql = "select *  from  OA_salarytime where companyId=$comid  ";
         $list = $this->g_db_query ( $sql );

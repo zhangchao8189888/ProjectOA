@@ -120,6 +120,7 @@ class SalaryAction extends BaseAction {
 		$this->objForm->setFormData ( "files", $files );
 	}
 	function salaryUpload() {
+
 		$exmsg = new EC ();
 		$fileName = $_FILES ['file'] ['name'];
 		

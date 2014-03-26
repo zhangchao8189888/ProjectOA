@@ -19,6 +19,7 @@
     <script type="text/javascript">
     Ext.require([
             'Ext.grid.*',
+            'Ext.form.field.File',
             'Ext.toolbar.Paging',
             'Ext.data.*'
     ]);
@@ -135,7 +136,46 @@
                         },
                         text : '查询',
                         iconCls : 'chakan'
+                    },
+                    {
+                        xtype : 'button',
+                        id : 'tianjia',
+                        handler : function(src) {
+                            checkSalWin();
+                        },
+                        text : '添加发票/到账',
+                        iconCls : 'tianjia'
+                    },
+                    {
+                        xtype: 'filefield',
+                        id: 'form-file',
+
+                        buttonText: '上传附件',
+                        buttonConfig: {
+                            iconCls: 'upload-icon'
+                        },
+
+                        buttonOnly: true,
+                        hideLabel: true,
+                        listeners: {
+                            'change': function(fb, v){
+
+                                alert(fb);
+                               return;
+                                Ext.Ajax.request({
+                                    url: "index.php?action=Salary&mode=upload",  //从json文件中读取数据，也可以从其他地方获取数据
+                                    method : 'POST',
+                                    params: {
+                                        file :v
+                                    },
+                                    success : function(response) {
+
+                                    }
+                                });
+                            }
+                        }
                     }
+
                 ]
             });
 
@@ -143,16 +183,199 @@
                 Ext.apply(daozhangListstore.proxy.extraParams, {Key:Ext.getCmp("comname").getValue(),comname:Ext.getCmp("comname").getValue(),salTime:Ext.getCmp("salTime").getValue()});
 
             });
-//            var duibiPanel = Ext.create('Ext.panel.Panel',{
-//                id : 'duibi',
-//                height:200,
-//                width:1100,
-//                x:0,
-//                y:-500,
-//                title: '对比结论',
-//                renderTo: 'demo'
-//            });
-        });
+            var salList = Ext.create('Ext.form.Panel', {
+                bodyPadding: 10,
+                width: 700,
+                height: 400,
+                title: '',
+                items: [
+                    {
+                        xtype: 'fieldcontainer',
+                        fieldLabel: '请输入数据',
+                        defaultType: 'checkboxfield',
+                        items: [
+
+                            {
+                                xtype: 'textfield',
+                                id:"fapiaobianhao" ,
+                                emptyText: "请输入发票编号",
+                                allowBlank: false,
+                                fieldLabel: '发票编号'
+
+                            },
+                            {
+                                xtype: 'textfield',
+                                id:"fapiaoxiangmu" ,
+                                emptyText: "请输入发票项目",
+                                allowBlank: false,
+                                fieldLabel: '发票项目'
+
+                            },
+                            {
+                                xtype: 'combobox',
+                                id:"gongsiming" ,
+                                emptyText: "请输入公司名称",
+                                editable: true,
+                                allowBlank: false,
+                                store: gongsiming,
+                                listeners: {
+                                    select: function () {
+                                        gongziriqi.removeAll();
+                                        gongziriqi.load( {
+                                            params : {
+                                                comid : Ext.getCmp("gongsiming").getValue()
+                                            }
+                                        });
+                                    }
+                                },
+                                valueField: 'companyid',
+                                displayField: 'companyname',
+                                fieldLabel: '公司名称'
+                            },
+                            {
+                                xtype: 'combobox',
+                                id:"gongziriqi" ,
+                                editable: false,
+                                emptyText: "请选择工资日期",
+                                allowBlank: false,
+                                store: gongziriqi,
+                                valueField: 'id',
+                                displayField: 'salaryTime',
+                                fieldLabel: '工资日期'
+                            },
+                            {
+                                xtype: 'textfield',
+                                id:"jine",
+                                emptyText: "请输入金额",
+                                allowBlank: false,
+                                fieldLabel: '金额'
+                            },
+                            {
+                                xtype: 'combobox',
+                                id:"leixing" ,
+                                editable: false,
+                                emptyText: "请选择类型",
+                                allowBlank: false,
+                                store: {
+                                    fields: ['abbr', 'name'],
+                                    data: [
+                                        {"abbr": "到账", "name": "到账"},
+                                        {"abbr": "发票", "name": "发票"}
+                                    ]
+                                },
+                                listeners: {
+                                    select: function () {
+                                         if(this.getValue()=='发票'){
+                                             Ext.getCmp("fapiaobianhao").show();
+                                             Ext.getCmp("fapiaoxiangmu").show();
+                                         }else
+                                         {
+                                             Ext.getCmp("fapiaobianhao").hide();
+                                             Ext.getCmp("fapiaoxiangmu").hide();
+                                         }
+                                    }
+                                },
+                                valueField: 'abbr',
+                                displayField: 'name',
+                                fieldLabel: '类型'
+                            },
+                            {
+                                xtype: 'textareafield',
+                                id:"beizhu",
+                                width:400,
+                                height:80,
+                                emptyText: "请输入备注信息",
+                                fieldLabel: '备注'
+                            }
+                        ]
+                    }
+                ],
+                bbar: [
+                    {
+                        text: '提交',
+                        handler: function () {
+                            if(Ext.getCmp("fapiaobianhao").getValue()=='' && Ext.getCmp("leixing").getValue()=='发票'){
+
+                                alert("存在部分必填项为空！");
+                            }else{
+                                addXinxi();
+                            }
+                        }
+                    },
+                    '-',
+                    {
+                        text: '清空',
+                        handler: function () {
+                            var fapiaobianhao =  Ext.getCmp("fapiaobianhao").setValue("");
+                            var fapiaoxiangmu =  Ext.getCmp("fapiaoxiangmu").setValue("");
+                            var gongsiming =  Ext.getCmp("gongsiming").setValue("");
+                            var gongziriqi =  Ext.getCmp("gongziriqi").setValue("");
+                            var jine =  Ext.getCmp("jine").setValue("");
+                            var leixing =  Ext.getCmp("leixing").setValue("");
+                            var beizhu =   Ext.getCmp("beizhu").setValue("");
+                        }
+                    }
+                ]
+
+            });
+            var winSal=null;
+            function checkSalWin() {
+                var items=[salList];
+                winSal = Ext.create('Ext.window.Window', {
+                    title: "增员信息", // 窗口标题
+                    width:600, // 窗口宽度
+                    height:500, // 窗口高度
+                    layout:"border",// 布局
+                    minimizable:true, // 最大化
+                    maximizable:true, // 最小化
+                    frame:true,
+                    constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+                    buttonAlign:"center", // 按钮显示的位置
+                    modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+                    resizable:true, // 是否可以调整窗口大小，默认TRUE。
+                    plain:true,// 将窗口变为半透明状态。
+                    items:items,
+                    listeners: {
+                        //最小化窗口事件
+                        minimize: function(window){
+                            this.hide();
+                            window.minimizable = true;
+                        }
+                    },
+                    closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+                });
+                winSal.show();
+
+            }
+            //通过ajax添加信息
+            function addXinxi() {
+                if( Ext.getCmp("leixing").getValue()=='发票'){
+                var url = "index.php?action=SalaryBill&mode=addInvoice";
+                }else{
+                var url = "index.php?action=SalaryBill&mode=addCheque";
+                }
+                Ext.Ajax.request({
+                    url: url,  //从json文件中读取数据，也可以从其他地方获取数据
+                    method : 'POST',
+                    params: {
+                        billno: Ext.getCmp("fapiaobianhao").getValue(),
+                        billname: Ext.getCmp("fapiaoxiangmu").getValue(),
+                        comId: Ext.getCmp("gongsiming").getValue(),
+                        salaryTime: Ext.getCmp("gongziriqi").getValue(),
+                        billval: Ext.getCmp("jine").getValue(),
+                        leixing: Ext.getCmp("leixing").getValue(),
+                        memo: Ext.getCmp("beizhu").getValue(),
+                        chequeType:3
+                    },
+                    success : function(response) {
+                        winSal.hide();
+
+                    }
+                });
+            }
+            Ext.getCmp("fapiaobianhao").hide();
+            Ext.getCmp("fapiaoxiangmu").hide();
+    });
 
     </script>
 </head>
