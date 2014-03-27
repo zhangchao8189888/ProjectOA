@@ -93,8 +93,8 @@ class ExtSalaryAction extends BaseAction{
             case "delSalayByTimeId":
                 $this->delSalayByTimeId();
                 break;
-            case "comboxCom":
-                $this->comboxCom();
+            case "upload":
+                $this->salaryUpload();
                 break;
             default :
                 $this->modelInput();
@@ -903,9 +903,20 @@ class ExtSalaryAction extends BaseAction{
         exit;
     }
 
-    function comboxCom(){
-        $this->objDao=new SalaryDao();
-
+    function salaryUpload() {
+        $info   =   array();
+        $file = $_FILES['photo-path'];
+        if($file['type']=='application/vnd.ms-excel'&&$file['size']<50000){
+            $movefile=   move_uploaded_file($file["tmp_name"],"upload/" . $file["name"]);
+            if($movefile){
+                $info['success']    =   true;
+            }
+            $info['message'] =    $movefile.$file["type"];
+        }else{
+            $info['success']    =   false;
+            $info['message'] =   "只允许上传.xls文件，大小不能超过3M";
+        }
+        echo json_encode($info);
         exit;
     }
 }

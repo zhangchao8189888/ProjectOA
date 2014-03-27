@@ -344,7 +344,6 @@ var salList = Ext.create("Ext.form.Panel", {
                         waitTitle : '请等待' ,
                         waitMsg: '正在提交中',
                         success: function (form,action) {
-                            var text = form.responseText;
                             Ext.Msg.alert("提示", action.result.info);
                             document.location = 'index.php?action=Ext&mode=contractInfo';
                         },

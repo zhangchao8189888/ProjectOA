@@ -123,13 +123,13 @@ class SalaryAction extends BaseAction {
 
 		$exmsg = new EC ();
 		$fileName = $_FILES ['file'] ['name'];
-		
+
 		$errorMsg = "";
-		// var_dump($_FILES);
+		 var_dump($_FILES);
 		
 		$fileArray = split ( "\.", $_FILES ['file'] ['name'] );
 		$fullfilepath = UPLOADPATH . $fileArray [0] . "." . $fileArray [1];
-		// var_dump($fileArray);
+		 var_dump($fileArray);
 		if (count ( $fileArray ) != 2) {
 			$this->mode = "toUpload";
 			$errorMsg = '文件名格式 不正确';
