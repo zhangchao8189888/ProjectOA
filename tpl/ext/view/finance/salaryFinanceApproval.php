@@ -158,28 +158,9 @@ Ext.onReady(function () {
             },
             {
                 xtype: 'combobox',
-                id:"e_b" ,
-                emptyText: "筛选工资状态",
-                store:comListStore,
-                minChars:1,
-                typeAhead : false,
-                hideLabel : true,
-
-                pageSize: 2, //设置每页显示的条数
-                listWidth: 240, //设置下拉框的宽度
-                listConfig:{
-                    emptyText :"未找到"
-                },
-                listeners: {
-
-                },
-                valueField: 'id',
-                displayField: 'company_name'
-            },
-            {
-                xtype: 'combobox',
                 id:"e_bill_value" ,
                 emptyText: "筛选工资状态",
+                editable:false,
                 store: {
                     fields: ['abbr', 'name'],
                     data: [
@@ -188,18 +169,6 @@ Ext.onReady(function () {
                         {"abbr": "2", "name": "审批未通过"},
                         {"abbr": "", "name": "全部"}
                     ]
-                },
-                minChars:1,
-                typeAhead : false,
-                hideLabel : true,
-
-                pageSize: 2, //设置每页显示的条数
-                listWidth: 240, //设置下拉框的宽度
-                listConfig:{
-                    emptyText :"未找到",
-                    getInnerTpl : function() {
-                        return this.getName;
-                    }
                 },
                 listeners: {
                     select: function (tab) {

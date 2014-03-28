@@ -65,6 +65,52 @@ $admin = $_SESSION ['admin'];
                 }),
                 tbar: [
                     {
+                        xtype: 'combobox',
+                        id:"e_b" ,
+                        emptyText: "筛选公司",
+                        store:comListStore,
+                        minChars:1,
+                        typeAhead : false,
+                        hideLabel : true,
+                        triggerAction:'query ',
+                        pageSize: 50, //设置每页显示的条数
+                        listWidth: 240, //设置下拉框的宽度
+                        listConfig:{
+                            emptyText :"未找到",
+                            getInnerTpl : function(){
+                                return  comListStore.load( {
+                                    params : {
+                                        Key : Ext.getCmp('e_b').getValue(),
+                                        start : 0,
+                                        limit : 50
+                                    }
+                                });
+                            }
+                        },
+                        listeners: {
+                            afterrender :   function(comb, record, index) {
+                                comListStore.load( {
+                                    params : {
+                                        Key : Ext.getCmp('e_b').getValue(),
+                                        start : 0,
+                                        limit : 50
+                                    }
+                                });
+                            }
+                        },
+                        valueField: 'company_name',
+                        displayField: 'company_name'
+                    },
+                    {
+                        xtype: 'button',
+                        id: 'cxear',
+                        handler: function (src) {
+                           alert(Ext.getCmp('e_b').getValue());
+                        },
+                        text: '审x过',
+                        iconCls: 'chakan'
+                    },
+                    {
                         xtype: 'button',
                         id: 'cClear',
                         disabled: true,

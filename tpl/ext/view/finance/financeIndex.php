@@ -414,7 +414,7 @@ var salList=Ext.create("Ext.form.Panel",{
                 fields: ['abbr', 'name'],
                 data: [
                     {"abbr": "2", "name": "到账支票"},
-                    {"abbr": "3", "name": "银行到账"},
+                    {"abbr": "3", "name": "银行到账"}
                 ]
             },
             valueField: 'abbr',

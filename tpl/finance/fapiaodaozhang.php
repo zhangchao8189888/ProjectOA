@@ -104,6 +104,7 @@ Ext.onReady(function () {
         viewConfig: {
             id: 'gv2',
             trackOver: false,
+            enableTextSelection:true,
             stripeRows: false
         },
         bbar: Ext.create('Ext.PagingToolbar', {
@@ -165,11 +166,12 @@ Ext.onReady(function () {
     daozhangListstore.on("beforeload", function () {
         Ext.apply(daozhangListstore.proxy.extraParams, {Key: Ext.getCmp("comname").getValue(), comname: Ext.getCmp("comname").getValue(), salTime: Ext.getCmp("salTime").getValue()});
     });
+    fapiaoStore.loadPage(1);
+    daozhangListstore.loadPage(1);
     var salList = Ext.create('Ext.form.Panel', {
         bodyPadding: 10,
-        width: 700,
-        height: 400,
-        title: '',
+        width: 550,
+        height: 350,
         items: [
             {
                 xtype: 'fieldcontainer',
@@ -271,7 +273,7 @@ Ext.onReady(function () {
                 ]
             }
         ],
-        bbar: [
+        buttons:[
             {
                 text: '提交',
                 handler: function () {
@@ -296,16 +298,15 @@ Ext.onReady(function () {
                 }
             }
         ]
-
     });
     var winSal = null;
 
     function checkSalWin() {
         var items = [salList];
         winSal = Ext.create('Ext.window.Window', {
-            title: "增员信息", // 窗口标题
-            width: 600, // 窗口宽度
-            height: 500, // 窗口高度
+            title: "添加发票/支票", // 窗口标题
+            width: 560, // 窗口宽度
+            height: 320, // 窗口高度
             layout: "border",// 布局
             minimizable: true, // 最大化
             maximizable: true, // 最小化
@@ -362,27 +363,25 @@ Ext.onReady(function () {
 
 function uploadFile() {
     var filewin = Ext.create('Ext.form.Panel', {
-        width: 500,
+        width: 400,
         frame: true,
         bodyPadding: '10 10 0',
         defaults: {
             anchor: '100%',
             allowBlank: false,
             msgTarget: 'side',
-            labelWidth: 100
+            labelWidth: 80
         },
         items: [
             {
-                xtype: 'textfield',
-                valueText: 'xxxxx',
-                fieldLabel: '文件命名'
+                xtype: 'displayfield',
+                value:"<span style='color: blue'>请创建后缀名为“.xls”的文件进行上传<br>系统会读取前四列数据，分别为：</span><br>“单位名称”，“工资日期”，“到账金额”，“备注”"
             },
             {
                 xtype: 'filefield',
                 id: 'form-file',
                 name: 'photo-path',
                 emptyText: '选择上传的文件',
-                fieldLabel: '文件地址',
                 buttonText: '选择文件',
                 buttonConfig: {
                     iconCls: 'upload-icon'
@@ -401,7 +400,33 @@ function uploadFile() {
                             isUpload: true,
                             waitMsg: '上传中.',
                             success: function (form, action) {
-                                Ext.Msg.alert("提示", action.result.message);
+                                Ext.MessageBox.show({
+                                    title: '提示',
+                                    msg: '上传成功！是否导入！',
+                                    width: 250,
+                                    buttonText: {ok: '导入', yes: '取消'},
+                                    animateTarget: 'mb4',
+                                    fn: function (btn) {
+                                        if ("ok" == btn) {
+                                            Ext.Ajax.request({
+                                                url: "index.php?action=ExtSalaryBill&mode=importCheque",  //从json文件中读取数据，也可以从其他地方获取数据
+                                                method : 'POST',
+                                                params: {
+                                                    filename : action.result.message
+                                                },
+                                                success : function(response) {
+                                                    var json = Ext.JSON.decode(response.responseText);
+                                                    Ext.Msg.alert("提示", json['message']);
+                                                }
+                                            });
+                                        }
+                                        else if ("yes" == btn) {
+                                            document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
+                                        }
+                                        return false;
+                                    },
+                                    icon: Ext.MessageBox.INFO
+                                })
                             },
                             failure: function (form, action) {
                                 Ext.Msg.alert("警告", action.result.message);
@@ -421,8 +446,8 @@ function uploadFile() {
     var items = [filewin];
     uploadfilewindow = Ext.create('Ext.window.Window', {
         title: "上传", // 窗口标题
-        width: 510, // 窗口宽度
-        height: 160, // 窗口高度
+        width: 410, // 窗口宽度
+        height: 190, // 窗口高度
         layout: "border",// 布局
         minimizable: false, // 最大化
         maximizable: false, // 最小化
@@ -434,13 +459,11 @@ function uploadFile() {
         plain: true,// 将窗口变为半透明状态。
         items: items,
         listeners: {
-            //最小化窗口事件
-            minimize: function (window) {
-                this.hide();
-                window.minimizable = true;
+            close:function(){
+
             }
         },
-        closeAction: 'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+        closeAction: 'destroy'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
     });
     uploadfilewindow.show();
 }

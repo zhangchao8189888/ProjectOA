@@ -124,6 +124,7 @@ Ext.define('oa.common.salApproval.list',{
         {name: 'sum_per_shifaheji', type: 'string'},
         {name: 'sum_per_daikoushui', type: 'string'},
         {name: 'sum_paysum_zhongqi', type: 'string'},
+        {name: 'sal_approve_id', type: 'int'},
         {name: 'bill_value', type: 'string'}
     ]
 });

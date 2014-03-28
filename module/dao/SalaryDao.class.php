@@ -1243,6 +1243,7 @@ AND a.id = st.companyId";
         $sql = "SELECT
 	a.company_name,
 	b.bill_value,
+	b.id billid,
 	st.salaryTime,
 	st.op_salaryTime,
 	st.id
@@ -1287,7 +1288,19 @@ AND a.id = st.companyId";
         $result=$this->g_db_query($sql);
         return $result;
     }
-
+    function searchSalTimeIdByCompanyName($com,$sal) {
+        $sql = "SELECT
+	s.id
+FROM
+	OA_salarytime s,
+	OA_company c
+WHERE
+	s.companyId = c.id
+AND company_name = '$com'
+AND salaryTime = '$sal'";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
     function saveSalaryBill($billArray) {
         $sql = "INSERT INTO OA_bill (salaryTime_id,bill_no,bill_type,bill_date,bill_item,bill_value,bill_state,text) VALUES
     	     ({$billArray['salaryTime_id']},'{$billArray['bill_no']}',{$billArray['bill_type']},'{$billArray['bill_date']}',

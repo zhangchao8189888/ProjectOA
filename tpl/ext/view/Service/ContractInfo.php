@@ -483,6 +483,10 @@ var upEmpInfoPanel = Ext.create("Ext.form.Panel", {
                     store: {
                         fields: ['abbr', 'name'],
                         data: [
+                            {"abbr": "实习生", "name": "实习生"},
+                            {"abbr": "未缴纳保险", "name": "未缴纳保险"},
+                            {"abbr": "本市农民工", "name": "本市农民工"},
+                            {"abbr": "外地农民工", "name": "外地农民工"},
                             {"abbr": "本市城镇职工", "name": "本市城镇职工"},
                             {"abbr": "外埠城镇职工", "name": "外埠城镇职工"},
                             {"abbr": "本市农村劳动力", "name": "本市农村劳动力"},

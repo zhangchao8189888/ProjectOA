@@ -284,6 +284,7 @@ class ExtSalaryAction extends BaseAction{
                 $josnArray['items'][$i]['sum_paysum_zhongqi']=$rowheji['sum_paysum_zhongqi'];
             }
             $josnArray['items'][$i]['bill_value'] = $row['bill_value'];
+             $josnArray['items'][$i]['sal_approve_id'] = $row['billid'];
             $josnArray['items'][$i]['id'] = $row['id'];
             $josnArray['items'][$i]['company_name'] = $row['company_name'];
             $josnArray['items'][$i]['salaryTime'] = date("Y-m-d", strtotime($row['salaryTime']));
@@ -906,15 +907,23 @@ class ExtSalaryAction extends BaseAction{
     function salaryUpload() {
         $info   =   array();
         $file = $_FILES['photo-path'];
-        if($file['type']=='application/vnd.ms-excel'&&$file['size']<50000){
-            $movefile=   move_uploaded_file($file["tmp_name"],"upload/" . $file["name"]);
-            if($movefile){
-                $info['success']    =   true;
-            }
-            $info['message'] =    $movefile.$file["type"];
+        if($file['type']=='application/vnd.ms-excel'&&$file['size']<3500000){
+
+                $info['success']    =   false;
+                $info['message'] = "服务器已存在同名文件，请更改名后重试！";
+
+                $movefile=   move_uploaded_file($file["tmp_name"],"upload/bill/" . $file["name"]);
+                if($movefile){
+                    $info['success']    =   true;
+                    $info['message'] = $file["name"];
+                }else{
+                    $info['success']    =   false;
+                    $info['message'] = "上传失败，请重试！";
+                }
+
         }else{
             $info['success']    =   false;
-            $info['message'] =   "只允许上传.xls文件，大小不能超过3M";
+            $info['message'] = "只允许上传.xls文件，大小不能超过3M";
         }
         echo json_encode($info);
         exit;
