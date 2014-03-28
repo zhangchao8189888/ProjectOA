@@ -111,6 +111,9 @@ class SaveSalaryAction extends BaseAction {
             case "setTypeGeshui" :
                 $this->setTypeGeshui ();
                 break;
+            case "setTypeGongsijibie" :
+                $this->setTypeGongsijibie ();
+                break;
             case "insGeshuijilu" :
 				$this->insGeshuijilu ();
 				break;
@@ -542,6 +545,17 @@ class SaveSalaryAction extends BaseAction {
 		// echo json_encode($salaryListArray);
 		exit ();
 	}
+    // 公司级别修改BY孙瑞鹏
+    function setTypeGongsijibie() {
+        // $this->mode="salaryList";
+        $salaryTimeId = $_REQUEST ['timeId'];
+        $type = $_REQUEST ['type'];
+        $this->objDao = new SalaryDao ();
+        $this->objDao->setTypeGongsijibie ( $salaryTimeId,$type );
+        // echo json_encode($salaryListArray);
+        exit ();
+    }
+
     // 残疾人修改BY孙瑞鹏
     function setTypeCanjiren() {
         // $this->mode="salaryList";

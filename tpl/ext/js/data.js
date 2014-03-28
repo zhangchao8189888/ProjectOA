@@ -189,7 +189,37 @@ var geshuiTypestore = Ext.create('Ext.data.Store', {
         direction: 'DESC'
     }]
 });
+//BY孙瑞鹏
+var gongsijibie = Ext.create('Ext.data.Store', {
+    //分页大小
+    pageSize: 50,
+    model: 'oa.common.gongsijibie.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSalary&mode=searchGongsijibie',
 
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
 //BY发票孙瑞鹏
 var fapiaoStore = Ext.create('Ext.data.Store', {
     //分页大小

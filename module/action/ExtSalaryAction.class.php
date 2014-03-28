@@ -69,6 +69,10 @@ class ExtSalaryAction extends BaseAction{
             case "searchGeshuiTypeJosn" :
             	$this->searchGeshuiTypeJosn();
             	break;
+
+            case "searchGongsijibie" :
+                $this->searchGongsijibie();
+                break;
             case "deleteZengjianyuan" :
             	$this->deleteZengjianyuan();
             	break;
@@ -711,6 +715,46 @@ class ExtSalaryAction extends BaseAction{
         exit;
     }
 
+    //公司级别查询BY孙瑞鹏
+    function searchGongsijibie(){
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $companyName=$_REQUEST['companyName'];
+        $salTime=$_REQUEST['salTime'];
+
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where=array();
+        $where['companyName']=$companyName;
+        $where['salaryTime']=$salTime;
+
+        $sum =$this->objDao->searhGongsijibieCount($where);
+
+        $salaryTimeList=$this->objDao->searhGongsijibiePage($start,$limit,$sorts." ".$dir,$where);
+        $josnArray=array();
+        $josnArray['total']=$sum;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['id']=$row['id'];
+            $josnArray['items'][$i]['company_name']=$row['company_name'];
+            if($row['company_level']==1){
+                $josnArray['items'][$i]['company_level']="一级公司";
+            }
+            elseif ($row['company_level']==2){
+                $josnArray['items'][$i]['company_level']="二级公司";
+            }
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
     //个税类型BY孙瑞鹏
     function searchGeshuiTypeJosn(){
     	$this->objDao=new SalaryDao();

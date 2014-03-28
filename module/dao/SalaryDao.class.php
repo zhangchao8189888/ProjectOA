@@ -292,6 +292,26 @@ class SalaryDao extends BaseDao {
         $row = mysql_fetch_assoc ( $result );
         return $row ['cnt'];
     }
+    // 公司级别统计数BY孙瑞鹏
+    function searhGongsijibieCount($where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select count(*) as cnt   from OA_company c,OA_admin_company a  where 1=1
+  and a.companyId = c.id  and  a.adminId = $id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= " and company_level='{$where['salaryTime']}' ";
+            }
+        }
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
 
     /**
      * 工资查询 dao
@@ -622,6 +642,29 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
+    // 个税类型BY孙瑞鹏
+    function searhGongsijibiePage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "SELECT c.id,c.company_name,c.company_level  from OA_company c,OA_admin_company a  where 1=1
+  and a.companyId = c.id  and  a.adminId = $id";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and company_name like '%{$where['companyName']}%' ";
+            }
+            if ($where ['salaryTime'] != "") {
+                $sql .= " and company_level='{$where['salaryTime']}' ";
+            }
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        // $sql.=" order by op_salaryTime desc ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
     function searhErSalaryTimeListCount($where = null) {
         $id = $_SESSION ['admin'] ['id'];
         $sql = "select count(*) as cnt  from OA_salarytime_other st,OA_company c,OA_admin_company a where  a.adminId=$id and a.companyId = c.id and st.companyId=c.id   and salaryType=" . ER_SALARY_TIME_TYPE;
@@ -807,6 +850,12 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
     // 个税类型设置BY孙瑞鹏
     function setTypeGeshui($sid,$type) {
         $sql = "UPDATE OA_company SET geshui_dateType = $type WHERE id = $sid";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 公司级别设置BY孙瑞鹏
+    function setTypeGongsijibie($sid,$type) {
+        $sql = "UPDATE OA_company SET company_level = $type WHERE id = $sid";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
