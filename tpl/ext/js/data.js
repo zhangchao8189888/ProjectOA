@@ -444,6 +444,40 @@ var salTimeListstore = Ext.create('Ext.data.Store', {
 });
 
 /**
+ * 财务审核工资store
+ */
+var salTimeListApprovalstore = Ext.create('Ext.data.Store', {
+    // 分页大小
+    pageSize: 50,
+    model: 'oa.common.salApproval.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSalary&mode=searchSalaryTimeApprovalListJosn',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
+
+/**
  * 工资统计store
  */
 var salTongjistore = Ext.create('Ext.data.Store', {
@@ -937,6 +971,37 @@ var employListstore = Ext.create('Ext.data.Store', {
     sorters: [{
         //排序字段。
         property: 'e_hetong_date',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
+
+
+var comboxCom = Ext.create('Ext.data.Store', {
+    pageSize: 50,
+    model: 'oa.common.comboxC.list',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=ExtSalary&mode=comboxCom',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
         //排序类型，默认为 ASC
         direction: 'DESC'
     }]

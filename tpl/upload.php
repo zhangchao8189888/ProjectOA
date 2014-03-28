@@ -88,7 +88,7 @@ $admin=$_SESSION['admin'];
 
                 <td><div><?php echo $row;?></div></td>
 
-                <td><div><a href="index.php?action=Salary&mode=newExcelToHtml&fname=<?php echo $row;?>">查看</a>|<a href="index.php?action=Salary&mode=del&fname=<?php echo $row;?>">删除</a>|<a href="index.php?action=Salary&mode=salDuiBi&fname=<?php echo $row;?>">对比</a>|<a  onclick="rename('<?php echo $row;?>');">重命名</a>
+                <td><div><a href="index.php?action=Salary&mode=excelToHtml&fname=<?php echo $row;?>">查看</a>|<a href="index.php?action=Salary&mode=del&fname=<?php echo $row;?>">删除</a>|<a href="index.php?action=Salary&mode=salDuiBi&fname=<?php echo $row;?>">对比</a>|<a  onclick="rename('<?php echo $row;?>');">重命名</a>
                <?php if($admin['admin_type']==1){?>
                 |<a  href="index.php?action=Service&mode=toUpdateEmpList&fname=<?php echo $row;?>">批量修改员工字段</a></div></td>
 <?php }?>

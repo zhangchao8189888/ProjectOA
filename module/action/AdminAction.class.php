@@ -228,6 +228,7 @@ class AdminAction extends BaseAction{
   	$result=$this->objDao->updateAdminLoginTime($check);
   	if(empty($check)){
   		$this->mode="login";
+
   	}else{
   		if($check['admin_type']==3){
   			$admin=$_SESSION["admin"];

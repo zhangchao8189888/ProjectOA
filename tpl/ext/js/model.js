@@ -124,6 +124,21 @@ Ext.define('oa.common.salaryTime.list',{
     ]
 });
 
+Ext.define('oa.common.salApproval.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'salaryTime', type: 'string'},
+        {name: 'op_salaryTime', type: 'time'},
+        {name: 'sum_per_shifaheji', type: 'string'},
+        {name: 'sum_per_daikoushui', type: 'string'},
+        {name: 'sum_paysum_zhongqi', type: 'string'},
+        {name: 'sal_approve_id', type: 'int'},
+        {name: 'bill_value', type: 'string'}
+    ]
+});
+
 /**
  * 工资统计model
  */
@@ -521,5 +536,13 @@ Ext.define('oa.common.employ.list',{
         {name: 'e_hetongnian', type: 'int'},
         {name: 'e_hetong_date', type: 'string'},
         {name: 'memo', type: 'string'}
+    ]
+});
+
+Ext.define('oa.common.comboxC.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'}
     ]
 });

@@ -79,8 +79,29 @@ class ExtEmployDao extends BaseDao
         return $result;
     }
 
+    function updateEm($employ){
+        $sql="update OA_employ  set
+		e_name='{$employ["e_name"]}',e_company='{$employ["e_company"]}',
+		e_num='{$employ["e_num"]}',bank_name='{$employ["bank_name"]}',
+		bank_num='{$employ["bank_num"]}',e_type='{$employ["e_type"]}',
+		shebaojishu={$employ["shebaojishu"]},gongjijinjishu={$employ["gongjijinjishu"]},
+		laowufei={$employ["laowufei"]},canbaojin={$employ["canbaojin"]},e_hetongnian={$employ["e_hetongnian"]},e_hetong_date='{$employ["e_hetong_date"]}',
+		danganfei={$employ["danganfei"]},memo='{$employ["memo"]}' where id={$employ["id"]}
+		";
+        $result=$this->g_db_query($sql);
+        return $result;
+    }
+
+    function updateEmployNoByid($eid,$enum){
+        $sql="update OA_employ  set
+		e_num='{$enum}' where id={$eid}
+		";
+        $result=$this->g_db_query($sql);
+        return $result;
+    }
+
     function searchInsurance($id){
-        $sql="select e_name,e_hetongnian,e_hetong_date from oa_employ where id=$id";
+        $sql="select * from OA_employ where id=$id";
         $result=$this->g_db_query($sql);
         return $result;
     }

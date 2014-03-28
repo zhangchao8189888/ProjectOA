@@ -43,6 +43,9 @@ class ExtSalaryAction extends BaseAction{
             case "searchSalaryTimeListJosn" :
                 $this->searchSalaryTimeListJosn();
                 break;
+            case "searchSalaryTimeApprovalListJosn":
+                $this->searchSalaryTimeApprovalListJosn();
+                break;
             case "searchSalaryTongji":
                 $this->searchSalaryTongji();
                 break;
@@ -93,6 +96,9 @@ class ExtSalaryAction extends BaseAction{
                   break;
             case "delSalayByTimeId":
                 $this->delSalayByTimeId();
+                break;
+            case "upload":
+                $this->salaryUpload();
                 break;
             default :
                 $this->modelInput();
@@ -236,19 +242,62 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i]['company_name']=$row['company_name'];
             $josnArray['items'][$i]['salaryTime']=date("Y-m-d", strtotime($row['salaryTime']));
             $josnArray['items'][$i]['op_salaryTime']=date("Y-m-d", strtotime($row['op_salaryTime']));
-            if(-1==$e_fa_state&&-1!= $josnArray ['items'] [$i]['sal_approve'] ){
-                continue;
-            }
-            //申请审批中
-            if(1==$e_fa_state&&0!= $josnArray ['items'] [$i]['fa_state'] ){
-                continue;
-            }
             $i++;
         }
         echo json_encode($josnArray);
         exit;
     }
 
+    function searchSalaryTimeApprovalListJosn(){
+        $where=array();
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $where['companyName']=$_REQUEST['companyName'];
+        $salTime=$_REQUEST['salTime'];
+        $opTime=$_REQUEST['opTime'];
+        $where['e_sal_approve']  =   $_REQUEST['e_sal_approve'];
+        $where['bill_value']    =    $_REQUEST['e_bill_value'];
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        if($opTime) {
+            $time=$this->AssignTabMonth($opTime,0);
+            $where['op_salaryTime']=$time["next"];
+            $where['op_time']   =   $time["data"];
+        }
+        if($salTime) {
+            $time=$this->AssignTabMonth($salTime,0);
+            $where['salaryTime']=$time["month"];
+        }
+        $sum =$this->objDao-> searchSalaryTimeApprovalCount($where);
+        $results=$this->objDao->searchSalaryTimeApprovalPage($start,$limit,$sorts." ".$dir,$where);
+        $josnArray=array();
+        $josnArray['total']=$sum;
+        $i=0;
+        while ($row = mysql_fetch_array($results)) {
+            $salaryHejiList = $this->objDao->searchSumSalaryListBy_SalaryTimeId ( $row ['id'] );
+            while ( $rowheji = mysql_fetch_array ( $salaryHejiList ) ) {
+                $josnArray['items'][$i]['sum_per_shifaheji']=$rowheji['sum_per_shifaheji'];
+                $josnArray['items'][$i]['sum_per_daikoushui']=$rowheji['sum_per_daikoushui'];
+                $josnArray['items'][$i]['sum_paysum_zhongqi']=$rowheji['sum_paysum_zhongqi'];
+            }
+            $josnArray['items'][$i]['bill_value'] = $row['bill_value'];
+             $josnArray['items'][$i]['sal_approve_id'] = $row['billid'];
+            $josnArray['items'][$i]['id'] = $row['id'];
+            $josnArray['items'][$i]['company_name'] = $row['company_name'];
+            $josnArray['items'][$i]['salaryTime'] = date("Y-m-d", strtotime($row['salaryTime']));
+            $josnArray['items'][$i]['op_salaryTime'] = date("Y-m-d", strtotime($row['op_salaryTime']));
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
     /**
      * 工资统计Ext
      */
@@ -896,6 +945,31 @@ class ExtSalaryAction extends BaseAction{
             $this->objDao->commit ();
         }
         echo("操作成功！");
+        exit;
+    }
+
+    function salaryUpload() {
+        $info   =   array();
+        $file = $_FILES['photo-path'];
+        if($file['type']=='application/vnd.ms-excel'&&$file['size']<3500000){
+
+                $info['success']    =   false;
+                $info['message'] = "服务器已存在同名文件，请更改名后重试！";
+
+                $movefile=   move_uploaded_file($file["tmp_name"],"upload/bill/" . $file["name"]);
+                if($movefile){
+                    $info['success']    =   true;
+                    $info['message'] = $file["name"];
+                }else{
+                    $info['success']    =   false;
+                    $info['message'] = "上传失败，请重试！";
+                }
+
+        }else{
+            $info['success']    =   false;
+            $info['message'] = "只允许上传.xls文件，大小不能超过3M";
+        }
+        echo json_encode($info);
         exit;
     }
 }

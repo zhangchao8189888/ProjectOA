@@ -33,6 +33,9 @@ class ExtSalaryBillAction extends BaseAction {
             case "addCheque":
                 $this->addCheque ();
                 break;
+            case "importCheque":
+                $this->importCheque();
+                break;
             default :
                 $this->modelInput ();
                 break;
@@ -139,6 +142,7 @@ class ExtSalaryBillAction extends BaseAction {
         }
         $memo = $_REQUEST ['memo'];
         $billArray = array ();
+
         $billArray ['salaryTime_id'] = $salaryTime;
         $billArray ['bill_type'] = $billType [$billname];
         $billArray ['bill_date'] = date ( 'Y-m-d H:i:s' );
@@ -147,6 +151,7 @@ class ExtSalaryBillAction extends BaseAction {
         $billArray ['bill_state'] = $billState; // 对应$billState['']=>""
         $billArray ['op_id'] = 0;
         $billArray ['text'] = $memo;
+
         $this->objDao = new SalaryDao ();
         $result = $this->objDao->saveSalaryBill ( $billArray );
         $lastid = $this->objDao->g_db_last_insert_id ();
@@ -171,6 +176,54 @@ class ExtSalaryBillAction extends BaseAction {
             $errormsg = $billname . "添加失败！";
         }
         echo $errormsg.$succ;
+        exit;
+    }
+
+    function importCheque() {
+        $exmsg = new EC ();
+        $filename = $_REQUEST["filename"];
+        $info = array();
+        $err = Read_Excel_File("upload/bill/" . $filename, $return);
+        $info['success'] = true;
+        if ($err != 0) {
+            $info['success'] = false;
+            $info['message'] = '读取表格发生错误！';
+        }
+        if ($return['Sheet1'][0][0] == "单位名称" && $return['Sheet1'][0][1] == "工资日期" && $return['Sheet1'][0][2] == "到账金额" && $return['Sheet1'][0][3] == "备注") {
+            $info['message'] = '成功读取表格！';
+            $this->objDao = new SalaryDao ();
+            for ($i = 0; $i < count($return['Sheet1']); $i++) {
+                $salId = $this->objDao->searchSalTimeIdByCompanyName($return['Sheet1'][$i][0], $return['Sheet1'][$i][1]);
+                while ($row = mysql_fetch_array($salId)) {
+                    $billArray = array();
+                    $billArray ['salaryTime_id'] = $row['id'];
+                    $billArray ['bill_type'] = 3;
+                    $billArray ['bill_date'] = $return['Sheet1'][$i][1];
+                    $billArray ['bill_item'] = "银行到账";
+                    $billArray ['bill_value'] = $return['Sheet1'][$i][2];
+                    $billArray ['bill_state'] = 3; // 对应$billState['']=>""
+                    $billArray ['op_id'] = 0;
+                    $billArray ['text'] = $return['Sheet1'][$i][3];
+                    $result = $this->objDao->saveSalaryBill($billArray);
+                    $lastid = $this->objDao->g_db_last_insert_id();
+                    if ($result) {
+                        $result = $this->objDao->updateSalaryTimeState($billArray ['bill_state'], $billArray ['bill_date']);
+                        $info['message']  = $billArray ['bill_item'] . "添加成功";
+                        $adminPO = $_SESSION ['admin'];
+                        $opLog ['who'] = $adminPO ['id'];
+                        $opLog ['what'] = $lastid;
+                        $opLog ['memo'] = '';
+                        $rasult = $this->objDao->addOplog($opLog);
+                        if (!$rasult) {
+                            $exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
+                            $info['message'] ='添加日志失败！';
+                            throw new Exception ($exmsg->error());
+                        }
+                    }
+                }
+            }
+        }
+        echo json_encode($info);
         exit;
     }
 }

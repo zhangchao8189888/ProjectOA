@@ -123,13 +123,13 @@ class SalaryAction extends BaseAction {
 
 		$exmsg = new EC ();
 		$fileName = $_FILES ['file'] ['name'];
-		
+
 		$errorMsg = "";
-		// var_dump($_FILES);
+		 var_dump($_FILES);
 		
 		$fileArray = split ( "\.", $_FILES ['file'] ['name'] );
 		$fullfilepath = UPLOADPATH . $fileArray [0] . "." . $fileArray [1];
-		// var_dump($fileArray);
+		 var_dump($fileArray);
 		if (count ( $fileArray ) != 2) {
 			$this->mode = "toUpload";
 			$errorMsg = '文件名格式 不正确';
@@ -220,56 +220,43 @@ class SalaryAction extends BaseAction {
 		}
 		$this->mode = "salaryList";
 	}
-	function newExcelToHtml() {
-		$fname = $_REQUEST ['fname'];
-		$checkType = $_REQUEST ['checkType'];
-		$path = "upload/" . $fname;
-		$_ReadExcel = new PHPExcel_Reader_Excel2007 ();
-		// 为了可以读取所有版本Excel文件
-		// $path='502/empTemlate11.xls';
-		if (! $_ReadExcel->canRead ( $path ))
-			$_ReadExcel = new PHPExcel_Reader_Excel5 ();
-			// 读取Excel文件
-		$_phpExcel = $_ReadExcel->load ( $path );
-		// 获取工作表的数目
-		$_sheetCount = $_phpExcel->getSheetCount ();
-		
-		$_newExcel = array ();
-		$_excelData = array ();
-		
-		// 循环工作表
-		// for($_s = 0;$_s<$_sheetCount;$_s++) {
-		for($_s = 0; $_s < 1; $_s ++) {
-			// 选择工作表
-			$_currentSheet = $_phpExcel->getSheet ( $_s );
-			// 取得一共有多少列
-			$_allColumn = $_currentSheet->getHighestColumn ();
-			// 取得一共有多少行
-			$_allRow = $_currentSheet->getHighestRow ();
-			$temp = 0;
-			for($_r = 1; $_r <= $_allRow; $_r ++) {
-				
-				for($_currentColumn = 'A'; $_currentColumn <= $_allColumn; $_currentColumn ++) {
-					$address = $_currentColumn . $_r;
-					$val = $_currentSheet->getCell ( $address )->getValue ();
-					$_newExcel ['Sheet1'] [$temp] [] = $val;
-				}
-				$temp ++;
-			}
-		}
-		
-		$this->objForm->setFormData ( "salarylist", $_newExcel );
-		if ($checkType) {
-			$companyName = $_POST ['companyName'];
-			$companyId = $_POST ['companyId'];
-			$salDate = $_POST ['salDate'];
-			$this->objForm->setFormData ( "companyName", $companyName );
-			$this->objForm->setFormData ( "companyId", $companyId );
-			$this->objForm->setFormData ( "salDate", $salDate );
-			$this->objForm->setFormData ( "checkType", $checkType );
-		}
-		$this->mode = "salaryList";
-	}
+
+    function newExcelToHtml() {
+        $fname = $_REQUEST ['fname'];
+        $checkType = $_REQUEST ['checkType'];
+        $path = "upload/" . $fname;
+        $_ReadExcel = new PHPExcel_Reader_Excel2007 ();
+        if (!$_ReadExcel->canRead($path))
+            $_ReadExcel = new PHPExcel_Reader_Excel5 ();
+        $_phpExcel = $_ReadExcel->load($path);
+        $_newExcel = array();
+        for ($_s = 0; $_s < 1; $_s++) {
+            $_currentSheet = $_phpExcel->getSheet($_s);
+            $_allColumn = $_currentSheet->getHighestColumn();
+            $_allRow = $_currentSheet->getHighestRow();
+            $temp = 0;
+            for ($_r = 1; $_r <= $_allRow; $_r++) {
+                for ($_currentColumn = 'A'; $_currentColumn <= $_allColumn; $_currentColumn++) {
+                    $address = $_currentColumn . $_r;
+                    $val = $_currentSheet->getCell($address)->getValue();
+                    $_newExcel ['Sheet1'] [$temp] [] = $val;
+                }
+                $temp++;
+            }
+        }
+
+        $this->objForm->setFormData("salarylist", $_newExcel);
+        if ($checkType) {
+            $companyName = $_POST ['companyName'];
+            $companyId = $_POST ['companyId'];
+            $salDate = $_POST ['salDate'];
+            $this->objForm->setFormData("companyName", $companyName);
+            $this->objForm->setFormData("companyId", $companyId);
+            $this->objForm->setFormData("salDate", $salDate);
+            $this->objForm->setFormData("checkType", $checkType);
+        }
+        $this->mode = "salaryList";
+    }
 	function sumSalary() {
 		$this->mode = "sumlist";
 		$shenfenzheng = ($_POST ['shenfenzheng'] - 1);

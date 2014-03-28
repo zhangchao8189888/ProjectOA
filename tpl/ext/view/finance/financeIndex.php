@@ -176,7 +176,7 @@ Ext.onReady(function () {
                 name: 'STime',
                 xtype : 'monthfield',
                 editable: false,
-                width: 150,
+                width: 200,
                 labelAlign: 'right',
                 format: 'Y-m'
             },
@@ -260,7 +260,8 @@ Ext.onReady(function () {
                     });
 
                 } else {
-                    alert('请选择一条记录');
+                    Ext.Msg.alert("提示","'请选择一条记录");
+                    return;
                 }
             },
             text : '添加管理',
@@ -330,7 +331,7 @@ Ext.onReady(function () {
  */
 function addCheque(comId,companyName,sal_state,sal_date) {
     if(sal_state==0){
-        alert("没有发工资是不能开支票的！");
+        Ext.Msg.alert("提示","没有发工资是不能开支票的！");
         return false;
     }
     var items=[salList];
@@ -413,7 +414,7 @@ var salList=Ext.create("Ext.form.Panel",{
                 fields: ['abbr', 'name'],
                 data: [
                     {"abbr": "2", "name": "到账支票"},
-                    {"abbr": "3", "name": "银行到账"},
+                    {"abbr": "3", "name": "银行到账"}
                 ]
             },
             valueField: 'abbr',
@@ -449,7 +450,7 @@ var salList=Ext.create("Ext.form.Panel",{
             var chequeValue =   Ext.getCmp("chequeValue").getValue();
             var remarks =   Ext.getCmp("chequeRemarks").getValue();
             if(chequeValue==null){
-                alert("请您先输入发票金额！");
+                Ext.Msg.alert("提示","请您先输入发票金额！");
                 return;
             }
             Ext.Ajax.request({
@@ -465,7 +466,7 @@ var salList=Ext.create("Ext.form.Panel",{
                 },
                 success : function(response) {
                     var text=   response.responseText;
-                    alert(text);
+                    Ext.Msg.alert("提示",text);
                     document.location='index.php?action=Ext&mode=toFinanceIndex';
                 }
             });
