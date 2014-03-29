@@ -1243,7 +1243,11 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         $list = $this->g_db_query ( $sql );
         return $list;
     }
-
+    function getSalaryListByComName($comid) {
+        $sql = "select  s.id,s.salaryTime  from  OA_salarytime  s  ,OA_company  c where s.companyId = c.id AND c.company_name = '{$comid}' ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
     function searchSalaryTimeApprovalCount($where) {
         $id = $_SESSION ['admin'] ['id'];
         $sql = "SELECT

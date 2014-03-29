@@ -200,19 +200,31 @@ Ext.onReady(function () {
                         id: "gongsiming",
                         emptyText: "请输入公司名称",
                         editable: true,
-                        allowBlank: false,
-                        store: gongsiming,
-                        listeners: {
-                            select: function () {
-                                gongziriqi.removeAll();
-                                gongziriqi.load({
+                        allowBlank : false,
+                        store: gongsimingStore,
+                        minChars:255,
+                            listeners: {
+                            change: function () {
+                                gongsimingStore.removeAll();
+                                gongsimingStore.load({
                                     params: {
-                                        comid: Ext.getCmp("gongsiming").getValue()
+                                        cname: this.getRawValue()
                                     }
                                 });
-                            }
+                                this.expand();
+                            },
+                            select: function () {
+                                    gongziriqi.removeAll();
+                                    Ext.getCmp("gongziriqi"). reset();
+                                    gongziriqi.load({
+                                        params: {
+                                            comid: Ext.getCmp("gongsiming").getRawValue()
+                                        }
+                                    });
+                                }
+
                         },
-                        valueField: 'companyid',
+                        valueField: 'companyname',
                         displayField: 'companyname',
                         fieldLabel: '公司名称'
                     },
@@ -222,6 +234,18 @@ Ext.onReady(function () {
                         editable: false,
                         emptyText: "请选择工资日期",
                         allowBlank: false,
+                        listeners: {
+                            expand: function () {
+                                    gongziriqi.removeAll();
+                                    Ext.getCmp("gongziriqi"). reset();
+                                    gongziriqi.load({
+                                    params: {
+                                    comid: Ext.getCmp("gongsiming").getRawValue()
+                                  }
+                              });
+                             }
+
+                         },
                         store: gongziriqi,
                         valueField: 'id',
                         displayField: 'salaryTime',
@@ -343,7 +367,6 @@ Ext.onReady(function () {
             params: {
                 billno: Ext.getCmp("fapiaobianhao").getValue(),
                 billname: Ext.getCmp("fapiaoxiangmu").getValue(),
-                comId: Ext.getCmp("gongsiming").getValue(),
                 salaryTime: Ext.getCmp("gongziriqi").getValue(),
                 billval: Ext.getCmp("jine").getValue(),
                 leixing: Ext.getCmp("leixing").getValue(),

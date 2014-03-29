@@ -449,8 +449,9 @@ class ExtSalaryAction extends BaseAction{
         $josnArray=array();
         $i=0;
         while ($row=mysql_fetch_array($salaryTimeList) ){
-            $josnArray['items'][$i]['companyid']=$row['id'];
+
             $josnArray['items'][$i]['companyname']=$row['company_name'];
+            $josnArray['items'][$i]['companyid']=$row['id'];
             $i++;
         }
         echo json_encode($josnArray);

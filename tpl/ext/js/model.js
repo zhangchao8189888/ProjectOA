@@ -312,8 +312,9 @@ Ext.define('oa.common.gongsiming.list',{
     extend: 'Ext.data.Model',
     fields: [
 
-        {name: 'companyid', type: 'int'},
-        {name: 'companyname', type: 'string'}
+
+        {name: 'companyname', type: 'string'},
+        {name: 'companyid', type: 'string'}
 
     ]
 });

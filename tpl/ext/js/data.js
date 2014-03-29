@@ -620,12 +620,11 @@ var gongziriqi = Ext.create('Ext.data.Store', {
 
         reader: {
             root: 'items'
-        },
-        simpleSortMode: true
+        }
     }
 });
 //到账发票公司名BY孙瑞鹏
-var gongsiming = Ext.create('Ext.data.Store', {
+var gongsimingStore = Ext.create('Ext.data.Store', {
     model: 'oa.common.gongsiming.list',
     //是否在服务端排序
     remoteSort: false,
@@ -642,8 +641,7 @@ var gongsiming = Ext.create('Ext.data.Store', {
 
         reader: {
             root: 'items'
-        },
-        simpleSortMode: true
+        }
     }
 });
 //残疾人统计BY孙瑞鹏
