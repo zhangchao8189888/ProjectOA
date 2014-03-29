@@ -375,7 +375,7 @@ function uploadFile() {
         items: [
             {
                 xtype: 'displayfield',
-                value:"<span style='color: blue'>请创建后缀名为“.xls”的文件进行上传<br>系统会读取前四列数据，分别为：</span><br>“单位名称”，“工资日期”，“到账金额”，“备注”"
+                value:"<span style='color: blue'>请创建后缀名为“.xls”的文件进行上传(重名将会覆盖)<br>系统会读取前四列数据，分别为：</span><br>“单位名称”，“工资日期”，“到账金额”，“备注”"
             },
             {
                 xtype: 'filefield',
@@ -417,6 +417,7 @@ function uploadFile() {
                                                 success : function(response) {
                                                     var json = Ext.JSON.decode(response.responseText);
                                                     Ext.Msg.alert("提示", json['message']);
+                                                    document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
                                                 }
                                             });
                                         }

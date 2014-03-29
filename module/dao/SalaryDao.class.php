@@ -1437,5 +1437,73 @@ AND salaryTime = '$sal'";
         return $result;
     }
 
+    function searchAccountListCount($where = null) {
+        $sql = "select count(*) as cnt  from OA_account where 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and companyName like '%{$where['companyName']}%' ";
+            }
+            if ($where ['transactionDate'] != "") {
+                $sql .= " and transactionDate like '%{$where['transactionDate']}%' ";
+            }
+            if ($where ['accountsType'] != "") {
+                $sql .= " and accountsType = '{$where['accountsType']}' ";
+            }
+        }
+        $result = $this->g_db_query ( $sql );
+        if (! $result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc ( $result );
+        return $row ['cnt'];
+    }
+    function searchAccountListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
+        $sql = "select * from OA_account where 1=1";
+        if ($where != null) {
+            if ($where ['companyName'] != "") {
+                $sql .= " and companyName like '%{$where['companyName']}%' ";
+            }
+            if ($where ['transactionDate'] != "") {
+                $sql .= " and transactionDate like '%{$where['transactionDate']}%' ";
+            }
+            if ($where ['accountsType'] != "") {
+                $sql .= " and accountsType = '{$where['accountsType']}' ";
+            }
+        }
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        // $sql.=" order by op_salaryTime desc ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+
+    function insertAccounts($accountsArray){
+        $sql = "
+INSERT INTO OA_account (
+	transactionDate,
+	accountsType,
+	companyName,
+	accountsValue,
+	remark
+)
+VALUES
+	(
+	'{$accountsArray['transactionDate']}',
+	'{$accountsArray['accountsType']}',
+		'{$accountsArray['companyName']}',
+		'{$accountsArray['accountsValue']}',
+		'{$accountsArray['remark']}'
+	)";
+        $list = $this->g_db_query ( $sql );
+        if ($list) {
+            return $this->g_db_last_insert_id ();
+        } else {
+            return false;
+        }
+    }
 }
 ?>

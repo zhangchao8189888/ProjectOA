@@ -194,7 +194,6 @@ Ext.onReady(function () {
                             limit: 50
                         }
                     });
-
                 },
                 text: '按月份查找'
             }

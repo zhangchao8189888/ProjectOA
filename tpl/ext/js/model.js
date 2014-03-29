@@ -536,3 +536,21 @@ Ext.define('oa.common.comboxC.list',{
         {name: 'company_name', type: 'string'}
     ]
 });
+
+/**
+ * 收益store
+ */
+Ext.define('oa.common.account.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'companyName', type: 'string'},
+        {name: 'companyId', type: 'int'},
+        {name: 'transactionDate', type: 'string'},
+        {name: 'accountsType', type: 'string'},
+        {name: 'companyName', type: 'string'},
+        {name: 'value', type: 'double'},
+        {name: 'remark', type: 'string'},
+        {name: 'salType', type: 'string'}
+    ]
+});

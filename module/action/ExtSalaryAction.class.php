@@ -96,6 +96,12 @@ class ExtSalaryAction extends BaseAction{
             case "upload":
                 $this->salaryUpload();
                 break;
+            case "accountList":
+                $this->accountList();
+                break;
+            case "importAccounts":
+                $this->importAccounts();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -284,7 +290,7 @@ class ExtSalaryAction extends BaseAction{
                 $josnArray['items'][$i]['sum_paysum_zhongqi']=$rowheji['sum_paysum_zhongqi'];
             }
             $josnArray['items'][$i]['bill_value'] = $row['bill_value'];
-             $josnArray['items'][$i]['sal_approve_id'] = $row['billid'];
+            $josnArray['items'][$i]['sal_approve_id'] = $row['billid'];
             $josnArray['items'][$i]['id'] = $row['id'];
             $josnArray['items'][$i]['company_name'] = $row['company_name'];
             $josnArray['items'][$i]['salaryTime'] = date("Y-m-d", strtotime($row['salaryTime']));
@@ -908,11 +914,7 @@ class ExtSalaryAction extends BaseAction{
         $info   =   array();
         $file = $_FILES['photo-path'];
         if($file['type']=='application/vnd.ms-excel'&&$file['size']<3500000){
-
-                $info['success']    =   false;
-                $info['message'] = "服务器已存在同名文件，请更改名后重试！";
-
-                $movefile=   move_uploaded_file($file["tmp_name"],"upload/bill/" . $file["name"]);
+                $movefile=   move_uploaded_file($file["tmp_name"],"upload/" . $file["name"]);
                 if($movefile){
                     $info['success']    =   true;
                     $info['message'] = $file["name"];
@@ -924,6 +926,104 @@ class ExtSalaryAction extends BaseAction{
         }else{
             $info['success']    =   false;
             $info['message'] = "只允许上传.xls文件，大小不能超过3M";
+        }
+        echo json_encode($info);
+        exit;
+    }
+
+    function accountList(){
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $companyName=$_REQUEST['companyName'];
+        $accountDate=$_REQUEST['accountDate'];
+        $where=array();
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where['companyName']=$companyName;
+        $where['accountDate']=$accountDate;
+        $sum =$this->objDao->searchAccountListCount($where);
+        $salaryTimeList=$this->objDao->searchAccountListPage($start,$limit,$sorts." ".$dir,$where);
+        $josnArray=array();
+        $josnArray['total']=$sum;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['id']=$row['id'];
+            $josnArray['items'][$i]['companyName']=$row['companyName'];
+            $josnArray['items'][$i]['accountsType']=$row['accountsType'];
+            $com=$this->objDao->searchCompanyByName($row['companyName']);
+            $josnArray['items'][$i]['companyId']=$com['id'];
+            if($row['accountsType']==1){
+                $josnArray ['items'] [$i]['salType'] = -1;
+                $salType =$this->objDao->searhSalaryTimeListByComIdAndDate($row['transactionDate'],$com['id']);
+                if($salType){
+                    $bill_fa = $this->objDao->searchBillBySalaryTimeId($salType['id'], 4);
+                    if ($bill = mysql_fetch_array($bill_fa)) {
+                        if($bill['bill_value']){
+                            $josnArray ['items'] [$i]['salType'] = $bill['bill_value'];
+                        }
+                    }
+                }
+            }else if($row['accountsType']==2){
+                $josnArray ['items'] [$i]['salType'] = -2;
+            }
+
+            $josnArray['items'][$i]['transactionDate']=$row['transactionDate'];
+            $josnArray['items'][$i]['value']=$row['accountsValue'];
+            $josnArray['items'][$i]['accountsType']=$row['accountsType'];
+            $josnArray['items'][$i]['remark']=$row['remark'];
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
+    function importAccounts() {
+        $exmsg = new EC ();
+        $filename = $_REQUEST["filename"];
+        $info = array();
+        $err = Read_Excel_File("upload/" . $filename, $return);
+        $info['success'] = true;
+        if ($err != 0) {
+            $info['success'] = false;
+            $info['message'] = '读取表格发生错误！';
+        }
+        if ($return['Sheet1'][0][0] == "单位名称" && $return['Sheet1'][0][1] == "交易日期" && $return['Sheet1'][0][2] == "支出" && $return['Sheet1'][0][3] == "收入"&& $return['Sheet1'][0][4] == "备注") {
+            $info['message'] = '成功读取表格！';
+            $this->objDao = new SalaryDao ();
+            for ($i = 0; $i < count($return['Sheet1']); $i++) {
+                $accountsArray  =   array();
+                $accountsArray['companyName']   =  $return['Sheet1'][$i][0] ;
+                $accountsArray['transactionDate']   =  $return['Sheet1'][$i][1] ;
+                if($return['Sheet1'][$i][2]){
+                    $accountsArray['accountsType']   =  2 ;
+                    $accountsArray['value']   =  $return['Sheet1'][$i][2] ;
+                }else if($return['Sheet1'][$i][3]){
+                    $accountsArray['accountsType']   =  1 ;
+                    $accountsArray['value']   =  $return['Sheet1'][$i][3] ;
+                }
+                $accountsArray['remark']   =  $return['Sheet1'][$i][4] ;
+                $result = $this->objDao->insertAccounts($accountsArray);
+                $lastid = $this->objDao->g_db_last_insert_id();
+                if ($result) {
+                    $info['message']  ="添加成功";
+                    $adminPO = $_SESSION ['admin'];
+                    $opLog ['who'] = $adminPO ['id'];
+                    $opLog ['what'] = $lastid;
+                    $opLog ['memo'] = '';
+                    $rasult = $this->objDao->addOplog($opLog);
+                    if (!$rasult) {
+                        $exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
+                        $info['message'] ='添加日志失败！';
+                        throw new Exception ($exmsg->error());
+                    }
+                }
+            }
         }
         echo json_encode($info);
         exit;

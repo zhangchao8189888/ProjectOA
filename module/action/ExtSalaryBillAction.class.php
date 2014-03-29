@@ -183,7 +183,7 @@ class ExtSalaryBillAction extends BaseAction {
         $exmsg = new EC ();
         $filename = $_REQUEST["filename"];
         $info = array();
-        $err = Read_Excel_File("upload/bill/" . $filename, $return);
+        $err = Read_Excel_File("upload/" . $filename, $return);
         $info['success'] = true;
         if ($err != 0) {
             $info['success'] = false;

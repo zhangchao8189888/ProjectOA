@@ -110,6 +110,9 @@ class ExtAction extends BaseAction{
             case "toFinanceApproval":
                 $this->toFinanceApproval();
                 break;
+            case "toAccount":
+                $this->toAccount();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -218,6 +221,10 @@ class ExtAction extends BaseAction{
     }
     function toFinanceApproval(){
         $this->mode="toFinanceApproval";
+    }
+
+    function toAccount(){
+        $this->mode="toAccount";
     }
 }
 

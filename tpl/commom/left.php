@@ -194,6 +194,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class="item">
             <a href="index.php?action=Ext&mode=toFinanceApproval">工资审批</a>
         </div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toAccount">导入收益</a>
+        </div>
 		<div class='item'>
 			<a href='index.php?action=Finance&mode=salCaiwuImport'>财务文件导出</a>
 		</div>
@@ -207,7 +210,7 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Salary&mode=input">文件上传</a>
 		</div>
-		<div class="title">工资统计管理</div>
+		<div class="title">统计管理</div>
         <div class="item">
             <a href="index.php?action=Ext&mode=tosalaryTongji">工资统计</a>
         </div>
@@ -234,19 +237,6 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class="item">
             <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
         </div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toAddInvoice">添加发票</a>
-		</div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toAddCheque">添加支票/到账支票</a>
-		</div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toSendSalary">工资发放</a>
-		</div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toBillList">工资票据查询</a>
-		</div>
-
 	</div>
 	<img id="imgload" style="display: none" src="common/image/load.gif" />
 </div>

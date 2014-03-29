@@ -29,7 +29,7 @@ Ext.onReady(function () {
         selType: 'checkboxmodel',
         id : 'comlist',
         columns: [
-            {text: "编号", width: 80, dataIndex: 'id', sortable: false},
+            {text: "编号", width: 80, dataIndex: 'id', sortable: false,hidden:true},
             {text: "单位名称", width: 200, dataIndex: 'company_name', sortable: true,
                 renderer: function (val, cellmeta, record) {
                     return '<a href="#" onclick="checkSalWin(' + record.data['id'] + ')">'+val+'</a>';

@@ -947,9 +947,9 @@ var employListstore = Ext.create('Ext.data.Store', {
 });
 
 
-var comboxCom = Ext.create('Ext.data.Store', {
+var accountstore = Ext.create('Ext.data.Store', {
     pageSize: 50,
-    model: 'oa.common.comboxC.list',
+    model: 'oa.common.account.list',
     //是否在服务端排序
     remoteSort: true,
     proxy: {
@@ -961,7 +961,7 @@ var comboxCom = Ext.create('Ext.data.Store', {
             update : 'POST',
             destroy: 'POST'
         },
-        url : 'index.php?action=ExtSalary&mode=comboxCom',
+        url : 'index.php?action=ExtSalary&mode=accountList',
 
         reader: {
             root: 'items',
