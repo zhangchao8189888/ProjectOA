@@ -155,7 +155,7 @@ class SalaryBillAction extends BaseAction {
         $comId = $_REQUEST ['comid'];
         $this->objDao = new SalaryDao ();
         if($comId){
-        $salrayList = $this->objDao->getSalaryListByComId ($comId);
+        $salrayList = $this->objDao->getSalaryListByComName ($comId);
         }
         $josnArray=array();
         $josnArray['total']=null;

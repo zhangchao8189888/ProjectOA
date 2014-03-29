@@ -84,6 +84,10 @@ class FinanceAction extends BaseAction {
 			case "searchGeShuiType" :
 				$this->searchGeShuiType ();
 				break;
+            case "searchGongsijibie" :
+				$this->searchGongsijibie ();
+				break;
+
             case "searchFaPiaoDaoZhang" :
                  $this->searchFaPiaoDaoZhang ();
                  break;
@@ -105,6 +109,10 @@ class FinanceAction extends BaseAction {
 	function searchGeShuiType() {
 		$this->mode = "geShuiType";
 	}
+    // 公司级别跳转
+    function searchGongsijibie() {
+        $this->mode = "gongsijibie";
+    }
 
 // 发票跳转
     function searchFaPiaoDaoZhang() {

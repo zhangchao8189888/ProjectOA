@@ -50,6 +50,16 @@ Ext.define('oa.common.geshuitype.list',{
         {name: 'salary_state', type: 'int'}
     ]
 });
+//BY孙瑞鹏
+Ext.define('oa.common.gongsijibie.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'company_level', type: 'string'}
+
+    ]
+});
 
 //BY孙瑞鹏
 Ext.define('oa.common.canjirenType.list',{
@@ -302,8 +312,9 @@ Ext.define('oa.common.gongsiming.list',{
     extend: 'Ext.data.Model',
     fields: [
 
-        {name: 'companyid', type: 'int'},
-        {name: 'companyname', type: 'string'}
+
+        {name: 'companyname', type: 'string'},
+        {name: 'companyid', type: 'string'}
 
     ]
 });

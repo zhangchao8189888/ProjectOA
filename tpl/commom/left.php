@@ -59,6 +59,10 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiType">个税类型</a>
 		</div>
+
+        <div class="item">
+            <a href="index.php?action=Finance&mode=searchGongsijibie">公司级别</a>
+        </div>
 		<div class="title">发票管理</div>
         <div class="item">
             <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
@@ -233,6 +237,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Finance&mode=searchGeShuiType">个税类型</a>
 		</div>
+        <div class="item">
+            <a href="index.php?action=Finance&mode=searchGongsijibie">公司级别</a>
+        </div>
 		<div class="title">发票管理</div>
         <div class="item">
             <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
