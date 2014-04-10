@@ -60,7 +60,7 @@ class ExtSalaryBillAction extends BaseAction {
         $time = array ();
         $time["data"]   =  $date ;
         $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
-        $time["month"]  =   (date("Y-m",strtotime("+1 day",strtotime($date))));
+        $time["month"]  =   (date("Y-m",strtotime($date)));
         $time["first"]  =    $first_date;
         $time["last"]   =      $for_day;
         return $time;

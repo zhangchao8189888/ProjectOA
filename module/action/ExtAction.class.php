@@ -113,6 +113,12 @@ class ExtAction extends BaseAction{
             case "toAccount":
                 $this->toAccount();
                 break;
+            case "toSocialSecurity":
+                $this->toSocialSecurity();
+                break;
+            case "toBund":
+                $this->toBund();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -225,6 +231,12 @@ class ExtAction extends BaseAction{
 
     function toAccount(){
         $this->mode="toAccount";
+    }
+    function toSocialSecurity(){
+        $this->mode="toSocialSecurity";
+    }
+    function toBund(){
+        $this->mode="toBund";
     }
 }
 

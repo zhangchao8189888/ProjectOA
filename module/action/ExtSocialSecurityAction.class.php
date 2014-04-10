@@ -71,6 +71,12 @@ class ExtSocialSecurityAction extends BaseAction {
             case "updateBusiness":
                 $this->updateBusiness();
                 break;
+            case "importBusinessEmploy":
+                $this->importBusinessEmploy();
+                break;
+            case "importEmployBund":
+                $this->importEmployBund();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -554,7 +560,209 @@ class ExtSocialSecurityAction extends BaseAction {
         exit;
     }
 
-
+    function importBusinessEmploy() {
+        $filename = $_REQUEST["filename"];
+        $info = array();
+        $err = Read_Excel_File("upload/" . $filename, $return);
+        $info['success'] = true;
+        if ($err != 0) {
+            $info['success'] = false;
+            $info['message'] = '读取表格发生错误！';
+        }
+        $type="社保";
+        if($return['Sheet1'][0][0] == "增员"){
+            if ($return['Sheet1'][1][0] == "客服名称"
+                && $return['Sheet1'][1][1] == "单位名称"
+                && $return['Sheet1'][1][2] == "员工姓名"
+                && $return['Sheet1'][1][3] == "身份证号"
+                && $return['Sheet1'][1][4] == "身份类别"
+                && $return['Sheet1'][1][5] == "社保基数"
+                && $return['Sheet1'][1][6] == "新参统"
+                && $return['Sheet1'][1][7] == "备注") {
+                $info['message'] = '成功读取表格！';
+                $this->objDao = new SalaryDao ();
+                $this->jisuan = new sumSalary();
+                for ($i = 2; $i < count($return['Sheet1']); $i++) {
+                    $caozuo = "社保增员";
+                    $kefuName=  $return['Sheet1'][$i][0];
+                    if($return['Sheet1'][$i][1]){
+                        $companyName   =  $return['Sheet1'][$i][1] ;
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][2]){
+                        $employName = $return['Sheet1'][$i][2];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][3]){
+                        $employNumber = $return['Sheet1'][$i][3];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][4]){
+                        $leibie = $return['Sheet1'][$i][4];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][5]){
+                        $shebao =  $return['Sheet1'][$i][5] ;
+                    }else{
+                        continue;
+                    }
+                    $waiqu=null;
+                    if($return['Sheet1'][$i][6]){
+                        if($return['Sheet1'][$i][6]=="是"){
+                            $waiqu ="新参统";
+                        }elseif($return['Sheet1'][$i][6]=="否"){
+                            $waiqu ="外区转入";
+                        }
+                    }else{
+                        continue;
+                    }
+                    $shenbao =  '等待办理';
+                    $shebaosum= $this->jisuan->getSumShebao($leibie,$shebao);
+                    $beizhu =$return['Sheet1'][$i][7];
+                    $this->objDao->setZengyuan ($type,$kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$shebaosum,null,null,$shenbao,$beizhu,$caozuo);
+                }
+            }
+            $info['message'] = '操作完毕！';
+        }elseif($return['Sheet1'][0][0] == "减员"){
+            if ($return['Sheet1'][1][0] == "客服名称"
+                && $return['Sheet1'][1][1] == "单位名称"
+                && $return['Sheet1'][1][2] == "员工姓名"
+                && $return['Sheet1'][1][3] == "身份证号"
+                && $return['Sheet1'][1][4] == "备注") {
+                $info['message'] = '成功读取表格！';
+                $this->objDao = new SalaryDao ();
+                $this->jisuan = new sumSalary();
+                for ($i = 2; $i < count($return['Sheet1']); $i++) {
+                    $caozuo = "社保减员";
+                    $kefuName=  $return['Sheet1'][$i][0];
+                    if($return['Sheet1'][$i][1]){
+                        $companyName   =  $return['Sheet1'][$i][1] ;
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][2]){
+                        $employName = $return['Sheet1'][$i][2];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][3]){
+                        $employNumber = $return['Sheet1'][$i][3];
+                    }else{
+                        continue;
+                    }
+                    $shenbao =  '等待办理';
+                    $beizhu =$return['Sheet1'][$i][4];
+                    $this->objDao->setZengyuan ($type,$kefuName,$companyName,$employName,$employNumber,null,null,null,null,null,null,$shenbao,$beizhu,$caozuo);
+                    $this->objDao->setTypeLizhi($employNumber);
+                }
+            }
+            $info['message'] = '操作完毕！';
+        }else{
+            echo "未知的存储类型，请标示“增员”或“减员”！";
+        }
+        echo json_encode($info);
+        exit;
+    }
+    function importEmployBund(){
+        $filename = $_REQUEST["filename"];
+        $info = array();
+        $err = Read_Excel_File("upload/" . $filename, $return);
+        $info['success'] = true;
+        if ($err != 0) {
+            $info['success'] = false;
+            $info['message'] = '读取表格发生错误！';
+        }
+        $type="公积金";
+        if($return['Sheet1'][0][0] == "增员"){
+            if ($return['Sheet1'][1][0] == "客服名称"
+                && $return['Sheet1'][1][1] == "单位名称"
+                && $return['Sheet1'][1][2] == "员工姓名"
+                && $return['Sheet1'][1][3] == "身份证号"
+                && $return['Sheet1'][1][4] == "身份类别"
+                && $return['Sheet1'][1][5] == "公积金基数"
+                && $return['Sheet1'][1][6] == "备注") {
+                $info['message'] = '成功读取表格！';
+                $this->objDao = new SalaryDao ();
+                $this->jisuan = new sumSalary();
+                for ($i = 2; $i < count($return['Sheet1']); $i++) {
+                    $caozuo = "公积金增员";
+                    $kefuName=  $return['Sheet1'][$i][0];
+                    if($return['Sheet1'][$i][1]){
+                        $companyName   =  $return['Sheet1'][$i][1] ;
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][2]){
+                        $employName = $return['Sheet1'][$i][2];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][3]){
+                        $employNumber = $return['Sheet1'][$i][3];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][4]){
+                        $leibie = $return['Sheet1'][$i][4];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][5]){
+                        $gongjijin =  $return['Sheet1'][$i][5] ;
+                    }else{
+                        continue;
+                    }
+                    $shenbao =  '等待办理';
+                    $gongjijinsum= $this->jisuan->getSumGongjijin($leibie,$gongjijin);
+                    $beizhu =$return['Sheet1'][$i][6];
+                    $this->objDao->setZengyuan ($type,$kefuName,$companyName,$employName,$employNumber,$leibie,null,null,null,null,null,$shenbao,$beizhu,$caozuo,null,$gongjijin,$gongjijinsum);
+                }
+            }
+            $info['message'] = '操作完毕！';
+        }elseif($return['Sheet1'][0][0] == "减员"){
+            if ($return['Sheet1'][1][0] == "客服名称"
+                && $return['Sheet1'][1][1] == "单位名称"
+                && $return['Sheet1'][1][2] == "员工姓名"
+                && $return['Sheet1'][1][3] == "身份证号"
+                && $return['Sheet1'][1][4] == "备注") {
+                $info['message'] = '成功读取表格！';
+                $this->objDao = new SalaryDao ();
+                $this->jisuan = new sumSalary();
+                for ($i = 2; $i < count($return['Sheet1']); $i++) {
+                    $caozuo = "公积金减员";
+                    $kefuName=  $return['Sheet1'][$i][0];
+                    if($return['Sheet1'][$i][1]){
+                        $companyName   =  $return['Sheet1'][$i][1] ;
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][2]){
+                        $employName = $return['Sheet1'][$i][2];
+                    }else{
+                        continue;
+                    }
+                    if($return['Sheet1'][$i][3]){
+                        $employNumber = $return['Sheet1'][$i][3];
+                    }else{
+                        continue;
+                    }
+                    $shenbao =  '等待办理';
+                    $beizhu =$return['Sheet1'][$i][4];
+                    $this->objDao->setZengyuan ($type,$kefuName,$companyName,$employName,$employNumber,null,null,null,null,null,null,$shenbao,$beizhu,$caozuo);
+                    $this->objDao->setTypeLizhi($employNumber);
+                }
+            }
+            $info['message'] = '操作完毕！';
+        }else{
+            echo "未知的存储类型，请标示“增员”或“减员”！";
+        }
+        echo json_encode($info);
+        exit;
+    }
 }
 
 $objModel = new ExtSocialSecurityAction($actionPath);

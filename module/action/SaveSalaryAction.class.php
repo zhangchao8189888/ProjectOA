@@ -605,6 +605,7 @@ class SaveSalaryAction extends BaseAction {
         $shebao = $_REQUEST ['shebao'];
         $caozuo = $_REQUEST ['caozuo'];
         $leibie = $_REQUEST ['leibie'];
+        $type = $_REQUEST ['add_type'];
         $companyName = $_REQUEST ['companyName'];
         $employName = $_REQUEST ['employName'];
         $employNumber = $_REQUEST ['employNumber'];
@@ -617,7 +618,7 @@ class SaveSalaryAction extends BaseAction {
         $gongjijinsum= $this->jisuan->getSumGongjijin($leibie,$gongjijin);
         $shebaosum= $this->jisuan->getSumShebao($leibie,$shebao);
         $this->objDao = new SalaryDao ();
-        $this->objDao->setZengyuan ($kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$shebaosum,$yongren,null,$shenbao,$beizhu,$caozuo,$tel,$gongjijin,$gongjijinsum);
+        $this->objDao->setZengyuan ($type,$kefuName,$companyName,$employName,$employNumber,$leibie,$shebao,$waiqu,$shebaosum,$yongren,null,$shenbao,$beizhu,$caozuo,$tel,$gongjijin,$gongjijinsum);
         if($caozuo=='减员'){
             $this->objDao->setTypeLizhi($employNumber);
         }

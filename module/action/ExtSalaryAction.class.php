@@ -106,6 +106,9 @@ class ExtSalaryAction extends BaseAction{
             case "importAccounts":
                 $this->importAccounts();
                 break;
+            case "selectExpenses":
+                $this->selectExpenses();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -129,7 +132,7 @@ class ExtSalaryAction extends BaseAction{
         $time = array ();
         $time["data"]   =  $date ;
         $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
-        $time["month"]  =   (date("Y-m",strtotime("+1 day",strtotime($date))));
+        $time["month"]  =   (date("Y-m",strtotime($date)));
         $time["first"]  =    $first_date;
         $time["last"]   =      $for_day;
         return $time;
@@ -483,6 +486,7 @@ class ExtSalaryAction extends BaseAction{
         $limit=$_REQUEST['limit'];
         $sorts=$_REQUEST['sort'];
         $dir=$_REQUEST['dir'];
+        $search_type=$_REQUEST['search_type'];
         $STime=$_REQUEST['STime'];
         if($STime) {
             $time1=$this->AssignTabMonth($STime,0);
@@ -510,6 +514,7 @@ class ExtSalaryAction extends BaseAction{
         $where['shenbaozhuangtai']=$shenbaozhuangtai;
         $where['companyName']=$companyName;
         $where['zengjian']=$zengjian;
+        $where['search_type']=$search_type;
         $sum =$this->objDao->searhZengjianTongjiPage($where);
         $salaryTimeList=$this->objDao->searhZengjianListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray=array();
@@ -1004,19 +1009,11 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i]['accountsType']=$row['accountsType'];
             $com=$this->objDao->searchCompanyByName($row['companyName']);
             $josnArray['items'][$i]['companyId']=$com['id'];
-            if($row['accountsType']==1){
-                $josnArray ['items'] [$i]['salType'] = -1;
-                $salType =$this->objDao->searhSalaryTimeListByComIdAndDate($row['transactionDate'],$com['id']);
-                if($salType){
-                    $bill_fa = $this->objDao->searchBillBySalaryTimeId($salType['id'], 4);
-                    if ($bill = mysql_fetch_array($bill_fa)) {
-                        if($bill['bill_value']){
-                            $josnArray ['items'] [$i]['salType'] = $bill['bill_value'];
-                        }
-                    }
-                }
-            }else if($row['accountsType']==2){
-                $josnArray ['items'] [$i]['salType'] = -2;
+            $josnArray ['items'] [$i]['salaryTime'] =-1;
+            if($row['accountsType']==2){
+                $josnArray ['items'] [$i]['salType'] = 1;
+            }else if($row['accountsType']==1){
+                $josnArray ['items'] [$i]['salType'] = 0;
             }
 
             $josnArray['items'][$i]['transactionDate']=$row['transactionDate'];
@@ -1041,16 +1038,16 @@ class ExtSalaryAction extends BaseAction{
         if ($return['Sheet1'][0][0] == "单位名称" && $return['Sheet1'][0][1] == "交易日期" && $return['Sheet1'][0][2] == "支出" && $return['Sheet1'][0][3] == "收入"&& $return['Sheet1'][0][4] == "备注") {
             $info['message'] = '成功读取表格！';
             $this->objDao = new SalaryDao ();
-            for ($i = 0; $i < count($return['Sheet1']); $i++) {
+            for ($i = 1; $i < count($return['Sheet1']); $i++) {
                 $accountsArray  =   array();
                 $accountsArray['companyName']   =  $return['Sheet1'][$i][0] ;
                 $accountsArray['transactionDate']   =  $return['Sheet1'][$i][1] ;
                 if($return['Sheet1'][$i][2]){
                     $accountsArray['accountsType']   =  2 ;
-                    $accountsArray['value']   =  $return['Sheet1'][$i][2] ;
+                    $accountsArray['accountsValue']   =  $return['Sheet1'][$i][2] ;
                 }else if($return['Sheet1'][$i][3]){
                     $accountsArray['accountsType']   =  1 ;
-                    $accountsArray['value']   =  $return['Sheet1'][$i][3] ;
+                    $accountsArray['accountsValue']   =  $return['Sheet1'][$i][3] ;
                 }
                 $accountsArray['remark']   =  $return['Sheet1'][$i][4] ;
                 $result = $this->objDao->insertAccounts($accountsArray);
@@ -1073,8 +1070,92 @@ class ExtSalaryAction extends BaseAction{
         echo json_encode($info);
         exit;
     }
-}
 
+    function selectExpenses() {
+        $this->objDao = new SalaryDao ();
+        $salTime = $_REQUEST['salTime'];
+        $comId = $_REQUEST['comId'];
+        $time = $this->AssignTabMonth($salTime, 0);
+        $resultCom = $this->objDao->getComByComLevel($comId);
+        $jsonArray = array();
+        $i = 0;
+        $sumShifa=0;
+        $sumDaikoushui  =   0;
+        $sumPay =   0;
+        global $expensesInfo;
+        while ($row = mysql_fetch_array($resultCom)) {
+            $expenses = array();
+            $expenses['单位名称'] = $row['company_name'];
+            $expenses['工资月份'] = $salTime;
+            $salType = $this->objDao->searhSalaryTimeListByComIdAndDate($time["month"], $row['id']);
+            if ($salType) {
+                $salaryHejiList = $this->objDao->searchSumSalaryListBy_SalaryTimeId($salType['id']);
+                while ($rowheji = mysql_fetch_array($salaryHejiList)) {
+                    $expenses['实发合计'] = $rowheji['sum_per_shifaheji'];
+                    $sumShifa   =  $rowheji['sum_per_shifaheji']+ $sumShifa;
+                    $expenses['代扣税'] = $rowheji['sum_per_daikoushui'];
+                    $sumDaikoushui   =  $rowheji['sum_per_daikoushui']+ $sumDaikoushui;
+                    $expenses['缴中企合计'] = $rowheji['sum_paysum_zhongqi'];
+                    $sumPay   =  $rowheji['sum_paysum_zhongqi']+ $sumPay;
+                }
+                $bill_fa = $this->objDao->searchBillBySalaryTimeId($salType['id'], 4);
+                if ($bill = mysql_fetch_array($bill_fa)) {
+                    if ($bill['bill_value']) {
+                        if ($bill['bill_value'] == 0) {
+                            $expenses['状态'] = '<span style="color: blue">等待审批</span>';
+                        } elseif ($bill['bill_value'] == 1) {
+                            $expenses['状态'] = '<span style="color:green ">审批通过</span>';
+                        } elseif ($bill['bill_value'] == 2) {
+                            $expenses['状态'] = '<span style="color:gray ">审批未通过</span>';
+                        }
+                    }
+                }
+            }
+            if( $expenses['状态']==null){
+                continue;
+            }
+            foreach ($expensesInfo as $key => $value) {
+                $rowSalCol = array();
+                $rowFields = array();
+                if ($i == 0) {
+                    $rowSalCol ['text'] = $value;
+                    $rowSalCol ["dataIndex"] = $key;
+                    if ($key == 1) {
+                        $rowSalCol ["width"] = 200;
+                    } else {
+                        $rowSalCol ["width"] = 100;
+                    }
+                    $jsonArray ['columns'] [] = $rowSalCol;
+                }
+                $rowFields ["name"] = $key;
+                $rowFields ["type"] = 'string';
+                $jsonArray ['fields'] [] = $rowFields;
+                $rowData [$key] = $expenses [$value];
+
+            }
+            $jsonArray ['data'] [] = $rowData;
+            $i++;
+        }
+        $sum=$sumShifa+$sumDaikoushui+$sumPay;
+        $expenses = array();
+        $expenses['单位名称'] =  '<span style="color: green;font-weight:bold">        合计</span>';
+        $expenses['工资月份'] =  '<span style="color: green;font-weight:bold">——</span>';
+        $expenses['实发合计'] =  '<span style="color: green;font-weight:bold">'.$sumShifa.'</span>';
+        $expenses['代扣税'] ='<span style="color: green;font-weight:bold">'.$sumDaikoushui.'</span>';
+        $expenses['缴中企合计'] ='<span style="color: green;font-weight:bold">'.$sumPay.'</span>';
+        $expenses['状态'] ='<span style="color: green;font-weight:bold">'.$sum.'</span>';
+        foreach ($expensesInfo as $key => $value) {
+            $rowFields = array();
+            $rowFields ["name"] = $key;
+            $rowFields ["type"] = 'string';
+            $jsonArray ['fields'] [] = $rowFields;
+            $rowData [$key] = $expenses [$value];
+        }
+        $jsonArray ['data'] [] = $rowData;
+        echo json_encode($jsonArray);
+        exit ();
+    }
+}
 
 
 $objModel = new ExtSalaryAction($actionPath);

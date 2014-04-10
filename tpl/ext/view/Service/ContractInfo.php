@@ -235,7 +235,7 @@ Ext.onReady(function () {
                 indexWin.show();
             }
         },
-        closeAction:'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+        closeAction:'destroy'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
     });
     indexWin.show();
 });
@@ -418,7 +418,7 @@ function updateEmpInfo(id){
                         window.minimizable = true;
                     }
                 },
-                closeAction: 'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+                closeAction: 'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
             });
             updateEmpWin.show();
         }
