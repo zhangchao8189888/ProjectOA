@@ -54,6 +54,9 @@ class ServiceAction extends BaseAction{
             case "getOpCompanyListJson":
             	$this->getOpCompanyListJson();
                 break;
+            case "getSuperCompany":
+                $this->getSuperCompany();
+                break;
             case "addServiceCompany":
             	$this->addServiceCompany();
                 break;
@@ -292,6 +295,41 @@ class ServiceAction extends BaseAction{
   	$salaryTimeList=$this->objDao->searchCompanyList();
   	$this->objForm->setFormData("salaryTimeList",$salaryTimeList);
   }
+//获得所有一级公司BY孙瑞鹏
+    function getSuperCompany(){
+        $this->objDao=new SalaryDao();
+        $start=$_REQUEST['start'];
+        $limit=$_REQUEST['limit'];
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $key=$_REQUEST['Key'];
+        /**
+         * sorts = Replace(Trim(Request.Form("sort")),"'","")
+        dir = Replace(Trim(Request.Form("dir")),"'","")
+         */
+        if(!$start){
+            $start=0;
+        }
+        if(!$limit){
+            $limit=50;
+        }
+        $where="1=1";
+        if($key){
+            $where.=" and company_name like '%$key%'";
+        }
+        $sum =$this->objDao->g_db_countSuper("OA_company","*",$where);
+        $salaryTimeList=$this->objDao->searchCompanyListSuper($start,$limit,$sorts." ".$dir,$where);
+        $comArray=array();
+        $comArray['total']=$sum;
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $comArray['items'][$i]['id']=$row['id'];
+            $comArray['items'][$i]['company_name']=$row['company_name'];
+            $i++;
+        }
+        echo json_encode($comArray);
+        exit;
+    }
   function getOpCompanyListJson(){
   	$this->objDao=new SalaryDao();
   	$start=$_REQUEST['start'];

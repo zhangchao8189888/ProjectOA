@@ -72,9 +72,11 @@ class ExtSalaryAction extends BaseAction{
             case "searchGeshuiTypeJosn" :
             	$this->searchGeshuiTypeJosn();
             	break;
-
             case "searchGongsijibie" :
                 $this->searchGongsijibie();
+                break;
+            case "searchErjigongsi" :
+                $this->searchErjigongsi();
                 break;
             case "deleteZengjianyuan" :
             	$this->deleteZengjianyuan();
@@ -770,6 +772,22 @@ class ExtSalaryAction extends BaseAction{
         echo json_encode($josnArray);
         exit;
     }
+    //二级公司查询BY孙瑞鹏
+    function searchErjigongsi(){
+        $superId=$_REQUEST['superId'];
+        $this->objDao=new SalaryDao();
+        $salaryTimeList=$this->objDao->searhErjigongsi($superId);
+        $josnArray=array();
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+                $josnArray['items'][$i]['id']=$row['id'];
+                $josnArray['items'][$i]['company_name']=$row['company_name'];
+                $josnArray['items'][$i]['company_level']="二级公司";
+                $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
 
     //公司级别查询BY孙瑞鹏
     function searchGongsijibie(){
@@ -798,15 +816,19 @@ class ExtSalaryAction extends BaseAction{
         $josnArray['total']=$sum;
         $i=0;
         while ($row=mysql_fetch_array($salaryTimeList) ){
-            $josnArray['items'][$i]['id']=$row['id'];
-            $josnArray['items'][$i]['company_name']=$row['company_name'];
-            if($row['company_level']==1){
+
+            if($row['company_level']==0){
+                $josnArray['items'][$i]['id']=$row['id'];
+                $josnArray['items'][$i]['company_name']=$row['company_name'];
                 $josnArray['items'][$i]['company_level']="一级公司";
+                $josnArray['items'][$i]['geshu']=$row['geshu'];
+                $josnArray['items'][$i]['geshu'].='      家';
+                $i++;
             }
-            elseif ($row['company_level']==2){
-                $josnArray['items'][$i]['company_level']="二级公司";
+            else{
+
             }
-            $i++;
+
         }
         echo json_encode($josnArray);
         exit;

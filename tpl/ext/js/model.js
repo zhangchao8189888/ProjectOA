@@ -54,13 +54,23 @@ Ext.define('oa.common.geshuitype.list',{
 Ext.define('oa.common.gongsijibie.list',{
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'id', type: 'int'},
+        {name: 'id'},
+        {name: 'company_name', type: 'string'},
+        {name: 'company_level', type: 'string'},
+        {name: 'geshu', type: 'string'}
+
+    ]
+});
+//BY孙瑞鹏
+Ext.define('oa.common.erjigongsi.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id'},
         {name: 'company_name', type: 'string'},
         {name: 'company_level', type: 'string'}
 
     ]
 });
-
 //BY孙瑞鹏
 Ext.define('oa.common.canjirenType.list',{
     extend: 'Ext.data.Model',

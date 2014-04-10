@@ -294,15 +294,11 @@ class SalaryDao extends BaseDao {
     }
     // 公司级别统计数BY孙瑞鹏
     function searhGongsijibieCount($where = null) {
-        $id = $_SESSION ['admin'] ['id'];
-        $sql = "select count(*) as cnt   from OA_company c,OA_admin_company a  where 1=1
-  and a.companyId = c.id  and  a.adminId = $id";
+        $sql = "select count(*) as cnt   from OA_company   where 1=1
+  and company_level=0 ";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";
-            }
-            if ($where ['salaryTime'] != "") {
-                $sql .= " and company_level='{$where['salaryTime']}' ";
             }
         }
         $result = $this->g_db_query ( $sql );
@@ -406,52 +402,34 @@ WHERE convert( emp.e_company  using utf8)  = b.company_name
     function searhGeshuiListPage($where = null,$id = null) {
 
         $time = date ( "Y-m", strtotime ( "last month", strtotime ( $where ['salaryTime'] ) ) );
-        $sql = "SELECT yi.companyId company_id,yi.salaryTime,yi.e_company company_name,yi.su daikou,er.su bukou, (IFNULL(yi.su,0)+IFNULL(er.su,0))  geshuiSum FROM
+        $sql = "SELECT yi.companyId company_id,yi.salaryTime,yi.company_name company_name,yi.su daikou,er.su bukou, (IFNULL(yi.su,0)+IFNULL(er.su,0))  geshuiSum FROM
 			(
-			SELECT  diyi.companyId,  diyi.salaryTime  ,diyi.e_company, SUM(diyi.per_daikoushui) su
-			FROM
-      (
-     SELECT t.companyId,  t.salaryTime  ,e_company,
-     CASE (e_teshu_state)
-     when 0 then s.per_daikoushui
-     when 1 then s.per_daikoushui/2
-     END per_daikoushui
-    FROM OA_salary s ,OA_employ emp,OA_salarytime t
-			WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
-			AND convert( emp.e_company  using utf8) = (
-            SELECT  company_name  FROM OA_company c
-            WHERE   c.geshui_dateType <> 3  AND c.id=$id
-             )
+     SELECT t.companyId,  t.salaryTime  ,c.company_name,SUM(s.per_daikoushui) su
+    FROM OA_salary s ,OA_employ emp,OA_salarytime t,OA_company c
+			WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id AND t.companyId = c.id
+			AND  c.geshui_dateType <> 3
        AND (
-    			(t.salaryTime like '%{$where ['salaryTime']}%'  AND  (SELECT geshui_dateType FROM OA_company WHERE id  =$id )=1 AND t.companyId = $id)
+    			(t.salaryTime like '%{$where ['salaryTime']}%' AND c.geshui_dateType =1 )
     			OR
-    			(t.salaryTime like '%{$time}%'  AND  (SELECT geshui_dateType FROM OA_company WHERE id  = $id )=2 AND t.companyId = $id)
+    			(t.salaryTime like '%{$time}%' AND c.geshui_dateType =2  )
     			)
-
-			) diyi
-      GROUP BY diyi.e_company,diyi.salaryTime
+      AND t.companyId = $id
+      GROUP BY t.companyId,t.salaryTime
       ) yi
 			LEFT JOIN
 			 (
-			SELECT  dier.salaryTime,dier.e_company,SUM(dier.bukoushui) su
-			FROM
-     (
-     SELECT  t.salaryTime,e_company,
-     CASE (e_teshu_state)
-     when 0 then e.bukoushui
-     when 1 then e.bukoushui /2
-     END bukoushui
-      FROM
+     SELECT  t.companyId,t.salaryTime,e_company, SUM(e.bukoushui) su
+     FROM
       OA_er_salary e ,OA_employ emp,OA_salarytime_other t
 			WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
-     ) dier
-			GROUP BY dier.e_company,dier.salaryTime
+			GROUP BY t.companyId,t.salaryTime
 			) er
-			ON yi.e_company = er.e_company AND yi.salaryTime = er.salaryTime
-    		where 1=1";
+			ON yi.companyId = er.companyId AND yi.salaryTime = er.salaryTime
+    		where 1=1
+";
         if ($where != null) {
             if ($where ['companyName'] != "") {
-                $sql .= " and yi.e_company like '%{$where['companyName']}%' ";
+                $sql .= " and yi.company_name like '%{$where['companyName']}%' ";
             }
 
         }
@@ -642,17 +620,15 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
-    // 个税类型BY孙瑞鹏
+    // 公司级别BY孙瑞鹏
     function searhGongsijibiePage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
-        $id = $_SESSION ['admin'] ['id'];
-        $sql = "SELECT c.id,c.company_name,c.company_level  from OA_company c,OA_admin_company a  where 1=1
-  and a.companyId = c.id  and  a.adminId = $id";
+        $sql = "SELECT c.id,c.company_name,c.company_level,COUNT(d.company_name) geshu
+FROM oa_company  c  LEFT JOIN oa_company d
+ON c.id = d.company_level
+GROUP BY c.id";
         if ($where != null) {
             if ($where ['companyName'] != "") {
-                $sql .= " and company_name like '%{$where['companyName']}%' ";
-            }
-            if ($where ['salaryTime'] != "") {
-                $sql .= " and company_level='{$where['salaryTime']}' ";
+                $sql .= " and c.company_name like '%{$where['companyName']}%' ";
             }
         }
         if ($sort) {
@@ -662,6 +638,15 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
             $sql .= " limit $start,$limit";
         }
         // $sql.=" order by op_salaryTime desc ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+
+
+
+    // 二级公司BY孙瑞鹏
+    function searhErjigongsi($superId = NULL) {
+        $sql = "SELECT id,company_name,company_level FROM oa_company  where  company_level =$superId ";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
@@ -716,74 +701,54 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
         if ($nian==1) {
         $sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,yi.su daikou,er.su bukou,nian.su nian,(yi.su+IFNULL(er.su,0)+IFNULL(nian.su,0)) geshuiSum FROM
     	(
-    	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,
-    CASE (e_teshu_state)
-     when 0 then  IFNULL(SUM(s.per_daikoushui),0)
-     when 1 then  IFNULL(SUM(s.per_daikoushui),0)/2
-     END   su
+    	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,  IFNULL(SUM(s.per_daikoushui),0) su
     	FROM OA_salary s ,OA_employ emp,OA_salarytime t
     	WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
-    	AND e_company = '$sid'
+       AND t.companyId = '$sid'
     	AND t.salaryTime = '$stime'
-    	GROUP BY s.employid,t.salaryTime
+    	GROUP BY s.employid,t.salaryTime,emp.id
     	ORDER BY e_name
     	) yi
     	LEFT JOIN
     	(
-    	SELECT emp.e_name, t.salaryTime,e_company,
-       CASE (e_teshu_state)
-     when 0 then  IFNULL(SUM(e.bukoushui),0)
-     when 1 then  IFNULL(SUM(e.bukoushui),0) /2
-     END   su
+    	SELECT emp.e_name, t.salaryTime,e_company, IFNULL(SUM(e.bukoushui),0) su
     	FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
     	WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
-    	AND e_company = '$sid'
+    	AND t.companyId = '$sid'
     	AND t.salaryTime = '$stime'
-    	GROUP BY e.employid,t.salaryTime
+    	GROUP BY e.employid,t.salaryTime,emp.id
     	) er
     	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime
     	LEFT JOIN
     	(
-    	SELECT  emp.e_name,   t.salaryTime,e_company,
-    CASE (e_teshu_state)
-     when 0 then  IFNULL(SUM(n.nian_daikoushui),0)
-     when 1 then  IFNULL(SUM(n.nian_daikoushui),0) /2
-     END   su
+    	SELECT  emp.e_name,   t.salaryTime,e_company, IFNULL(SUM(n.nian_daikoushui),0) su
     	FROM OA_nian_salary n  ,OA_employ emp,OA_salarytime_other t
     	WHERE n.employid = emp.e_num AND n.salaryTimeId = t.id
-    	AND e_company = '$sid'
+    	AND t.companyId = '$sid'
     	AND t.salaryTime like '%{$time}%'
-    	GROUP BY n.employid,t.salaryTime
+    	GROUP BY n.employid,t.salaryTime,emp.id
     	) nian
     	ON  yi.e_name = nian.e_name
     	where 1=1";
         }elseif($nian == 0){
             $sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,yi.su daikou,er.su bukou,(yi.su+IFNULL(er.su,0)) geshuiSum FROM
     	(
-    	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,
-    CASE (e_teshu_state)
-     when 0 then  IFNULL(SUM(s.per_daikoushui),0)
-     when 1 then  IFNULL(SUM(s.per_daikoushui),0)/2
-     END   su
+    	SELECT emp.id,e_num,emp.e_name,  t.salaryTime  ,e_company,  IFNULL(SUM(s.per_daikoushui),0) su
     	FROM OA_salary s ,OA_employ emp,OA_salarytime t
     	WHERE s.employid = emp.e_num AND s.salaryTimeId = t.id
-    	AND e_company = '$sid'
+    	AND t.companyId = '$sid'
     	AND t.salaryTime = '$stime'
-    	GROUP BY s.employid,t.salaryTime
+    	GROUP BY s.employid,t.salaryTime,emp.id
     	ORDER BY e_name
     	) yi
     	LEFT JOIN
     	(
-    	SELECT emp.e_name, t.salaryTime,e_company,
-       CASE (e_teshu_state)
-     when 0 then  IFNULL(SUM(e.bukoushui),0)
-     when 1 then  IFNULL(SUM(e.bukoushui),0) /2
-     END   su
+    	SELECT emp.e_name, t.salaryTime,e_company,  IFNULL(SUM(e.bukoushui),0) su
     	FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
     	WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
-    	AND e_company = '$sid'
+    	AND t.companyId = '$sid'
     	AND t.salaryTime = '$stime'
-    	GROUP BY e.employid,t.salaryTime
+    	GROUP BY e.employid,t.salaryTime,emp.id
     	) er
     	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime
     	where 1=1";
@@ -839,7 +804,36 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
-
+    //所有父公司
+    function searchCompanyListSuper($start = NULL, $limit = NULL, $sort = NULL, $where = '1=1') {
+        $id = $_SESSION ['admin'] ['id'];
+        $sql = "select c.id,c.company_name from OA_company c  where $where and company_level=0";
+        if ($sort) {
+            $sql .= " order by $sort";
+        }
+        if ($start >= 0 && $limit) {
+            $sql .= " limit $start,$limit";
+        }
+        // echo $sql;
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+    //所有父公司数量
+    function g_db_countSuper($table,$key,$where,$db=null){
+        if (!$table) {
+            return 0;
+        }
+        if (!$key) {
+            $key = '*';
+        }
+        $query = "select count({$key}) as cnt from {$table} where {$where} and  company_level=0";
+        $result = $this->g_db_query($query,$db);
+        if (!$result) {
+            return 0;
+        }
+        $row = mysql_fetch_assoc($result);
+        return $row['cnt'];
+    }
     // 离职设置BY孙瑞鹏
     function setTypeLizhi($sid) {
         $sql = "UPDATE OA_employ SET e_state =1 where e_num = '{$sid}' ";
@@ -854,8 +848,14 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
         return $list;
     }
     // 公司级别设置BY孙瑞鹏
-    function setTypeGongsijibie($sid,$type) {
+    function setTypeGongsijibie($sid=null,$type=null) {
         $sql = "UPDATE OA_company SET company_level = $type WHERE id = $sid";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    // 公司级别添加验证BY孙瑞鹏
+    function selectGongsijibie($type=null) {
+        $sql = "select id from OA_company  WHERE company_level = $type";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
