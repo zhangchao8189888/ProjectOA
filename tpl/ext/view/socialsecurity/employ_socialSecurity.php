@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>增减员</title>
+<title>社保增减员</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 <link href="tpl/ext/lib/prettify/prettify.css" type="text/css" rel="stylesheet"/>
 <link href="tpl/ext/resources/KitchenSink-all.css" rel="stylesheet"/>
@@ -31,7 +31,6 @@ Ext.onReady(function(){
         columns: [
             {text: "编号", width: 100, dataIndex: 'id', sortable: true,hidden:true},
             {text: "提交时间", width: 100, dataIndex: 'submitTime', sortable: true},
-            {text: "客服姓名", width: 100, dataIndex: 'CName', sortable: true,hidden:true},
             {text: "部门", width: 150, dataIndex: 'Dept', sortable: true},
             {text: "员工姓名", width: 100, dataIndex: 'EName', sortable: true},
             {text: "身份证号", width: 100, dataIndex: 'EmpNo', sortable: true},
@@ -39,11 +38,8 @@ Ext.onReady(function(){
             {text: "操作标志", width: 100, dataIndex: 'zengjianbiaozhi', sortable: true},
             {text: "申报状态", width: 100, dataIndex: 'shenbaozhuangtai', sortable: true},
             {text: "社保基数", width: 100, dataIndex: 'shebaojishu', sortable: true},
-            {text: "公积金基数", width: 100, dataIndex: 'gongjijinjishu', sortable: true,hidden:true},
             {text: "外区转入/新参保", width: 200, dataIndex: 'waiquzhuanru', sortable: true},
             {text: "社保金额合计", width: 100, dataIndex: 'sum', sortable: true},
-            {text: "公积金金额合计", width: 100, dataIndex: 'gongjijinsum', sortable: true,hidden:true},
-            {text: "用人单位基数", width: 150, dataIndex: 'danweijishu', sortable: true,hidden:true},
             {text: "操作人姓名", width: 150, dataIndex: 'caozuoren', sortable: true},
             {text: "联系方式", width: 100, dataIndex: 'tel', sortable: true},
             {text: "备注", width: 100, dataIndex: 'beizhu', sortable: true}
@@ -52,7 +48,7 @@ Ext.onReady(function(){
         width:1000,
         x:0,
         y:0,
-        title: '增减员添加',
+        title: '欢迎使用社保增减员功能',
         renderTo: 'demo',
         viewConfig: {
             id: 'gv',
@@ -67,6 +63,11 @@ Ext.onReady(function(){
         }),
 
         tbar : [
+            {
+                xtype: 'hidden',
+                id: 'search_type',
+                value:"社保"
+            },
             {
                 xtype: 'button',
                 id: 'bt_deleteDocument',
@@ -89,7 +90,7 @@ Ext.onReady(function(){
 
                                 zengjianListstore.load( {
                                         params: {
-
+                                            search_type:Ext.getCmp("search_type").getValue()
                                         }
                                     }
                                 );
@@ -136,8 +137,8 @@ Ext.onReady(function(){
                 store: {
                     fields: ['abbr', 'name'],
                     data: [
-                        {"abbr": "增员", "name": "增员"},
-                        {"abbr": "减员", "name": "减员"}
+                        {"abbr": "社保增员", "name": "增员"},
+                        {"abbr": "社保减员", "name": "减员"}
                     ]
                 },
                 width: 100,
@@ -161,6 +162,7 @@ Ext.onReady(function(){
                     zengjianListstore.removeAll();
                     zengjianListstore.load( {
                         params : {
+                            search_type:Ext.getCmp("search_type").getValue(),
                             companyName :  Ext.getCmp("comname").getValue(),
                             STime :  Ext.getCmp("STime").getValue(),
                             zengjian : Ext.getCmp("zengjian").getValue(),
@@ -175,155 +177,145 @@ Ext.onReady(function(){
 
         ]
     });
+    zengjianListstore.on("beforeload", function () {
+        Ext.apply(zengjianListstore.proxy.extraParams, {search_type:Ext.getCmp("search_type").getValue()});
+    });
     salTimeListGrid.getSelectionModel().on('selectionchange', function (selModel, selections) {
-
+        Ext.apply(zengjianListstore.proxy.extraParams, {search_type: Ext.getCmp("search_type").getValue()});
     }, this);
     var salList = Ext.create('Ext.form.Panel', {
         bodyPadding: 10,
-        width: 700,
+        width: 440,
         height: 500,
-        title: '',
         items: [
             {
-                xtype: 'fieldcontainer',
-                fieldLabel: '请输入数据',
-                defaultType: 'checkboxfield',
-                items: [
+                xtype: 'hidden',
+                id: 'add_type',
+                value:"社保"
+            },
+            {
+                xtype: 'textfield',
+                id:"companyName" ,
+                emptyText: "请输入单位名称",
+                allowBlank: false,
+                fieldLabel: '单位'
 
-                    {
-                        xtype: 'textfield',
-                        id:"companyName" ,
-                        emptyText: "请输入单位名称",
-                        allowBlank: false,
-                        fieldLabel: '单位'
-
-                    },
-                    {
-                        xtype: 'textfield',
-                        id:"employName",
-                        emptyText: "请输入姓名",
-                        allowBlank: false,
-                        fieldLabel: '姓名'
-                    },
-                    {
-                        xtype: 'textfield',
-                        id:"employNumber",
-                        emptyText: "请输入身份证号",
-                        allowBlank: false,
-                        fieldLabel: '身份证号'
-                    },
-                    {
-                        xtype: 'combobox',
-                        id:"leibie" ,
-                        emptyText: "请选择身份类别",
-                        editable: false,
-                        allowBlank: false,
-                        store: {
-                            fields: ['abbr', 'name'],
-                            data: [
-                                {"abbr": "本市城镇职工", "name": "本市城镇职工"},
-                                {"abbr": "外埠城镇职工", "name": "外埠城镇职工"},
-                                {"abbr": "本市农村劳动力", "name": "本市农村劳动力"},
-                                {"abbr": "外地农村劳动力", "name": "外地农村劳动力"}
-                            ]
-                        },
-                        valueField: 'abbr',
-                        displayField: 'name',
-                        fieldLabel: '身份类别'
-                    },
-                    {
-                        xtype: 'combobox',
-                        id:"caozuo" ,
-                        editable: false,
-                        emptyText: "请选择操作状态",
-                        allowBlank: false,
-                        store: {
-                            fields: ['abbr', 'name'],
-                            data: [
-                                {"abbr": "增员", "name": "增员"},
-                                {"abbr": "减员", "name": "减员"}
-                            ]
-                        },
-                        valueField: 'abbr',
-                        displayField: 'name',
-                        fieldLabel: '操作状态'
-                    },
-                    {
-                        xtype: 'textfield',
-                        id:"shebao",
-                        emptyText: "请输入社保基数",
-                        fieldLabel: '社保基数'
-                    },
-                    {
-                        xtype: 'textfield',
-                        id:"gongjijin",
-                        emptyText: "请输入公积金基数",
-                        fieldLabel: '公积金基数'
-                    },
-                    {
-                        xtype: 'combobox',
-                        id:"waiqu" ,
-                        editable: false,
-                        emptyText: "请选择操作状态",
-                        allowBlank: false,
-                        store: {
-                            fields: ['abbr', 'name'],
-                            data: [
-                                {"abbr": "外区转入", "name": "外区转入"},
-                                {"abbr": "新参保", "name": "新参保"}
-                            ]
-                        },
-                        valueField: 'abbr',
-                        displayField: 'name',
-                        fieldLabel: '外区转入/新参保'
-                    },
-
-                    {
-                        xtype: 'combobox',
-                        id:"yongren" ,
-                        editable: false,
-                        emptyText: "请选择用人单位基数是否有",
-                        allowBlank: false,
-                        store: {
-                            fields: ['abbr', 'name'],
-                            data: [
-                                {"abbr": "是", "name": "是"},
-                                {"abbr": "否", "name": "否"}
-                            ]
-                        },
-                        valueField: 'abbr',
-                        displayField: 'name',
-                        fieldLabel: '用人单位基数'
-                    },
-                    {
-                        xtype: 'textfield',
-                        id:"tel",
-                        emptyText: "请输入电话号码",
-                        fieldLabel: '联系方式'
-                    },
-                    {
-                        xtype: 'textareafield',
-                        id:"beizhu",
-                        width:400,
-                        height:80,
-                        emptyText: "请输入备注信息",
-                        fieldLabel: '备注'
-                    }
-                ]
+            },
+            {
+                xtype: 'textfield',
+                id:"employName",
+                emptyText: "请输入姓名",
+                allowBlank: false,
+                fieldLabel: '姓名'
+            },
+            {
+                xtype: 'textfield',
+                id:"employNumber",
+                emptyText: "请输入身份证号",
+                allowBlank: false,
+                fieldLabel: '身份证号'
+            },
+            {
+                xtype: 'combobox',
+                id:"leibie" ,
+                emptyText: "请选择身份类别",
+                editable: false,
+                allowBlank: false,
+                store: {
+                    fields: ['abbr', 'name'],
+                    data: [
+                        {"abbr": "本市城镇职工", "name": "本市城镇职工"},
+                        {"abbr": "外埠城镇职工", "name": "外埠城镇职工"},
+                        {"abbr": "本市农村劳动力", "name": "本市农村劳动力"},
+                        {"abbr": "外地农村劳动力", "name": "外地农村劳动力"}
+                    ]
+                },
+                valueField: 'abbr',
+                displayField: 'name',
+                fieldLabel: '身份类别'
+            },
+            {
+                xtype: 'combobox',
+                id:"caozuo" ,
+                editable: false,
+                emptyText: "请选择操作状态",
+                allowBlank: false,
+                store: {
+                    fields: ['abbr', 'name'],
+                    data: [
+                        {"abbr": "社保增员", "name": "增员"},
+                        {"abbr": "社保减员", "name": "减员"}
+                    ]
+                },
+                valueField: 'abbr',
+                displayField: 'name',
+                fieldLabel: '操作状态'
+            },
+            {
+                xtype: 'textfield',
+                id:"shebao",
+                emptyText: "请输入社保基数",
+                fieldLabel: '社保基数'
+            },
+            {
+                xtype: 'combobox',
+                id:"waiqu" ,
+                editable: false,
+                emptyText: "请选择操作状态",
+                allowBlank: false,
+                store: {
+                    fields: ['abbr', 'name'],
+                    data: [
+                        {"abbr": "外区转入", "name": "外区转入"},
+                        {"abbr": "新参保", "name": "新参保"}
+                    ]
+                },
+                valueField: 'abbr',
+                displayField: 'name',
+                fieldLabel: '外区转入/新参保'
+            },
+            {
+                xtype: 'combobox',
+                id:"yongren" ,
+                editable: false,
+                emptyText: "请选择用人单位基数是否有",
+                allowBlank: false,
+                store: {
+                    fields: ['abbr', 'name'],
+                    data: [
+                        {"abbr": "是", "name": "是"},
+                        {"abbr": "否", "name": "否"}
+                    ]
+                },
+                valueField: 'abbr',
+                displayField: 'name',
+                fieldLabel: '用人单位基数'
+            },
+            {
+                xtype: 'textfield',
+                id:"tel",
+                emptyText: "请输入电话号码",
+                fieldLabel: '联系方式'
+            },
+            {
+                xtype: 'textareafield',
+                id:"beizhu",
+                width:400,
+                height:80,
+                emptyText: "请输入备注信息",
+                fieldLabel: '备注'
             }
         ],
-        bbar: [
+        buttons: [
             {
                 text: '提交',
                 handler: function () {
                     addZengyuan();
                 }
             },
-            '-',
             {
                 text: '清空',
                 handler: function () {
-                    var gongjijin =  Ext.getCmp("gongjijin").setValue("");
                     var yongren =  Ext.getCmp("yongren").setValue("");
                     var waiqu =  Ext.getCmp("waiqu").setValue("");
                     var shebao =  Ext.getCmp("shebao").setValue("");
@@ -343,9 +335,9 @@ Ext.onReady(function(){
     function checkSalWin() {
         var items=[salList];
          winSal = Ext.create('Ext.window.Window', {
-            title: "增员信息", // 窗口标题
-            width:600, // 窗口宽度
-            height:560, // 窗口高度
+            title: "社保增减员", // 窗口标题
+            width:450, // 窗口宽度
+            height:450, // 窗口高度
             layout:"border",// 布局
             minimizable:true, // 最大化
             maximizable:true, // 最小化
@@ -375,8 +367,8 @@ Ext.onReady(function(){
             url: url,  //从json文件中读取数据，也可以从其他地方获取数据
             method : 'POST',
             params: {
-                gongjijin: Ext.getCmp("gongjijin").getValue(),
                 yongren: Ext.getCmp("yongren").getValue(),
+                add_type: Ext.getCmp("add_type").getValue(),
                 waiqu: Ext.getCmp("waiqu").getValue(),
                 shebao: Ext.getCmp("shebao").getValue(),
                 caozuo: Ext.getCmp("caozuo").getValue(),
@@ -391,7 +383,7 @@ Ext.onReady(function(){
                 winSal.hide();
                 zengjianListstore.load( {
                     params: {
-
+                        search_type:Ext.getCmp("search_type").getValue()
                     }
                 });
             }
@@ -462,12 +454,12 @@ Ext.onReady(function(){
                                                     success : function(response) {
                                                         var json = Ext.JSON.decode(response.responseText);
                                                         Ext.Msg.alert("提示", json['message']);
-                                                        document.location = "index.php?action=SalaryBill&mode=toShebaoExt";
+//                                                        document.location = "index.php?action=Ext&mode=toSocialSecurity";
                                                     }
                                                 });
                                             }
                                             else if ("yes" == btn) {
-                                                document.location = "index.php?action=SalaryBill&mode=toShebaoExt";
+                                                document.location = "index.php?action=Ext&mode=toSocialSecurity";
                                             }
                                             return false;
                                         },

@@ -37,9 +37,8 @@ Ext.onReady(function () {
 
     var contractWin=Ext.create("Ext.grid.Panel",{
         store:accountstore,
-        width:800,
+        width:1000,
         height:500,
-        selType: 'checkboxmodel',
         id : 'configGrid',
         name : 'configGrid',
         features: [{
@@ -51,11 +50,11 @@ Ext.onReady(function () {
             stripeRows: false
         },
         columns : [
-            {text: "编号", width: 80, dataIndex: 'id', sortable: true,hidden:true},
-            {text: "单位编号", width: 80, dataIndex: 'companyId', sortable: true,hidden:true},
+            {text: "编号", width: 80, dataIndex: 'id', sortable: true},
+            {text: "单位编号", width: 80, dataIndex: 'companyId', sortable: true},
             {text: "单位名称", width: 170, dataIndex: 'companyName', sortable: true},
             {text: "交易日期", width: 100, dataIndex: 'transactionDate', sortable: true},
-            {text: "交易类型", width: 170, dataIndex: 'accountsType', sortable: true,
+            {text: "交易类型", width: 100, dataIndex: 'accountsType', sortable: true,
                 renderer:function(val,cellmeta,record){
                     if(val ==1){
                         return  '<span style="color:green ">收入</span>';
@@ -65,26 +64,26 @@ Ext.onReady(function () {
                     return val;
                 }
             },
-            {text: "金额", width: 150, dataIndex: 'value', sortable: true},
-            {text: "状态", flex: 120, dataIndex: 'salType', sortable: false,align:'center',
+            {text: "金额", width: 100, dataIndex: 'value', sortable: true},
+            {text: "操作", width: 120, dataIndex: 'salType', sortable: false,align:'center',
                 renderer:function(val,cellmeta,record){
-                    if(val == 0){
-                        return '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color: blue">等待审批</span></a>';
-                    } else if(val ==1){
-                        return  '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color:green ">审批通过</span></a>';
-                    } else if(val ==2){
-                        return '<a href="#" title="审核工资" onclick=updateSal(' + record.data['sal_approve_id'] + ')><span style="color:gray ">审批未通过</span></a>';
-                    }else if(val ==-1){
-                        return '<span style="color:gray ">未找到审核</span>';
-                    }else if(val ==-2){
-                        return '<span style="color:gray ">支出业务</span>';
+                    if (val == 1) {
+                        return  '<a href="#" title="搜索工资" onclick=selectExpenses(' + record.data['companyId'] + ',"' + record.data['transactionDate'] + '")><span style="color:green ">查询工资</span></a>';
+                    } else if (val == 0) {
+                        return '<span style="color:gray ">收入业务</span>';
                     }
                     return val;
                 }
             },
-            {text: "备注", width: 80, dataIndex: 'remark', sortable: true}
+            {text: "备注", width: 200, dataIndex: 'remark', sortable: true}
         ],
         tbar : [
+            {
+                xtype:'textfield',
+                id:'companyName',
+                width:150,
+                emptyText:"筛选公司"
+            },
             {
                 id: 'transactionDate',
                 xtype: 'datefield',
@@ -94,12 +93,6 @@ Ext.onReady(function () {
                 readOnly: false,
                 anchor: '95%'
             } ,
-            {
-                xtype:'textfield',
-                id:'companyName',
-                width:150,
-                emptyText:"筛选公司"
-            },
             {
                 xtype : 'button',
                 id : 'searchw',
@@ -143,7 +136,7 @@ Ext.onReady(function () {
     var items=[contractWin];
     var indexWin = Ext.create('Ext.window.Window', {
         title: "欢迎使用收益导入功能", // 窗口标题
-        width:810, // 窗口宽度
+        width:1010, // 窗口宽度
         height:540, // 窗口高度
         layout:"border",// 布局
         frame:true,
@@ -278,6 +271,82 @@ function uploadFile() {
     });
     uploadfilewindow.show();
 }
+
+var infolist=Ext.create("Ext.grid.Panel",{
+    width:780,
+    height:400,
+    enableLocking : true,
+    id : 'infogrid',
+    name : 'infogrid',
+    features: [{
+        ftype: 'summary'
+    }],
+    columns : [], //注意此行代码，至关重要
+    //displayInfo : true,
+    emptyMsg : "没有数据显示"
+});
+function selectExpenses(comId,salTime){
+
+    //加载数据遮罩
+    var mk=new Ext.LoadMask(Ext.getBody(),{
+        msg:'正在查询数据，请等待',removeMask:true
+    });
+    mk.show();
+    var items=[infolist];
+
+    var wininfo = Ext.create('Ext.window.Window', {
+        title: "详细信息", // 窗口标题
+        width:800, // 窗口宽度
+        height:410, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:true, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:items,
+        listeners: {
+            //最小化窗口事件
+            minimize: function(window){
+                this.hide();
+                mk.hide();
+                window.minimizable = true;
+            },
+            close:function(){
+                mk.hide();
+            }
+        },
+        closeAction:'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+
+    Ext.Ajax.request({
+        url: "index.php?action=ExtSalary&mode=selectExpenses",  //从json文件中读取数据，也可以从其他地方获取数据
+        method : 'POST',
+        params: {
+            comId:comId,
+            salTime:salTime
+        },
+        success : function(response) {
+            //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
+            mk.hide();
+            var json = Ext.JSON.decode(response.responseText); //获得后台传递json
+            //创建store
+            var store = Ext.create('Ext.data.Store', {
+                fields : json.fields,//把json的fields赋给fields
+                data : json.data     //把json的data赋给data
+            });
+            //根据store和column构造表格
+            Ext.getCmp("infogrid").reconfigure(store, json.columns);
+            //重新渲染表格
+            // Ext.getCmp("salTimeListP").render();
+        }
+    });
+    wininfo.show();
+}
+
 </script>
 </head>
 <body>

@@ -74,6 +74,10 @@ class ExtForm extends BaseForm
                 return "ext/view/finance/salaryfinanceApproval.php";
             case "toAccount":
                 return "ext/view/finance/account.php";
+            case "toSocialSecurity":
+                return"ext/view/socialsecurity/employ_socialSecurity.php";
+            case "toBund":
+                return"ext/view/socialsecurity/employ_bund.php";
            default :
                 return "BaseConfig.php";
         }

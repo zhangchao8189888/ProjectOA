@@ -113,7 +113,10 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
             <a href="index.php?action=Ext&mode=toPersonsalary">个人工资</a>
         </div>
         <div class="item">
-            <a href="index.php?action=SalaryBill&mode=toShebaoExt">增减员添加</a>
+            <a href="index.php?action=Ext&mode=toSocialSecurity">社保人员</a>
+        </div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toBund">公积金人员</a>
         </div>
         <div class='item'>
             <a href='index.php?action=Ext&mode=contractInfo'>员工信息</a>

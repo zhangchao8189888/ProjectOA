@@ -182,7 +182,7 @@ class SalaryDao extends BaseDao {
         }
     }
     function searhSalaryTimeListByComIdAndDate($date, $comid) {
-        $sql = "select * from OA_salarytime  where  salaryTime='{$date}' and companyId=$comid ";
+        $sql = "select * from OA_salarytime  where  salaryTime like'%{$date}%' and companyId=$comid ";
         $result = $this->g_db_query ( $sql );
         return mysql_fetch_array ( $result );
     }
@@ -476,6 +476,9 @@ WHERE convert( emp.e_company  using utf8)  = b.company_name
     function searhZengjianListPage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $sql = "SELECT * FROM OA_security WHERE 1=1";
         if ($where != null) {
+            if ($where ['search_type'] != "") {
+                $sql .= " and business_type = '{$where['search_type']}' ";
+            }
             if ($where ['companyName'] != "") {
                 $sql .= " and Dept like '%{$where['companyName']}%' ";
             }
@@ -508,6 +511,9 @@ WHERE convert( emp.e_company  using utf8)  = b.company_name
     function searhZengjianTongjiPage($where = null) {
         $sql = "SELECT count(id) as cnt FROM OA_security WHERE 1=1";
         if ($where != null) {
+            if ($where ['search_type'] != "") {
+                $sql .= " and business_type = '{$where['search_type']}' ";
+            }
             if ($where ['companyName'] != "") {
                 $sql .= " and Dept like '%{$where['companyName']}%' ";
             }
@@ -799,9 +805,9 @@ ON c.id = d.company_level where  1 = 1
         return $list;
     }
     // 增员BY孙瑞鹏
-    function setZengyuan($CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi,$tel,$gongjijin,$gongjijinsum) {
-        $sql = "insert into OA_security (submitTime,CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi,tel,gongjijinjishu,gongjijinsum)
-                   values (now(),'{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}','{$sum1}','{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}','{$tel}','{$gongjijin}','{$gongjijinsum}')";
+    function setZengyuan($type,$CName,$Dept,$EName,$EmpNo,$EmpType,$shebaojishu,$waiquzhuanru,$sum1,$danweijishu,$caozuoren,$shenbaozhuangtai,$beizhu,$zengjianbiaozhi,$tel,$gongjijin,$gongjijinsum) {
+        $sql = "insert into OA_security (submitTime,CName,Dept,EName,EmpNo,EmpType,shebaojishu,waiquzhuanru,sum,danweijishu,caozuoren,shenbaozhuangtai,beizhu,zengjianbiaozhi,tel,gongjijinjishu,gongjijinsum,business_type)
+                   values (now(),'{$CName}','{$Dept}','{$EName}','{$EmpNo}','{$EmpType}','{$shebaojishu}','{$waiquzhuanru}','{$sum1}','{$danweijishu}','{$caozuoren}','{$shenbaozhuangtai}','{$beizhu}','{$zengjianbiaozhi}','{$tel}','{$gongjijin}','{$gongjijinsum}','{$type}')";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
@@ -839,7 +845,6 @@ ON c.id = d.company_level where  1 = 1
     function setTypeLizhi($sid) {
         $sql = "UPDATE OA_employ SET e_state =1 where e_num = '{$sid}' ";
         $list = $this->g_db_query ( $sql );
-        echo($sql);
         return $list;
     }
     // 个税类型设置BY孙瑞鹏
@@ -1534,7 +1539,6 @@ AND salaryTime = '$sal'";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
-
     function insertAccounts($accountsArray){
         $sql = "
 INSERT INTO OA_account (
@@ -1558,6 +1562,16 @@ VALUES
         } else {
             return false;
         }
+    }
+    function getComByComLevel($comId){
+        $sql = "SELECT
+	id,company_name
+FROM
+	oa_company
+WHERE
+	company_level = $comId";
+        $result = $this->g_db_query ( $sql );
+        return $result;
     }
 }
 ?>

@@ -240,13 +240,7 @@ function updateSal(eid){
                     success: function (response) {
                         var text = response.responseText;
                         Ext.Msg.alert("提示",text);
-                        salTimeListApprovalstore.load( {
-                                params: {
-                                    start: 0,
-                                    limit: 50
-                                }
-                            }
-                        );
+
                     }
 
                 });
@@ -263,13 +257,7 @@ function updateSal(eid){
                     success: function (response) {
                         var text = response.responseText;
                         Ext.Msg.alert("提示",text);
-                        salTimeListApprovalstore.load( {
-                                params: {
-                                    start: 0,
-                                    limit: 50
-                                }
-                            }
-                        );
+
                     }
 
                 });
