@@ -71,7 +71,7 @@
                             geshuiListstore.each(function(record) {
                                     if(record.data.salaryTime != '<span style=\"color: red\">未作工资或免税</span>'){
                                      times.push(record.data.salaryTime);
-                                     names.push(record.data.company_name);
+                                     names.push(record.data.company_id);
                                         if(model.isSelected(i)){
                                             nian.push(1);
                                         }else{

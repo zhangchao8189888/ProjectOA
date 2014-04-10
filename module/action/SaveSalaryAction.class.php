@@ -445,7 +445,7 @@ class SaveSalaryAction extends BaseAction {
 		$this->objDao->commit ();
 		$this->searchNianSalaryTime ();
 	}
-	
+
 	// 个税详细BY孙瑞鹏
 	function searchGeshuiByIdJosn() {
 		$salaryTimeId = $_REQUEST ['timeId'];
@@ -548,10 +548,28 @@ class SaveSalaryAction extends BaseAction {
     // 公司级别修改BY孙瑞鹏
     function setTypeGongsijibie() {
         // $this->mode="salaryList";
-        $salaryTimeId = $_REQUEST ['timeId'];
-        $type = $_REQUEST ['type'];
+        $ids=$_POST['ids'];
+        $ids=str_replace('\"','"',$ids);
+        $ids=json_decode($ids);
+        $superId = $_REQUEST ['superId'];
         $this->objDao = new SalaryDao ();
-        $this->objDao->setTypeGongsijibie ( $salaryTimeId,$type );
+        for($i=0;$i<(count($ids));$i++){
+            if($ids[$i]==$superId){
+                echo("不可设置子公司为自身！");
+                exit ();
+           }
+            $yanzheng = $this->objDao->selectGongsijibie ($ids[$i]);
+            if (mysql_fetch_array($yanzheng)) {
+                echo("不可以为有下属公司的公司设置父公司！");
+                exit ();
+            }
+            $result = $this->objDao->setTypeGongsijibie ($ids[$i],$superId);
+            if (!$result) {
+                echo("操作失败！");
+                exit ();
+            }
+        }
+        echo("操作成功！");
         // echo json_encode($salaryListArray);
         exit ();
     }
