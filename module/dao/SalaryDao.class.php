@@ -623,14 +623,15 @@ WHERE convert( emp.e_company  using utf8) = b.company_name";
     // 公司级别BY孙瑞鹏
     function searhGongsijibiePage($start = NULL, $limit = NULL, $sort = NULL, $where = null) {
         $sql = "SELECT c.id,c.company_name,c.company_level,COUNT(d.company_name) geshu
-FROM oa_company  c  LEFT JOIN oa_company d
-ON c.id = d.company_level
-GROUP BY c.id";
+FROM OA_company  c  LEFT JOIN OA_company d
+ON c.id = d.company_level where  1 = 1
+";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and c.company_name like '%{$where['companyName']}%' ";
             }
         }
+        $sql .= " GROUP BY c.id ";
         if ($sort) {
             $sql .= " order by $sort";
         }
@@ -646,7 +647,7 @@ GROUP BY c.id";
 
     // 二级公司BY孙瑞鹏
     function searhErjigongsi($superId = NULL) {
-        $sql = "SELECT id,company_name,company_level FROM oa_company  where  company_level =$superId ";
+        $sql = "SELECT id,company_name,company_level FROM OA_company  where  company_level =$superId ";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
