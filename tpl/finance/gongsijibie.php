@@ -82,9 +82,11 @@
                             var record = innerGrid[renderId].getSelectionModel().getSelection();
                             if (record) {
                                 var itcIds = [];
+                                if(record.length>0){
                                 for(var i=0;i<record.length;i++){
                                     itcIds.push(record[i].data.id);
                                 }
+
                                 Ext.Ajax.request({
                                     url:'index.php?action=SaveSalary&mode=setTypeGongsijibie',
                                     method: 'post',
@@ -104,7 +106,10 @@
                                         });
                                     }
                                 });
-
+                                }else{
+                                    Ext.Msg.alert("提示","请选择公司。");
+                                    return;
+                                }
 
                             } else {
                                 Ext.Msg.alert("提示","'请选择一条记录");
@@ -233,7 +238,10 @@
 
                 }]
             });
+            comListSuperStore.on("beforeload",function(){
+                Ext.apply(comListSuperStore.proxy.extraParams, {Key:Ext.getCmp('comnameid'+renderId).getValue()});
 
+            });
             function checkSalWinEr(fuid) {
                 var itemser=[salLister[renderId]];
                  winSaler[renderId] = Ext.create('Ext.window.Window', {
@@ -484,7 +492,10 @@
 
                 }]
             });
+            comListStore.on("beforeload",function(){
+                Ext.apply(comListStore.proxy.extraParams, {Key:Ext.getCmp("comnameid").getValue(),companyName:Ext.getCmp("comnameid").getValue()});
 
+            });
 //通过ajax获取表头已经表格数据
             function checkSalWin(timeId) {
                 var items=[salList];
