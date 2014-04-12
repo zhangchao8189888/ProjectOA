@@ -718,24 +718,24 @@ ON c.id = d.company_level where  1 = 1
     	) yi
     	LEFT JOIN
     	(
-    	SELECT emp.e_name, t.salaryTime,e_company, IFNULL(SUM(e.bukoushui),0) su
+    	SELECT emp.e_name,e.employid, t.salaryTime,e_company, IFNULL(SUM(e.bukoushui),0) su
     	FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
     	WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
     	AND t.companyId = '$sid'
     	AND t.salaryTime = '$stime'
     	GROUP BY e.employid,t.salaryTime,emp.id
     	) er
-    	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime
+    	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime AND yi.e_num = er.employid
     	LEFT JOIN
     	(
-    	SELECT  emp.e_name,   t.salaryTime,e_company, IFNULL(SUM(n.nian_daikoushui),0) su
+    	SELECT  emp.e_name,   n.employid, t.salaryTime,e_company, IFNULL(SUM(n.nian_daikoushui),0) su
     	FROM OA_nian_salary n  ,OA_employ emp,OA_salarytime_other t
     	WHERE n.employid = emp.e_num AND n.salaryTimeId = t.id
     	AND t.companyId = '$sid'
     	AND t.salaryTime like '%{$time}%'
-    	GROUP BY n.employid,t.salaryTime,emp.id
+    	GROUP BY n.employid,emp.id
     	) nian
-    	ON  yi.e_name = nian.e_name
+    	ON  yi.e_name = nian.e_name AND yi.e_num = nian.employid
     	where 1=1";
         }elseif($nian == 0){
             $sql = "SELECT yi.id company_id,yi.e_name ename ,e_num,yi.salaryTime,yi.e_company companyname,yi.su daikou,er.su bukou,(yi.su+IFNULL(er.su,0)) geshuiSum FROM
@@ -750,14 +750,14 @@ ON c.id = d.company_level where  1 = 1
     	) yi
     	LEFT JOIN
     	(
-    	SELECT emp.e_name, t.salaryTime,e_company,  IFNULL(SUM(e.bukoushui),0) su
+    	SELECT emp.e_name,e.employid, t.salaryTime,e_company,  IFNULL(SUM(e.bukoushui),0) su
     	FROM OA_er_salary e ,OA_employ emp,OA_salarytime_other t
     	WHERE e.employid = emp.e_num  AND e.salaryTimeId = t.id
     	AND t.companyId = '$sid'
     	AND t.salaryTime = '$stime'
     	GROUP BY e.employid,t.salaryTime,emp.id
     	) er
-    	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime
+    	ON yi.e_name = er.e_name AND yi.salaryTime = er.salaryTime AND yi.e_num = er.employid
     	where 1=1";
 
         }
