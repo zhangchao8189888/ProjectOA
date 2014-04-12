@@ -240,7 +240,17 @@ function updateSal(eid){
                     success: function (response) {
                         var text = response.responseText;
                         Ext.Msg.alert("提示",text);
-
+                        salTimeListApprovalstore.removeAll();
+                        salTimeListApprovalstore.load({
+                            params: {
+                                companyName: Ext.getCmp("comnamesecrch").getValue(),
+                                salTime: Ext.getCmp("salTime").getValue(),
+                                e_bill_value:Ext.getCmp("e_bill_value").getValue(),
+                                opTime : Ext.getCmp("STime").getValue(),
+                                start: 0,
+                                limit: 50
+                            }
+                        });
                     }
 
                 });
@@ -257,7 +267,7 @@ function updateSal(eid){
                     success: function (response) {
                         var text = response.responseText;
                         Ext.Msg.alert("提示",text);
-
+                        document.location = 'index.php?action=Ext&mode=toFinanceApproval';
                     }
 
                 });

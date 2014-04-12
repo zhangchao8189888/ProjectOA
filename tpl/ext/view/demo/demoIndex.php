@@ -45,28 +45,30 @@ Ext.onReady(function () {
                         columns: [
                             {text: "业务名称", width: 200, dataIndex: 'mattername', sortable: false,
                                 renderer: function (val, cellmeta, record) {
-                                    if (val == "增减员信息") {
+                                    if (val == "社保增减员") {
                                         return '<a href="#" onclick="loadz(1)"><span>'+val+'</span></a>' ;
-                                    }else  if (val == "医疗报销") {
+                                    }else  if (val == "公积金增减员") {
                                         return '<a href="#" onclick="loadz(2)"><span>'+val+'</span></a>' ;
-                                    }else  if (val == "工伤报销") {
+                                    }else  if (val == "医疗报销") {
                                         return '<a href="#" onclick="loadz(3)"><span>'+val+'</span></a>' ;
-                                    }else  if (val == "失业申报") {
+                                    }else  if (val == "工伤报销") {
                                         return '<a href="#" onclick="loadz(4)"><span>'+val+'</span></a>' ;
-                                    } else  if (val == "生育医疗申报") {
+                                    }else  if (val == "失业申报") {
                                         return '<a href="#" onclick="loadz(5)"><span>'+val+'</span></a>' ;
-                                    } else  if (val == "生育津贴申报") {
+                                    } else  if (val == "生育医疗申报") {
                                         return '<a href="#" onclick="loadz(6)"><span>'+val+'</span></a>' ;
-                                    }else  if (val == "退休") {
+                                    } else  if (val == "生育津贴申报") {
                                         return '<a href="#" onclick="loadz(7)"><span>'+val+'</span></a>' ;
-                                    } else  if (val == "个人保险") {
+                                    }else  if (val == "退休") {
                                         return '<a href="#" onclick="loadz(8)"><span>'+val+'</span></a>' ;
-                                    } else  if (val == "个人工资") {
+                                    } else  if (val == "个人保险") {
                                         return '<a href="#" onclick="loadz(9)"><span>'+val+'</span></a>' ;
-                                    } else  if (val == "其他") {
+                                    } else  if (val == "个人工资") {
                                         return '<a href="#" onclick="loadz(10)"><span>'+val+'</span></a>' ;
+                                    } else  if (val == "其他") {
+                                        return '<a href="#" onclick="loadz(11)"><span>'+val+'</span></a>' ;
                                     }
-                                    return '<a href="#" onclick="send(' + record.data['id'] + ')"><span style="color: red">111</span></a>' ;;
+                                    return '<a href="#" onclick="send(' + record.data['id'] + ')"><span style="color: red">未知</span></a>' ;;
                                 }
                             },
                             {text: "等待办理事项", width: 100, dataIndex: 'matterWait', sortable: true,
@@ -96,11 +98,11 @@ Ext.onReady(function () {
                 }
             },
             {
-                title: '增减人员',
+                title: '社保增减员',
                 items:[
                     Ext.create('Ext.grid.Panel',{
                         store: zengjianListstore,
-                        id : 'winzengjian',
+                        id : 'winshezengjian',
                         columns: [
                             {text: "办理情况", width: 100, dataIndex: 'shenbaozhuangtai', sortable: true,
                                 renderer: function (val, cellmeta, record) {
@@ -134,10 +136,8 @@ Ext.onReady(function () {
                             },
                             {text: "操作标志", width: 100, dataIndex: 'zengjianbiaozhi', sortable: true},
                             {text: "社保基数", width: 100, dataIndex: 'shebaojishu', sortable: true},
-                            {text: "公积金基数", width: 100, dataIndex: 'gongjijinjishu', sortable: true},
+                            {text: "社保合计", width: 100, dataIndex: 'sum', sortable: true},
                             {text: "外区转入/新参保", width: 200, dataIndex: 'waiquzhuanru', sortable: true},
-                            {text: "社保金额合计", width: 100, dataIndex: 'sum', sortable: true},
-                            {text: "公积金金额合计", width: 100, dataIndex: 'gongjijinsum', sortable: true},
                             {text: "用人单位基数", width: 150, dataIndex: 'danweijishu', sortable: true},
                             {text: "操作人姓名", width: 150, dataIndex: 'caozuoren', sortable: true},
                             {text: "更新时间", width: 100, dataIndex: 'updateTime', sortable: true},
@@ -152,6 +152,11 @@ Ext.onReady(function () {
                             emptyMsg: "没有数据"
                         }),
                         tbar : [
+                            {
+                                xtype: 'hidden',
+                                id: 'search_type',
+                                value:"社保"
+                            },
                             {
                                 xtype:'textfield',
                                 id:'zengjiancom',
@@ -189,8 +194,8 @@ Ext.onReady(function () {
                                 store: {
                                     fields: ['abbr', 'name'],
                                     data: [
-                                        {"abbr": "增员", "name": "增员"},
-                                        {"abbr": "减员", "name": "减员"}
+                                        {"abbr": "社保增员", "name": "增员"},
+                                        {"abbr": "社保减员", "name": "减员"}
                                     ]
                                 },
                                 valueField: 'abbr',
@@ -212,6 +217,7 @@ Ext.onReady(function () {
                                     zengjianListstore.load( {
                                         params : {
                                             shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),
+                                            search_type:Ext.getCmp("search_type").getValue(),
                                             zengjian : Ext.getCmp("zengjian").getValue(),
                                             STime: Ext.getCmp("zengjianTime").getValue(),
                                             companyName:Ext.getCmp("zengjiancom").getValue(),
@@ -251,7 +257,172 @@ Ext.onReady(function () {
                 listeners: {
                     activate: function (tab) {
                         zengjianListstore.on("beforeload", function () {
-                            Ext.apply(zengjianListstore.proxy.extraParams, {companyName: Ext.getCmp("zengjiancom").getValue(),zengjian: Ext.getCmp("zengjian").getValue(),shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),STime: Ext.getCmp("zengjianTime").getValue(),EName: Ext.getCmp("zengjianemp").getValue()});
+                            Ext.apply(zengjianListstore.proxy.extraParams, { search_type:Ext.getCmp("search_type").getValue(),companyName: Ext.getCmp("zengjiancom").getValue(),zengjian: Ext.getCmp("zengjian").getValue(),shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),STime: Ext.getCmp("zengjianTime").getValue(),EName: Ext.getCmp("zengjianemp").getValue()});
+                        });
+                        zengjianListstore.loadPage(1);
+                    }
+                }
+            },
+            {
+                title: '公积金增减员',
+                items:[
+                    Ext.create('Ext.grid.Panel',{
+                        store: zengjianListstore,
+                        id : 'wingongzengjian',
+                        columns: [
+                            {text: "办理情况", width: 100, dataIndex: 'shenbaozhuangtai', sortable: true,
+                                renderer: function (val, cellmeta, record) {
+                                    if (val == "") {
+                                        return '<span style="color: gray"> 已取消 </span>';
+                                    } else if (val == "等待办理") {
+                                        return '<a href="#" title="修改状态" onclick=changezengjianState(' + record.data['id'] + ')><span style="color: red"> 等待办理 </span></a>';
+                                    } else if (val =="正在办理") {
+                                        return '<a href="#" title="修改状态" onclick=changezengjianState(' + record.data['id'] + ')><span style="color: blue"> 正在办理 </span></a>';
+                                    } else if (val =="办理成功") {
+                                        return '<a href="#" title="修改状态" onclick=changezengjianState(' + record.data['id'] + ')><span style="color: green"> 办理成功 </span>';
+                                    } else if (val =="无法办理") {
+                                        return '<span style="color: darkviolet"> 无法办理 </span>';
+                                    }
+                                    return val;
+                                }
+                            },
+                            {text: "提交时间", width: 100, dataIndex: 'submitTime', sortable: true},
+                            {text: "申报客服姓名", width: 100, dataIndex: 'CName', sortable: true},
+                            {text: "部门", width: 150, dataIndex: 'Dept', sortable: true},
+                            {text: "员工姓名", width: 100, dataIndex: 'EName', sortable: true},
+                            {text: "身份证号", width: 100, dataIndex: 'EmpNo', sortable: true},
+                            {text: "身份类别", width: 100, dataIndex: 'EmpType', sortable: true},
+                            {text: "联系方式", width: 100, dataIndex: 'tel', sortable: false,
+                                renderer: function (val, cellmeta, record) {
+                                    if(val=="0"){
+                                        return "暂无";
+                                    }
+                                    return val;
+                                }
+                            },
+                            {text: "操作标志", width: 100, dataIndex: 'zengjianbiaozhi', sortable: true},
+                            {text: "公积金基数", width: 100, dataIndex: 'gongjijinjishu', sortable: true},
+                            {text: "公积金合计", width: 100, dataIndex: 'gongjijinsum', sortable: true},
+                            {text: "用人单位基数", width: 150, dataIndex: 'danweijishu', sortable: true},
+                            {text: "操作人姓名", width: 150, dataIndex: 'caozuoren', sortable: true},
+                            {text: "更新时间", width: 100, dataIndex: 'updateTime', sortable: true},
+                            {text: "备注", width: 100, dataIndex: 'beizhu', sortable: true}
+                        ],
+                        height:560,
+                        width:1200,
+                        bbar: Ext.create('Ext.PagingToolbar', {
+                            store: zengjianListstore,
+                            displayInfo: true,
+                            displayMsg: '显示 {0} - {1} 条，共计 {2} 条',
+                            emptyMsg: "没有数据"
+                        }),
+                        tbar : [
+                            {
+                                xtype: 'hidden',
+                                id: 'ssearch_type',
+                                value:"公积金"
+                            },
+                            {
+                                xtype:'textfield',
+                                id:'szengjiancom',
+                                width:150,
+                                emptyText:"筛选公司"
+                            },
+                            {
+                                xtype:'textfield',
+                                id:'szengjianemp',
+                                width:100,
+                                emptyText:"筛选姓名"
+                            },
+                            {
+                                xtype: 'combobox',
+                                id:"sbusinesszengjian",
+                                emptyText: "筛选业务状态",
+                                editable: false,
+                                store: {
+                                    fields: ['abbr', 'name'],
+                                    data: [
+                                        {"abbr": "等待办理", "name": "等待办理"},
+                                        {"abbr": "正在办理", "name": "正在办理"},
+                                        {"abbr": "办理成功", "name": "办理成功"},
+                                        {"abbr": "无法办理", "name": "无法办理"}
+                                    ]
+                                },
+                                valueField: 'abbr',
+                                displayField: 'name'
+                            },
+                            {
+                                xtype: 'combobox',
+                                id:"szengjian",
+                                emptyText: "筛选增减员类型",
+                                editable: false,
+                                store: {
+                                    fields: ['abbr', 'name'],
+                                    data: [
+                                        {"abbr": "公积金增员", "name": "增员"},
+                                        {"abbr": "公积金减员", "name": "减员"}
+                                    ]
+                                },
+                                valueField: 'abbr',
+                                displayField: 'name'
+                            },
+                            {
+                                id:'szengjianTime',
+                                xtype : 'monthfield',
+                                editable: false,
+                                width: 150,
+                                labelAlign: 'right',
+                                format: 'Y-m'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'ssearchzengjiani',
+                                handler : function(src) {
+                                    zengjianListstore.removeAll();
+                                    zengjianListstore.load( {
+                                        params : {
+                                            shenbaozhuangtai : Ext.getCmp("sbusinesszengjian").getValue(),
+                                            search_type:Ext.getCmp("ssearch_type").getValue(),
+                                            zengjian : Ext.getCmp("szengjian").getValue(),
+                                            STime: Ext.getCmp("szengjianTime").getValue(),
+                                            companyName:Ext.getCmp("szengjiancom").getValue(),
+                                            EName: Ext.getCmp("szengjianemp").getValue(),
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                    zengjianListstore.loadPage(1);
+                                },
+                                text : '筛选',
+                                iconCls : 'chakan'
+                            },
+                            {
+                                xtype : 'button',
+                                id : 'sclearzengjian',
+                                handler : function(src) {
+                                    Ext.getCmp("sbusinesszengjian").setValue("");
+                                    Ext.getCmp("szengjian").setValue("");
+                                    Ext.getCmp("szengjianTime").setValue("");
+                                    Ext.getCmp("szengjiancom").setValue("");
+                                    Ext.getCmp("szengjianemp").setValue("");
+                                    zengjianListstore.removeAll();
+                                    zengjianListstore.load( {
+                                        params : {
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                },
+                                text : '重新加载',
+                                iconCls : 'chakan'
+                            }
+                        ]
+                    })
+                ],
+                listeners: {
+                    activate: function (tab) {
+                        zengjianListstore.on("beforeload", function () {
+                            Ext.apply(zengjianListstore.proxy.extraParams, { search_type:Ext.getCmp("ssearch_type").getValue(),companyName: Ext.getCmp("zengjiancom").getValue(),zengjian: Ext.getCmp("zengjian").getValue(),shenbaozhuangtai : Ext.getCmp("businesszengjian").getValue(),STime: Ext.getCmp("zengjianTime").getValue(),EName: Ext.getCmp("zengjianemp").getValue()});
                         });
                         zengjianListstore.loadPage(1);
                     }

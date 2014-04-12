@@ -468,7 +468,7 @@ WHERE convert( emp.e_company  using utf8)  = b.company_name
     }
     // 增减员删除BY孙瑞鹏
     function deleteZengjian($id) {
-        $sql = "delete  FROM oa_security WHERE id=$id";
+        $sql = "delete  FROM OA_security WHERE id=$id";
         $list = $this->g_db_query ( $sql );
         return $list;
     }

@@ -86,8 +86,6 @@ Ext.onReady(function(){
                                 ids: Ext.JSON.encode(ids)
                             },
                             success: function (response) {
-                                var text = response.responseText;
-
                                 zengjianListstore.load( {
                                         params: {
                                             search_type:Ext.getCmp("search_type").getValue()

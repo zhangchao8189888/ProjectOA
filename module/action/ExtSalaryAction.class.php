@@ -987,13 +987,13 @@ class ExtSalaryAction extends BaseAction{
         $file = $_FILES['photo-path'];
         if($file['type']=='application/vnd.ms-excel'&&$file['size']<3500000){
                 $movefile=   move_uploaded_file($file["tmp_name"],"upload/" . $file["name"]);
-                if($movefile){
-                    $info['success']    =   true;
-                    $info['message'] = $file["name"];
-                }else{
-                    $info['success']    =   false;
-                    $info['message'] = "上传失败，请重试！";
-                }
+            if($movefile){
+                $info['success']    =   true;
+                $info['message'] = $file["name"];
+            }else{
+                $info['success']    =   false;
+                $info['message'] = "上传失败，请重试！";
+            }
 
         }else{
             $info['success']    =   false;
