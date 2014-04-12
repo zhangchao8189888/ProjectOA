@@ -1099,6 +1099,9 @@ class ExtSalaryAction extends BaseAction{
         $comId = $_REQUEST['comId'];
         $time = $this->AssignTabMonth($salTime, 0);
         $resultCom = $this->objDao->getComByComLevel($comId);
+        if(!mysql_fetch_array($resultCom)){
+            $resultCom = $this->objDao->getCompanyById($comId);
+        }
         $jsonArray = array();
         $i = 0;
         $sumShifa=0;
@@ -1134,7 +1137,7 @@ class ExtSalaryAction extends BaseAction{
                 }
             }
             if( $expenses['状态']==null){
-                continue;
+                $expenses['状态']="工资未申请审核";
             }
             foreach ($expensesInfo as $key => $value) {
                 $rowSalCol = array();
@@ -1145,7 +1148,7 @@ class ExtSalaryAction extends BaseAction{
                     if ($key == 1) {
                         $rowSalCol ["width"] = 200;
                     } else {
-                        $rowSalCol ["width"] = 100;
+                        $rowSalCol ["width"] = 120;
                     }
                     $jsonArray ['columns'] [] = $rowSalCol;
                 }

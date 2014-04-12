@@ -1128,6 +1128,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
     }
     function searchSumSalaryListBy_SalaryTimeId($sid) {
         $sql = "select *  from OA_total where salaryTime_Id=$sid";
+
         $list = $this->g_db_query ( $sql );
         return $list;
     }
@@ -1567,9 +1568,14 @@ VALUES
         $sql = "SELECT
 	id,company_name
 FROM
-	oa_company
+	OA_company
 WHERE
 	company_level = $comId";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+    function getCompanyById($comId) {
+        $sql = "select *  from OA_company where  id=$comId";
         $result = $this->g_db_query ( $sql );
         return $result;
     }
