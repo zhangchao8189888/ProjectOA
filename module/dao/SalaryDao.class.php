@@ -733,7 +733,7 @@ ON c.id = d.company_level where  1 = 1
     	WHERE n.employid = emp.e_num AND n.salaryTimeId = t.id
     	AND t.companyId = '$sid'
     	AND t.salaryTime like '%{$time}%'
-    	GROUP BY n.employid,t.salaryTime,emp.id
+    	GROUP BY n.employid,emp.id
     	) nian
     	ON  yi.e_name = nian.e_name
     	where 1=1";
