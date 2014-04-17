@@ -569,6 +569,8 @@ Ext.define('oa.common.account.list',{
         {name: 'companyId', type: 'int'},
         {name: 'transactionDate', type: 'string'},
         {name: 'accountsType', type: 'string'},
+        {name: 'accountsRemark', type: 'string'},
+        {name: 'companyBank', type: 'string'},
         {name: 'companyName', type: 'string'},
         {name: 'value', type: 'double'},
         {name: 'remark', type: 'string'},

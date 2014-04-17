@@ -471,7 +471,6 @@ var salList=Ext.create("Ext.form.Panel",{
             });
         }
     },
-    '-',
     {
         text: '清空',
         handler: function () {

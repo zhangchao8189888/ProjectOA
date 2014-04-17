@@ -426,6 +426,18 @@ Ext.onReady(function(){
 
             buttons: [
                 {
+                    text: '下载增员示例文件',
+                    handler: function () {
+                        window.location.href ="template/importAddEmployBund.xls";
+                    }
+                },
+                {
+                    text: '下载减员示例文件',
+                    handler: function () {
+                        window.location.href ="template/importSubsideEmployBund.xls";
+                    }
+                },
+                {
                     text: '上传',
                     handler: function () {
                         var form = this.up('form').getForm();

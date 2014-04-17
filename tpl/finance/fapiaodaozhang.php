@@ -171,7 +171,7 @@ Ext.onReady(function () {
     var salList = Ext.create('Ext.form.Panel', {
         bodyPadding: 10,
         width: 550,
-        height: 350,
+        height: 310,
         items: [
             {
                 xtype: 'fieldcontainer',
@@ -308,7 +308,6 @@ Ext.onReady(function () {
                     }
                 }
             },
-            '-',
             {
                 text: '清空',
                 handler: function () {
@@ -330,7 +329,7 @@ Ext.onReady(function () {
         winSal = Ext.create('Ext.window.Window', {
             title: "添加发票/支票", // 窗口标题
             width: 560, // 窗口宽度
-            height: 320, // 窗口高度
+            height: 350, // 窗口高度
             layout: "border",// 布局
             minimizable: true, // 最大化
             maximizable: true, // 最小化
@@ -357,9 +356,9 @@ Ext.onReady(function () {
     //通过ajax添加信息
     function addXinxi() {
         if (Ext.getCmp("leixing").getValue() == '发票') {
-            var url = "index.php?action=SalaryBill&mode=addInvoice";
+            var url = "index.php?action=ExtSalaryBill&mode=addInvoice";
         } else {
-            var url = "index.php?action=SalaryBill&mode=addCheque";
+            var url = "index.php?action=ExtSalaryBill&mode=addCheque";
         }
         Ext.Ajax.request({
             url: url,  //从json文件中读取数据，也可以从其他地方获取数据
@@ -374,6 +373,7 @@ Ext.onReady(function () {
                 chequeType: 3
             },
             success: function (response) {
+                Ext.Msg.alert("提示", response.responseText);
                 winSal.hide();
 
             }

@@ -50,21 +50,25 @@ Ext.onReady(function () {
             stripeRows: false
         },
         columns : [
-            {text: "编号", width: 80, dataIndex: 'id', sortable: true},
-            {text: "单位编号", width: 80, dataIndex: 'companyId', sortable: true},
+
+            {text: "操作序号", width: 80, dataIndex: 'id', sortable: true,hidden:true},
+            {text: "单位编号", width: 80, dataIndex: 'companyId', sortable: true,hidden:true},
             {text: "单位名称", width: 170, dataIndex: 'companyName', sortable: true},
             {text: "交易日期", width: 100, dataIndex: 'transactionDate', sortable: true},
             {text: "交易类型", width: 100, dataIndex: 'accountsType', sortable: true,
                 renderer:function(val,cellmeta,record){
                     if(val ==1){
-                        return  '<span style="color:green ">收入</span>';
+                        return  '<span style="color:gray ">收入</span>';
                     } else if(val ==2){
-                        return '<span style="color:gray ">支出</span>';
+                        return '<span style="color:green ">支出</span>';
                     }
                     return val;
                 }
             },
-            {text: "金额", width: 100, dataIndex: 'value', sortable: true},
+            {text: "类型说明", width: 100, dataIndex: 'accountsRemark', sortable: true},
+            {text: "交易账号", width: 100, dataIndex: 'companyBank', sortable: true},
+
+            {text: "金额", width: 100, dataIndex: 'value',sortable:false},
             {text: "操作", width: 120, dataIndex: 'salType', sortable: false,align:'center',
                 renderer:function(val,cellmeta,record){
                     if (val == 1) {
@@ -75,21 +79,68 @@ Ext.onReady(function () {
                     return val;
                 }
             },
-            {text: "备注", width: 200, dataIndex: 'remark', sortable: true}
+            {text: "备注", width: 200, dataIndex: 'remark', sortable: false}
         ],
         tbar : [
             {
+                xtype : 'button',
+                id : 'update',
+                handler : function(src) {
+                    var model = contractWin.getSelectionModel();
+                    var sel=model.getSelection();
+                    if(sel[0]==null){
+                        Ext.Msg.alert("提示", "请先选中单条数据！");
+                        return false;
+                    }else{
+                        updateCom(sel[0].data.id,sel[0].data.companyName);
+                    }
+                },
+                text : '单位更正',
+                iconCls : 'chakan'
+            },
+            {
                 xtype:'textfield',
                 id:'companyName',
-                width:150,
+                width:120,
                 emptyText:"筛选公司"
             },
             {
-                id: 'transactionDate',
+                xtype:'textfield',
+                id:'accountsRemark',
+                width:120,
+                emptyText:"筛选类型说明"
+            },
+            {
+                xtype: 'combobox',
+                id:"accountType" ,
+                width:100,
+                emptyText: "筛选交易类型",
+                editable: false,
+                store: {
+                    fields: ['abbr', 'name'],
+                    data: [
+                        {"abbr": "1", "name": "收入"},
+                        {"abbr": "2", "name": "支出"}
+                    ]
+                },
+                valueField: 'abbr',
+                displayField: 'name'
+            },
+            {
+                id: 'transactionDateb',
                 xtype: 'datefield',
                 width:120,
                 format: "Y-m-d",
-                emptyText:"请筛选交易日",
+                emptyText:"请筛选日期间隔",
+                readOnly: false,
+                anchor: '95%'
+            },
+            {
+                id: 'transactionDatea',
+                xtype: 'datefield',
+                width:120,
+                format: "Y-m-d",
+                emptyText:"请筛选日期间隔",
                 readOnly: false,
                 anchor: '95%'
             } ,
@@ -101,7 +152,10 @@ Ext.onReady(function () {
                     accountstore.load({
                         params: {
                             companyName: Ext.getCmp("companyName").getValue(),
-                            transactionDate: Ext.getCmp("transactionDate").getValue(),
+                            transactionDateb: Ext.getCmp("transactionDateb").getValue(),
+                            transactionDatea: Ext.getCmp("transactionDatea").getValue(),
+                            accountsType:Ext.getCmp("accountType").getValue(),
+                            accountsRemark:Ext.getCmp("accountsRemark").getValue(),
                             start: 0,
                             limit: 50
                         }
@@ -176,9 +230,14 @@ function uploadFile() {
         items: [
             {
                 xtype: 'displayfield',
-                value:"<span style='color: blue'>请创建后缀名为“.xls”的文件进行上传(重名将会覆盖)<br>系统会读取前五列数据，分别为：</span>" +
-                    "<br>“单位名称”，“交易日期”，“支出”，“收入”，“备注”" +
-                    "<br><span style='color: red'>注：一条数据只允许一次支出或收入，同时填写只读取支出。</span>"
+                value:"<span style='color: blue'>请创建后缀名为“.xls”的文件进行上传(重名将会覆盖)<br>请保证表格中包含以下数据，分别为：</span>" +
+                    "<br>交易日	借	贷	摘要	收(付)方名称	收(付)方帐号	交易类型" +
+                    "<br><span style='color: red'>注：一条数据只允许一次支出或收入，同时填写只读取支出。</span>"+
+                    "<br><span style='color: red'>示例：</span>"
+            },
+            {
+                xtype: 'image',
+                src:"tpl/ext/resources/images/upload-examples/account.jpg"
             },
             {
                 xtype: 'filefield',
@@ -193,6 +252,22 @@ function uploadFile() {
         ],
 
         buttons: [
+            {
+                text: '下载示例文件',
+                handler: function () {
+                    Ext.Ajax.request({
+                        url : "index.php?action=ExtSalary&mode=getImportAccountsTemplate",
+                        params : {
+                        },
+                        method : "POST",
+                        timeout : 4000,
+                        success : function(response) {
+                            var obj =Ext.decode(response.responseText);
+                            window.location.href =obj.path;
+                        }
+                    });
+                }
+            },
             {
                 text: '上传',
                 handler: function () {
@@ -251,7 +326,7 @@ function uploadFile() {
     uploadfilewindow = Ext.create('Ext.window.Window', {
         title: "上传", // 窗口标题
         width: 410, // 窗口宽度
-        height: 200, // 窗口高度
+        height: 250, // 窗口高度
         layout: "border",// 布局
         minimizable: false, // 最大化
         maximizable: false, // 最小化
@@ -327,12 +402,16 @@ function selectExpenses(comId,salTime,companyName,money){
         method : 'POST',
         params: {
             comId:comId,
-            salTime:salTime
+            salTime:salTime,
+            money:money
         },
         success : function(response) {
-            //将返回的结果转换为json对象，注意extjs4中decode函数已经变成了：Ext.JSON.decode
             mk.hide();
             var json = Ext.JSON.decode(response.responseText); //获得后台传递json
+            if(json['info']!=null){
+                Ext.Msg.alert("警告",json['info']);
+                return false;
+            }
             //创建store
             var store = Ext.create('Ext.data.Store', {
                 fields : json.fields,//把json的fields赋给fields
@@ -340,11 +419,130 @@ function selectExpenses(comId,salTime,companyName,money){
             });
             //根据store和column构造表格
             Ext.getCmp("infogrid").reconfigure(store, json.columns);
-            //重新渲染表格
-            // Ext.getCmp("salTimeListP").render();
         }
     });
     wininfo.show();
+}
+var companyListGrid = Ext.create('Ext.grid.Panel',{
+    store: comListStore,
+    id : 'companyList',
+    columns: [
+        {text: "id", width: 50, dataIndex: 'id', sortable: true},
+        {text: "公司名称", width: 350, dataIndex: 'company_name', sortable: true}
+    ],
+    height:400,
+    width:420,
+    disableSelection: false,
+    loadMask: true,
+
+    bbar: Ext.create('Ext.PagingToolbar', {
+        store: comListStore,
+        displayInfo: true,
+        displayMsg: '共计{2}家单位',
+        emptyMsg: "没有数据"
+    }),
+    tbar: [
+        {
+            xtype: 'button',
+            id: 'bt_deleteDocument',
+            handler: function () {
+                var record = Ext.getCmp('companyList').getSelectionModel().getSelection();
+                if(record[0]==null){
+                    Ext.Msg.alert("提示", "请先选中单条数据！");
+                    return false;
+                }else{
+                    var oldCom=Ext.getCmp("update_com").getValue();
+                    var newCom=record[0].data.company_name;
+                    Ext.MessageBox.show({
+                        title:'更新单位',
+                        msg: '确认修改<br><span style="color: blue">"'+oldCom+'"</span><br>为<br><span style="color: blue">"'+newCom+'"</span>？',
+                        width:240,
+                        buttonText:{ok: '修改', yes: '取消'},
+                        animateTarget: 'mb4',
+                        fn: function (btn) {
+                            if("ok"==btn){
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=ExtSalary&mode=updateAccount',
+                                    method: 'post',
+                                    params: {
+                                        id:Ext.getCmp("update_id").getValue(),
+                                        newCom:newCom
+                                    },
+                                    success: function (response) {
+                                        var json = Ext.JSON.decode(response.responseText);
+                                        Ext.Msg.alert("提示",json['message']);
+                                        document.location = 'index.php?action=Ext&mode=toAccount';
+                                    }
+                                });
+                            }else{
+                                return false;
+                            }
+                        },
+                        icon: Ext.MessageBox.INFO
+                    })
+
+                }
+            },
+            text: '更新单位',
+            iconCls: 'shanchu'
+        },
+        {
+            id: 'update_id',
+            xtype: 'hiddenfield'
+        },
+        {
+            id: 'update_com',
+            xtype: 'hiddenfield'
+        },
+        {
+            id: 'comnameid',
+            xtype: 'textfield',
+            width:240,
+            emptyText:"请输入筛选公司"
+        },
+        {
+            xtype: 'button',
+            id: 'search_company',
+            handler: function () {
+                comListStore.removeAll();
+                comListStore.load({
+                    params: {
+                        Key:Ext.getCmp("comnameid").getValue(),
+                        start: 0,
+                        limit: 50
+                    }
+                });
+            },
+            text: '搜索',
+            iconCls: 'shanchu'
+        }
+    ]
+});
+
+comListStore.on("beforeload",function(){
+    Ext.apply(comListStore.proxy.extraParams, {Key:Ext.getCmp("comnameid").getValue()});
+});
+function updateCom(id,comName){
+    Ext.getCmp("update_com").setValue(comName);
+    Ext.getCmp("update_id").setValue(id);
+    var window = new Ext.Window({
+        title:"管理", // 窗口标题
+        width:430, // 窗口宽度
+        height:440, // 窗口高度
+        layout:"border",// 布局
+        minimizable:true, // 最大化
+        maximizable:true, // 最小化
+        frame:true,
+        constrain:true, // 防止窗口超出浏览器窗口,保证不会越过浏览器边界
+        buttonAlign:"center", // 按钮显示的位置
+        modal:true, // 模式窗口，弹出窗口后屏蔽掉其他组建
+        resizable:false, // 是否可以调整窗口大小，默认TRUE。
+        plain:true,// 将窗口变为半透明状态。
+        items:[companyListGrid],
+        closeAction:'hide'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
+    });
+    window.show();
+    comListStore.load();
 }
 
 </script>

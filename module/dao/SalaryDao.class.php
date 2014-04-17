@@ -1503,11 +1503,17 @@ AND salaryTime = '$sal'";
             if ($where ['companyName'] != "") {
                 $sql .= " and companyName like '%{$where['companyName']}%' ";
             }
-            if ($where ['transactionDate'] != "") {
-                $sql .= " and transactionDate like '%{$where['transactionDate']}%' ";
+            if ($where ['transactionDateb'] != "") {
+                $sql .= " and transactionDate> '{$where['transactionDateb']}' ";
+            }
+            if ($where ['transactionDatea'] != "") {
+                $sql .= " and transactionDate< '{$where['transactionDatea']}' ";
             }
             if ($where ['accountsType'] != "") {
                 $sql .= " and accountsType = '{$where['accountsType']}' ";
+            }
+            if ($where ['accountsRemark'] != "") {
+                $sql .= " and accountsRemark like '%{$where['accountsRemark']}%' ";
             }
         }
         $result = $this->g_db_query ( $sql );
@@ -1523,11 +1529,17 @@ AND salaryTime = '$sal'";
             if ($where ['companyName'] != "") {
                 $sql .= " and companyName like '%{$where['companyName']}%' ";
             }
-            if ($where ['transactionDate'] != "") {
-                $sql .= " and transactionDate like '%{$where['transactionDate']}%' ";
+            if ($where ['transactionDateb'] != "") {
+                $sql .= " and transactionDate> '{$where['transactionDateb']}' ";
+            }
+            if ($where ['transactionDatea'] != "") {
+                $sql .= " and transactionDate< '{$where['transactionDatea']}' ";
             }
             if ($where ['accountsType'] != "") {
                 $sql .= " and accountsType = '{$where['accountsType']}' ";
+            }
+            if ($where ['accountsRemark'] != "") {
+                $sql .= " and accountsRemark like '%{$where['accountsRemark']}%' ";
             }
         }
         if ($sort) {
@@ -1536,9 +1548,18 @@ AND salaryTime = '$sal'";
         if ($start >= 0 && $limit) {
             $sql .= " limit $start,$limit";
         }
-        // $sql.=" order by op_salaryTime desc ";
         $list = $this->g_db_query ( $sql );
         return $list;
+    }
+
+    function updateAccount($id, $comname){
+        $sql = "
+UPDATE OA_account
+SET companyName = '$comname'
+WHERE
+	id = $id";
+        $result = $this->g_db_query($sql);
+        return $result;
     }
     function insertAccounts($accountsArray){
         $sql = "
@@ -1547,7 +1568,9 @@ INSERT INTO OA_account (
 	accountsType,
 	companyName,
 	accountsValue,
-	remark
+	remark,
+	accountsRemark,
+	companyBank
 )
 VALUES
 	(
@@ -1555,8 +1578,11 @@ VALUES
 	'{$accountsArray['accountsType']}',
 		'{$accountsArray['companyName']}',
 		'{$accountsArray['accountsValue']}',
-		'{$accountsArray['remark']}'
+		'{$accountsArray['remark']}',
+		'{$accountsArray['accountsRemark']}',
+		'{$accountsArray['companyBank']}'
 	)";
+        echo($sql);
         $list = $this->g_db_query ( $sql );
         if ($list) {
             return $this->g_db_last_insert_id ();
@@ -1564,6 +1590,7 @@ VALUES
             return false;
         }
     }
+
     function getComByComLevel($comId){
         $sql = "SELECT
 	id,company_name

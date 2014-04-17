@@ -773,7 +773,7 @@ class ExtSocialSecurityAction extends BaseAction {
             }
             $info['message'] = '操作完毕！';
         }else{
-            echo "未知的存储类型，请标示“增员”或“减员”！";
+            $info['message']='未知的存储类型，请标示“增员”或“减员”！';
         }
         echo json_encode($info);
         exit;
