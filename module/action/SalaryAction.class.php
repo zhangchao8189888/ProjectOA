@@ -406,6 +406,9 @@ class SalaryAction extends BaseAction {
 			/*
 			 * $salaryList[Sheet1][0][($count_add+0)]=" 银行卡号"; $salaryList[Sheet1][0][($count_add+1)]="身份类别"; $salaryList[Sheet1][0][($count_add+2)]=" 社保基数"; $salaryList[Sheet1][0][($count_add+3)]="公积金基数";
 			 */
+
+            $canjiren = $this->objDao->getCanjiren ( $salaryList [Sheet1] [$i] [$shenfenzheng] );
+
 			$salaryList [Sheet1] [$i] [($count_add + 0)] = $jisuan_var [$i] ['yinhangkahao'];
 			$salaryList [Sheet1] [$i] [($count_add + 1)] = $jisuan_var [$i] ['shenfenleibie'];
 			$salaryList [Sheet1] [$i] [($count_add + 2)] = $jisuan_var [$i] ['shebaojishu'];
@@ -416,6 +419,9 @@ class SalaryAction extends BaseAction {
 			$salaryList [Sheet1] [$i] [($count + 3)] = sprintf ( "%01.2f", $jisuan_var [$i] ['gerenyanglao'] ) + 0;
 			$salaryList [Sheet1] [$i] [($count + 4)] = $jisuan_var [$i] ['gerengongjijin'] + 0;
 			$salaryList [Sheet1] [$i] [($count + 5)] = sprintf ( "%01.2f", $jisuan_var [$i] ['daikousui'] ) + 0;
+            if($canjiren[0]==1){
+                $salaryList [Sheet1] [$i] [($count + 5)] /= 2;
+            }
 			$salaryList [Sheet1] [$i] [($count + 6)] = sprintf ( "%01.2f", $jisuan_var [$i] ['koukuanheji'] ) + 0;
 			$salaryList [Sheet1] [$i] [($count + 7)] = sprintf ( "%01.2f", $jisuan_var [$i] ['shifaheji'] ) + 0;
 			$salaryList [Sheet1] [$i] [($count + 8)] = sprintf ( "%01.2f", $jisuan_var [$i] ['danweishiye'] ) + 0;
@@ -542,6 +548,7 @@ class SalaryAction extends BaseAction {
 		$sumJiaozhongqiheji = 0;
 		$error = array ();
 		$this->objDao = new SalaryDao ();
+        $this->eobjDao = new EmployDao ();
 		// 根据年终奖月份和身份证号查询该员工的当月应发合计项
 		for($i = 1; $i < count ( $salaryList [Sheet1] ); $i ++) {
 			$jisuan_var = array ();
@@ -599,9 +606,14 @@ class SalaryAction extends BaseAction {
 				$jisuan_var ['nianzhongjiang'] = $salaryList [Sheet1] [$i] [$nian];
 				$sumclass = new sumSalary ();
 				$sumclass->sumNianSal ( $jisuan_var ); // 计算年终奖
+                $canjiren = $this->eobjDao->getCanjiren ( $salaryList [Sheet1] [$i] [$shenfenzheng] );
 				$salaryList [Sheet1] [$i] [($count + 0)] = sprintf ( "%01.2f", $jisuan_var ['yingfaheji'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 1)] = sprintf ( "%01.2f", $jisuan_var ['shifaheji'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 2)] = sprintf ( "%01.2f", $jisuan_var ['niandaikoushui'] ) + 0;
+                if($canjiren[0]==1){
+                    $salaryList [Sheet1] [$i] [($count + 2)] /= 2;
+                }
+
 				$salaryList [Sheet1] [$i] [($count + 3)] = sprintf ( "%01.2f", $jisuan_var ['shifajinka'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 4)] = sprintf ( "%01.2f", $jisuan_var ['jiaozhongqi'] ) + 0;
 			} else {
@@ -689,6 +701,7 @@ class SalaryAction extends BaseAction {
 		$sumjiaozhongqi = 0;
 		$error = array ();
 		$this->objDao = new SalaryDao ();
+        $this->eobjDao = new EmployDao ();
 		// 根据年终奖月份和身份证号查询该员工的当月应发合计项
 		for($i = 1; $i < count ( $salaryList [Sheet1] ); $i ++) {
 			$jisuan_var = array ();
@@ -728,6 +741,8 @@ class SalaryAction extends BaseAction {
 				 * $jisuan_var['jiaozhongqi']=$jisuan_var['ercigongziheji'];
 				 * //失业	医疗	养老	公积金	应扣税	已扣税	补扣税	2010年1次双薪进卡	缴中企基业合计
 				 */
+
+                $canjiren = $this->eobjDao->getCanjiren ( $salaryList [Sheet1] [$i] [$shenfenzheng] );
 				$salaryList [Sheet1] [$i] [($count + 0)] = sprintf ( "%01.2f", $jisuan_var ['ercigongziheji'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 1)] = sprintf ( "%01.2f", $jisuan_var ['yingfaheji'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 2)] = sprintf ( "%01.2f", $jisuan_var ['shijiyingfaheji'] ) + 0;
@@ -738,6 +753,9 @@ class SalaryAction extends BaseAction {
 				$salaryList [Sheet1] [$i] [($count + 7)] = sprintf ( "%01.2f", $jisuan_var ['yingkoushui'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 8)] = sprintf ( "%01.2f", $jisuan_var ['yikoushui'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 9)] = sprintf ( "%01.2f", $jisuan_var ['bukoushui'] ) + 0;
+                if($canjiren[0]==1){
+                    $salaryList [Sheet1] [$i] [($count + 9)] /= 2;
+                }
 				$salaryList [Sheet1] [$i] [($count + 10)] = sprintf ( "%01.2f", $jisuan_var ['shuangxinjinka'] ) + 0;
 				$salaryList [Sheet1] [$i] [($count + 11)] = sprintf ( "%01.2f", $jisuan_var ['jiaozhongqi'] ) + 0;
 			} else {
