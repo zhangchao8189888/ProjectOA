@@ -1251,7 +1251,7 @@ and OA_salarytime_other.id=OA_er_salary.salarytimeId and OA_er_salary.employId='
         return $list;
     }
     function getSalaryListByComName($comid) {
-        $sql = "select  s.id,s.salaryTime  from  OA_salarytime  s  ,OA_company  c where s.companyId = c.id AND c.company_name = '{$comid}' ";
+        $sql = "select  s.id,s.salaryTime  from  OA_salarytime  s  ,OA_company  c where s.companyId = c.id AND c.company_name = '{$comid}' order by s.salaryTime DESC ";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
@@ -1363,8 +1363,8 @@ AND salaryTime = '$sal'";
     }
     function saveSalaryBill($billArray) {
         $sql = "INSERT INTO OA_bill (salaryTime_id,bill_no,bill_type,bill_date,bill_item,bill_value,bill_state,text) VALUES
-    	     ({$billArray['salaryTime_id']},'{$billArray['bill_no']}',{$billArray['bill_type']},'{$billArray['bill_date']}',
-    	     '{$billArray['bill_item']}',{$billArray['bill_value']},{$billArray['bill_state']},'{$billArray['text']}')";
+    	     ({$billArray['salaryTime_id']},'{$billArray['bill_no']}','{$billArray['bill_type']}','{$billArray['bill_date']}',
+    	     '{$billArray['bill_item']}','{$billArray['bill_value']}',{$billArray['bill_state']},'{$billArray['text']}')";
         $result = $this->g_db_query ( $sql );
         return $result;
     }
@@ -1606,5 +1606,20 @@ WHERE
         $result = $this->g_db_query ( $sql );
         return $result;
     }
+
+    function getApprovalBySalaryTimeId($id) {
+        $sql = "SELECT
+	*
+FROM
+	OA_bill
+WHERE
+	salaryTime_id = $id
+AND bill_value <=2";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+
+
+
 }
 ?>

@@ -178,7 +178,34 @@ Ext.onReady(function () {
                 fieldLabel: '请输入数据',
                 defaultType: 'checkboxfield',
                 items: [
-
+                    {
+                        xtype: 'combobox',
+                        id: "leixing",
+                        editable: false,
+                        emptyText: "请选择类型",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "到账", "name": "到账"},
+                                {"abbr": "发票", "name": "发票"}
+                            ]
+                        },
+                        listeners: {
+                            select: function () {
+                                if (this.getValue() == '发票') {
+                                    Ext.getCmp("fapiaobianhao").show();
+                                    Ext.getCmp("fapiaoxiangmu").show();
+                                } else {
+                                    Ext.getCmp("fapiaobianhao").hide();
+                                    Ext.getCmp("fapiaoxiangmu").hide();
+                                }
+                            }
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '类型'
+                    },
                     {
                         xtype: 'textfield',
                         id: "fapiaobianhao",
@@ -257,34 +284,6 @@ Ext.onReady(function () {
                         emptyText: "请输入金额",
                         allowBlank: false,
                         fieldLabel: '金额'
-                    },
-                    {
-                        xtype: 'combobox',
-                        id: "leixing",
-                        editable: false,
-                        emptyText: "请选择类型",
-                        allowBlank: false,
-                        store: {
-                            fields: ['abbr', 'name'],
-                            data: [
-                                {"abbr": "到账", "name": "到账"},
-                                {"abbr": "发票", "name": "发票"}
-                            ]
-                        },
-                        listeners: {
-                            select: function () {
-                                if (this.getValue() == '发票') {
-                                    Ext.getCmp("fapiaobianhao").show();
-                                    Ext.getCmp("fapiaoxiangmu").show();
-                                } else {
-                                    Ext.getCmp("fapiaobianhao").hide();
-                                    Ext.getCmp("fapiaoxiangmu").hide();
-                                }
-                            }
-                        },
-                        valueField: 'abbr',
-                        displayField: 'name',
-                        fieldLabel: '类型'
                     },
                     {
                         xtype: 'textareafield',
@@ -373,9 +372,41 @@ Ext.onReady(function () {
                 chequeType: 3
             },
             success: function (response) {
-                Ext.Msg.alert("提示", response.responseText);
-                winSal.hide();
-
+                var json = Ext.JSON.decode(response.responseText);
+                if(json['approval']){
+                    alert(json['approval']);
+                    Ext.MessageBox.show({
+                        title: '提示',
+                        msg: '该工资还未申请，是否申请？',
+                        width: 250,
+                        buttonText: {ok: '申请', yes: '取消'},
+                        animateTarget: 'mb4',
+                        fn: function (btn) {
+                            if ("ok" == btn) {
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=ExtService&mode=salarySend',
+                                    method: 'post',
+                                    params: {
+                                        timeid:json['approval']
+                                    },
+                                    success : function(response) {
+                                        var text = response.responseText;
+                                        Ext.Msg.alert("提示",text);
+                                        document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
+                                    }
+                                });
+                            }
+                            else if ("yes" == btn) {
+                                document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
+                            }
+                            return false;
+                        },
+                        icon: Ext.MessageBox.INFO
+                    })
+                }else{
+                    Ext.Msg.alert("提示", json['message']);
+                    document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
+                }
             }
         });
     }
@@ -425,7 +456,7 @@ function uploadFile() {
                             success: function (form, action) {
                                 Ext.MessageBox.show({
                                     title: '提示',
-                                    msg: '上传成功！是否导入！',
+                                    msg: '上传成功！是否导入？',
                                     width: 250,
                                     buttonText: {ok: '导入', yes: '取消'},
                                     animateTarget: 'mb4',

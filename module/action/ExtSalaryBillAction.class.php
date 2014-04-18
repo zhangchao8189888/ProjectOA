@@ -71,10 +71,9 @@ class ExtSalaryBillAction extends BaseAction {
      * @throws Exception
      */
     function addInvoice() {
+        $info=array();
         global $billType;
         $exmsg = new EC ();
-        $html="";
-        $comId = $_REQUEST ['companyname'];
         $salaryTime = $_REQUEST ['salaryTime'];
         $billname = $_REQUEST ['billname'];
         $billno = $_REQUEST ['billno'];
@@ -95,27 +94,32 @@ class ExtSalaryBillAction extends BaseAction {
         $lastid = $this->objDao->g_db_last_insert_id ();
         if ($result) {
             // 1代表$billState发票已开
-            $result = $this->objDao->updateSalaryTimeState ( 1, $salaryTime );
-            $succ = "发票添加成功";
+            $this->objDao->updateSalaryTimeState ( 1, $salaryTime );
+            $info['message'] = "发票添加成功";
         } else {
-            $errormsg = "发票添加失败！";
+            $info['message']  = "发票添加失败！";
         }
+
         $adminPO = $_SESSION ['admin'];
+        $adminInfo = $this->objDao->getAdmin ($adminPO['name']);
+        if($adminInfo['admin_type']==3){
+             $salaryApporval= $this->objDao->getApprovalBySalaryTimeId ($salaryTime);
+            if(mysql_fetch_array($salaryApporval)){
+            }else{
+                $info['approval']=$salaryTime;
+            }
+        }
         $opLog = array ();
         $opLog ['who'] = $adminPO ['id'];
         $opLog ['what'] = $lastid;
         $opLog ['Subject'] = OP_LOG_ADD_BILL_INVOICE;
         $opLog ['memo'] = '';
-        // {$OpLog['who']},{$OpLog['what']},{$OpLog['Subject']},{$OpLog['time']},{$OpLog['memo']}
         $rasult = $this->objDao->addOplog ( $opLog );
         if (! $rasult) {
             $exmsg->setError ( __FUNCTION__, "delsalary  add oplog  faild " );
-            $this->objForm->setFormData ( "warn", "失败" );
-            // 事务回滚
-            // $this->objDao->rollback();
             throw new Exception ( $exmsg->error () );
         }
-        echo $errormsg.$succ;
+        echo json_encode($info);
         exit;
     }
 
@@ -123,11 +127,10 @@ class ExtSalaryBillAction extends BaseAction {
      * 添加支票
      */
     function addCheque() {
+        $info=array();
         $exmsg = new EC ();
         global $billType;
         $opLog = array ();
-        // $this->mode="tocheque";
-        $comId = $_REQUEST ['companyname'];
         $salaryTime = $_REQUEST ['salaryTime'];
         $chequeType = $_REQUEST ['chequeType'];
         $chequeval = $_REQUEST ['chequeval'];
@@ -142,7 +145,6 @@ class ExtSalaryBillAction extends BaseAction {
         }
         $memo = $_REQUEST ['memo'];
         $billArray = array ();
-
         $billArray ['salaryTime_id'] = $salaryTime;
         $billArray ['bill_type'] = $billType [$billname];
         $billArray ['bill_date'] = date ( 'Y-m-d H:i:s' );
@@ -158,24 +160,20 @@ class ExtSalaryBillAction extends BaseAction {
         if ($result) {
             // 1代表$billState发票已开
             $result = $this->objDao->updateSalaryTimeState ( $billState, $salaryTime );
-            $succ = $billname . "添加成功";
+            $info['message'] = $billname."添加成功";
             $adminPO = $_SESSION ['admin'];
             $opLog ['who'] = $adminPO ['id'];
             $opLog ['what'] = $lastid;
             $opLog ['memo'] = '';
-            // {$OpLog['who']},{$OpLog['what']},{$OpLog['Subject']},{$OpLog['time']},{$OpLog['memo']}
             $rasult = $this->objDao->addOplog ( $opLog );
             if (! $rasult) {
                 $exmsg->setError ( __FUNCTION__, "delsalary  add oplog  faild " );
-                $this->objForm->setFormData ( "warn", "失败" );
-                // 事务回滚
-                // $this->objDao->rollback();
                 throw new Exception ( $exmsg->error () );
             }
         } else {
-            $errormsg = $billname . "添加失败！";
+            $info['message'] = $billname."添加失败";
         }
-        echo $errormsg.$succ;
+        echo json_encode($info);
         exit;
     }
 

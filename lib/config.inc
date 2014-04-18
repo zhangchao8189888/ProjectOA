@@ -67,6 +67,7 @@ $billType=array(
 	'支票'=>'2',
 	'到账支票'=>'3',
     '工资发放'=>'4',
+    '银行到账'=>'3',
 );
 global $billState;
 $billState=array(
