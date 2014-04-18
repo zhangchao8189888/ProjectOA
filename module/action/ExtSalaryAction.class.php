@@ -111,6 +111,12 @@ class ExtSalaryAction extends BaseAction{
             case "selectExpenses":
                 $this->selectExpenses();
                 break;
+            case "updateAccount":
+                $this->updateAccount();
+                break;
+            case "getImportAccountsTemplate":
+                $this->getImportAccountsTemplate();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -987,13 +993,13 @@ class ExtSalaryAction extends BaseAction{
         $file = $_FILES['photo-path'];
         if($file['type']=='application/vnd.ms-excel'&&$file['size']<3500000){
                 $movefile=   move_uploaded_file($file["tmp_name"],"upload/" . $file["name"]);
-                if($movefile){
-                    $info['success']    =   true;
-                    $info['message'] = $file["name"];
-                }else{
-                    $info['success']    =   false;
-                    $info['message'] = "上传失败，请重试！";
-                }
+            if($movefile){
+                $info['success']    =   true;
+                $info['message'] = $file["name"];
+            }else{
+                $info['success']    =   false;
+                $info['message'] = $file["tmp_name"].$file["name"];
+            }
 
         }else{
             $info['success']    =   false;
@@ -1010,7 +1016,10 @@ class ExtSalaryAction extends BaseAction{
         $sorts=$_REQUEST['sort'];
         $dir=$_REQUEST['dir'];
         $companyName=$_REQUEST['companyName'];
-        $accountDate=$_REQUEST['accountDate'];
+        $accountsType=$_REQUEST['accountsType'];
+        $accountsRemark=$_REQUEST['accountsRemark'];
+        $accountDateb=$_REQUEST['transactionDateb'];
+        $accountDatea=$_REQUEST['transactionDatea'];
         $where=array();
         if(!$start){
             $start=0;
@@ -1018,8 +1027,18 @@ class ExtSalaryAction extends BaseAction{
         if(!$limit){
             $limit=50;
         }
+        $where['accountsType']=$accountsType;
+        $where['accountsRemark']=$accountsRemark;
         $where['companyName']=$companyName;
-        $where['accountDate']=$accountDate;
+        if($accountDateb){
+            $time   =   $this->AssignTabMonth($accountDateb,0);
+            $where['transactionDateb']=$time["data"];
+        }
+        if($accountDatea){
+            $time   =   $this->AssignTabMonth($accountDatea,0);
+            $where['transactionDatea']=$time["data"];
+        }
+
         $sum =$this->objDao->searchAccountListCount($where);
         $salaryTimeList=$this->objDao->searchAccountListPage($start,$limit,$sorts." ".$dir,$where);
         $josnArray=array();
@@ -1041,6 +1060,8 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i]['transactionDate']=$row['transactionDate'];
             $josnArray['items'][$i]['value']=$row['accountsValue'];
             $josnArray['items'][$i]['accountsType']=$row['accountsType'];
+            $josnArray['items'][$i]['accountsRemark']=$row['accountsRemark'];
+            $josnArray['items'][$i]['companyBank']=$row['companyBank'];
             $josnArray['items'][$i]['remark']=$row['remark'];
             $i++;
         }
@@ -1057,35 +1078,70 @@ class ExtSalaryAction extends BaseAction{
             $info['success'] = false;
             $info['message'] = '读取表格发生错误！';
         }
-        if ($return['Sheet1'][0][0] == "单位名称" && $return['Sheet1'][0][1] == "交易日期" && $return['Sheet1'][0][2] == "支出" && $return['Sheet1'][0][3] == "收入"&& $return['Sheet1'][0][4] == "备注") {
+        $companyName    =   -1;
+        $transactionDate    =  -1;
+        $accountsin    =   -1;
+        $accountsout    =   -1;
+        $remark    =  -1;
+        $accountsRemark    =   -1;
+        $companyBank    =  -1;
+        for ($i = 0; $i < count($return['Sheet1'][0]); $i++) {
+            if($return['Sheet1'][0][$i] == "交易日"||$return['Sheet1'][0][$i] == "交易日期" ){
+                $transactionDate    =   $i;
+            }
+            if($return['Sheet1'][0][$i] == "收(付)方名称"||$return['Sheet1'][0][$i] == "单位名称" ){
+                $companyName    =   $i;
+            }
+            if($return['Sheet1'][0][$i] == "收入"||$return['Sheet1'][0][$i] == "借" ){
+                $accountsin    =   $i;
+            }
+            if($return['Sheet1'][0][$i] == "贷"||$return['Sheet1'][0][$i] == "支出"){
+                $accountsout    =   $i;
+            }
+            if($return['Sheet1'][0][$i] == "摘要"||$return['Sheet1'][0][$i] == "备注"){
+                $remark    =   $i;
+            }
+            if($return['Sheet1'][0][$i] == "收(付)方帐号"){
+                $companyBank    =   $i;
+            }
+            if($return['Sheet1'][0][$i] == "交易类型" ){
+                $accountsRemark    =   $i;
+            }
+        }
+        if($companyName!=-1&&$transactionDate!=-1&&$accountsin!=-1&&$accountsout!=-1&&$remark!=-1&&$remark!=-1&&$accountsRemark!=-1&&$companyBank!=-1){
             $info['message'] = '成功读取表格！';
-            $this->objDao = new SalaryDao ();
-            for ($i = 1; $i < count($return['Sheet1']); $i++) {
-                $accountsArray  =   array();
-                $accountsArray['companyName']   =  $return['Sheet1'][$i][0] ;
-                $accountsArray['transactionDate']   =  $return['Sheet1'][$i][1] ;
-                if($return['Sheet1'][$i][2]){
-                    $accountsArray['accountsType']   =  2 ;
-                    $accountsArray['accountsValue']   =  $return['Sheet1'][$i][2] ;
-                }else if($return['Sheet1'][$i][3]){
-                    $accountsArray['accountsType']   =  1 ;
-                    $accountsArray['accountsValue']   =  $return['Sheet1'][$i][3] ;
-                }
-                $accountsArray['remark']   =  $return['Sheet1'][$i][4] ;
-                $result = $this->objDao->insertAccounts($accountsArray);
-                $lastid = $this->objDao->g_db_last_insert_id();
-                if ($result) {
-                    $info['message']  ="添加成功";
-                    $adminPO = $_SESSION ['admin'];
-                    $opLog ['who'] = $adminPO ['id'];
-                    $opLog ['what'] = $lastid;
-                    $opLog ['memo'] = '';
-                    $rasult = $this->objDao->addOplog($opLog);
-                    if (!$rasult) {
-                        $exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
-                        $info['message'] ='添加日志失败！';
-                        throw new Exception ($exmsg->error());
-                    }
+        }else{
+            echo json_encode($info);
+            exit;
+        }
+        $this->objDao = new SalaryDao ();
+        for ($i = 1; $i < count($return['Sheet1']); $i++) {
+            $accountsArray  =   array();
+            $accountsArray['companyName']   =  $return['Sheet1'][$i][$companyName] ;
+            $accountsArray['transactionDate']   =  $return['Sheet1'][$i][$transactionDate] ;
+            if($return['Sheet1'][$i][$accountsout]){
+                $accountsArray['accountsType']   =  2 ;
+                $accountsArray['accountsValue']   =  $return['Sheet1'][$i][$accountsout] ;
+            }else if($return['Sheet1'][$i][$accountsin]){
+                $accountsArray['accountsType']   =  1 ;
+                $accountsArray['accountsValue']   =  $return['Sheet1'][$i][$accountsin] ;
+            }
+            $accountsArray['remark']   =  $return['Sheet1'][$i][$remark] ;
+            $accountsArray['accountsRemark']   =  $return['Sheet1'][$i][$accountsRemark] ;
+            $accountsArray['companyBank']   =  $return['Sheet1'][$i][$companyBank] ;
+            $result = $this->objDao->insertAccounts($accountsArray);
+            $lastid = $this->objDao->g_db_last_insert_id();
+            if ($result) {
+                $info['message']  ="添加成功";
+                $adminPO = $_SESSION ['admin'];
+                $opLog ['who'] = $adminPO ['id'];
+                $opLog ['what'] = $lastid;
+                $opLog ['memo'] = '';
+                $rasult = $this->objDao->addOplog($opLog);
+                if (!$rasult) {
+                    $exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
+                    $info['message'] ='添加日志失败！';
+                    throw new Exception ($exmsg->error());
                 }
             }
         }
@@ -1097,6 +1153,12 @@ class ExtSalaryAction extends BaseAction{
         $this->objDao = new SalaryDao ();
         $salTime = $_REQUEST['salTime'];
         $comId = $_REQUEST['comId'];
+       if($comId==0){
+           $jsonArray['info']="数据库中没有该公司！";
+           echo json_encode($jsonArray);
+           exit ();
+       }
+        $money = $_REQUEST['money'];
         $time = $this->AssignTabMonth($salTime, 0);
         $resultCom = $this->objDao->getComByComLevel($comId);
         if(!mysql_fetch_array($resultCom)){
@@ -1177,8 +1239,56 @@ class ExtSalaryAction extends BaseAction{
             $rowData [$key] = $expenses [$value];
         }
         $jsonArray ['data'] [] = $rowData;
+        $expenses = array();
+        $expenses['单位名称'] =  '<span style="color: green;font-weight:bold">      ——</span>';
+        $expenses['工资月份'] =  '<span style="color: green;font-weight:bold">——</span>';
+        $expenses['实发合计'] =  '<span style="color: green;font-weight:bold">      ——</span>';
+        $expenses['代扣税'] = '<span style="color: green;font-weight:bold">      ——</span>';
+        $expenses['缴中企合计'] ='<span style="color: green;font-weight:bold">'."导入金额".'</span>';
+        $expenses['状态'] ='<span style="color: blue;font-weight:bold">'.$money.'</span>';
+        foreach ($expensesInfo as $key => $value) {
+            $rowFields = array();
+            $rowFields ["name"] = $key;
+            $rowFields ["type"] = 'string';
+            $jsonArray ['fields'] [] = $rowFields;
+            $rowData [$key] = $expenses [$value];
+        }
+        $jsonArray ['data'] [] = $rowData;
         echo json_encode($jsonArray);
         exit ();
+    }
+
+    function updateAccount(){
+        $info = array();
+        $exmsg = new EC ();
+        $this->objDao=new SalaryDao();
+        $id=$_REQUEST['id'];
+        $newCom=$_REQUEST['newCom'];
+        $result = $this->objDao->updateAccount($id,$newCom);
+        $lastid = $this->objDao->g_db_last_insert_id();
+        if ($result) {
+            $info['message']  ="更新成功！";
+            $adminPO = $_SESSION ['admin'];
+            $opLog ['who'] = $adminPO ['id'];
+            $opLog ['what'] = $lastid;
+            $opLog ['memo'] = '';
+            $rasult = $this->objDao->addOplog($opLog);
+            if (!$rasult) {
+                $exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
+                $info['message'] ='添加日志失败！';
+                throw new Exception ($exmsg->error());
+            }
+        }else{
+            $info['message']  ="更新失败！";
+        }
+        echo json_encode($info);
+        exit;
+    }
+
+    function getImportAccountsTemplate() {
+        $json = '{"path":"template/importAccountsTemplate.xls"}';
+        echo $json;
+        exit;
     }
 }
 

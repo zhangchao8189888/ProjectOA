@@ -45,6 +45,8 @@ Ext.onReady(function () {
                         return '<span style="color: green">批准通过</span>';
                     } else if (val == -1) {
                         return '<a href="#" onclick="send(' + record.data['id'] + ')"><span style="color: red">未申请发放</span></a>';
+                    }else if(val ==2){
+                        return '<span style="color: gray">审核未通过</span>';
                     }
                     return val;
                 }

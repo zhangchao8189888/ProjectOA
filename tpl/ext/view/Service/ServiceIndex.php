@@ -648,8 +648,8 @@ var salList=Ext.create("Ext.form.Panel",{
                         memo:remarks
                     },
                     success : function(response) {
-                        var text=   response.responseText;
-                        alert(text);
+                        var json = Ext.JSON.decode(response.responseText);
+                        Ext.Msg.alert("提示", json['message']);
                         document.location='index.php?action=Ext&mode=toServiceIndex';
                     }
                 });

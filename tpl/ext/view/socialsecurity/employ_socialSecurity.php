@@ -86,8 +86,6 @@ Ext.onReady(function(){
                                 ids: Ext.JSON.encode(ids)
                             },
                             success: function (response) {
-                                var text = response.responseText;
-
                                 zengjianListstore.load( {
                                         params: {
                                             search_type:Ext.getCmp("search_type").getValue()
@@ -403,7 +401,6 @@ Ext.onReady(function(){
                 labelWidth: 80
             },
             items: [
-
                 {
                     xtype: 'displayfield',
                     value:"<span style='color: blue'>请创建后缀名为“.xls”的文件进行上传(重名将会覆盖)<br>系统会根据上传类型读取不同列数据：</span>" +
@@ -427,6 +424,18 @@ Ext.onReady(function(){
             ],
 
             buttons: [
+                {
+                    text: '下载增员示例文件',
+                    handler: function () {
+                        window.location.href ="template/importAddEmploySocialSecurity.xls";
+                    }
+                },
+                {
+                    text: '下载减员示例文件',
+                    handler: function () {
+                        window.location.href ="template/importSubsideEmploySocialSecurity.xls";
+                    }
+                },
                 {
                     text: '上传',
                     handler: function () {
@@ -466,8 +475,9 @@ Ext.onReady(function(){
                                         icon: Ext.MessageBox.INFO
                                     })
                                 },
-                                failure: function (form, action) {
-                                    Ext.Msg.alert("警告", action.result.message);
+                                failure: function (response) {
+                                    var json = Ext.JSON.decode(response.responseText);
+                                    Ext.Msg.alert("警告",json['message']);
                                 }
                             });
                         }

@@ -402,23 +402,6 @@ var salList=Ext.create("Ext.form.Panel",{
             width:150,
             name: 'salaryTime',
             fieldLabel:'月份'
-        } ,
-        {
-            xtype: 'combobox',
-            id:"chequeType" ,
-            emptyText: "请选择支票类型",
-            editable: false,
-            allowBlank: false,
-            store: {
-                fields: ['abbr', 'name'],
-                data: [
-                    {"abbr": "2", "name": "到账支票"},
-                    {"abbr": "3", "name": "银行到账"}
-                ]
-            },
-            valueField: 'abbr',
-            displayField: 'name',
-            fieldLabel: '支票类型'
         },
         {
             id:'chequeValue',
@@ -445,7 +428,6 @@ var salList=Ext.create("Ext.form.Panel",{
             var companyId =  Ext.getCmp("company_id").getValue();
             var companyName =  Ext.getCmp("company_name").getValue();
             var sal_state =  Ext.getCmp("sal_state").getValue();
-            var chequeType =   Ext.getCmp("chequeType").getValue();
             var chequeValue =   Ext.getCmp("chequeValue").getValue();
             var remarks =   Ext.getCmp("chequeRemarks").getValue();
             if(chequeValue==null){
@@ -459,7 +441,7 @@ var salList=Ext.create("Ext.form.Panel",{
                     companyId:companyId,
                     companyname:companyName,
                     salaryTime:sal_state,
-                    chequeType:chequeType,
+                    chequeType:3,
                     chequeval:chequeValue,
                     memo:remarks
                 },
@@ -471,7 +453,6 @@ var salList=Ext.create("Ext.form.Panel",{
             });
         }
     },
-    '-',
     {
         text: '清空',
         handler: function () {
@@ -565,7 +546,6 @@ function selectinfo(timeId) {
         },
         closeAction:'close'//hide:单击关闭图标后隐藏，可以调用show()显示。如果是close，则会将window销毁。
     });
-    var title="";
     var url = "index.php?action=SaveSalary&mode=searchSalaryByIdJosn";
 
     Ext.Ajax.request({

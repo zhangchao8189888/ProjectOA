@@ -108,17 +108,32 @@ class ExtSocialSecurityAction extends BaseAction {
         $where = array ();
         $comList = array ();
         $i=0;
+        $where['business_type']="社保";
         $where['shenbaozhuangtai']  =   "等待办理";
         $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
-        $comList ['items'] [$i] ["mattername"] = "增减员信息";
+        $comList ['items'] [$i] ["mattername"] = "社保增减员";
         $comList ['items'] [$i] ["matterWait"] = $resultEmp;
         $where['shenbaozhuangtai']  =   "正在办理";
         $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
-        $comList ['items'] [$i] ["mattername"] = "增减员信息";
+        $comList ['items'] [$i] ["mattername"] = "社保增减员";
         $comList ['items'] [$i] ["matterDoing"] = $resultEmp;
         $where['shenbaozhuangtai']  =   "办理成功";
         $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
-        $comList ['items'] [$i] ["mattername"] = "增减员信息";
+        $comList ['items'] [$i] ["mattername"] = "社保增减员";
+        $comList ['items'] [$i] ["matterClear"] = $resultEmp;
+        $i++;
+        $where['business_type']="公积金";
+        $where['shenbaozhuangtai']  =   "等待办理";
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
+        $comList ['items'] [$i] ["mattername"] = "公积金增减员";
+        $comList ['items'] [$i] ["matterWait"] = $resultEmp;
+        $where['shenbaozhuangtai']  =   "正在办理";
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
+        $comList ['items'] [$i] ["mattername"] = "公积金增减员";
+        $comList ['items'] [$i] ["matterDoing"] = $resultEmp;
+        $where['shenbaozhuangtai']  =   "办理成功";
+        $resultEmp   =   $this->objDao->searhZengjianTongjiCount($where);
+        $comList ['items'] [$i] ["mattername"] = "公积金增减员";
         $comList ['items'] [$i] ["matterClear"] = $resultEmp;
         $i++;
         foreach ( $businessInfo as $key => $value ) {
@@ -660,7 +675,7 @@ class ExtSocialSecurityAction extends BaseAction {
                     $this->objDao->setTypeLizhi($employNumber);
                 }
             }
-            $info['message'] = '操作完毕！';
+
         }else{
             echo "未知的存储类型，请标示“增员”或“减员”！";
         }
@@ -758,7 +773,7 @@ class ExtSocialSecurityAction extends BaseAction {
             }
             $info['message'] = '操作完毕！';
         }else{
-            echo "未知的存储类型，请标示“增员”或“减员”！";
+            $info['message']='未知的存储类型，请标示“增员”或“减员”！';
         }
         echo json_encode($info);
         exit;

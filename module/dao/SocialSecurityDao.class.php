@@ -266,6 +266,9 @@ class SocialSecurityDao extends BaseDao {
             if($where ['shenbaozhuangtai'] != ""){
                 $sql .= "  and shenbaozhuangtai = '{$where['shenbaozhuangtai']}' ";
             }
+            if($where ['business_type'] != ""){
+                $sql .= "  and business_type = '{$where['business_type']}' ";
+            }
         }
         $result = $this->g_db_query ( $sql );
         if (! $result) {

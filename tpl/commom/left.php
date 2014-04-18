@@ -152,15 +152,6 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class="item">
             <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
         </div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toAddInvoice">添加发票</a>
-		</div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toAddCheque">添加支票/到账支票</a>
-		</div>
-		<div class="item">
-			<a href="index.php?action=SalaryBill&mode=toBillList">工资票据查询</a>
-		</div>
 		<!-- 				        <div class="title">Ext</div> -->
 		<!-- 				             <div class="item"><a href="index.php?action=Ext&mode=toExtTable">ExtList</a></div> -->
 		<!-- 						     <div class="item"><a href="index.php?action=Ext&mode=toExtJson">ExtJson</a></div> -->

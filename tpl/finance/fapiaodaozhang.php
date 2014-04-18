@@ -171,14 +171,41 @@ Ext.onReady(function () {
     var salList = Ext.create('Ext.form.Panel', {
         bodyPadding: 10,
         width: 550,
-        height: 350,
+        height: 310,
         items: [
             {
                 xtype: 'fieldcontainer',
                 fieldLabel: '请输入数据',
                 defaultType: 'checkboxfield',
                 items: [
-
+                    {
+                        xtype: 'combobox',
+                        id: "leixing",
+                        editable: false,
+                        emptyText: "请选择类型",
+                        allowBlank: false,
+                        store: {
+                            fields: ['abbr', 'name'],
+                            data: [
+                                {"abbr": "到账", "name": "到账"},
+                                {"abbr": "发票", "name": "发票"}
+                            ]
+                        },
+                        listeners: {
+                            select: function () {
+                                if (this.getValue() == '发票') {
+                                    Ext.getCmp("fapiaobianhao").show();
+                                    Ext.getCmp("fapiaoxiangmu").show();
+                                } else {
+                                    Ext.getCmp("fapiaobianhao").hide();
+                                    Ext.getCmp("fapiaoxiangmu").hide();
+                                }
+                            }
+                        },
+                        valueField: 'abbr',
+                        displayField: 'name',
+                        fieldLabel: '类型'
+                    },
                     {
                         xtype: 'textfield',
                         id: "fapiaobianhao",
@@ -259,34 +286,6 @@ Ext.onReady(function () {
                         fieldLabel: '金额'
                     },
                     {
-                        xtype: 'combobox',
-                        id: "leixing",
-                        editable: false,
-                        emptyText: "请选择类型",
-                        allowBlank: false,
-                        store: {
-                            fields: ['abbr', 'name'],
-                            data: [
-                                {"abbr": "到账", "name": "到账"},
-                                {"abbr": "发票", "name": "发票"}
-                            ]
-                        },
-                        listeners: {
-                            select: function () {
-                                if (this.getValue() == '发票') {
-                                    Ext.getCmp("fapiaobianhao").show();
-                                    Ext.getCmp("fapiaoxiangmu").show();
-                                } else {
-                                    Ext.getCmp("fapiaobianhao").hide();
-                                    Ext.getCmp("fapiaoxiangmu").hide();
-                                }
-                            }
-                        },
-                        valueField: 'abbr',
-                        displayField: 'name',
-                        fieldLabel: '类型'
-                    },
-                    {
                         xtype: 'textareafield',
                         id: "beizhu",
                         width: 400,
@@ -308,7 +307,6 @@ Ext.onReady(function () {
                     }
                 }
             },
-            '-',
             {
                 text: '清空',
                 handler: function () {
@@ -330,7 +328,7 @@ Ext.onReady(function () {
         winSal = Ext.create('Ext.window.Window', {
             title: "添加发票/支票", // 窗口标题
             width: 560, // 窗口宽度
-            height: 320, // 窗口高度
+            height: 350, // 窗口高度
             layout: "border",// 布局
             minimizable: true, // 最大化
             maximizable: true, // 最小化
@@ -357,9 +355,9 @@ Ext.onReady(function () {
     //通过ajax添加信息
     function addXinxi() {
         if (Ext.getCmp("leixing").getValue() == '发票') {
-            var url = "index.php?action=SalaryBill&mode=addInvoice";
+            var url = "index.php?action=ExtSalaryBill&mode=addInvoice";
         } else {
-            var url = "index.php?action=SalaryBill&mode=addCheque";
+            var url = "index.php?action=ExtSalaryBill&mode=addCheque";
         }
         Ext.Ajax.request({
             url: url,  //从json文件中读取数据，也可以从其他地方获取数据
@@ -374,8 +372,41 @@ Ext.onReady(function () {
                 chequeType: 3
             },
             success: function (response) {
-                winSal.hide();
-
+                var json = Ext.JSON.decode(response.responseText);
+                if(json['approval']){
+                    alert(json['approval']);
+                    Ext.MessageBox.show({
+                        title: '提示',
+                        msg: '该工资还未申请，是否申请？',
+                        width: 250,
+                        buttonText: {ok: '申请', yes: '取消'},
+                        animateTarget: 'mb4',
+                        fn: function (btn) {
+                            if ("ok" == btn) {
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=ExtService&mode=salarySend',
+                                    method: 'post',
+                                    params: {
+                                        timeid:json['approval']
+                                    },
+                                    success : function(response) {
+                                        var text = response.responseText;
+                                        Ext.Msg.alert("提示",text);
+                                        document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
+                                    }
+                                });
+                            }
+                            else if ("yes" == btn) {
+                                document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
+                            }
+                            return false;
+                        },
+                        icon: Ext.MessageBox.INFO
+                    })
+                }else{
+                    Ext.Msg.alert("提示", json['message']);
+                    document.location = 'index.php?action=Finance&mode=searchFaPiaoDaoZhang';
+                }
             }
         });
     }
@@ -425,7 +456,7 @@ function uploadFile() {
                             success: function (form, action) {
                                 Ext.MessageBox.show({
                                     title: '提示',
-                                    msg: '上传成功！是否导入！',
+                                    msg: '上传成功！是否导入？',
                                     width: 250,
                                     buttonText: {ok: '导入', yes: '取消'},
                                     animateTarget: 'mb4',

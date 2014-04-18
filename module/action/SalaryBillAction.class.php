@@ -213,6 +213,7 @@ class SalaryBillAction extends BaseAction {
             // $this->objDao->rollback();
             throw new Exception ( $exmsg->error () );
         }
+
         $this->objForm->setFormData ( "errormsg", $errormsg );
         $this->objForm->setFormData ( "succ", $succ );
         $this->toAddInvoice ();
