@@ -419,11 +419,13 @@ class SalaryAction extends BaseAction {
 			$salaryList [Sheet1] [$i] [($count + 3)] = sprintf ( "%01.2f", $jisuan_var [$i] ['gerenyanglao'] ) + 0;
 			$salaryList [Sheet1] [$i] [($count + 4)] = $jisuan_var [$i] ['gerengongjijin'] + 0;
 			$salaryList [Sheet1] [$i] [($count + 5)] = sprintf ( "%01.2f", $jisuan_var [$i] ['daikousui'] ) + 0;
-            if($canjiren[0]==1){
-                $salaryList [Sheet1] [$i] [($count + 5)] /= 2;
-            }
 			$salaryList [Sheet1] [$i] [($count + 6)] = sprintf ( "%01.2f", $jisuan_var [$i] ['koukuanheji'] ) + 0;
 			$salaryList [Sheet1] [$i] [($count + 7)] = sprintf ( "%01.2f", $jisuan_var [$i] ['shifaheji'] ) + 0;
+            if($canjiren[0]==1){
+                $salaryList [Sheet1] [$i] [($count + 5)] /= 2;
+                $salaryList [Sheet1] [$i] [($count + 6)] -=  $salaryList [Sheet1] [$i] [($count + 5)];
+                $salaryList [Sheet1] [$i] [($count + 7)] += $salaryList [Sheet1] [$i] [($count + 5)];
+            }
 			$salaryList [Sheet1] [$i] [($count + 8)] = sprintf ( "%01.2f", $jisuan_var [$i] ['danweishiye'] ) + 0;
 			$salaryList [Sheet1] [$i] [($count + 9)] = sprintf ( "%01.2f", $jisuan_var [$i] ['danweiyiliao'] ) + 0;
 			$salaryList [Sheet1] [$i] [($count + 10)] = sprintf ( "%01.2f", $jisuan_var [$i] ['danweiyanglao'] ) + 0;
