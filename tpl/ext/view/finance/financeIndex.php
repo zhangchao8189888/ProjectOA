@@ -96,6 +96,7 @@ Ext.onReady(function () {
         viewConfig: {
             id: 'gv2',
             trackOver: false,
+            enableTextSelection:true,
             stripeRows: false
         },
 

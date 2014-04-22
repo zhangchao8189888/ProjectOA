@@ -991,7 +991,7 @@ class ExtSalaryAction extends BaseAction{
     function salaryUpload() {
         $info   =   array();
         $file = $_FILES['photo-path'];
-        if($file['type']=='application/vnd.ms-excel'&&$file['size']<3500000){
+        if($file['type']=='application/vnd.ms-excel'){
                 $movefile=   move_uploaded_file($file["tmp_name"],"upload/" . $file["name"]);
             if($movefile){
                 $info['success']    =   true;
@@ -1003,7 +1003,7 @@ class ExtSalaryAction extends BaseAction{
 
         }else{
             $info['success']    =   false;
-            $info['message'] = "只允许上传.xls文件，大小不能超过3M";
+            $info['message'] = "只允许上传.xls文件";
         }
         echo json_encode($info);
         exit;
@@ -1120,10 +1120,10 @@ class ExtSalaryAction extends BaseAction{
             $accountsArray['companyName']   =  $return['Sheet1'][$i][$companyName] ;
             $accountsArray['transactionDate']   =  $return['Sheet1'][$i][$transactionDate] ;
             if($return['Sheet1'][$i][$accountsout]){
-                $accountsArray['accountsType']   =  2 ;
+                $accountsArray['accountsType']   =  1 ;
                 $accountsArray['accountsValue']   =  $return['Sheet1'][$i][$accountsout] ;
             }else if($return['Sheet1'][$i][$accountsin]){
-                $accountsArray['accountsType']   =  1 ;
+                $accountsArray['accountsType']   =  2 ;
                 $accountsArray['accountsValue']   =  $return['Sheet1'][$i][$accountsin] ;
             }
             $accountsArray['remark']   =  $return['Sheet1'][$i][$remark] ;

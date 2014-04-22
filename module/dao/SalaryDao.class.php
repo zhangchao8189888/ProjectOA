@@ -1582,7 +1582,6 @@ VALUES
 		'{$accountsArray['accountsRemark']}',
 		'{$accountsArray['companyBank']}'
 	)";
-        echo($sql);
         $list = $this->g_db_query ( $sql );
         if ($list) {
             return $this->g_db_last_insert_id ();
