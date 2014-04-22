@@ -28,14 +28,11 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Employ&mode=toimport">导入员工</a>
 		</div>
-        <div class="item">
-            <a href="index.php?action=Ext&mode=toAccount">导入收益</a>
-        </div>
 <!--		<div class="item">-->
 <!--			<a href="index.php?action=Employ&mode=toEmlist">员工列表查询</a>-->
 <!--		</div>-->
-        <div class='item'>
-            <a href='index.php?action=Ext&mode=contractInfo'>员工信息</a>
+        <div class="item">
+            <a href="index.php?action=Employ&mode=toEmlistExt">员工列表查询</a>
         </div>
 		<div class="item">
 			<a href="index.php?action=Employ&mode=toComplist">单位列表查询</a>
@@ -157,12 +154,6 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="title">发票管理</div>
         <div class="item">
             <a href="index.php?action=Finance&mode=searchFaPiaoDaoZhang">发票到账</a>
-        </div>
-        <div class="item">
-            <a href="index.php?action=SalaryBill&mode=toAddInvoice">添加发票</a>
-        </div>
-        <div class="item">
-            <a href="index.php?action=SalaryBill&mode=toAddCheque">添加支票/到账支票</a>
         </div>
 		<!-- 				        <div class="title">Ext</div> -->
 		<!-- 				             <div class="item"><a href="index.php?action=Ext&mode=toExtTable">ExtList</a></div> -->

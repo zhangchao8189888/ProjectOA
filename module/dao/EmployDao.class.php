@@ -59,7 +59,12 @@ class EmployDao extends BaseDao
         $result=$this->g_db_query($sql);
         return $result;
     }
-
+    //BY孙瑞鹏，取得是否残疾
+    function getCanjiren($eNo) {
+        $sql = "select e_teshu_state  from OA_employ  where e_num='{$eNo}'";
+        $result = $this->g_db_query ( $sql );
+        return mysql_fetch_array ( $result );
+    }
     function getEmlistbyHetongriqi($comName,$hetongriqi,$hetongriqiEnd){
     	$sql="select *  from  OA_employ  where e_company like '%$comName%' and e_hetong_date>='$hetongriqi' and e_hetong_date<='$hetongriqiEnd'";
     	$result=$this->g_db_query($sql);
