@@ -37,6 +37,7 @@
                 viewConfig: {
                     id: 'gv',
                     trackOver: false,
+                    enableTextSelection:true,
                     stripeRows: false
                 },
                 tbar : [

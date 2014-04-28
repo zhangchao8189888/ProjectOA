@@ -159,6 +159,7 @@ Ext.onReady(function () {
         viewConfig: {
             id: 'gv',
             trackOver: false,
+            enableTextSelection:true,
             stripeRows: false
         },
         bbar: Ext.create('Ext.PagingToolbar', {
@@ -521,7 +522,7 @@ function addBill(comId,companyName,sal_state,sal_date) {
 
     var winSal = Ext.create('Ext.window.Window', {
         title: "添加发票", // 窗口标题
-        width:500, // 窗口宽度
+        width:430, // 窗口宽度
         height:350, // 窗口高度
         layout:"border",// 布局
         minimizable:true, // 最大化
@@ -547,7 +548,7 @@ function addBill(comId,companyName,sal_state,sal_date) {
 }
 
 var salList=Ext.create("Ext.form.Panel",{
-    width: 480,
+    width: 420,
     height: 300,
     bodyPadding: 10,
     labelWidth:50,

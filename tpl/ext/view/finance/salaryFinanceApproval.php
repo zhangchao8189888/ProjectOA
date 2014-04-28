@@ -222,7 +222,7 @@ Ext.onReady(function () {
 function updateSal(eid){
     Ext.MessageBox.show({
         title:'审核工资',
-        msg: '请选择审核结果：',
+        msg: '请选择审核结果：<br><span style="color: red">注:审核通过公司余额将进行扣除操作！（操作不可逆）</span>',
         width:300,
         buttonText:{ok: '同意',yes:'拒绝',no:'取消'},
         animateTarget: 'mb4',

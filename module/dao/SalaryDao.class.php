@@ -1618,7 +1618,15 @@ AND bill_value <=2";
         return $result;
     }
 
-
+    function delAccountsById($id) {
+        $sql = "DELETE
+FROM
+	OA_account
+WHERE
+	id = $id";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
 
 }
 ?>

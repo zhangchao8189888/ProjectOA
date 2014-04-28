@@ -117,6 +117,9 @@ class ExtSalaryAction extends BaseAction{
             case "getImportAccountsTemplate":
                 $this->getImportAccountsTemplate();
                 break;
+            case "delAccountsById":
+                $this->delAccountsById();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -1282,6 +1285,44 @@ class ExtSalaryAction extends BaseAction{
             $info['message']  ="更新失败！";
         }
         echo json_encode($info);
+        exit;
+    }
+
+    function delAccountsById() {
+        $exmsg = new EC (); // 设置错误信息类
+        $this->objDao = new SalaryDao ();
+        // 开始事务
+        $ids   =   $_POST["ids"];
+        $arr=json_decode($ids);
+        foreach($arr as $key=>$value){
+            $this->objDao->beginTransaction ();
+            $result = $this->objDao->delAccountsById ( $value );
+            if (! $result) {
+                $exmsg->setError ( __FUNCTION__, "del   salaryMovement  faild " );
+                // 事务回滚
+                $this->objDao->rollback ();
+                echo("删除失败！");
+                throw new Exception ( $exmsg->error () );
+            }
+
+            $adminPO = $_SESSION ['admin'];
+            $opLog = array ();
+            $opLog ['who'] = $adminPO ['id'];
+            $opLog ['what'] = 0;
+            $opLog ['Subject'] = OP_LOG_DEL_SALARY;
+            $opLog ['memo'] = "delete account info from id=".$value;
+            $rasult = $this->objDao->addOplog ( $opLog );
+            if (! $rasult) {
+                $exmsg->setError ( __FUNCTION__, "delsalary  add oplog  faild " );
+                echo("添加删除操作日志失败！");
+                // 事务回滚
+                $this->objDao->rollback ();
+                throw new Exception ( $exmsg->error () );
+            }
+            // 事务提交
+            $this->objDao->commit ();
+        }
+        echo("操作成功！");
         exit;
     }
 

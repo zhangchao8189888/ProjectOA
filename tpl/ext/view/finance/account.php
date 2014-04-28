@@ -39,6 +39,7 @@ Ext.onReady(function () {
         store:accountstore,
         width:1000,
         height:500,
+        selType: 'checkboxmodel',
         id : 'configGrid',
         name : 'configGrid',
         features: [{
@@ -82,6 +83,67 @@ Ext.onReady(function () {
             {text: "备注", width: 200, dataIndex: 'remark', sortable: false}
         ],
         tbar : [
+            {
+                xtype: 'button',
+                id: 'bt_deleteAcc',
+                handler: function (src) {
+                    var record = Ext.getCmp('configGrid').getSelectionModel().getSelection();
+                    // getSelection()
+                    //var records = grid.getSelectionModel().getSelection();
+                    if (record.length>0) {
+                        Ext.MessageBox.show({
+                            title:'删除本项导入',
+                            msg: '是否要删除选中的导入项？（警告，本过程不可逆！同时更新数据库中对应账目！）',
+                            buttonText:{ok: '确认',no:'取消'},
+                            animateTarget: 'mb4',
+                            fn: function (btn) {
+                                if("no"==btn){
+                                    return false;
+                                }
+                                var itcIds = [];
+                                var itcComs = [];
+                                for (var i = 0; i < record.length; i++) {
+                                    itcIds.push(record[i].data.id);
+                                    itcComs.push(record[i].data.companyId);
+                                }
+                                Ext.Ajax.request({
+                                    url: 'index.php?action=ExtSalary&mode=delAccountsById',
+                                    method: 'post',
+                                    waitTitle : '请等待' ,
+                                    waitMsg: '正在提交中',
+                                    params: {
+                                        ids: Ext.JSON.encode(itcIds),
+                                        coms: Ext.JSON.encode(itcComs)
+                                    },
+                                    success: function (response) {
+                                        var text = response.responseText;
+                                        Ext.Msg.alert('信息',text);
+                                        accountstore.removeAll();
+                                        accountstore.load({
+                                            params: {
+                                                companyName: Ext.getCmp("companyName").getValue(),
+                                                transactionDateb: Ext.getCmp("transactionDateb").getValue(),
+                                                transactionDatea: Ext.getCmp("transactionDatea").getValue(),
+                                                accountsType:Ext.getCmp("accountType").getValue(),
+                                                accountsRemark:Ext.getCmp("accountsRemark").getValue(),
+                                                start: 0,
+                                                limit: 50
+                                            }
+                                        });
+                                    }
+                                });
+                            },
+                            icon: Ext.MessageBox.WARNING
+                        })
+
+                    } else {
+                        Ext.Msg.alert('警告','请选择一条记录！');
+                    }
+
+                },
+                text : '删除',
+                iconCls : 'shanchu'
+            },
             {
                 xtype : 'button',
                 id : 'update',
@@ -170,7 +232,7 @@ Ext.onReady(function () {
                 handler : function(src) {
                     uploadFile();
                 },
-                text : '导入文件',
+                text : '添加支出',
                 iconCls : 'chakan'
             }
         ],

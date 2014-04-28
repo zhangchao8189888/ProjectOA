@@ -45,8 +45,6 @@ $admin = $_SESSION ['admin'];
                 ],
                 height: 700,
                 width: 1000,
-                x: 0,
-                y: 0,
                 title: '单位审批',
                 disableSelection: false,
                 loadMask: true,
@@ -54,6 +52,7 @@ $admin = $_SESSION ['admin'];
                 viewConfig: {
                     id: 'gv',
                     trackOver: false,
+                    enableTextSelection:true,
                     stripeRows: false
                 },
 

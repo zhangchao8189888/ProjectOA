@@ -92,7 +92,7 @@ class ExtAction extends BaseAction{
             case "toInsurance":
                 $this->toInsurance();
                 break;
-            case "toPersonSalary":
+            case "toPersonsalary":
                 $this->toPersonsalary();
                 break;
             case "todemo":

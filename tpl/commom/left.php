@@ -28,11 +28,17 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
 		<div class="item">
 			<a href="index.php?action=Employ&mode=toimport">导入员工</a>
 		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toAccount">导入收益</a>
+        </div>
 <!--		<div class="item">-->
 <!--			<a href="index.php?action=Employ&mode=toEmlist">员工列表查询</a>-->
 <!--		</div>-->
         <div class="item">
             <a href="index.php?action=Employ&mode=toEmlistExt">员工列表查询</a>
+        </div>
+        <div class='item'>
+            <a href='index.php?action=Ext&mode=contractInfo'>员工信息</a>
         </div>
 		<div class="item">
 			<a href="index.php?action=Employ&mode=toComplist">单位列表查询</a>

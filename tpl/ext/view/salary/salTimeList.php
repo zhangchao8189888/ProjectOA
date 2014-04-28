@@ -50,6 +50,7 @@
                 viewConfig: {
                     id: 'gv',
                     trackOver: false,
+                    enableTextSelection:true,
                     stripeRows: false
                 },
                 bbar: Ext.create('Ext.PagingToolbar', {
