@@ -78,6 +78,8 @@ class ExtForm extends BaseForm
                 return"ext/view/socialsecurity/employ_socialSecurity.php";
             case "toBund":
                 return"ext/view/socialsecurity/employ_bund.php";
+            case "toCaiWuDuizhang":
+                return"ext/view/finance/caiWuDuizhang.php";
            default :
                 return "BaseConfig.php";
         }

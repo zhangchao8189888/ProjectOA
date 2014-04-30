@@ -119,6 +119,12 @@ class ExtAction extends BaseAction{
             case "toBund":
                 $this->toBund();
                 break;
+            case "toCaiWuDuizhang":
+                $this->toCaiWuDuizhang();
+                break;
+            case "getCaiWuDuizhangJosn":
+                $this->getCaiWuDuizhangJosn();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -237,6 +243,42 @@ class ExtAction extends BaseAction{
     }
     function toBund(){
         $this->mode="toBund";
+    }
+    function toCaiWuDuizhang() {
+        $this->mode="toCaiWuDuizhang";
+    }
+    function getCaiWuDuizhangJosn() {
+        $start = $_REQUEST ['start'];
+        $limit = $_REQUEST ['limit'];
+        $sorts = $_REQUEST ['sort'];
+        $dir = $_REQUEST ['dir'];
+        if (! $start) {
+            $start = 0;
+        }
+        if (! $limit) {
+            $limit = 50;
+        }
+        if (! $sorts) {
+            $sorts = "uncheckid";
+        }
+        $where = array ();
+        $companyName=$_REQUEST['companyName'];
+        $where['companyName']=$companyName;
+        $this->objDao = new ServiceDao();
+        // 查询公司列表
+        $sum =$this->objDao->manageCompanyCount($where);
+        $result=$this->objDao->manageCompanyPage($start,$limit,$sorts." ".$dir,$where);
+        $comList['total']=$sum;
+        $i = 0;
+        while ( $row = mysql_fetch_array ( $result ) ) {
+            $comList ['items'] [$i] ['id'] = $row ['id'];
+            $comList ['items'] [$i] ['company_name'] = $row ['company_name'];
+            $comList ['items'] [$i] ['account_value'] = $row ['account_value'];
+            $i ++;
+        }
+        echo json_encode($comList);
+        exit ();
+
     }
 }
 

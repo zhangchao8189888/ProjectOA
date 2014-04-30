@@ -1071,6 +1071,41 @@ class ExtSalaryAction extends BaseAction{
         echo json_encode($josnArray);
         exit;
     }
+    function getAccountListByCompany(){
+        $this->objDao=new SalaryDao();
+        $sorts=$_REQUEST['sort'];
+        $dir=$_REQUEST['dir'];
+        $companyName=$_REQUEST['companyName'];
+        $where=array();
+        $where['accountsType']=1;//收入
+        $where['companyName']=$companyName;
+        $salaryTimeList=$this->objDao->searchAccountListPage(null,null,$sorts." ".$dir,$where);
+        $josnArray=array();
+        $i=0;
+        while ($row=mysql_fetch_array($salaryTimeList) ){
+            $josnArray['items'][$i]['id']=$row['id'];
+            $josnArray['items'][$i]['companyName']=$row['companyName'];
+            $josnArray['items'][$i]['accountsType']=$row['accountsType'];
+            $com=$this->objDao->searchCompanyByName($row['companyName']);
+            $josnArray['items'][$i]['companyId']=$com['id'];
+            $josnArray ['items'] [$i]['salaryTime'] =-1;
+            if($row['accountsType']==2){
+                $josnArray ['items'] [$i]['salType'] = 1;
+            }else if($row['accountsType']==1){
+                $josnArray ['items'] [$i]['salType'] = 0;
+            }
+
+            $josnArray['items'][$i]['transactionDate']=$row['transactionDate'];
+            $josnArray['items'][$i]['value']=$row['accountsValue'];
+            $josnArray['items'][$i]['accountsType']=$row['accountsType'];
+            $josnArray['items'][$i]['accountsRemark']=$row['accountsRemark'];
+            $josnArray['items'][$i]['companyBank']=$row['companyBank'];
+            $josnArray['items'][$i]['remark']=$row['remark'];
+            $i++;
+        }
+        echo json_encode($josnArray);
+        exit;
+    }
     function importAccounts() {
         $exmsg = new EC ();
         $filename = $_REQUEST["filename"];

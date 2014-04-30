@@ -1028,3 +1028,32 @@ var accountstore = Ext.create('Ext.data.Store', {
         direction: 'DESC'
     }]
 });
+var accountCompanyListStore = Ext.create('Ext.data.Store', {
+    pageSize: 50,
+    model: 'oa.common.account.duizhangComp',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=Ext&mode=getCaiWuDuizhangJosn',
+
+        reader: {
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});

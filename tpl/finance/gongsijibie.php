@@ -441,7 +441,7 @@
                         var record = Ext.getCmp('companyList').getSelectionModel().getSelection();
                         if (record) {
                             var itcIds = [];
-                            for(var i=0;i<record.length;i++){
+                            for(var i=0;i< record.length;i++){
                                 itcIds.push(record[i].data.id);
                             }
                             Ext.Ajax.request({

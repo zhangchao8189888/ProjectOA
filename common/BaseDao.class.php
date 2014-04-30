@@ -208,7 +208,7 @@ class BaseDao extends db {
      */
     function manageCompanyPage($start = NULL, $limit = NULL, $sort = NULL, $where = null){
         $id = $_SESSION ['admin'] ['id'];
-        $sql    =   "SELECT c.id,c.company_name FROM OA_company c,OA_admin_company a WHERE a.adminId = $id AND a.companyId = c.id";
+        $sql    =   "SELECT c.id,c.company_name,c.account_value  FROM OA_company c,OA_admin_company a WHERE a.adminId = $id AND a.companyId = c.id";
         if ($where != null) {
             if ($where ['companyName'] != "") {
                 $sql .= " and company_name like '%{$where['companyName']}%' ";

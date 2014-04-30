@@ -577,3 +577,14 @@ Ext.define('oa.common.account.list',{
         {name: 'salType', type: 'string'}
     ]
 });
+/**
+ * 公司对账model
+ */
+Ext.define('oa.common.account.duizhangComp',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id'},
+        {name: 'company_name', type: 'string'},
+        {name: 'account_value', type: 'double'}
+    ]
+});
