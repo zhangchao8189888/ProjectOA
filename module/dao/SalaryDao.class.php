@@ -1529,6 +1529,9 @@ AND salaryTime = '$sal'";
             if ($where ['companyName'] != "") {
                 $sql .= " and companyName like '%{$where['companyName']}%' ";
             }
+            if ($where ['companyId'] != "") {
+                $sql .= " and companyId = {$where ['companyId']}";
+            }
             if ($where ['transactionDateb'] != "") {
                 $sql .= " and transactionDate> '{$where['transactionDateb']}' ";
             }
@@ -1563,19 +1566,21 @@ WHERE
     }
     function insertAccounts($accountsArray){
         $sql = "
-INSERT INTO OA_account (
+ insert into OA_account (
 	transactionDate,
 	accountsType,
+    companyId,
 	companyName,
 	accountsValue,
 	remark,
 	accountsRemark,
 	companyBank
 )
-VALUES
+values
 	(
 	'{$accountsArray['transactionDate']}',
 	'{$accountsArray['accountsType']}',
+		{$accountsArray['companyId']},
 		'{$accountsArray['companyName']}',
 		'{$accountsArray['accountsValue']}',
 		'{$accountsArray['remark']}',

@@ -54,7 +54,15 @@ Ext.onReady(function () {
 
             {text: "操作序号", width: 80, dataIndex: 'id', sortable: true,hidden:true},
             {text: "单位编号", width: 80, dataIndex: 'companyId', sortable: true,hidden:true},
-            {text: "单位名称", width: 170, dataIndex: 'companyName', sortable: true},
+            {text: "单位名称", width: 170, dataIndex: 'companyName', sortable: true,
+                renderer:function(val,cellmeta,record){
+                    if(record.data['companyId'] > 0){
+                        return  '<span style="color:green ">'+record.data['companyName']+'</span>';
+                    } else {
+                        return '<span style="color:red ">'+record.data['companyName']+'</span>';
+                    }
+                    return val;
+                }},
             {text: "交易日期", width: 100, dataIndex: 'transactionDate', sortable: true},
             {text: "交易类型", width: 100, dataIndex: 'accountsType', sortable: true,
                 renderer:function(val,cellmeta,record){
@@ -281,6 +289,7 @@ Ext.onReady(function () {
 function uploadFile() {
     var filewin = Ext.create('Ext.form.Panel', {
         width: 400,
+        height:200,
         frame: true,
         bodyPadding: '10 10 0',
         defaults: {

@@ -275,5 +275,9 @@ $expensesInfo   =   array(
     '5' => '缴中企合计',
     '6' => '状态',
 );
-
+global $accountType;
+$accountType   =   array(
+    '收入' => 1,
+    '支出' => 2,
+);
 ?>

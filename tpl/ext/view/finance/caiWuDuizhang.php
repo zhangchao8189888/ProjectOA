@@ -30,55 +30,53 @@ var  winSaler = [];
 var winSal;
 function displayInnerGrid(renderId) {
 
-    insideGridStore[renderId] = Ext.create('Ext.data.Store', {
-        //分页大小
-        pageSize: 50,
-        model: 'oa.common.erjigongsi.list',
-        //是否在服务端排序
-        remoteSort: true,
-        proxy: {
-            //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
-            type: 'ajax',
-            actionMethods: {
-                create : 'POST',
-                read   : 'POST', // by default POST
-                update : 'POST',
-                destroy: 'POST'
-            },
-            url : 'index.php?action=ExtSalary&mode=searchErjigongsi',
-
-            reader: {
-                root: 'items',
-                totalProperty  : 'total'
-            },
-            simpleSortMode: true
-        },
-        sorters: [{
-            //排序字段。
-            property: 'id',
-            //排序类型，默认为 ASC
-            direction: 'DESC'
-        }]
-    });
+    insideGridStore[renderId] = duizhangStore;
     innerGrid[renderId] = Ext.create('Ext.grid.Panel', {
         store: insideGridStore[renderId],
         selType: 'checkboxmodel',
-        columns: [
-            {text: "编号", width: 120, dataIndex: 'id', sortable: false},
-            {text: "单位名称", flex: 200, dataIndex: 'company_name', sortable: false},
-            {text: "公司级别", flex: 200, dataIndex: 'company_level', sortable: false}
+        columns : [
+
+            {text: "操作序号", width: 80, dataIndex: 'id', sortable: true,hidden:true},
+            {text: "单位编号", width: 80, dataIndex: 'companyId', sortable: true,hidden:true},
+            {text: "单位名称", width: 170, dataIndex: 'companyName', sortable: true},
+            {text: "交易日期", width: 100, dataIndex: 'transactionDate', sortable: true},
+            {text: "交易类型", width: 100, dataIndex: 'accountsType', sortable: true,
+                renderer:function(val,cellmeta,record){
+                    if(val ==1){
+                        return  '<span style="color:gray ">收入</span>';
+                    } else if(val ==2){
+                        return '<span style="color:green ">支出</span>';
+                    }
+                    return val;
+                }
+            },
+            {text: "类型说明", width: 100, dataIndex:  'accountsRemark', sortable: true},
+            {text: "交易账号", width: 100, dataIndex: 'companyBank', sortable: true},
+
+            {text: "金额", width: 100, dataIndex: 'value',sortable:false},
+            {text: "操作", width: 120, dataIndex: 'salType', sortable: false,align:'center',
+                renderer:function(val,cellmeta,record){
+                    if (val == 1) {
+                        return  '<a href="#" title="搜索工资" onclick=selectExpenses(' + record.data['companyId'] + ',"' + record.data['transactionDate'] + '","' + record.data['companyName'] + '","' + record.data['value'] + '")><span style="color:green ">查询工资</span></a>';
+                    } else if (val == 0) {
+                        return '<span style="color:gray ">收入业务</span>';
+                    }
+                    return val;
+                }
+            },
+            {text: "备注", width: 200, dataIndex: 'remark', sortable: false}
         ],
         columnLines: true,
 //                autoWidth: true,
-        width:500,
+        width:1000,
         autoHeight: true,
         disableSelection: false,
         frame: false,
-        title: '二级单位',
+        title: '收入详细',
         tbar : [
             {
                 xtype : 'button',
-                id : 'tiquan'+renderId,
+                id : 'gongzi'+renderId,
                 disabled: false,
                 handler : function(src) {
                     var record = innerGrid[renderId].getSelectionModel().getSelection();
@@ -118,12 +116,12 @@ function displayInnerGrid(renderId) {
                         return;
                     }
                 },
-                text : '设为一级公司',
+                text : '支出工资',
                 iconCls : 'tiquan'+renderId
             },
             {
                 xtype : 'button',
-                id : 'zhuanyi'+renderId,
+                id : 'shebao'+renderId,
                 disabled: false,
                 handler : function(src) {
                     var model =  innerGrid[renderId].getSelectionModel();
@@ -141,7 +139,30 @@ function displayInnerGrid(renderId) {
                         return;
                     }
                 },
-                text : '改变所属公司',
+                text : '支出社保',
+                iconCls : 'zhuanyi'+renderId
+            },
+            {
+                xtype : 'button',
+                id : 'gongjijin'+renderId,
+                disabled: false,
+                handler : function(src) {
+                    var model =  innerGrid[renderId].getSelectionModel();
+                    var sel=model.getSelection();
+                    if(sel[0] && !sel[1]){
+                        checkSalWinEr(sel[0].data.id);
+                        comListSuperStore.removeAll();
+                        comListSuperStore.load( {
+                            params : {
+
+                            }
+                        });
+                    }else{
+                        Ext.Msg.alert("提示","请选择一个公司并且只选择一个公司保证操作准确");
+                        return;
+                    }
+                },
+                text : '支出公积金',
                 iconCls : 'zhuanyi'+renderId
             }
         ],
@@ -292,11 +313,11 @@ Ext.onReady(function () {
         id : 'comlist',
         columns: [
             {text: "编号", width: 120, dataIndex: 'id', sortable: true},
-            {text: "单位名称", width: 200, dataIndex: 'company_name', sortable: true},
-            {text: "实时余额", width: 200, dataIndex: 'account_value', sortable: true}
+            {text: "单位名称", width: 500, dataIndex: 'company_name', sortable: true},
+            {text: "实时余额", width: 500, dataIndex: 'account_value', sortable: true}
         ],
         height:700,
-        width:1000,
+        width:1500,
         x:0,
         y:0,
         plugins: [{
