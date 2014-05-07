@@ -37,38 +37,18 @@ function displayInnerGrid(renderId) {
         columns : [
 
             {text: "操作序号", width: 80, dataIndex: 'id', sortable: true,hidden:true},
-            {text: "单位编号", width: 80, dataIndex: 'companyId', sortable: true,hidden:true},
             {text: "单位名称", width: 170, dataIndex: 'companyName', sortable: true},
             {text: "交易日期", width: 100, dataIndex: 'transactionDate', sortable: true},
-            {text: "交易类型", width: 100, dataIndex: 'accountsType', sortable: true,
-                renderer:function(val,cellmeta,record){
-                    if(val ==1){
-                        return  '<span style="color:gray ">收入</span>';
-                    } else if(val ==2){
-                        return '<span style="color:green ">支出</span>';
-                    }
-                    return val;
-                }
-            },
-            {text: "类型说明", width: 100, dataIndex:  'accountsRemark', sortable: true},
-            {text: "交易账号", width: 100, dataIndex: 'companyBank', sortable: true},
-
-            {text: "金额", width: 100, dataIndex: 'value',sortable:false},
-            {text: "操作", width: 120, dataIndex: 'salType', sortable: false,align:'center',
-                renderer:function(val,cellmeta,record){
-                    if (val == 1) {
-                        return  '<a href="#" title="搜索工资" onclick=selectExpenses(' + record.data['companyId'] + ',"' + record.data['transactionDate'] + '","' + record.data['companyName'] + '","' + record.data['value'] + '")><span style="color:green ">查询工资</span></a>';
-                    } else if (val == 0) {
-                        return '<span style="color:gray ">收入业务</span>';
-                    }
-                    return val;
-                }
-            },
+            {text: "收入金额", width: 100, dataIndex: 'value',sortable:false},
+            {text: "实发合计", width: 100, dataIndex: 'shifaheji',sortable:false},
+            {text: "工资状态", width: 100, dataIndex: 'salType',sortable:false},
+            {text: "个税合计", width: 100, dataIndex: 'daikoushui',sortable:false},
+            {text: "社保合计", width: 100, dataIndex: 'shebaoheji',sortable:false},
             {text: "备注", width: 200, dataIndex: 'remark', sortable: false}
         ],
         columnLines: true,
 //                autoWidth: true,
-        width:1000,
+        width:1200,
         autoHeight: true,
         disableSelection: false,
         frame: false,

@@ -578,6 +578,28 @@ Ext.define('oa.common.account.list',{
     ]
 });
 /**
+ * 对账详情store
+ */
+Ext.define('oa.common.account.detail.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', type: 'int'},
+        {name: 'companyName', type: 'string'},
+        {name: 'companyId', type: 'int'},
+        {name: 'transactionDate', type: 'string'},
+        {name: 'accountsType', type: 'string'},
+        {name: 'accountsRemark', type: 'string'},
+        {name: 'companyBank', type: 'string'},
+        {name: 'companyName', type: 'string'},
+        {name: 'value', type: 'double'},
+        {name: 'shifaheji', type: 'double'},
+        {name: 'salType', type: 'string'},
+        {name: 'daikoushui', type: 'double'},
+        {name: 'shebaoheji', type: 'double'},
+        {name: 'remark', type: 'string'}
+    ]
+});
+/**
  * 公司对账model
  */
 Ext.define('oa.common.account.duizhangComp',{

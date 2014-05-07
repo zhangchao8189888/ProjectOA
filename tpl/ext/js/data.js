@@ -1030,7 +1030,7 @@ var accountstore = Ext.create('Ext.data.Store', {
 });
 var duizhangStore = Ext.create('Ext.data.Store', {
     pageSize: 50,
-    model: 'oa.common.account.list',
+    model: 'oa.common.account.detail.list',
     //是否在服务端排序
     remoteSort: true,
     proxy: {
