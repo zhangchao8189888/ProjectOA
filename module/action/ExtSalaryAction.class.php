@@ -1090,15 +1090,34 @@ class ExtSalaryAction extends BaseAction{
             $josnArray['items'][$i]['id']=$row['id'];
             $josnArray['items'][$i]['companyName']=$row['companyName'];
             $josnArray['items'][$i]['accountsType']=$row['accountsType'];
-            $com=$this->objDao->searchCompanyByName($row['companyName']);
-            $josnArray['items'][$i]['companyId']=$com['id'];
-            $josnArray ['items'] [$i]['salaryTime'] =-1;
-            if($row['accountsType']==2){
-                $josnArray ['items'] [$i]['salType'] = 1;
-            }else if($row['accountsType']==1){
-                $josnArray ['items'] [$i]['salType'] = 0;
+            $josnArray['items'][$i]['companyId']=$companyId;
+            $time = $this->AssignTabMonth($row['transactionDate'], 0);//查询收入日期月份
+            $salTimeInfo = $this->objDao->searhSalaryTimeListByComIdAndDate($time["month"], $companyId);
+            if ($salTimeInfo) {
+                $salaryHejiList = $this->objDao->searchSumSalaryListBy_SalaryTimeId($salTimeInfo['id']);
+                while ($rowheji = mysql_fetch_array($salaryHejiList)) {
+                    $josnArray['items'][$i]['shifaheji'] = $rowheji['sum_per_shifaheji'];
+                    $josnArray['items'][$i]['daikoushui'] = $rowheji['sum_per_daikoushui'];
+                    $josnArray['items'][$i]['shebaoheji'] =
+                        $rowheji['sum_per_shiye']+$rowheji['sum_per_yiliao']+
+                        $rowheji['sum_per_yanglao']+$rowheji['sum_per_gongjijin']+
+                        $rowheji['sum_com_shiye']+$rowheji['sum_com_yiliao']+
+                        $rowheji['sum_com_yanglao']+$rowheji['sum_com_gongshang']+
+                        $rowheji['sum_com_shengyu']+$rowheji['sum_com_gongjijin'];
+                }
+                $bill_fa = $this->objDao->searchBillBySalaryTimeId($salTimeInfo['id'], 4);
+                if ($bill = mysql_fetch_array($bill_fa)) {
+                    if ($bill['bill_value']) {
+                        if ($bill['bill_value'] == 0) {
+                            $josnArray['items'][$i]['salType'] = '<span style="color: blue">等待审批</span>';
+                        } elseif ($bill['bill_value'] == 1) {
+                            $josnArray['items'][$i]['salType'] = '<span style="color:green ">审批通过</span>';
+                        } elseif ($bill['bill_value'] == 2) {
+                            $josnArray['items'][$i]['salType'] = '<span style="color:gray ">审批未通过</span>';
+                        }
+                    }
+                }
             }
-
             $josnArray['items'][$i]['transactionDate']=$row['transactionDate'];
             $josnArray['items'][$i]['value']=$row['accountsValue'];
             $josnArray['items'][$i]['accountsType']=$row['accountsType'];
