@@ -56,29 +56,31 @@ function displayInnerGrid(renderId) {
         tbar : [
             {
                 xtype : 'button',
-                id : 'gongzi'+renderId,
+                id : 'shebao'+renderId,
                 disabled: false,
                 handler : function(src) {
                     var record = innerGrid[renderId].getSelectionModel().getSelection();
                     if (record) {
                         var itcIds = [];
+                        var shebaoValues = [];
                         if(record.length>0){
                             for(var i=0;i<record.length;i++){
-                                itcIds.push(record[i].data.id);
+                                itcIds.push(record[i].data.companyId);
+                                shebaoValues.push(record[i].data.shebaoheji);
                             }
 
                             Ext.Ajax.request({
-                                url:'index.php?action=SaveSalary&mode=setTypeGongsijibie',
+                                url:'index.php?action=ExtFinance&mode=updateCompanyAccountValueJson',
                                 method: 'post',
                                 params: {
-                                    superId:0,
-                                    ids : Ext.JSON.encode(itcIds)
+                                    accountValues: Ext.JSON.encode(shebaoValues),
+                                    comIds : Ext.JSON.encode(itcIds)
                                 },
                                 success: function(response){
                                     var text = response.responseText;
                                     Ext.Msg.alert("提示",text);
-                                    gongsijibie.removeAll();
-                                    gongsijibie.load( {
+                                    comListSuperStore.removeAll();
+                                    comListSuperStore.load( {
                                         params : {
                                             start : 0,
                                             limit : 50
@@ -96,54 +98,55 @@ function displayInnerGrid(renderId) {
                         return;
                     }
                 },
-                text : '支出工资',
+                text : '支出社保合计',
                 iconCls : 'tiquan'+renderId
             },
             {
                 xtype : 'button',
-                id : 'shebao'+renderId,
+                id : 'daikoushui'+renderId,
                 disabled: false,
                 handler : function(src) {
-                    var model =  innerGrid[renderId].getSelectionModel();
-                    var sel=model.getSelection();
-                    if(sel[0]&& !sel[1]){
-                        checkSalWinEr(sel[0].data.id);
-                        comListSuperStore.removeAll();
-                        comListSuperStore.load( {
-                            params : {
-
+                    var record = innerGrid[renderId].getSelectionModel().getSelection();
+                    if (record) {
+                        var itcIds = [];
+                        var shebaoValues = [];
+                        if(record.length>0){
+                            for(var i=0;i<record.length;i++){
+                                itcIds.push(record[i].data.companyId);
+                                shebaoValues.push(record[i].data.daikoushui);
                             }
-                        });
-                    }else{
-                        Ext.Msg.alert("提示","请选择一个公司并且只选择一个公司保证操作准确");
+
+                            Ext.Ajax.request({
+                                url:'index.php?action=ExtFinance&mode=updateCompanyAccountValueJson',
+                                method: 'post',
+                                params: {
+                                    accountValues: Ext.JSON.encode(shebaoValues),
+                                    comIds : Ext.JSON.encode(itcIds)
+                                },
+                                success: function(response){
+                                    var text = response.responseText;
+                                    Ext.Msg.alert("提示",text);
+                                    comListSuperStore.removeAll();
+                                    comListSuperStore.load( {
+                                        params : {
+                                            start : 0,
+                                            limit : 50
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            Ext.Msg.alert("提示","请选择公司。");
+                            return;
+                        }
+
+                    } else {
+                        Ext.Msg.alert("提示","'请选择一条记录");
                         return;
                     }
                 },
-                text : '支出社保',
-                iconCls : 'zhuanyi'+renderId
-            },
-            {
-                xtype : 'button',
-                id : 'gongjijin'+renderId,
-                disabled: false,
-                handler : function(src) {
-                    var model =  innerGrid[renderId].getSelectionModel();
-                    var sel=model.getSelection();
-                    if(sel[0] && !sel[1]){
-                        checkSalWinEr(sel[0].data.id);
-                        comListSuperStore.removeAll();
-                        comListSuperStore.load( {
-                            params : {
-
-                            }
-                        });
-                    }else{
-                        Ext.Msg.alert("提示","请选择一个公司并且只选择一个公司保证操作准确");
-                        return;
-                    }
-                },
-                text : '支出公积金',
-                iconCls : 'zhuanyi'+renderId
+                text : '支出代扣税',
+                iconCls : 'daikoushui'+renderId
             }
         ],
         iconCls: 'icon-grid',

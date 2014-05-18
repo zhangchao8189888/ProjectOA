@@ -58,6 +58,10 @@ class ExtFinanceAction extends BaseAction {
             case "cancelManage":
                 $this->cancelManage();
                 break;
+            case "updateCompanyAccountValueJson":
+                $this->updateCompanyAccountValueJson();
+                break;
+
 			default :
 				$this->modelInput ();
 				break;
@@ -241,6 +245,33 @@ class ExtFinanceAction extends BaseAction {
     }
 
     /**
+     * 修改公司帐户余额
+     */
+    function updateCompanyAccountValueJson () {
+        $comIds = json_decode($_POST['comIds']);
+        $values = json_decode($_POST['accountValues']);
+        $this->objDao = new SalaryDao ();
+        $i = 0;
+        foreach ($comIds as $comId) {
+            echo $comId."sss";
+            $companyInfo = $this->objDao->getCompanyById($comId);//查询公司信息
+            $companyInfo = mysql_fetch_array($companyInfo);
+            $sumValue = $companyInfo['account_value'] - $values[$i];//计算出合计值
+            if ($sumValue < 0) {
+                $sumValue = 0;
+            }
+            $result = $this->objDao->updateComanyAccountvalue($comId,$sumValue);
+            if (!$result) {
+                echo("操作失败，请重试！");
+                exit;
+            }
+            $i ++;
+        }
+
+        echo("操作成功！");
+        exit;
+    }
+    /**
      * 审核工资
      */
     function opShenPi() {
@@ -251,7 +282,18 @@ class ExtFinanceAction extends BaseAction {
         $bill ['bill_value'] = $_POST ['shenPiType'];
         $this->objDao = new SalaryDao ();
         $result = $this->objDao->updateBillById ( $bill );
-        if (! $result) {
+        if ($result) {
+            $billInfo = $this->objDao->searchBillById($bill ['id']);
+                //修改公司余额
+            $salaryHejiList = $this->objDao->searchSumSalaryListBy_SalaryTimeId($billInfo['salaryTime_id']);
+            $hejiInfo = mysql_fetch_array($salaryHejiList);//合计表信息
+            $companyInfo = $this->objDao->getCompanyById($hejiInfo['companyId']);//查询公司信息
+            $sumValue = $companyInfo['account_value'] - $hejiInfo['sum_per_shifaheji'];//计算出合计值
+            if ($sumValue < 0) {
+                $sumValue = 0;
+            }
+            $this->objDao->updateComanyAccountvalue($hejiInfo['companyId'],$sumValue);
+        } else {
             echo("操作失败，请重试！");
             exit;
         }

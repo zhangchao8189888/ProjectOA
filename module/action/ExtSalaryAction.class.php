@@ -1217,6 +1217,12 @@ class ExtSalaryAction extends BaseAction{
             $com=$this->objDao->searchCompanyByName($accountsArray['companyName']);
             if ($com['id']) {
                 $accountsArray['companyId']=$com['id'];
+                if($return['Sheet1'][$i][$accountsout] && $return['Sheet1'][$i][$accountsout] > 0){
+                    //更新公司收入金额
+                    $accountValue = $com['account_value'] + $return['Sheet1'][$i][$accountsout];
+                    $this->objDao->updateComanyAccountvalue($com['id'],$accountValue);
+                }
+
             } else {
                 $accountsArray['companyId']=0;
             }

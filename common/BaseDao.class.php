@@ -29,6 +29,11 @@ class BaseDao extends db {
 		$result = $this->g_db_query ( $sql );
 		return mysql_fetch_array ( $result );
 	}
+    function updateComanyAccountvalue($comId,$value) {
+        $sql = "update  OA_company set account_value = $value where id = $comId";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
     function searchCompanyidByName($companyName) {
         $sql = "select id from  OA_company where company_name='{$companyName}'";
         $result = $this->g_db_query ( $sql );
