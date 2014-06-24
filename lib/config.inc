@@ -6,14 +6,14 @@ require_once( 'lib/functions.inc' );
 require_once( 'lib/log.class.inc' );
 require_once( 'lib/EC.class.inc' );
 
- define('DB_HOST','qdm-001.hichina.com');
+/* define('DB_HOST','qdm-001.hichina.com');
 define('DB_NAME','qdm0010465_db');
 define('DB_USER','qdm0010465');
-define('DB_PASS','l2x2y0t5o8');
-/*define('DB_HOST','localhost');
-define('DB_NAME','company_OA');
+define('DB_PASS','l2x2y0t5o8');*/
+define('DB_HOST','182.92.81.13');
+define('DB_NAME','oa');
 define('DB_USER','root');
-define('DB_PASS','');*/
+define('DB_PASS','Hello0617');
 define('UPLOADPATH','upload/');
 define('DUIBIUPLOADPATH','upload/duiBi/');
 //define('UPLOADPATH','$(UPLOADPATH)');

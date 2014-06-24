@@ -10,7 +10,7 @@
 <script language="javascript" type="text/javascript" src="common/ext/locale/ext-lang-zh_CN.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"src="tpl/ext/js/model.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript"src="tpl/ext/js/data.js" charset="utf-8"></script>
-<script language="javascript" type="text/javascript"src="tpl/ext/js/MonthPickerPlugin.js" charset="utf-8"></script>
+<script language="javascript" type="text/javascript"src="tpl/ext/js/monthPickerPlugin.js" charset="utf-8"></script>
 <script language="javascript" type="text/javascript" src="common/js/jquery_last.js" charset="utf-8"></script>
 <style type="text/css">
     <!--

@@ -362,6 +362,7 @@ class ExtFinanceAction extends BaseAction {
         echo json_encode ( $josnArray );
         exit ();
     }
+
 //工资查看BY孙瑞鹏
     function searchGongzibiao(){
         $this->objDao = new FinanceDao ();
