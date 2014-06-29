@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class db{
 function db(){
 //echo "db structi</br>";

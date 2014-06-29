@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once("common/BaseDao.class.php");
 require_once("common/BaseForm.class.php");
 class BaseAction
@@ -49,6 +49,24 @@ class BaseAction
         if (isset($this->objDao)) {
             $this->objDao->closeConnect();
         }
+    }
+    function AssignTabMonth($date,$step){
+        $date= date("Y-m-d",strtotime($step." months",strtotime($date)));//得到处理后的日期（得到前后月份的日期）
+        $u_date = strtotime($date);
+        $days=date("t",$u_date);// 得到结果月份的天数
+
+        //月份第一天的日期
+        $first_date=date("Y-m",$u_date).'-01';
+        for($i=0;$i<$days;$i++){
+            $for_day=date("Y-m-d",strtotime($first_date)+($i*3600*24));
+        }
+        $time = array ();
+        $time["data"]   =  $date ;
+        $time["next"]   =   (date("Y-m-d",strtotime("+1 day",strtotime($date))));
+        $time["month"]  =   (date("Y-m",strtotime($date)));
+        $time["first"]  =    $first_date;
+        $time["last"]   =      $for_day;
+        return $time;
     }
 }
 ?>

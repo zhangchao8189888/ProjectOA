@@ -610,3 +610,19 @@ Ext.define('oa.common.account.duizhangComp',{
         {name: 'account_value', type: 'double'}
     ]
 });
+/**
+ * 公司总额查询
+ */
+Ext.define('oa.common.company.comListTotalSal',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id'},
+        {name: 'company_name', type: 'string'},
+        {name: 'salTime', type: 'string'},
+        {name: 'salTimeId', type: 'int'},
+        {name: 'salTotal', type: 'double'},
+        {name: 'salErTotal', type: 'double'},
+        {name: 'salErNum', type: 'int'},
+        {name: 'salNianTotal', type: 'double'}
+    ]
+});

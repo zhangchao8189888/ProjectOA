@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class log{
 	  private $logdata=array();
       private $beginlogchar="*";

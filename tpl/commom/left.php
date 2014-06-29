@@ -205,6 +205,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
             <a href="index.php?action=Ext&mode=toAccount">导入收益</a>
         </div>
         <div class="item">
+            <a href="index.php?action=PageIndex&mode=toCompanyTotalByTimeListPage">工资总数查询</a>
+        </div>
+        <div class="item">
             <a href="index.php?action=Ext&mode=toCaiWuDuizhang">公司对账</a>
         </div>
 		<div class='item'>

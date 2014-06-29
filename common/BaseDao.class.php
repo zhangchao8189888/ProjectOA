@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class BaseDao extends db {
 	function BaseDao() {
 		// echo "BaseDao</br> ";

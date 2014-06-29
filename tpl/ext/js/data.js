@@ -1086,3 +1086,33 @@ var accountCompanyListStore = Ext.create('Ext.data.Store', {
         direction: 'DESC'
     }]
 });
+var adminCompanyListStore = Ext.create('Ext.data.Store', {
+    pageSize: 50,
+    model: 'oa.common.company.comListTotalSal',
+    //是否在服务端排序
+    remoteSort: true,
+    proxy: {
+        //异步获取数据，这里的URL可以改为任何动态页面，只要返回JSON数据即可
+        type: 'ajax',
+        actionMethods: {
+            create : 'POST',
+            read   : 'POST', // by default POST
+            update : 'POST',
+            destroy: 'POST'
+        },
+        url : 'index.php?action=AjaxJson&mode=getAdminCompanyListJson',
+
+        reader: {
+            type: 'json',
+            root: 'items',
+            totalProperty  : 'total'
+        },
+        simpleSortMode: true
+    },
+    sorters: [{
+        //排序字段。
+        property: 'id',
+        //排序类型，默认为 ASC
+        direction: 'DESC'
+    }]
+});
