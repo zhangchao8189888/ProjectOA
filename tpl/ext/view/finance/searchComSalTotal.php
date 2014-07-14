@@ -23,7 +23,65 @@ Ext.require([
     'Ext.toolbar.Paging',
     'Ext.data.*'
 ]);
+var innerGrid=[];
+var insideGridStore=[];
+var  salLister=[];
+var  winSaler = [];
+var winSal;
+function displayInnerGrid(renderId) {
 
+    insideGridStore[renderId] = getSalTotalListJson;
+    innerGrid[renderId] = Ext.create('Ext.grid.Panel', {
+        store: insideGridStore[renderId],
+        selType: 'checkboxmodel',
+        columns : [
+            {text: "操作序号", width: 80, dataIndex: 'id', sortable: true,hidden:true},
+            {text: "单位名称", width: 170, dataIndex: 'company_name', sortable: true},
+            {text: "工资日期", width: 100, dataIndex: 'sal_time', sortable: true},
+            {text: "工资类型", width: 100, dataIndex: 'sal_type', sortable: true},
+            {text: "应发合计", width: 100, dataIndex: 'sum_yingfaheji',sortable:false},
+            {text: "实发合计", width: 100, dataIndex: 'sum_shifaheji',sortable:false},
+            {text: "交中企合计", width: 100, dataIndex: 'sum_paysum_zhongqi',sortable:false}
+        ],
+        columnLines: true,
+//                autoWidth: true,
+        width:1200,
+        autoHeight: true,
+        disableSelection: false,
+        frame: false,
+        title: '收入详细',
+        tbar : [],
+        iconCls: 'icon-grid',
+        renderTo: renderId
+    });
+    insideGridStore[renderId].removeAll();
+    insideGridStore[renderId].load( {
+        params : {
+            superId:renderId,
+            salTime : Ext.getCmp("salTime").getValue()
+        }
+    });
+    innerGrid[renderId].getEl().swallowEvent([
+        'mousedown', 'mouseup', 'click',
+        'contextmenu', 'mouseover', 'mouseout',
+        'dblclick', 'mousemove'
+    ]);
+    comListSuperStore.on("beforeload",function(){
+        Ext.apply(comListSuperStore.proxy.extraParams, {Key:Ext.getCmp('comnameid'+renderId).getValue()});
+
+    });
+}
+function destroyInnerGrid(record) {
+
+    var parent = document.getElementById(record.get('id'));
+    var child = parent.firstChild;
+
+    while (child) {
+        child.parentNode.removeChild(child);
+        child = child.nextSibling;
+    }
+
+}
 Ext.onReady(function () {
     //创建对账公司列表Grid
     var salTimeListGrid = Ext.create('Ext.grid.Panel',{

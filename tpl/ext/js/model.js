@@ -600,6 +600,23 @@ Ext.define('oa.common.account.detail.list',{
     ]
 });
 /**
+ * 工资合计store
+ */
+Ext.define('oa.common.salary.sum.list',{
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'salTimeId', type: 'int'},
+        {name: 'company_name', type: 'string'},
+        {name: 'companyId', type: 'int'},
+        {name: 'sal_time', type: 'string'},
+        {name: 'sal_type', type: 'string'},
+        {name: 'salTimeId', type: 'int'},
+        {name: 'sum_yingfaheji', type: 'double'},
+        {name: 'sum_shifaheji', type: 'double'},
+        {name: 'sum_paysum_zhongqi', type: 'double'}
+    ]
+});
+/**
  * 公司对账model
  */
 Ext.define('oa.common.account.duizhangComp',{
