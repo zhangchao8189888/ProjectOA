@@ -1163,6 +1163,7 @@ class ExtSalaryAction extends BaseAction{
         $remark    =  -1;
         $accountsRemark    =   -1;
         $companyBank    =  -1;
+        $accountsYue = -1;
         for ($i = 0; $i < count($return['Sheet1'][0]); $i++) {
             if($return['Sheet1'][0][$i] == "交易日"||$return['Sheet1'][0][$i] == "交易日期" ){
                 $transactionDate    =   $i;
@@ -1185,38 +1186,60 @@ class ExtSalaryAction extends BaseAction{
             if($return['Sheet1'][0][$i] == "交易类型" ){
                 $accountsRemark    =   $i;
             }
+            if ($return['Sheet1'][0][$i] == "余额" ) {
+                $accountsYue    =   $i;
+            }
         }
-        if($companyName!=-1&&$transactionDate!=-1&&$accountsin!=-1&&$accountsout!=-1&&$remark!=-1&&$remark!=-1&&$accountsRemark!=-1&&$companyBank!=-1){
+        if($companyName!=-1&&$transactionDate!=-1&&$accountsin!=-1&&$accountsout!=-1&&$remark!=-1&&$remark!=-1&&$accountsRemark!=-1&&$companyBank!=-1&&$accountsYue!=-1){
             $info['message'] = '成功读取表格！';
         }else{
             echo json_encode($info);
             exit;
         }
         $this->objDao = new SalaryDao ();
+        //开始事务
+        $this->objDao->beginTransaction();
+        //查询出当前账户余额
+        $presentPo = $this->objDao->searchAccoutValuePresent();
+        $yueDuiBi = $presentPo['accountsValue'];
         for ($i = 1; $i < count($return['Sheet1']); $i++) {
             $accountsArray  =   array();
             $accountsArray['companyName']   =  $return['Sheet1'][$i][$companyName] ;
             $com=$this->objDao->searchCompanyByName($accountsArray['companyName']);
             if ($com['id']) {
                 $accountsArray['companyId']=$com['id'];
-                if($return['Sheet1'][$i][$accountsout] && $return['Sheet1'][$i][$accountsout] > 0){
-                    //更新公司收入金额
-                    $accountValue = $com['account_value'] + $return['Sheet1'][$i][$accountsout];
-                    $this->objDao->updateComanyAccountvalue($com['id'],$accountValue);
-                }
-
             } else {
                 $accountsArray['companyId']=0;
+            }
+            if ($yueDuiBi) {
+                $accountsArray['companyId']=$com['id'];
+                if($return['Sheet1'][$i][$accountsout] && $return['Sheet1'][$i][$accountsout] > 0){
+                    //更新公司收入金额
+                    $accountValue = $yueDuiBi + $return['Sheet1'][$i][$accountsout];
+
+                } elseif ($return['Sheet1'][$i][$accountsin] && $return['Sheet1'][$i][$accountsin] > 0) {
+                    $accountValue = $yueDuiBi - $return['Sheet1'][$i][$accountsout];
+                }
+                if ($accountValue != $return['Sheet1'][$i][$accountsYue]) {
+                    $info['message'] = '中企账户余额（'.$accountValue.'）和导入余额（'.$return['Sheet1'][$i][$accountsYue].'）不符';
+                    // 事务回滚
+                    $this->objDao->rollback ();
+                    echo json_encode($info);
+                    exit;
+                }
+                $yueDuiBi = $accountValue;
             }
             $accountsArray['transactionDate']   =  $return['Sheet1'][$i][$transactionDate] ;
             if($return['Sheet1'][$i][$accountsout]){
                 $accountsArray['accountsType']   =  1 ;
-                $accountsArray['accountsValue']   =  $return['Sheet1'][$i][$accountsout] ;
+                $accountsArray['jiaoyiJin']   =  $return['Sheet1'][$i][$accountsout] ;//交易金额
             }else if($return['Sheet1'][$i][$accountsin]){
                 $accountsArray['accountsType']   =  2 ;
-                $accountsArray['accountsValue']   =  $return['Sheet1'][$i][$accountsin] ;
+                $accountsArray['jiaoyiJin']   =  $return['Sheet1'][$i][$accountsin] ;//交易金额
             }
+
             $accountsArray['remark']   =  $return['Sheet1'][$i][$remark] ;
+            $accountsArray['accountsValue']   =  $return['Sheet1'][$i][$accountsYue] ;//总账户余额
             $accountsArray['accountsRemark']   =  $return['Sheet1'][$i][$accountsRemark] ;
             $accountsArray['companyBank']   =  $return['Sheet1'][$i][$companyBank] ;
             $result = $this->objDao->insertAccounts($accountsArray);
@@ -1235,6 +1258,8 @@ class ExtSalaryAction extends BaseAction{
                 }
             }
         }
+        // 事务提交
+        $this->objDao->commit ();
         echo json_encode($info);
         exit;
     }

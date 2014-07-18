@@ -365,8 +365,10 @@ function uploadFile() {
                                                 },
                                                 success : function(response) {
                                                     var json = Ext.JSON.decode(response.responseText);
-                                                    Ext.Msg.alert("提示", json['message']);
-                                                    document.location = 'index.php?action=Ext&mode=toAccount';
+                                                    Ext.Msg.alert("提示", json['message'],function(){
+                                                        document.location = 'index.php?action=Ext&mode=toAccount';
+                                                    });
+
                                                 }
                                             });
                                         }

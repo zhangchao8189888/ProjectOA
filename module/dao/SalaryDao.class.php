@@ -1564,6 +1564,20 @@ WHERE
         $result = $this->g_db_query($sql);
         return $result;
     }
+    function searchAccoutValuePresent(){
+        $sql = "select transactionDate,
+	accountsType,
+    companyId,
+	companyName,
+	jiaoyi_jine,
+	accountsValue,
+	remark,
+	accountsRemark,
+	companyBank  from OA_account ORDER BY id DESC LIMIT 1;";
+        $result = $this->g_db_query($sql);
+        return mysql_fetch_array($result);
+    }
+
     function insertAccounts($accountsArray){
         $sql = "
  insert into OA_account (
@@ -1571,6 +1585,7 @@ WHERE
 	accountsType,
     companyId,
 	companyName,
+	jiaoyi_jine,
 	accountsValue,
 	remark,
 	accountsRemark,
@@ -1582,6 +1597,7 @@ values
 	'{$accountsArray['accountsType']}',
 		{$accountsArray['companyId']},
 		'{$accountsArray['companyName']}',
+		'{$accountsArray['jiaoyiJin']}',
 		'{$accountsArray['accountsValue']}',
 		'{$accountsArray['remark']}',
 		'{$accountsArray['accountsRemark']}',
