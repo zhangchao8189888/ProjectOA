@@ -201,6 +201,16 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class="item">
             <a href="index.php?action=Ext&mode=toFinanceApproval">工资审批</a>
         </div>
+		<div class='item'>
+			<a href='index.php?action=Finance&mode=salCaiwuImport'>财务文件导出</a>
+		</div>
+		<div class='item'>
+			<a href='index.php?action=Admin&mode=toOpLog'>日志查询</a>
+		</div>
+        <div class="item">
+            <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
+        </div>
+        <div class='title'>对账管理</div>
         <div class="item">
             <a href="index.php?action=Ext&mode=toAccount">导入收益</a>
         </div>
@@ -210,14 +220,8 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class="item">
             <a href="index.php?action=Ext&mode=toCaiWuDuizhang">公司对账</a>
         </div>
-		<div class='item'>
-			<a href='index.php?action=Finance&mode=salCaiwuImport'>财务文件导出</a>
-		</div>
-		<div class='item'>
-			<a href='index.php?action=Admin&mode=toOpLog'>日志查询</a>
-		</div>
         <div class="item">
-            <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
+            <a href="index.php?action=PageIndex&mode=toCompanyDuizhang">对账</a>
         </div>
 		<div class="title">工资管理</div>
 		<div class="item">

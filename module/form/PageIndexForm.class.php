@@ -26,6 +26,8 @@ class PageIndexForm extends BaseForm
         switch ($mode) {
             case "toCompanyTotalByTimeListPage":
                 return  "ext/view/finance/searchComSalTotal.php";
+            case "toCompanyDuizhang":
+                return  "ext/view/finance/modifyComValue.php";
             default :
                 return "BaseConfig.php";
         }

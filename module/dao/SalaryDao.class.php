@@ -1551,6 +1551,8 @@ AND salaryTime = '$sal'";
         if ($start >= 0 && $limit) {
             $sql .= " limit $start,$limit";
         }
+
+        echo $sql;
         $list = $this->g_db_query ( $sql );
         return $list;
     }
