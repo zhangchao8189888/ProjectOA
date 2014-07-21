@@ -41,6 +41,9 @@ class AjaxJsonAction extends BaseAction{
             case "getSalTotalListJson"://查询管理公司列表
                 $this->getSalTotalListJson();
                 break;
+            case "getCompanyListByName"://查询管理公司列表
+                $this->getCompanyListByName();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -180,6 +183,24 @@ class AjaxJsonAction extends BaseAction{
         exit();
     }
 
+    /**
+     * 模糊查询公司名称
+     */
+    function getCompanyListByName() {
+        $salayString=null;
+        $comName = $_POST ['keyword'];
+        $this->objDao = new SalaryDao ();
+        $result = $this->objDao->getCompanyLisyByName ( $comName );
+        $comList = array();
+        $i = 0;
+        while ( $row = mysql_fetch_array ( $result ) ) {
+            $comList[$i]['id'] = $row ['id'];
+            $comList[$i]['company_name'] = $row ['company_name'];
+            $i++;
+        }
+        echo json_encode($comList);
+        exit;
+    }
 }
 
 
