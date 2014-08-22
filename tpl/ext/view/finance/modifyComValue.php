@@ -1,5 +1,5 @@
 <?php
-//var_dump($form_data);
+//var_dump($salaryList);
 $salaryList=$form_data['salaryList'];
 $startIndex=$form_data['startIndex'];
 $total=$form_data['total'];
@@ -48,33 +48,182 @@ global $rootPath;
                 var jine = $(this).parent().parent().children("td").eq(2).text();
                 var jiaoyiDate = $(this).parent().parent().children("td").eq(1).text();
                 var companyName = $(this).parent().parent().children("td").eq(0).text();
+                var duizhangYue = $(this).parent().parent().children("td").eq(3).text();
+
+                var rowId = $(this).attr("row-data");
+                var obj = {
+                    "shouru_id" : rowId
+                };
+
+                if (duizhangYue > 0) {
+                    $.ajax(
+                        {
+                            type: "POST",
+                            url: "index.php?action=AjaxJson&mode=searchDuizhangById",
+                            async:false,
+                            data: obj,
+                            dataType: "json",
+                            success: function(data){
+                                if (data.jisuan_json) {
+                                    var  json = data.jisuan_json;
+                                    $("#shifa").text(json.shifa);
+                                    if (json.is_shifa == 1){
+                                        $("#shifa_btn").hide();
+                                        $("#shifa_btn").attr("data-value",1);
+                                    }
+                                    $("#shiye").text(json.shiye);
+                                    if (json.is_shiye == 1){
+                                        $("#shiye_btn").hide();
+                                        $("#shiye_btn").attr("data-value",1);
+                                    }
+                                    $("#yiliao").text(json.yiliao);
+                                    if (json.is_yiliao == 1){
+                                        $("#yiliao_btn").hide();
+                                        $("#yiliao_btn").attr("data-value",1);
+                                    }
+                                    $("#yanglao").text(json.yanglao);
+                                    if (json.is_yanglao == 1){
+                                        $("#yanglao_btn").hide();
+                                        $("#yanglao_btn").attr("data-value",1);
+                                    }
+                                    $("#gongjijin").text(json.gongjijin);
+                                    if (json.is_gongjijin == 1){
+                                        $("#gongjijin_btn").hide();
+                                        $("#gongjijin_btn").attr("data-value",1);
+                                    }
+                                    $("#daikoushui").text(json.daikoushui);
+                                    if (json.is_daikoushui == 1){
+                                        $("#daikoushui_btn").hide();
+                                        $("#daikoushui_btn").attr("data-value",1);
+                                    }
+
+                                }
+                                $("#yue").text(data.jisuan_yue);
+                                $("#gover_search_key").val(data.company_name);
+                                $("#salTime").append('<option value ="'+data.salTime_id+'"   selected="selected" >'+data.salaryTime+'</option>');
+                                $("#searchBtn").hide();
+                            }
+                        }
+                    );
+                }
                 $('.theme-popover-mask').fadeIn(100);
                 $('.theme-popover').slideDown(200);
                 $('#jine').text(jine);
                 $('#comName').text(companyName);
                 $('#date').text(jiaoyiDate);
-                /*$.ajax({
-                    type: "post",
-                    url : "index.php?action=SalaryBill&mode=getSalaryTimeById&chequeType="+$("#chequeType").val(),
-                    dataType:'json',
-                    data: 'username='+username+'&password='+password,
-                    success: function(json){
-                        $('#result').html("姓名:" + json.username + "<br/>密码:" + json.password); //把php中的返回值显示在预定义的result定位符位置
-                    }
-                });*/
+                $("#shouruId").val(rowId);
             })
             $('.theme-poptit .close').click(function(){
                 $('.theme-popover-mask').fadeOut(100);
                 $('.theme-popover').slideUp(200);
             })
+            $('#searchBtn').click(function(){
+                var obj = {
+                    "keyword" : $("#gover_search_key").val()
+                };
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "index.php?action=AjaxJson&mode=getSalTimeListByComNameJson",
+                        async:false,
+                        data: obj,
+                        dataType: "json",
+                        success: function(data){
+                            var aData = [];
+                            for(var i=0;i<data.length;i++){
+                                //以下为根据输入返回搜索结果的模拟效果代码,实际数据由后台返回
+                                if(data[i]){
+                                    if (i == 0){
+                                        $("#salTime").append('<option value ="'+data[i].id+'"   selected="selected" >'+data[i].salaryTime+'</option>');
+                                    } else {
+                                        $("#salTime").append('<option value ="'+data[i].id+'" >'+data[i].salaryTime+'</option>');
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                );
+            })
+
         });
         function changeTagPage(page_id, jq) {
             var jumpurl = "index.php?action=Admin&mode=toOpLog&p="+(page_id+1);
             location = jumpurl;
             return false;
         }
-        function sumYue () {
+        function getSalTotalList() {
+            var obj = {
+                "salTimeId" : $("#salTime").val()
+            };
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "index.php?action=AjaxJson&mode=getSalSalTotalBySalTimeIdJson",
+                    async:false,
+                    data: obj,
+                    dataType: "json",
+                    success: function(data){
+                        var dataS = data.items;
+                        $("#shifa").text(dataS.sum_shifaheji);
+                        $("#shiye").text(dataS.sum_shiye);
+                        $("#yiliao").text(dataS.sum_yiliao);
+                        $("#yanglao").text(dataS.sum_yanglao);
+                        $("#gongjijin").text(dataS.sum_gongjijin);
+                        $("#daikoushui").text(dataS.sum_daikoushui);
+                        $("#yue").text($('#jine').text());
 
+                    }
+                }
+            );
+        }
+        function sumYue (vals) {
+            var jine = parseFloat($("#"+vals).text());
+            jine = parseFloat($("#yue").text()) - jine;
+            jine = Math.round(jine*100)/100;
+            $("#yue").text(jine);
+            $("#"+vals+"_btn").hide();
+            $("#"+vals+"_btn").attr("data-value",1);
+        }
+        function saveJisuan (type) {
+            var obj = {
+                shouru_id : $("#shouruId").val(),
+                salTime_id : $("#salTime").val(),
+                sal_type : 1,
+                shifa :$("#shifa").text(),
+                is_shifa :$("#shifa_btn").attr("data-value"),
+                shiye : $("#shiye").text(),
+                is_shiye : $("#shiye_btn").attr("data-value"),
+                yiliao : $("#yiliao").text(),
+                is_yiliao : $("#yiliao_btn").attr("data-value"),
+                yanglao : $("#yanglao").text(),
+                is_yanglao : $("#yanglao_btn").attr("data-value"),
+                gongjijin : $("#gongjijin").text(),
+                is_gongjijin : $("#gongjijin_btn").attr("data-value"),
+                daikoushui : $("#daikoushui").text(),
+                is_daikoushui : $("#daikoushui_btn").attr("data-value"),
+                yue : $("#yue").text(),
+                jisuan_status : type,
+                more : "",
+                shouru_jine : $("#jine").text()
+            };
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "index.php?action=AjaxJson&mode=saveJisuan",
+                    async:false,
+                    data: obj,
+                    dataType: "json",
+                    success: function(data){
+                        if (data.code ==10000) {
+                            alert("保存成功");
+                            window.location.href='index.php?action=PageIndex&mode=toCompanyDuizhang';
+                        } else {
+                            alert("保存失败");
+                        }
+                    }
+                }
+            );
         }
     </script>
 <body>
@@ -83,17 +232,7 @@ global $rootPath;
     <?php include("tpl/commom/left.php"); ?>
     <div id="right">
         <!--导航栏-->
-        <div class="navigate">日志查询</div>
-        <!--       <div class="manage">
-               </div>
-               <!--功能项
-               <div class="manage">
-                </div>
-                    <!--搜索栏
-               <div class="search" >
-
-               </div>
-               -->
+        <div class="navigate">对账查询</div>
         <div>
             <table width="100%" cellpadding="0" cellspacing="0">
                 <tr valign="top">
@@ -102,7 +241,7 @@ global $rootPath;
                     <td width="89%">
                         <table cellpadding=4 cellspacing=0 width="100%">
                             <tr class="form-action-bar">
-                                <td width="99%"><div align="center"><strong>操作日志查询列表</strong></div></td>
+                                <td width="99%"><div align="center"><strong>工资对账查询列表</strong></div></td>
                             </tr>
                         </table>
                         <!-------------------------------------------------------------------------->
@@ -113,8 +252,9 @@ global $rootPath;
                                     <td style="width:15%;"><div>客户名称</div></td>
                                     <td style="width:15%;"><div>交易日期</div></td>
                                     <td style="width:5%;"><div>收入金额</div></td>
+                                    <td style="width:5%;"><div>对账余额</div></td>
                                     <td style="width:10%;"><div>备注</div></td>
-                                    <td style="width:10%;"><div>操作</div></td>
+                                    <td style="width:20%;"><div>操作</div></td>
                                 </tr>
                                 <?php
                                 foreach($salaryList as $row){
@@ -123,8 +263,9 @@ global $rootPath;
                                         <td><?php  echo $row['companyName'];?></td>
                                         <td><?php echo $row['transactionDate'];?></td>
                                         <td><?php echo $row['accountsValue'];?></td>
+                                        <td><span style="color: green"><?php echo $row['duizhangYue'];?></span></td>
                                         <td><?php echo $row['remark'];?></td>
-                                        <td><a class="btn btn-primary btn-large theme-login" href="javascript:;">点击查看效果</a></td>
+                                        <td><a class="btn btn-primary btn-large theme-login" row-data="<?php  echo $row['id'];?>" href="javascript:;">对账</a></td>
 
                                     </tr>
                                 <?php
@@ -148,12 +289,13 @@ global $rootPath;
             </div>
             <div class="theme-popbod dform">
                 <form class="theme-signin" name="loginform" action="" method="post">
+                    <input type="hidden" id="shouruId" value=""/>
                     <ol>
                         <li><h4>请选选择单位和工资月份！</h4></li>
                         <li><strong>进账客户：</strong><span class="ipt" size="20" id="comName"></span></li>
                         <li><strong>进账金额：</strong><span class="ipt" size="20" id="jine"></span></li>
                         <li><strong>进账日期：</strong><span class="ipt" size="20" id="date"></span></li>
-                        <li><strong>进账总额：</strong><div class="gover_search">
+                        <li><strong>客户名称：</strong><div class="gover_search">
                                 <div class="gover_search_form">
                                     <input type="text" class="input_search_key" id="gover_search_key" placeholder="输入公司名称">
                                 </div>
@@ -163,8 +305,8 @@ global $rootPath;
                                 </div>
 
                             </div></li>
-                        <li><input class="btn btn-primary" type="submit" name="submit" value=" 查 询 " /></li>
-                        <li><div style="float:left;" >	<select  name="cid" id="cid" size="5">
+                        <li><input class="btn btn-primary" id ="searchBtn" type="button" name="submit" value=" 查 询 " /></li>
+                        <li><div style="float:left;" >	<select  name="salTime" id="salTime" size="5" onchange="getSalTotalList()">
                                     <option value="-1">请选择工资月份</option>
                                 </select></li>
                     </ol>
@@ -174,21 +316,26 @@ global $rootPath;
             </div>
             <table border="2" style="border-style: solid;width: 500px;">
                 <tr>
-                    <td style="width:5%;"><div>客户</div></td>
-                    <td style="width:5%;"><div>交易</div></td>
-                    <td style="width:5%;"><div>收入</div></td>
-                    <td style="width:5%;"><div>备注</div></td>
-                    <td style="width:5%;"><div>操作</div></td>
+                    <td style="width:5%;"><div>实发</div></td>
+                    <td style="width:5%;"><div>失业</div></td>
+                    <td style="width:5%;"><div>医疗</div></td>
+                    <td style="width:5%;"><div>养老</div></td>
+                    <td style="width:5%;"><div>公积金</div></td>
+                    <td style="width:5%;"><div>代扣税</div></td>
                     <td style="width:5%;"><div>余额</div></td>
+                    <td style="width:5%;"><div>操作</div></td>
                 </tr>
-                <tr><td><div><span>1122</span><input type="button" onclick="sumYue()" value="减" /></div></td>
-                    <td><div><span>1231</span><input type="button" onclick="sumYue()" value="减" /></div></td>
-                    <td><div><span>32343</span><input type="button" onclick="sumYue()" value="减" /></div></td>
-                    <td><div><span>12313</span><input type="button" onclick="sumYue()" value="减" /></div></td>
-                    <td><div><span>1555</span><input type="button" onclick="sumYue()" value="减" /></div></td>
-                    <td><div><span>1555</span></div></td>
+                <tr><td><div><span id="shifa"></span><input type="button" id ='shifa_btn' data-value="0" onclick="sumYue('shifa')" value="减" /></div></td>
+                    <td><div><span id="shiye"></span><input type="button" id ='shiye_btn' data-value="0" onclick="sumYue('shiye')" value="减" /></div></td>
+                    <td><div><span id="yiliao"></span><input type="button" id ='yiliao_btn' data-value="0" onclick="sumYue('yiliao')" value="减" /></div></td>
+                    <td><div><span id="yanglao"></span><input type="button"  id ='yanglao_btn' data-value="0" onclick="sumYue('yanglao')" value="减" /></div></td>
+                    <td><div><span id="gongjijin"></span><input type="button" id ='gongjijin_btn' data-value="0" onclick="sumYue('gongjijin')" value="减" /></div></td>
+                    <td><div><span id="daikoushui"></span><input type="button" id ='daikoushui_btn' data-value="0" onclick="sumYue('daikoushui')" value="减" /></div></td>
+                    <td><div><span id="yue"></span></div></td>
+                    <td style="width:5%;"><div><input  onclick="saveJisuan(1)" type="button" name="submit" value=" 保存 " />||<input  type="button" onclick="saveJisuan(2)" name="submit" value=" 结算 " /></div></td>
                 </tr>
             </table>
+
         </div>
         <div class="theme-popover-mask"></div>
 
@@ -305,24 +452,6 @@ global $rootPath;
         var obj = {
             "keyword" : keyword
         };
-        /*$.ajax({
-            type: "POST",
-            url: "/a/api/GetHouseName",
-            async:false,
-            data: obj,
-            dataType: "json",
-            success: function(data){
-                var aData = [];
-                for(var i=0;i<data.data.length;i++){
-                    //以下为根据输入返回搜索结果的模拟效果代码,实际数据由后台返回
-                    if(data.data[i]){
-                        aData.push(data.data[i].buildname);
-                    }
-                }
-                //将返回的数据传递给实现搜索输入框的输入提示js类
-                searchSuggest.dataDisplay(aData);
-            }
-        });*/
         $.ajax(
             {
                 type: "POST",

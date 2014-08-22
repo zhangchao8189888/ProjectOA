@@ -898,7 +898,7 @@ function salarySend(){
 					if($updateSal){
 						$updateSal.=",";
 					}
-					$updateSal.="shebaojishu={$salaryList[Sheet1][$i][$gongjijin]}";
+					$updateSal.="gongjijinjishu={$salaryList[Sheet1][$i][$gongjijin]}";
 				}
 				if($canbaofei!=''&&$canbaofei!=-1){
 					if($updateSal){

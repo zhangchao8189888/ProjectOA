@@ -64,6 +64,7 @@ $admin=$_SESSION['admin'];
 			<input type="button" value="导入" onclick="b()"/>
 			<input type="button" value="工资导出" onclick="salImport()"/> 
 			<input type="button" value="下载导入工资模板" id="btn_ok" onclick="downLoadTmp()" class="btn_submit" />
+           <font color="red">如果上传工资文件部分无法显示前请先下载模版</font>　
 			<font color="red"><?php if($errorMsg)echo $errorMsg?></font>
 			<font color="green"><?php if($succ)echo $succ?></font>
        	</form>

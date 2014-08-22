@@ -1047,6 +1047,7 @@ class ExtSalaryAction extends BaseAction{
 
             $josnArray['items'][$i]['transactionDate']=$row['transactionDate'];
             $josnArray['items'][$i]['value']=$row['accountsValue'];
+            $josnArray['items'][$i]['jiaoyi_jine']=$row['jiaoyi_jine'];
             $josnArray['items'][$i]['accountsType']=$row['accountsType'];
             $josnArray['items'][$i]['accountsRemark']=$row['accountsRemark'];
             $josnArray['items'][$i]['companyBank']=$row['companyBank'];

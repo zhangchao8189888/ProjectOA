@@ -1552,7 +1552,7 @@ AND salaryTime = '$sal'";
             $sql .= " limit $start,$limit";
         }
 
-        echo $sql;
+        //echo $sql;
         $list = $this->g_db_query ( $sql );
         return $list;
     }
@@ -1650,6 +1650,61 @@ WHERE
         $list = $this->g_db_query ( $sql );
         return $list;
     }
-
+    function searchOaDuizhangByShouruIdAndSalTimeId($id,$salTimeId = null) {
+        $sql = "select *
+FROM
+	OA_duizhang
+WHERE
+	shouru_id = $id ";
+        if ($salTimeId) {
+            $sql.=" and salTime_id =$salTimeId ";
+        }
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    function saveOaDuizhang($data){
+        $sql = "insert into OA_duizhang
+        (shouru_id,
+        salTime_id,
+        sal_type,
+        jisuan_json,
+        jisuan_status,
+        more,
+        shouru_jine,
+        jisuan_yue)
+        values
+        (
+        {$data['shouru_id']},
+        {$data['salTime_id']},
+        {$data['sal_type']},
+        '{$data['jisuan_json']}',
+        {$data['jisuan_status']},
+        '{$data['more']}',
+        {$data['shouru_jine']},
+        {$data['yue']}
+        )";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+    function updateOaDuiJson($data){
+        $sql = "update OA_duizhang
+        set
+        jisuan_json = '{$data['jisuan_json']}',
+        jisuan_yue = {$data['yue']},
+        jisuan_status = {$data['jisuan_status']}
+        where shouru_id = {$data['shouru_id']}
+        and  salTime_id = {$data['salTime_id']}";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
+    function updateAccountDuizhangValueById ($accountId,$duizhangYue) {
+        //duizhangYue
+        $sql = "update OA_account
+        set
+        duizhangYue = $duizhangYue
+        where id = $accountId ";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
 }
 ?>

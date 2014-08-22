@@ -573,6 +573,7 @@ Ext.define('oa.common.account.list',{
         {name: 'companyBank', type: 'string'},
         {name: 'companyName', type: 'string'},
         {name: 'value', type: 'double'},
+        {name: 'jiaoyi_jine', type: 'double'},
         {name: 'remark', type: 'string'},
         {name: 'salType', type: 'string'}
     ]

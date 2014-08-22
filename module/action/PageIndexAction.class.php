@@ -101,6 +101,7 @@ class PageIndexAction extends BaseAction{
 
             $salaryTimeList[$i]['transactionDate']=$row['transactionDate'];
             $salaryTimeList[$i]['value']=$row['accountsValue'];
+            $salaryTimeList[$i]['duizhangYue']=$row['duizhangYue'];
             $salaryTimeList[$i]['remark']=$row['remark'];
             $salaryTimeList[$i]['accountsType']="收入";
             $salaryTimeList[$i]=$row;

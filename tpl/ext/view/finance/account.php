@@ -77,7 +77,8 @@ Ext.onReady(function () {
             {text: "类型说明", width: 100, dataIndex: 'accountsRemark', sortable: true},
             {text: "交易账号", width: 100, dataIndex: 'companyBank', sortable: true},
 
-            {text: "金额", width: 100, dataIndex: 'value',sortable:false},
+            {text: "交易金额", width: 100, dataIndex: 'jiaoyi_jine',sortable:false},
+            {text: "账户余额", width: 100, dataIndex: 'value',sortable:false},
             {text: "操作", width: 120, dataIndex: 'salType', sortable: false,align:'center',
                 renderer:function(val,cellmeta,record){
                     if (val == 1) {

@@ -35,14 +35,26 @@ class AjaxJsonAction extends BaseAction{
     {
         // Controller -> Model
         switch($this->mode) {
-            case "getAdminCompanyListJson"://查询管理公司列表
+            case "getAdminCompanyListJson":
                 $this->getAdminCompanyListJson();
                 break;
-            case "getSalTotalListJson"://查询管理公司列表
+            case "getSalTotalListJson":
                 $this->getSalTotalListJson();
                 break;
-            case "getCompanyListByName"://查询管理公司列表
+            case "getCompanyListByName":
                 $this->getCompanyListByName();
+                break;
+            case "getSalTimeListByComNameJson":
+                $this->getSalTimeListByComNameJson();
+                break;
+            case "getSalSalTotalBySalTimeIdJson":
+                $this->getSalSalTotalBySalTimeIdJson();
+                break;
+            case "saveJisuan":
+                $this->saveJisuan();
+                break;
+            case "searchDuizhangById":
+                $this->searchDuizhangById();
                 break;
             default :
                 $this->modelInput();
@@ -199,6 +211,97 @@ class AjaxJsonAction extends BaseAction{
             $i++;
         }
         echo json_encode($comList);
+        exit;
+    }
+    /**
+     * 查询公司工资月份
+     */
+    function getSalTimeListByComNameJson() {
+        $salayString=null;
+        $comName = $_POST ['keyword'];
+        $this->objDao = new SalaryDao ();
+        $result = $this->objDao->getSalaryListByComName( $comName );
+        $comList = array();
+        $i = 0;
+        while ( $row = mysql_fetch_array ( $result ) ) {
+            $comList[$i]['id'] = $row ['id'];
+            $comList[$i]['salaryTime'] = $row ['salaryTime'];
+            $i++;
+        }
+        echo json_encode($comList);
+        exit;
+    }
+    /**
+     * 查询公司工资月份
+     */
+    function getSalSalTotalBySalTimeIdJson() {
+        $salayString=null;
+        $salTimeId = $_POST ['salTimeId'];
+        $this->objDao = new SalaryDao ();
+        $sqlResult = $this->objDao->searchSumSalaryListBy_SalaryTimeId($salTimeId);
+        $salTotal = mysql_fetch_array($sqlResult);
+        $comList ['items']['sum_yingfaheji'] = $salTotal['sum_per_yingfaheji'];
+        $comList ['items']['sum_shifaheji'] = $salTotal['sum_per_shifaheji'];
+        $comList ['items']['sum_shiye'] = $salTotal['sum_per_shiye']+$salTotal['sum_com_shiye'];
+        $comList ['items']['sum_yiliao'] = $salTotal['sum_per_yiliao']+$salTotal['sum_com_yiliao'];
+        $comList ['items']['sum_yanglao'] = $salTotal['sum_per_yanglao']+$salTotal['sum_com_gongjijin'];
+        $comList ['items']['sum_gongjijin'] = $salTotal['sum_per_gongjijin']+$salTotal['sum_com_yiliao'];
+        $comList ['items']['sum_daikoushui'] = $salTotal['sum_per_daikoushui'];
+        echo json_encode($comList);
+        exit;
+    }
+    function saveJisuan () {
+        $data = array();
+        $data['shouru_id'] = $_POST['shouru_id'];
+        $data['salTime_id'] = $_POST['salTime_id'];
+        $data['sal_type'] = $_POST['sal_type'];
+        $dataJson =array();
+        $dataJson['shifa'] = $_POST['shifa'];
+        $dataJson['is_shifa'] = $_POST['is_shifa'];
+        $dataJson['shiye'] = $_POST['shiye'];
+        $dataJson['is_shiye'] = $_POST['is_shiye'];
+        $dataJson['yiliao'] = $_POST['yiliao'];
+        $dataJson['is_yiliao'] = $_POST['is_yiliao'];
+        $dataJson['yanglao'] = $_POST['yanglao'];
+        $dataJson['is_yanglao'] = $_POST['is_yanglao'];
+        $dataJson['gongjijin'] = $_POST['gongjijin'];
+        $dataJson['is_gongjijin'] = $_POST['is_gongjijin'];
+        $dataJson['daikoushui'] = $_POST['daikoushui'];
+        $dataJson['is_daikoushui'] = $_POST['is_daikoushui'];
+        $data['jisuan_json'] = json_encode($dataJson);
+        $data['yue'] = $_POST['yue'];
+        $data['more'] = $_POST['more'];
+        $data['shouru_jine'] = $_POST['shouru_jine'];
+        $data['jisuan_status'] = $_POST['jisuan_status'];
+        $this->objDao =new SalaryDao();
+        $result = $this->objDao->searchOaDuizhangByShouruIdAndSalTimeId($data['shouru_id'],$data['salTime_id']);
+        if (!mysql_fetch_array($result)) {//save
+            $result = $this->objDao->saveOaDuizhang($data);
+        } else {//
+            $result = $this->objDao->updateOaDuiJson($data);
+        }
+        if ($result) {
+            $this->objDao->updateAccountDuizhangValueById($data['shouru_id'],$data['yue']);
+            echo json_encode(array('code'=>10000,'msg'=>'success'));
+            exit;
+        } else {
+            echo json_encode(array('code'=>10001,'msg'=>'fail'));
+            exit;
+        }
+    }
+    function searchDuizhangById () {
+        $shouru_id = $_POST['shouru_id'];
+        $this->objDao =new SalaryDao();
+        $result = $this->objDao->searchOaDuizhangByShouruIdAndSalTimeId($shouru_id);
+        $duiZhangPo = mysql_fetch_array($result);
+        $salTimePo = $this->objDao->searchSalaryTimeBy_id($duiZhangPo['salTime_id']);
+        $duiZhangPo['company_name'] = $salTimePo['company_name'];
+        $duiZhangPo['salaryTime'] = $salTimePo['salaryTime'];
+
+        if ($duiZhangPo['jisuan_json']) {
+            $duiZhangPo['jisuan_json'] = json_decode($duiZhangPo['jisuan_json']);
+        }
+        echo json_encode($duiZhangPo);
         exit;
     }
 }

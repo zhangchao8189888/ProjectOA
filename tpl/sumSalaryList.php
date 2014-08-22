@@ -180,6 +180,7 @@ if ($checkType) {
                     </td>
                     <td>
                         <input type="button" value="保存年终奖"  id="botton_nian" onclick="nian_bu()"/>
+                        <span style="font-size: 12px; color: red;">（保存年终奖，excel上面字段名称必须写明年终奖三个字）</span>
                     </td>
                     <td>
                         <input type="button"  value="保存二次工资"   id="botton_er"  onclick="secon_bu()"/>

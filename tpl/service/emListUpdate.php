@@ -27,7 +27,7 @@ $_SESSION['salarylist']=$salarylist;
 				  alert('填入身份证位置');
 				  return;
 				  }
-			  $("#iform").attr("action","/zhongqiOA/index.php?action=Service&mode=updateEmpList");
+			  $("#iform").attr("action","index.php?action=Service&mode=updateEmpList");
 			  $("#iform").submit();
 	  
 	  }
