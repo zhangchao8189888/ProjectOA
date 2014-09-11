@@ -114,6 +114,18 @@ class ServiceAction extends BaseAction{
              case "getJson":
              	$this->getJson();
                 break;
+            case "toAddNotice":
+                $this->toAddNotice();
+                break;
+            case "addNotice":
+                $this->addNotice();
+                break;
+            case "delNotice":
+                $this->delNotice();
+                break;
+            case "updateNotice":
+                $this->updateNotice();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -122,6 +134,95 @@ class ServiceAction extends BaseAction{
 
 
     }
+    function addNotice () {
+        $notice = array();
+        $title = $_REQUEST['title'];
+        $content = $_REQUEST['content'];
+        $company_name = $_REQUEST['company_name'];
+        $this->objDao=new ServiceDao();
+        $company = $this->objDao->searchCompanyByName($company_name);
+        if ($title== '' || $content== '' || $company_name== ''){
+            $msg['code'] = 10002;
+            $msg['msg'] = '字段不能为空';
+            echo json_encode($msg);
+            exit;
+        }
+        $notice['title'] = $title;
+        $notice['content'] = $content;
+        $notice['company_id'] = $company['id'];
+        $result = $this->objDao->saveNotice($notice);
+        if ($result){
+            $msg['code'] = 10000;
+            $msg['msg'] = '添加成功';
+            echo json_encode($msg);
+            exit;
+        } else {
+            $msg['code'] = 10002;
+            $msg['msg'] = '添加失败';
+            echo json_encode($msg);
+            exit;
+        }
+
+    }
+    function delNotice () {
+        $noticeId = $_REQUEST['notice_id'];
+        $this->objDao=new ServiceDao();
+        $result = $this->objDao->delNotice($noticeId);
+        if ($result){
+            $msg['code'] = 10000;
+            $msg['msg'] = '添加成功';
+            echo json_encode($msg);
+            exit;
+        } else {
+            $msg['code'] = 10002;
+            $msg['msg'] = '添加失败';
+            echo json_encode($msg);
+            exit;
+        }
+    }
+    function updateNotice () {
+        $noticeId = $_REQUEST['notice_id'];
+        $this->objDao=new ServiceDao();
+        $result = $this->objDao->updateNotice($noticeId);
+        if ($result){
+            $msg['code'] = 10000;
+            $msg['msg'] = '添加成功';
+            echo json_encode($msg);
+            exit;
+        } else {
+            $msg['code'] = 10002;
+            $msg['msg'] = '添加失败';
+            echo json_encode($msg);
+            exit;
+        }
+    }
+  function toAddNotice (){
+      $this->mode="toAddNotice";
+      $this->objDao=new ServiceDao();
+      $sum =$this->objDao->searchCountNoticeList();
+      $pagesize=NOTICE_PAGE_SIZE;
+      $count = intval($_REQUEST["c"]);
+      $page = intval($_REQUEST["p"]);
+      if ($count == 0){
+          $count = $pagesize;
+      }
+      if ($page == 0){
+          $page = 1;
+      }
+
+      $startIndex = ($page-1)*$count;
+      $total = $sum;
+      $pageindex=$page;
+      $noticeList=$this->objDao->searchNoticeList();
+      while ($row = mysql_fetch_array($noticeList)) {
+          $company = $this->objDao->searchCo;
+      }
+      $this->objForm->setFormData("startIndex",$startIndex);
+      $this->objForm->setFormData("total",$total);
+      $this->objForm->setFormData("pageindex",$pageindex);
+      $this->objForm->setFormData("pagesize",$pagesize);
+      $this->objForm->setFormData("noticeList",$noticeList);
+  }
   function getJson(){
   	$arry=array();
   }
@@ -195,7 +296,7 @@ class ServiceAction extends BaseAction{
   					}elseif($rowEr['salaryType']==SALARY_TIME_TYPE){
   						$rowSal['salNianStat']='<a href="index.php?action=SaveSalary&mode=searchErSalaryById&id='.$rowEr['id'].'" target="_blank"><font color="green">已做年终奖</font></a>';
   					}
-  				
+
   				}
   			}
   		if($salTimePo['salary_state']<1){
@@ -204,7 +305,7 @@ class ServiceAction extends BaseAction{
   		    $rowSal['fastat']="<font color='green'>已开发票</font>";
   	    }
   	    $rowSal['opTime']=$row['opTime'];
-  	    
+
   		$comArray[$i]=$rowSal;
   		$i++;
   	}
@@ -274,7 +375,7 @@ class ServiceAction extends BaseAction{
   					}elseif($rowEr['salaryType']==SALARY_TIME_TYPE){
   					      $rowSal['salNianStat']=$rowEr['id'];
   					}
-  				
+
   				}
   			}
   		if($results['salary_state']<1){
@@ -338,7 +439,7 @@ class ServiceAction extends BaseAction{
   	$dir=$_REQUEST['dir'];
   	$key=$_REQUEST['Key'];
   	/**
-  	 * sorts = Replace(Trim(Request.Form("sort")),"'","") 
+  	 * sorts = Replace(Trim(Request.Form("sort")),"'","")
 dir = Replace(Trim(Request.Form("dir")),"'","")
   	 */
   	if(!$start){
@@ -393,7 +494,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 		}
 	}
 	$this->getAdminCompanyList();
-	$this->objForm->setFormData("error",$errorMage);	
+	$this->objForm->setFormData("error",$errorMage);
   }
   function addOpCompanyListJson(){
     $salTimeList=$_POST['ids'];
@@ -412,7 +513,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 		$result=$this->objDao->addAdminCompany($adminCom);
 		$html.="<div><font color=green>{$com['company_name']} :添加管理成功</font></div>";
 		}else{
-			
+
 			if($result['adminId']==$adminCom['adminId']){
 				$html.="<div><font color=red>你已经添加该公司：{$com['company_name']}</font></div>";
 			}else{
@@ -486,7 +587,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 	$succMsg="";
   	$exmsg=new EC();
   	$employ=array();
-  	$employ['e_name']=$_POST['name']; 
+  	$employ['e_name']=$_POST['name'];
   	$employ['e_num']=$_POST['e_no'];
   	$employ['bank_name']=$_POST['bank'];
   	$employ['bank_num']=$_POST['bank_no'];
@@ -517,7 +618,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 				$mess="员工添加失败";
 				$succMsg="";
 				//$this->objForm->setFormData("warn","审批通过操作失败！");
-				//事务回滚  
+				//事务回滚
 				//$this->objDao->rollback();
 				throw new Exception ($exmsg->error());
 			}else{
@@ -536,7 +637,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 			if(!$rasult){
 				$exmsg->setError(__FUNCTION__, "addAdmin  add oplog  faild ");
 				$this->objForm->setFormData("warn","添加员工操作失败");
-				//事务回滚  
+				//事务回滚
 				//$this->objDao->rollback();
 				throw new Exception ($exmsg->error());
 			}
@@ -557,8 +658,8 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 	$succMsg="";
   	$exmsg=new EC();
   	$employ=array();
-  	$employ['id']=$_POST['eid']; 
-  	$employ['e_name']=$_POST['name']; 
+  	$employ['id']=$_POST['eid'];
+  	$employ['e_name']=$_POST['name'];
   	$employ['e_num']=$_POST['e_no'];
   	$employ['bank_name']=$_POST['bank'];
   	$employ['bank_num']=$_POST['bank_no'];
@@ -586,7 +687,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 				$mess="员工修改失败";
 				$succMsg="";
 				//$this->objForm->setFormData("warn","审批通过操作失败！");
-				//事务回滚  
+				//事务回滚
 				//$this->objDao->rollback();
 				throw new Exception ($exmsg->error());
 			}else{
@@ -604,7 +705,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 			if(!$rasult){
 				$exmsg->setError(__FUNCTION__, "addAdmin  add oplog  faild ");
 				$this->objForm->setFormData("warn","修改员工操作失败");
-				//事务回滚  
+				//事务回滚
 				//$this->objDao->rollback();
 				throw new Exception ($exmsg->error());
 			}
@@ -672,7 +773,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
   	if($salList){
   		$i="";
   		while (mysql_fetch_array($salList)) {
-  			
+
   		}
   	}*/
   	if($type['sal']['type']==1){
@@ -696,8 +797,8 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
   	$this->objDao=new EmployDao();
   	$emList=$this->objDao->getEmlistbyComname($comname);
   	$date=strtotime(date("Y-m-d"));
-  	
-  	//date("Y-m-d",strtotime("+3 year")); 
+
+  	//date("Y-m-d",strtotime("+3 year"));
   	//echo $date.strtotime(date("2012-03-7"));
   	$emDaoList=array();
   	$i=0;
@@ -705,7 +806,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
   		$daoqiDate=date('Y-m-d', strtotime($row['e_hetong_date']."{$row['e_hetongnian']}year"));
   		$daoqiDateNum=strtotime($daoqiDate);
   		//echo $daoqiDate.'</br>';
-  		
+
   		//echo date('Y-m-d', strtotime($row['e_hetong_date']."{$row['e_hetongnian']}year")).'</br>';
   		//date('Y-m-d', strtotime($row['e_hetong_date']).'1year'));
   		//echo $daoqiDateNum.$date."</br>";
@@ -759,7 +860,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
     }else{
     	$errormsg="发票添加失败！";
     }
-   
+
         $opLog=array();
 			$opLog['who']=$adminPO['id'];
 			$opLog['what']=$lastid;
@@ -770,7 +871,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
 			if(!$rasult){
 				$exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
 				$this->objForm->setFormData("warn","失败");
-				//事务回滚  
+				//事务回滚
 				//$this->objDao->rollback();
 				throw new Exception ($exmsg->error());
 			}
@@ -781,7 +882,7 @@ dir = Replace(Trim(Request.Form("dir")),"'","")
   function updateEmployStat(){
   	$emId=$_POST['emId'];
   	$this->objDao=new EmployDao();
-  	
+
   }
 function salarySend(){
               $exmsg=new EC();
@@ -817,7 +918,7 @@ function salarySend(){
 			if(!$rasult){
 				$exmsg->setError(__FUNCTION__, "delsalary  add oplog  faild ");
 				$this->objForm->setFormData("warn","失败");
-				//事务回滚  
+				//事务回滚
 				//$this->objDao->rollback();
 				throw new Exception ($exmsg->error());
 			}
@@ -859,10 +960,10 @@ function salarySend(){
 		$this->objDao=new EmployDao();
 		//根据身份证号查询出员工身份类别
 		for ($i=1;$i<count($salaryList[Sheet1]);$i++)
-		{   
+		{
 			$sql=" update OA_employ  set ";
 			$updateSal="";
-			$salaryList[Sheet1][$i][$shenfenzheng]=trim($salaryList[Sheet1][$i][$shenfenzheng]);	
+			$salaryList[Sheet1][$i][$shenfenzheng]=trim($salaryList[Sheet1][$i][$shenfenzheng]);
 			if($salaryList[Sheet1][$i][$shenfenzheng]){
 				if($name!=''&&$name!=-1){
 					if($updateSal){
@@ -945,7 +1046,7 @@ function salarySend(){
 		$this->objForm->setFormData("errorlist",$error);
 		$this->objForm->setFormData("excelList",$salaryList[Sheet1]);
   }
-  
+
 }
 
 

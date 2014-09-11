@@ -136,5 +136,42 @@ class ServiceDao extends BaseDao
         $list = $this->g_db_query ( $sql );
         return $list;
     }
+    function searchCountNoticeList($where=null) {
+        $sql = "select count(*) as cnt from OA_notice  where status = 1 ";
+        if ($where && $where['company_id']) {
+            $sql.=" and company_id = {$where['company_id']}";
+        }
+        $list = $this->g_db_query ( $sql );
+        $list = mysql_fetch_array($list);
+        return $list['cnt'];
+    }
+    function searchNoticeList($where=null) {
+        $sql = "select *  from OA_notice  where status = 1 ";
+        if ($where && $where['company_id']) {
+            $sql.=" and company_id = {$where['company_id']}";
+        }
+        $sql.=" order by update_time desc";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    function delNotice ($id) {
+        $sql = "delete from OA_notice  where id = $id ";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    function saveNotice($notice) {
+        $sql = "insert into  OA_notice (title,content,status,company_id,create_time,update_time)
+        values ('{$notice['title']}','{$notice['content']}',
+                1,{$notice['company_id']},now(),now())";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
+    function updateNotice($notice) {
+        $sql = "update  OA_notice set title = '{$notice['title']}',content = '{$notice['content']}',
+        update_time = now()
+        values company_id = {$notice['company_id']}";
+        $list = $this->g_db_query ( $sql );
+        return $list;
+    }
 }
 ?>

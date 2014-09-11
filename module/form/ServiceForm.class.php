@@ -41,6 +41,8 @@ class ServiceForm extends BaseForm {
 				return "service/emListUpdate.php";
 			case "duibiError" :
 				return "duibiError.php";
+            case "toAddNotice" :
+                return "service/toAddNotice.php";
 			default :
 				return "service/service_frist.php";
 		}
