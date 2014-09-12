@@ -212,10 +212,10 @@ $pagesize=$form_data['pagesize'];
                                     <td style="width:20%;"><div>操作</div></td>
                                 </tr>
                                 <?php
-                                while($row = mysql_fetch_array($noticeList)){
+                                foreach($noticeList as $row){
                                     ?>
                                     <tr>
-                                        <td><?php  echo $row['companyName'];?></td>
+                                        <td><?php  echo $row['company_name'];?></td>
                                         <td><?php echo $row['title'];?></td>
                                         <td><?php echo $row['content'];?></td>
                                         <td><span style="color: green"><?php echo $row['update_time'];?></span></td>

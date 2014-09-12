@@ -213,9 +213,14 @@ class ServiceAction extends BaseAction{
       $startIndex = ($page-1)*$count;
       $total = $sum;
       $pageindex=$page;
-      $noticeList=$this->objDao->searchNoticeList();
-      while ($row = mysql_fetch_array($noticeList)) {
-          $company = $this->objDao->searchCo;
+      $result=$this->objDao->searchNoticeList();
+      $noticeList = array();
+      $i = 0;
+      while ($row = mysql_fetch_array($result)) {
+          $company = $this->objDao->getCompanyById($row['company_id']);
+          $row['company_name'] = $company['company_name'];
+          $noticeList[$i] = $row;
+          $i++;
       }
       $this->objForm->setFormData("startIndex",$startIndex);
       $this->objForm->setFormData("total",$total);

@@ -1463,6 +1463,12 @@ AND salaryTime = '$sal'";
         $result = $this->g_db_query ( $sql );
         return $result;
     }
+    function getCompanyLisyByNameNoAdmin($comName) {
+        $sql = "select c.id ,c.company_name  from OA_company c,OA_admin_company a  where  a.companyId = c.id
+		and c.company_name like '%$comName%'";
+        $result = $this->g_db_query ( $sql );
+        return $result;
+    }
     function updateLeijiyue($leiji, $timeId) {
         $sql = "update OA_salarytime set salary_leijiyue=$leiji where id=$timeId ";
 
