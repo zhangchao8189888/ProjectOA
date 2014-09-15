@@ -169,7 +169,7 @@ class ServiceDao extends BaseDao
     function updateNotice($notice) {
         $sql = "update  OA_notice set title = '{$notice['title']}',content = '{$notice['content']}',
         update_time = now()
-        values company_id = {$notice['company_id']}";
+        where  id = {$notice['id']}";
         $list = $this->g_db_query ( $sql );
         return $list;
     }

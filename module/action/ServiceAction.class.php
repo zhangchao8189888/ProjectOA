@@ -182,8 +182,13 @@ class ServiceAction extends BaseAction{
     }
     function updateNotice () {
         $noticeId = $_REQUEST['notice_id'];
+        $title= $_REQUEST['title'];
+        $contnt = $_REQUEST['content'];
+        $notice['id'] = $noticeId;
+        $notice['title'] = $title;
+        $notice['content'] = $contnt;
         $this->objDao=new ServiceDao();
-        $result = $this->objDao->updateNotice($noticeId);
+        $result = $this->objDao->updateNotice($notice);
         if ($result){
             $msg['code'] = 10000;
             $msg['msg'] = '添加成功';
