@@ -154,7 +154,7 @@ $pagesize=$form_data['pagesize'];
         );
     }
     function updateNotice (){
-        var rowId = $(this).attr("row-data");
+        var rowId = $("#noticeId").val();
         var obj = {
             notice_id : rowId,
             title : $("#title").val(),
