@@ -336,19 +336,27 @@ class SalaryAction extends BaseAction {
 			}
 			$addValue = 0;
 			$delValue = 0;
-			
+			$f= 0;
 			foreach ( $addArray as $row ) {
 				if (is_numeric ( $salaryList [Sheet1] [$i] [($row - 1)] )) {
+
+                    $salaryList[Sheet1] [$i]['add'][$f] ['key'] = urlencode($salaryList [Sheet1] [0] [($row - 1)]);
+                    $salaryList[Sheet1] [$i]['add'][$f] ['value'] =  $salaryList [Sheet1] [$i] [($row - 1)];
+                    $f++;
 					$addValue += $salaryList [Sheet1] [$i] [($row - 1)];
 				} else {
 					$error [$i] ["error"] = "第1$row列所加项非数字类型";
 					continue;
 				}
 			}
+            $f= 0;
 			if (! empty ( $delArray )) {
 				foreach ( $delArray as $row ) {
 					if (is_numeric ( $salaryList [Sheet1] [$i] [($row - 1)] )) {
+                        $salaryList[Sheet1] [$i]['del'][$f] ['key'] = urlencode($salaryList [Sheet1] [0] [($row - 1)]);
+                        $salaryList[Sheet1] [$i]['del'][$f] ['value'] =  $salaryList [Sheet1] [$i] [($row - 1)];
 						$delValue += $salaryList [Sheet1] [$i] [($row - 1)];
+                        $f++;
 					} else {
 						$error [$i] ["error"] = "第2$row列所减项非数字类型";
 						continue;
@@ -506,6 +514,8 @@ class SalaryAction extends BaseAction {
 		$this->objForm->setFormData ( "jisanlist", $jisuan_var );
 		$this->objForm->setFormData ( "errorlist", $error );
 		$this->objForm->setFormData ( "excelList", $salaryList [Sheet1] );
+        /*print_r($salaryList);
+        exit;*/
 		if (! empty ( $freeTex )) {
 			$this->objForm->setFormData ( "freeTex", $freeTex );
 		}
