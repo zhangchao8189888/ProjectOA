@@ -232,10 +232,16 @@ class SaveSalaryAction extends BaseAction {
 			$salayList ['canbaojin'] = $salaryList [$i] [($sit_gerenyinfaheji + 16)];
 			$salayList ['danganfei'] = $salaryList [$i] [($sit_gerenyinfaheji + 17)];
 			$salayList ['paysum_zhongqi'] = $salaryList [$i] [($sit_gerenyinfaheji + 18)];
-			
+
 			// $salary['employid']},{$salary['salaryTimeId']},{$salary['salaryTimeId']}
 			$salayList ['employid'] = $salaryList [$i] [$sit_shenfenzhenghao];
 			$salayList ['salaryTimeId'] = $lastSalaryTimeId;
+            if (!empty($salaryList [$i]['add'])){
+                $salayList ['sal_add_json'] = json_encode($salaryList [$i]['add']);
+            }
+            if (!empty($salaryList [$i]['del'])){
+                $salayList ['sal_del_json'] = json_encode($salaryList [$i]['del']);
+            }
 			if ($i == ((count ( $salaryList ) - 1))) { // 最后一行为合计所以需要减1
 			                                  // 以上保存成功后，保存合计项
 				$lastSumSalaryId = $this->objDao->saveSumSalary ( $salayList );
@@ -257,24 +263,6 @@ class SaveSalaryAction extends BaseAction {
 				throw new Exception ( $exmsg->error () );
 			}
 			
-			if ($i != ((count ( $salaryList ) - 1))) {
-				// 如果是小于$sit_gerenyinfaheji的标志位存储到动态字段中
-				for($j = 0; $j < $sit_gerenyinfaheji; $j ++) {
-					// {$salaryMovement['fieldName']}',{$salaryMovement['salaryId']},{$salaryMovement['fieldValue']
-					$salaryMovement = array ();
-					$salaryMovement ['fieldName'] = $salaryList [0] [$j];
-					$salaryMovement ['salaryId'] = $lastSalaryId;
-					$salaryMovement ['fieldValue'] = $salaryList [$i] [$j];
-					$lastSalaryMovementId = $this->objDao->saveSalaryMovement ( $salaryMovement );
-					if (! $lastSalaryMovementId && $lastSalaryId != 0) {
-						$exmsg->setError ( __FUNCTION__, "save  salaryMovement get last_insert_id  faild " );
-						// 事务回滚
-						$this->objDao->rollback ();
-						$this->objForm->setFormData ( "warn", "保存动态工资字段失败！" );
-						throw new Exception ( $exmsg->error () );
-					}
-				}
-			}
 			if (! empty ( $shifajian ) && $i != ((count ( $salaryList ) - 1))) {
 				/**
 				 * $salaryList[Sheet1][0][($count+20)]="实发合计减后项";
@@ -283,7 +271,7 @@ class SaveSalaryAction extends BaseAction {
 				 * $salaryList[Sheet1][$i][($count+20)]=sprintf("%01.2f", ($jisuan_var[$i]['shifaheji']-$salaryList[Sheet1][$i][$shifajian]))+0;
 				 * $salaryList[Sheet1][$i][($count+21)]=sprintf("%01.2f", ($jisuan_var[$i]['jiaozhongqiheji']-$salaryList[Sheet1][$i][$shifajian]))+0;
 				 * $salaryList[Sheet1][$i][($count+22)]=$salaryList[Sheet1][$i][$shifajian];
-				 * 
+				 *
 				 * @var unknown_type
 				 */
 				$salaryMovement = array ();
