@@ -51,7 +51,7 @@ class SalaryDao extends BaseDao {
     	{$salary['per_shiye']},{$salary['per_yiliao']},{$salary['per_yanglao']},{$salary['per_gongjijin']},
     	{$salary['per_daikoushui']},{$salary['per_koukuangheji']},{$salary['per_shifaheji']},{$salary['com_shiye']},{$salary['com_yiliao']},
     	{$salary['com_yanglao']},{$salary['com_gongshang']},{$salary['com_shengyu']},{$salary['com_gongjijin']},
-    	{$salary['com_heji']},{$salary['laowufei']},{$salary['canbaojin']},{$salary['danganfei']},{$salary['paysum_zhongqi']},'{$salary['sal_add_json']}','{$salary['sal_del_json']}');";
+    	{$salary['com_heji']},{$salary['laowufei']},{$salary['canbaojin']},{$salary['danganfei']},{$salary['paysum_zhongqi']},'{$salary['sal_add_json']}','{$salary['sal_del_json']}')";
         $list = $this->g_db_query ( $sql );
         if ($list) {
             return $this->g_db_last_insert_id ();

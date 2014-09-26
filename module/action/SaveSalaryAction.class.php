@@ -857,7 +857,7 @@ class SaveSalaryAction extends BaseAction {
 		// $this->mode="salaryList";
 		$salaryTimeId = $_REQUEST ['timeId'];
 		$this->objDao = new SalaryDao ();
-		$salaryList = $this->objDao->searchSalaryListBy_SalaryTimeId_New ( $salaryTimeId );
+		$salaryList = $this->objDao->searchSalaryListBy_SalaryTimeId ( $salaryTimeId );
 		$salaryListArray = array ();
 		$i = 0;
 		global $salaryTable;
@@ -890,6 +890,9 @@ class SaveSalaryAction extends BaseAction {
 
 				// type: 'int'
 				$salaryListArray ['fields'] [] = $rowFields;
+				$rowData [$key] = $row [$key];
+				$rowData [$key] = $row [$key];
+				$rowData [$key] = $row [$key];
 				$rowData [$key] = $row [$key];
 			}
 			$salaryListArray ['data'] [] = $rowData;
