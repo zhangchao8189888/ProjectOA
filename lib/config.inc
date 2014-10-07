@@ -112,9 +112,9 @@ $serviceState=array(
 //工资表字段
 global $salaryTable;
 $salaryTable=array(
-    '部门' =>'部门',
-    '姓名' =>'姓名',
-    '身份证号' =>'身份证号',
+    'e_company' =>'部门',
+    'e_name' =>'姓名',
+    'employid' =>'身份证号',
 	'per_shifaheji' =>'实发合计',
 	'per_daikoushui' =>'代扣税',
 	'paysum_zhongqi' =>'缴中企基业合计',
@@ -123,8 +123,8 @@ $salaryTable=array(
     '职务工资' =>'职务工资',
     '银行卡号' =>'银行卡号',
     '身份类别' =>'身份类别',
-    '社保基数' =>'社保基数',
-    '公积金基数' =>'公积金基数',
+    'shebaojishu' =>'社保基数',
+    'gongjijinjishu' =>'公积金基数',
     'per_yingfaheji' =>'个人应发合计',
   	'per_shiye' =>'个人失业',
   	'per_yiliao' =>'个人医疗',

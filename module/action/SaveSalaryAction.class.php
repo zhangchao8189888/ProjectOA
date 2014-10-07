@@ -862,16 +862,35 @@ class SaveSalaryAction extends BaseAction {
 		$i = 0;
 		global $salaryTable;
 		while ( $row = mysql_fetch_array ( $salaryList ) ) {
+            $addJsonArr = json_decode($row['sal_add_json'],true);
+
 			foreach ( $salaryTable as $key => $value ) {
+
 				$rowSalCol = array ();
 				$rowFields = array ();
+
 				if ($i == 0) {
+                    if ($key == 'per_shifaheji') {
+                        foreach ($addJsonArr as $jsonRow) {
+                            $jsonRow['key'] = urldecode($jsonRow['key']);
+                            $rowSalCol = array ();
+                            $rowFields = array ();
+                            $rowSalCol ['text'] = $jsonRow['key'];
+                            $rowSalCol ["dataIndex"] = $jsonRow['key'];
+                            $rowSalCol ["width"] = 80;
+                            $salaryListArray ['columns'] [] = $rowSalCol;
+                            $rowFields ["name"] = $jsonRow['key'];
+                            $rowFields ["type"] = 'float';
+                            $salaryListArray ['fields'] [] = $rowFields;
+
+                        }
+                    }
 					$rowSalCol ['text'] = $value;
 					$rowSalCol ["dataIndex"] = $key;
-                    if( $key !="姓名"  && $key !="部门"  && $key !="身份证号"  && $key !="身份类别"  &&$key !="银行卡号"    ){
+                    if( $value !="姓名"  && $value !="部门"  && $value !="身份证号"  && $value !="身份类别"  &&$value !="银行卡号"    ){
 					$rowSalCol ["summaryType"] = 'sum';
-                }
-                    if( $key =="姓名"  || $key =="部门"  || $key =="身份证号"     ){
+                    }
+                    if( $value =="姓名"  || $value =="部门"  || $value =="身份证号"     ){
                         $rowSalCol ["locked"] = true;
                     }
 
@@ -882,19 +901,23 @@ class SaveSalaryAction extends BaseAction {
 						$rowSalCol ["width"] = 80;
 					}
 					$salaryListArray ['columns'] [] = $rowSalCol;
-				}
-				$rowFields ["name"] = $key;
-                if( $key !="姓名"  && $key !="部门"  && $key !="身份证号"  && $key !="身份类别"  &&$key !="银行卡号"    ){
-                    $rowFields ["type"] = 'float';
-                }
+                    $rowFields ["name"] = $key;
+                    if( $value !="姓名"  && $value !="部门"  && $value !="身份证号"  && $value !="身份类别"  &&$value !="银行卡号"    ){
+                        $rowFields ["type"] = 'float';
+                    }
 
-				// type: 'int'
-				$salaryListArray ['fields'] [] = $rowFields;
+                    // type: 'int'
+                    $salaryListArray ['fields'] [] = $rowFields;
+				}
+
 				$rowData [$key] = $row [$key];
-				$rowData [$key] = $row [$key];
-				$rowData [$key] = $row [$key];
-				$rowData [$key] = $row [$key];
+
+
 			}
+
+            foreach ($addJsonArr as $jsonRow) {
+                $rowData [urldecode($jsonRow['key'])] = $jsonRow['value'];
+            }
 			$salaryListArray ['data'] [] = $rowData;
 			$i ++;
 		}
