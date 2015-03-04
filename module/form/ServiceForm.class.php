@@ -43,6 +43,8 @@ class ServiceForm extends BaseForm {
 				return "duibiError.php";
             case "toAddNotice" :
                 return "service/toAddNotice.php";
+            case "toModifyPassword" :
+                return "service/password_list.php";
 			default :
 				return "service/service_frist.php";
 		}

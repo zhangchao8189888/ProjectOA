@@ -139,6 +139,9 @@ if ($admin ['admin_type'] == 1 || $admin ['admin_type'] == 2) {
         <div class='item'>
             <a href='index.php?action=Service&mode=toAddNotice'>添加公告</a>
         </div>
+        <div class='item'>
+            <a href='index.php?action=Service&mode=toModifyPassword'>员工查询密码重置</a>
+        </div>
         <div class="item">
             <a href="index.php?action=Ext&mode=toModifyPass">修改密码</a>
         </div>

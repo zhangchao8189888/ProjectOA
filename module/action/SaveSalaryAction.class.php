@@ -153,9 +153,8 @@ class SaveSalaryAction extends BaseAction {
 		$comname = $_GET ['comname'];
 		$salaryTimeDate = $_POST ['salaryTime'];
         $time   =   $this->AssignTabMonth ($salaryTimeDate,0);
-        echo($time["first"]);
 		$shifajian = $_POST ['shifajian'];
-		$freeTex = $_POST ['shifajian']; // 免税项
+		$freeTex = $_POST ['freeTex']; // 免税项
 		                              // echo $comname.$salaryTime;
 		$salaryList = $_SESSION ['excelList'];
 		$mark = $_POST ['mark'];
@@ -241,6 +240,9 @@ class SaveSalaryAction extends BaseAction {
             }
             if (!empty($salaryList [$i]['del'])){
                 $salayList ['sal_del_json'] = json_encode($salaryList [$i]['del']);
+            }
+            if (!empty($salaryList [$i]['freeTex'])){
+                $salayList ['sal_free_json'] = json_encode($salaryList [$i]['freeTex']);
             }
 			if ($i == ((count ( $salaryList ) - 1))) { // 最后一行为合计所以需要减1
 			                                  // 以上保存成功后，保存合计项
