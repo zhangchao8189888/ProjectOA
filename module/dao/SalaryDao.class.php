@@ -976,7 +976,8 @@ ON c.id = d.company_level where  1 = 1
          * `paysum_zhongqi` double(10,2) DEFAULT NULL,
          * `salary_type` int(2) NOT NULL DEFAULT '0',
          */
-        $sql = "select *  from OA_salary where salaryTimeId=$sid";
+        $sql = "select *,oe.e_company,oe.e_name,oe.shebaojishu,oe.gongjijinjishu  from OA_salary as os,OA_employ as oe
+        where salaryTimeId=$sid and os.employid = oe.e_num";
         $list = $this->g_db_query ( $sql );
         return $list;
     }
