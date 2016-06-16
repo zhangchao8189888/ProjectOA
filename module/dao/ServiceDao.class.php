@@ -38,6 +38,17 @@ class ServiceDao extends BaseDao
     	$result=$this->g_db_query($sql);
 		return $result;
     }
+    function getUserList($e_num){
+        $sql = 'select oe.e_num,oe.e_name,oe.e_company,ou.name,ou.id,ou.password,ou.last_login_time
+        from OA_employ oe,OA_user ou where ou.user_id = oe.id and ou.name like "%'.$e_num.'"';
+        $result=$this->g_db_query($sql);
+        return $result;
+    }
+    function modifyUserPass($uid){
+        $sql ="update OA_user set password ='Hello@1234' where id = $uid";
+        $result=$this->g_db_query($sql);
+        return $result;
+    }
     function addAdminCompany($adminCom){
     	$sql="insert into OA_admin_company (adminId,companyId,opTime) values({$adminCom['adminId']},{$adminCom['companyId']},now())";
     	$result=$this->g_db_query($sql);

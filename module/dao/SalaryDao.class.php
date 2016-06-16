@@ -46,12 +46,12 @@ class SalaryDao extends BaseDao {
     function saveSalary($salary) {
         $sql = "insert  into  OA_salary (employid,salaryTimeId,per_yingfaheji,per_shiye,per_yiliao,per_yanglao,per_gongjijin,per_daikoushui
     	,per_koukuangheji,per_shifaheji,com_shiye,com_yiliao,com_yanglao,com_gongshang,com_shengyu,com_gongjijin,com_heji,
-    	laowufei,canbaojin,danganfei,paysum_zhongqi,sal_add_json,sal_del_json
+    	laowufei,canbaojin,danganfei,paysum_zhongqi,sal_add_json,sal_del_json,sal_free_json
     	) values('{$salary['employid']}',{$salary['salaryTimeId']},{$salary['per_yingfaheji']},
     	{$salary['per_shiye']},{$salary['per_yiliao']},{$salary['per_yanglao']},{$salary['per_gongjijin']},
     	{$salary['per_daikoushui']},{$salary['per_koukuangheji']},{$salary['per_shifaheji']},{$salary['com_shiye']},{$salary['com_yiliao']},
     	{$salary['com_yanglao']},{$salary['com_gongshang']},{$salary['com_shengyu']},{$salary['com_gongjijin']},
-    	{$salary['com_heji']},{$salary['laowufei']},{$salary['canbaojin']},{$salary['danganfei']},{$salary['paysum_zhongqi']},'{$salary['sal_add_json']}','{$salary['sal_del_json']}')";
+    	{$salary['com_heji']},{$salary['laowufei']},{$salary['canbaojin']},{$salary['danganfei']},{$salary['paysum_zhongqi']},'{$salary['sal_add_json']}','{$salary['sal_del_json']}','{$salary['sal_free_json']}')";
         $list = $this->g_db_query ( $sql );
         if ($list) {
             return $this->g_db_last_insert_id ();

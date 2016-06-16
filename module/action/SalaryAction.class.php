@@ -351,6 +351,7 @@ class SalaryAction extends BaseAction {
 					continue;
 				}
 			}
+
             $f= 0;
 			if (! empty ( $delArray )) {
 				foreach ( $delArray as $row ) {
@@ -369,6 +370,8 @@ class SalaryAction extends BaseAction {
 			$jisuan_var [$i] ["delValue"] = $delValue;
 			if (! empty ( $freeTex )) {
 				$jisuan_var [$i] ['freeTex'] = $salaryList [Sheet1] [$i] [$freeTex];
+                $salaryList[Sheet1] [$i]['freeTex'] ['key'] = urlencode($salaryList [Sheet1] [0] [($freeTex)]);
+                $salaryList[Sheet1] [$i]['freeTex'] ['value'] =  $salaryList [Sheet1] [$i] [($freeTex)];
 			} else {
 				$jisuan_var [$i] ['freeTex'] = 0;
 			}

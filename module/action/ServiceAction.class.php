@@ -126,6 +126,15 @@ class ServiceAction extends BaseAction{
             case "updateNotice":
                 $this->updateNotice();
                 break;
+            case "toModifyPassword":
+                $this->toModifyPassword();
+                break;
+            case "getUserListJson":
+                $this->getUserListJson();
+                break;
+            case "updatePassword":
+                $this->updatePassword();
+                break;
             default :
                 $this->modelInput();
                 break;
@@ -133,6 +142,36 @@ class ServiceAction extends BaseAction{
 
 
 
+    }
+    function updatePassword() {
+        $u_id = $_REQUEST['uid'];
+        $this->objDao=new ServiceDao();
+        $result = $this->objDao->modifyUserPass($u_id);
+        $data = array();
+        if ($result) {
+            $data['mess'] ='密码修改成功';
+            $data['code'] ='100000';
+
+        } else {
+            $data['mess'] ='密码修改失败';
+            $data['code'] ='100001';
+        }
+        echo json_encode($data);
+        exit;
+    }
+    function getUserListJson() {
+        $e_num = $_REQUEST['e_num'];
+        $this->objDao=new ServiceDao();
+        $result = $this->objDao->getUserList($e_num);
+        $list = array();
+        while ($row = mysql_fetch_array($result)) {
+            $list[] =$row;
+        }
+        echo json_encode($list);
+        exit;
+    }
+    function toModifyPassword() {
+        $this->mode="toModifyPassword";
     }
     function addNotice () {
         $notice = array();
