@@ -147,10 +147,17 @@ const  jijinshu=3500;
          * (F2="本市城镇职工",MAX(MIN(G2,17379),2317)*0.2%,
         IF(F2="外埠城镇职工",MAX(MIN(G2,17379),2317)*0.2%
         ,IF(F2="本市农村劳动力",0,IF(F2="外地农村劳动力",0,IF(F2="本市农民工",0,IF(F2="外地农民工",0,"错误"))))))
+         *2015-7-20张超修改
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),2585)*0.2%,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),2585)*0.2%,
+         * IF(F2="本市农村劳动力",0,
+         * IF(F2="外地农村劳动力",0,
+         * IF(F2="本市农民工",0,
+         * IF(F2="外地农民工",0,"错误"))))))
          *
 		 */
 		if($userType==1||$userType==2){
-			$gerenshiye=$this->max($this->min($shebaojishu,17379),2317)*0.002;
+			$gerenshiye=$this->max($this->min($shebaojishu,19389),2585)*0.002;
 		}else {
 			$gerenshiye=0;
 		}
@@ -165,9 +172,16 @@ const  jijinshu=3500;
         IF(F2="本市农村劳动力",MAX(MIN(G2,17379),3476)*2%+3,
         IF(F2="外地农村劳动力",MAX(MIN(G2,17379),3476)*2%+3,
         IF(F2="本市农民工",0,IF(F2="外地农民工",0,"错误"))))))
+         *
+         * 2015-7-20张超修改
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),3878)*2%+3,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),3878)*2%+3,
+         * IF(F2="本市农村劳动力",MAX(MIN(G2,19389),3878)*2%+3,
+         * IF(F2="外地农村劳动力",MAX(MIN(G2,19389),3878)*2%+3,
+         * IF(F2="本市农民工",0,IF(F2="外地农民工",0,"错误"))))))
 		 */
 	    if($userType==1||$userType==2||$userType==3||$userType==4){
-			$gerenyiliao=$this->max($this->min($shebaojishu,17379),3476)*0.02+3;
+			$gerenyiliao=$this->max($this->min($shebaojishu,19389),3878)*0.02+3;
 		}else {
 			$gerenyiliao=0;
 		}
@@ -184,8 +198,16 @@ const  jijinshu=3500;
         IF(F2="外地农村劳动力",MAX(MIN(G2,17379),2317)*8%,
         IF(F2="本市农民工",MAX(MIN(G2,17379),2317)*8%,
         IF(F2="外地农民工",MAX(MIN(G2,17379),2317)*8%,"错误"))))))
+         *
+         *
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),2585)*8%,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),2585)*8%,
+         * IF(F2="本市农村劳动力",MAX(MIN(G2,19389),2585)*8%,
+         * IF(F2="外地农村劳动力",MAX(MIN(G2,19389),2585)*8%,
+         * IF(F2="本市农民工",MAX(MIN(G2,19389),2585)*8%,
+         * IF(F2="外地农民工",MAX(MIN(G2,19389),2585)*8%,"错误"))))))
 		 */
-		$gerenyanglao=$this->max($this->min($shebaojishu,17379),2317)*0.08;
+		$gerenyanglao=$this->max($this->min($shebaojishu,19389),2585)*0.08;
 		if($userType==0){
 			$gerenyanglao=0;
 		}
@@ -202,8 +224,16 @@ const  jijinshu=3500;
         IF(F2="外地农村劳动力",MAX(MIN(G2,17379),2317)*1%,
         IF(F2="本市农民工",MAX(MIN(G2,17379),2317)*1%,
         IF(F2="外地农民工",MAX(MIN(G2,17379),2317)*1%,"错误"))))))
+         *
+         *
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),2585)*1%,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),2585)*1%,
+         * IF(F2="本市农村劳动力",MAX(MIN(G2,19389),2585)*1%,
+         * IF(F2="外地农村劳动力",MAX(MIN(G2,19389),2585)*1%,
+         * IF(F2="本市农民工",MAX(MIN(G2,19389),2585)*1%,
+         * IF(F2="外地农民工",MAX(MIN(G2,19389),2585)*1%,"错误"))))))
 		 */
-		$danweishiye=$this->max($this->min($shebaojishu,17379),2317)*0.01;
+		$danweishiye=$this->max($this->min($shebaojishu,19389),2585)*0.01;
 	    if($userType==0){
 			$danweishiye=0;
 		}
@@ -217,9 +247,16 @@ const  jijinshu=3500;
         IF(F2="本市农村劳动力",MAX(MIN(G2,17379),3476)*10%,
         IF(F2="外地农村劳动力",MAX(MIN(G2,17379),3476)*10%,
         IF(F2="本市农民工",3476*1%,IF(F2="外地农民工",3476*1%,"错误"))))))
+         *
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),3878)*10%,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),3878)*10%,
+         * IF(F2="本市农村劳动力",MAX(MIN(G2,19389),3878)*10%,
+         * IF(F2="外地农村劳动力",MAX(MIN(G2,19389),3878)*10%,
+         * IF(F2="本市农民工",3878*1%,
+         * IF(F2="外地农民工",3878*1%,"错误"))))))
 		 */
 		if($userType==1||$userType==2||$userType==3||$userType==4){
-			$danweiyiliao=$this->max($this->min($shebaojishu,17379),3476)*0.1;
+			$danweiyiliao=$this->max($this->min($shebaojishu,19389),3878)*0.1;
 		}else{
 			$danweiyiliao=3476*0.01;
 			
@@ -240,8 +277,17 @@ const  jijinshu=3500;
         IF(F2="外地农村劳动力",MAX(MIN(G2,17379),2317)*20%,
         IF(F2="本市农民工",MAX(MIN(G2,17379),2317)*20%,
         IF(F2="外地农民工",MAX(MIN(G2,17379),2317)*20%,"错误"))))))
+         *
+         *
+         *
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),2585)*20%,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),2585)*20%,
+         * IF(F2="本市农村劳动力",MAX(MIN(G2,19389),2585)*20%,
+         * IF(F2="外地农村劳动力",MAX(MIN(G2,19389),2585)*20%,
+         * IF(F2="本市农民工",MAX(MIN(G2,19389),2585)*20%,
+         * IF(F2="外地农民工",MAX(MIN(G2,19389),2585)*20%,"错误"))))))
 		 */
-		$danweiyanglao=$this->max($this->min($shebaojishu,17379),2317)*0.2;
+		$danweiyanglao=$this->max($this->min($shebaojishu,19389),2585)*0.2;
 	    if($userType==0){
 			$danweiyanglao=0;
 		}
@@ -256,13 +302,22 @@ const  jijinshu=3500;
         IF(F2="外地农村劳动力",MAX(MIN(G2,17379),3476)*0.8%,
         IF(F2="本市农民工",MAX(MIN(G2,17379),3476)*0.8%,
         IF(F2="外地农民工",MAX(MIN(G2,17379),3476)*0.8%,"错误"))))))
+         *
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="本市农村劳动力",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="外地农村劳动力",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="本市农民工",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="外地农民工",MAX(MIN(G2,19389),3878)*0.8%,"错误"))))))
+         *
+         *
 		 */
 		/*if($userType==1||$userType==2){
 			$danweigongshang=$this->max($this->min($shebaojishu,17379),3476)*0.008;
 		}else{
             $danweigongshang=$this->max($this->min($shebaojishu,15669),3134)*0.008;
         }*/
-        $danweigongshang=$this->max($this->min($shebaojishu,17379),3476)*0.008;
+        $danweigongshang=$this->max($this->min($shebaojishu,19389),3878)*0.008;
 		//echo $danweigongshang."||".$shebaojishu."||".$userType."<br/>";
 		if($userType==0){
 			$danweigongshang=0;
@@ -284,9 +339,17 @@ IF(F2="外地农民工",0,"错误"))))))
         IF(F2="外地农村劳动力",MAX(MIN(G2,17379),3476)*0.8%,
         IF(F2="本市农民工",MAX(MIN(G2,17379),3476)*0.8%,
         IF(F2="外地农民工",MAX(MIN(G2,17379),3476)*0.8%,"错误"))))))
+         *
+         * =IF(F2="本市城镇职工",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="外埠城镇职工",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="本市农村劳动力",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="外地农村劳动力",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="本市农民工",MAX(MIN(G2,19389),3878)*0.8%,
+         * IF(F2="外地农民工",MAX(MIN(G2,19389),3878)*0.8%,"错误"))))))
+         *
 		 */
 		//if($userType==1||$userType==3||$userType==5){
-			$danweishengyu=$this->max($this->min($shebaojishu,17379),3476)*0.008;
+			$danweishengyu=$this->max($this->min($shebaojishu,19389),3878)*0.008;
 		//}else{
 		//   $danweishengyu=0; 	
 		//}
@@ -299,11 +362,13 @@ IF(F2="外地农民工",0,"错误"))))))
         /**
          * 2014-7-16
          * 设置公积金基数
+         * 2015修改公积金基数
+         * 19389上限
          */
-        if ($nums < 1773 && $nums != 0) {
-            $nums = 1773;
-        } elseif ($nums > 17375) {
-            $nums = 17375;
+        if ($nums < 1955 && $nums != 0) {
+            $nums = 1955;
+        } elseif ($nums > 19389) {
+            $nums = 19389;
         }
 		return $nums*0.12;
 	}

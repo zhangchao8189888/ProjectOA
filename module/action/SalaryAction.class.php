@@ -43,7 +43,7 @@ class SalaryAction extends BaseAction {
 				$this->salaryUpload ();
 				break;
 			case "excelToHtml" :
-				$this->excelToHtml ();
+				$this->newExcelToHtml ();
 				break;
 			case "newExcelToHtml" :
 				$this->newExcelToHtml ();
@@ -321,10 +321,12 @@ class SalaryAction extends BaseAction {
 			/*
 			 * if(!is_numeric($salaryList[Sheet1][$i][$shenfenzheng])){ $error[$i]["error"]="身份证非数字类型！"; continue; }
 			 */
+            $salaryList [Sheet1] [$i] [$shenfenzheng] = trim($salaryList [Sheet1] [$i] [$shenfenzheng]);
 			$employ = $this->objDao->getEmByEno ( $salaryList [Sheet1] [$i] [$shenfenzheng] );
+
 			if ($employ) {
 				$jisuan_var [$i] ['yinhangkahao'] = $employ ['bank_num'];
-				$jisuan_var [$i] ['shenfenleibie'] = $employ ['e_type'];
+				$jisuan_var [$i] ['shenfenleibie'] = trim($employ ['e_type']);
 				$jisuan_var [$i] ['shebaojishu'] = $employ ['shebaojishu'];
 				$jisuan_var [$i] ['gongjijinjishu'] = $employ ['gongjijinjishu'];
 				$jisuan_var [$i] ['laowufei'] = $employ ['laowufei'];
